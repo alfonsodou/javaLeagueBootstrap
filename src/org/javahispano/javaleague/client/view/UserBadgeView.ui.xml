@@ -1,0 +1,35 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
+	ui:generateLocales='default'>	
+	<ui:style>
+		.logoutLink {
+			float: right;
+			margin-left: 10px;
+		}
+		
+		.container {
+			width: 300px;
+		}
+
+		.username {
+			text-align: right;
+		}
+	</ui:style>
+
+	<g:HTMLPanel styleName='{style.container}'>
+		<div class='{style.logoutLink}'>
+			<g:Anchor href='javascript:;' ui:field='logoutLink'>
+				<ui:msg key="logout" description="Log Out">Log Out</ui:msg>
+			</g:Anchor>
+		</div>
+		<div>
+			<g:Label styleName='{style.username}' ui:field='usernameLabel'>
+				<ui:msg key="loading" description="Loading">loading...</ui:msg>
+			</g:Label>
+		</div>
+	</g:HTMLPanel>
+
+</ui:UiBinder> 

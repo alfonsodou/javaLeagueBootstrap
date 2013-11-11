@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='javaleague'>
+	<!-- Inherit the core Web Toolkit stuff. -->
+	<inherits name='com.google.gwt.user.User' />
+	<inherits name="com.google.gwt.resources.Resources" />
+	<!-- Inherit the default GWT style sheet. You can change -->
+	<!-- the theme of your GWT application by uncommenting -->
+	<!-- any one of the following lines. -->
+	<inherits name='com.google.gwt.user.theme.standard.Standard' />
+	<!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
+	<!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/> -->
+
+	<!-- Other module inherits -->
+	<inherits name="com.github.gwtbootstrap.Bootstrap" />
+	<set-property name="bootstrap.responsiveDesign" value="true" />
+
+	<!-- Internacionalization -->
+	<inherits name='com.google.gwt.i18n.I18N' />
+	<!-- Spanish language, independent of country -->
+	<extend-property name="locale" values="es" />
+	<!-- English language, independent of country -->
+	<extend-property name="locale" values="en" />
+	<set-property-fallback name="locale" value="es" />
+
+
+	<!-- Specify the app entry point class. -->
+	<entry-point class='org.javahispano.javaleague.client.JavaLeagueApp' />
+
+	<!-- Specify the paths for translatable code -->
+	<source path='client' />
+	<source path='shared' />
+
+	<!--pay attention in this part -->
+	<!--  <source path='resources' />
+	<replace-with class="org.javahispano.javaleague.client.resources.ConfiguratorJavaLeague">
+		<when-type-is class="com.github.gwtbootstrap.client.ui.config.Configurator" />
+	</replace-with>
+	<public path="resources">
+		<exclude name="** /*.java" />
+		<exclude name="** /*.class" />
+	</public>
+	-->
+</module>

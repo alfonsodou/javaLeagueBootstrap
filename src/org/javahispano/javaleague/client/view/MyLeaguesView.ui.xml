@@ -1,0 +1,33 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:b="urn:import:com.github.gwtbootstrap.client.ui"
+	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
+	ui:generateLocales='default'>
+
+	<b:Container>
+		<b:Hero>
+			<b:Row>
+				<b:Column size="12">
+					<b:Button ui:field="createLeagueButton">
+						<ui:msg key="createLEagueButton" description="Create League Button">Crear Liga</ui:msg>
+					</b:Button>
+					<b:Button ui:field="searchLeagueButton">
+						<ui:msg key="searchLeagueButton" description="Search League Button">Buscar Liga
+						</ui:msg>
+					</b:Button>
+					<g:Label>Level 1 of Column</g:Label>
+					<b:Row addStyleNames="show-grid">
+						<b:Column size="6">
+							<g:Label>Level 2</g:Label>
+						</b:Column>
+						<b:Column size="6">
+							<g:Label>Level 2</g:Label>
+						</b:Column>
+					</b:Row>
+				</b:Column>
+			</b:Row>
+		</b:Hero>
+	</b:Container>
+
+</ui:UiBinder> 

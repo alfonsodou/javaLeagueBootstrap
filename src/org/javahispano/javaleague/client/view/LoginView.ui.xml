@@ -1,0 +1,68 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
+	ui:generateLocales='default' xmlns:b="urn:import:com.github.gwtbootstrap.client.ui">
+	<ui:image field='logo' src='../resources/images/logo_small.png' />
+	<ui:image field='twitter' src='../resources/images/twitterlogo.gif' />
+	<ui:image field='google' src='../resources/images/googlelogo.gif' />
+	<ui:image field='facebook' src='../resources/images/facebooklogo.jpeg' />
+	<ui:image field='javahispano' src='../resources/images/logoJavaHispano.png' />
+
+
+	<b:Modal title="Login" ui:field="loginModal" backdrop="STATIC" keyboard="true"
+		animation="true">
+
+
+		<!-- <b:ControlLabel> <ui:message key="email">Email</ui:message> </b:ControlLabel> 
+			<b:TextBox alternateSize="SMALL" placeholder="Email" /> <b:ControlLabel> 
+			<ui:message key="Password">Password</ui:message> </b:ControlLabel> <b:PasswordTextBox 
+			alternateSize="SMALL" placeholder="Password" /> <b:CheckBox> <ui:msg key="rememberMe"> 
+			Recu&eacute;rdame</ui:msg> </b:CheckBox> <b:SubmitButton addStyleNames="btn" 
+			ui:field="loginButton"> <ui:msg key="signIn">Entrar</ui:msg> </b:SubmitButton> 
+			<b:Button ui:field="cancelButton"> <ui:msg key="cancelSignIn">Cancelar</ui:msg> 
+			</b:Button> -->
+		<g:Label>
+			<ui:msg key="others">Identif&iacute;cate con</ui:msg>
+		</g:Label>
+
+		<!-- <b:Button icon="TWITTER_SIGN" ui:field="twitterButton"></b:Button> 
+			<b:Button icon="FACEBOOK_SIGN" ui:field="facebookButton"></b:Button> <b:Button 
+			icon="GOOGLE_PLUS_SIGN" ui:field="googleButton"></b:Button> -->
+
+		<b:ModalFooter>
+			<b:Button ui:field='twitterButton'>
+				<!-- <g:upFace image='{twitter}' /> -->
+			</b:Button>
+			<b:Button ui:field='googleButton'>
+				<!-- <g:upFace image='{google}' /> -->
+			</b:Button>
+			<b:Button ui:field='facebookButton'>
+				<!-- <g:upFace image='{facebook}' /> -->
+			</b:Button>
+		</b:ModalFooter>
+
+
+	</b:Modal>
+	<!-- <g:HTMLPanel styleName='{style.outer}'> <center> <div class='{style.container}'> 
+		<div class='{style.content}'> <div class='{style.logo}' /> <div class='{style.sidebox}'> 
+		<ui:msg key="salute" description="Greeting"> javaLeague, programa tu equipo 
+		de f&uacute;tbol y compite contra otros usuarios </ui:msg> </div> <div class='{style.what-to-do}'> 
+		<ui:msg key='what-to-do' description='What to do?'> Para entrar en javaLeague, 
+		identif&iacute;cate con alguna de estas cuentas. </ui:msg> </div> <div class='{style.providers}'> 
+		<div class='{style.provider-button}'> <g:PushButton ui:field='twitterButton' 
+		width='120px' height='40px'> <g:upFace image='{twitter}' /> </g:PushButton> 
+		</div> <div class='{style.provider-button}'> <g:PushButton ui:field='googleButton' 
+		width='120px' height='40px'> <g:upFace image='{google}' /> </g:PushButton> 
+		</div> <div class='{style.provider-button}'> <g:PushButton ui:field='facebookButton' 
+		width='120px' height='40px'> <g:upFace image='{facebook}' /> </g:PushButton> 
+		</div> </div> <div> <div class='{style.clear} {style.description}'> <ui:msg 
+		key='description' description='Description of javaLeague'> javaLeague, programa 
+		tu equipo de f&uacute;tbol y compite contra otros usuarios </ui:msg> </div> 
+		</div> </div> <div class='{style.about}'> <ui:msg key='about' description='About 
+		javaLeague'> <p> <em>javaLeague</em> es un torneo de programaci&oacute;n 
+		en Java. Idea original de <a href='http:\\www.javahispano.org' title='javaHispano'> 
+		<img src='../resources/images/logoJavaHispano.png'></img> </a> - <a href='http:\\javacup.javahispano.org' 
+		title=' javaCup'>javaCup</a> </p> </ui:msg> </div> </div> </center> </g:HTMLPanel> -->
+</ui:UiBinder> 
+

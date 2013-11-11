@@ -1,0 +1,65 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:b="urn:import:com.github.gwtbootstrap.client.ui"
+	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
+	ui:generateLocales='default'>
+
+	<b:Container>
+		<b:Hero>
+			
+			<b:Row>
+				<b:Column size="12">
+			
+					<g:Label>
+						<ui:msg key="teamName" description="Team Name">Nombre del equipo</ui:msg>
+					</g:Label>
+					<g:Label  ui:field="teamNameField"></g:Label>
+					<g:Label>
+						<ui:msg key="winsMatch">Ganados: </ui:msg>
+					</g:Label>
+					<g:Label  ui:field="winsField"></g:Label>
+					<g:Label>
+						<ui:msg key="tiedMatch">Empatados:
+						</ui:msg>
+					</g:Label>
+					<g:Label ui:field="tiedField"></g:Label>
+					<g:Label>
+						<ui:msg key="lostMatch">Perdidos:
+						</ui:msg>
+					</g:Label>
+					<g:Label  ui:field="lostField"></g:Label>
+					<g:Label>
+						<ui:msg key="goalsFor">Goles
+							a favor:
+						</ui:msg>
+					</g:Label>
+					<g:Label ui:field="goalsForField"></g:Label>
+					<g:Label>
+						<ui:msg key="goalsAgainst">Goles en contra: </ui:msg>
+					</g:Label>
+					<g:Label ui:field="goalsAgainstField"></g:Label>
+					<b:Button ui:field="updateButton">
+						<ui:msg key="updateButton" description="Update Button">Editar
+							Táctica </ui:msg>
+					</b:Button>
+					<b:Button ui:field="playMatchButton">
+						<ui:msg key="playMatchButton" description="Play Match Button">Jugar Partido
+						</ui:msg>
+					</b:Button>
+
+					<b:Row addStyleNames="show-grid">
+						<b:Column size="6">
+							<g:Label>Level 2</g:Label>
+						</b:Column>
+						<b:Column size="6">
+							<g:Label>Level 2</g:Label>
+						</b:Column>
+					</b:Row>
+				</b:Column>
+			</b:Row>
+		</b:Hero>
+	</b:Container>
+
+</ui:UiBinder> 
+

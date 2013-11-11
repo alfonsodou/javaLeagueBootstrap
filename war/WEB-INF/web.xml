@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.5"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+    <filter>
+		<filter-name>appstats</filter-name>
+		<filter-class>
+			com.google.appengine.tools.appstats.AppstatsFilter
+		</filter-class>
+		<init-param>
+			<param-name>logMessage</param-name>
+			<param-value>Appstats available: /appstats/details?time={ID}
+			</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>appstats</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+    
+	<servlet>
+		<servlet-name>appstats</servlet-name>
+		<servlet-class>
+			com.google.appengine.tools.appstats.AppstatsServlet
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>appstats</servlet-name>
+		<url-pattern>/appstats/*</url-pattern>
+	</servlet-mapping>
+
+	<security-constraint>
+		<web-resource-collection>
+			<url-pattern>/appstats/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<!-- ===================== League Service ===================== -->
+	<servlet>
+		<servlet-name>leagueService</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.LeagueServiceImpl
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>leagueService</servlet-name>
+		<url-pattern>/javaleague/leagueService</url-pattern>
+	</servlet-mapping>    
+
+	<!-- ===================== Login Service ===================== -->
+	<servlet>
+		<servlet-name>loginService</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.LoginServiceImpl
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>loginService</servlet-name>
+		<url-pattern>/javaleague/loginService</url-pattern>
+	</servlet-mapping>
+
+	<!-- ===================== tacticService ===================== -->
+	<servlet>
+		<servlet-name>tacticService</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.TacticServiceImpl
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>tacticService</servlet-name>
+		<url-pattern>/javaleague/tacticService</url-pattern>
+	</servlet-mapping>
+
+	<!-- ===================== matchService ===================== -->
+	<servlet>
+		<servlet-name>matchService</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.MatchServiceImpl
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>matchService</servlet-name>
+		<url-pattern>/javaleague/matchService</url-pattern>
+	</servlet-mapping>
+
+	<!-- ===================== Login Google Servlet ===================== -->
+
+	<servlet>
+		<servlet-name>logingoogle</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.servlets.LoginGoogleServlet
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>logingoogle</servlet-name>
+		<url-pattern>/logingoogle</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>logingooglecallback</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.servlets.LoginGoogleCallbackServlet
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>logingooglecallback</servlet-name>
+		<url-pattern>/logingooglecallback</url-pattern>
+	</servlet-mapping>
+
+	<!-- ===================== Login Twitter Servlet ===================== -->
+
+	<servlet>
+		<servlet-name>logintwitter</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.servlets.LoginTwitterServlet
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>logintwitter</servlet-name>
+		<url-pattern>/logintwitter</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>logintwittercallback</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.servlets.LoginTwitterCallbackServlet
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>logintwittercallback</servlet-name>
+		<url-pattern>/logintwittercallback</url-pattern>
+	</servlet-mapping>
+
+	<!-- ===================== Login Facebook Servlet ===================== -->
+
+	<servlet>
+		<servlet-name>loginfacebook</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.servlets.LoginFacebookServlet
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>loginfacebook</servlet-name>
+		<url-pattern>/loginfacebook</url-pattern>
+	</servlet-mapping>
+
+	<!-- ===================== UserFile Service ===================== -->
+	<servlet>
+		<servlet-name>userFileService</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.UserFileServiceImpl
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>userFileService</servlet-name>
+		<url-pattern>/javaleague/userFileService</url-pattern>
+	</servlet-mapping>
+
+	<!-- ===================== Upload Servlet ===================== -->
+	<servlet>
+		<servlet-name>upload</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.servlets.UploadServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>upload</servlet-name>
+		<url-pattern>/upload</url-pattern>
+	</servlet-mapping>
+
+	<!-- ===================== Dispatch Match Servlet ===================== -->
+	<servlet>
+		<servlet-name>dispatchMatch</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.servlets.DispatchMatchServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dispatchMatch</servlet-name>
+		<url-pattern>/dispatchMatch</url-pattern>
+	</servlet-mapping>
+
+	<!-- ===================== Play Match Servlet ===================== -->
+	<servlet>
+		<servlet-name>playMatch</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.servlets.PlayMatchServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>playMatch</servlet-name>
+		<url-pattern>/playMatch</url-pattern>
+	</servlet-mapping>
+
+	<!-- ===================== Serve Match Servlet ===================== -->
+	<servlet>
+		<servlet-name>Serve</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.servlets.ServeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Serve</servlet-name>
+		<url-pattern>/serve</url-pattern>
+	</servlet-mapping>
+	
+	<!-- ===================== Daytime  Servlet ===================== -->
+	<servlet>
+		<servlet-name>Daytime</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.servlets.DaytimeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Daytime</servlet-name>
+		<url-pattern>/daytime</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+
+
+	<servlet>
+		<servlet-name>SystemServiceServlet</servlet-name>
+		<servlet-class>com.google.api.server.spi.SystemServiceServlet
+		</servlet-class>
+		<init-param>
+			<param-name>services</param-name>
+			<param-value />
+		</init-param>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>SystemServiceServlet</servlet-name>
+		<url-pattern>/_ah/spi/*</url-pattern>
+	</servlet-mapping>
+
+</web-app>
