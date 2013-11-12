@@ -17,6 +17,9 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  */
 public class LoginView extends Composite implements LoginPresenter.Display {
+	
+	protected Widget widget;
+	
 	@UiField
 	Button googleButton;
 	@UiField
@@ -39,12 +42,37 @@ public class LoginView extends Composite implements LoginPresenter.Display {
 	}
 
 	public LoginView() {
+		setUpDialog();
 		initWidget(uiBinder.createAndBindUi(this));
 	}
+	
+	   // DialogBox must be overridden to let the presenter handle changes onUnload
+    private void setUpDialog() {
+        loginModal = new Modal() {
 
+            @Override
+            protected void onUnload() {
+                LoginView.this.hide();
+            }
+        };
+       
+        twitterButton.getElement().getStyle().setBackgroundImage("../resources/images/twitterlogo.gif");
+        facebookButton.getElement().getStyle().setBackgroundImage("../resources/images/facebooklogo.jpeg");
+        googleButton.getElement().getStyle().setBackgroundImage("../resources/images/googlelogo.gif");
+        
+    }
+
+    public final void hide() {
+        loginModal.hide();
+    }
+    
+    protected final void initWidget(final Widget widget) {
+        this.widget = widget;
+    }    
+    
 	@Override
 	public Widget asWidget() {
-		return this;
+		return widget;
 	}
 
 	@Override

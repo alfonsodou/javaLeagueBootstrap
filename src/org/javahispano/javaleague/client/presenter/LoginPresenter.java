@@ -73,7 +73,7 @@ public class LoginPresenter implements Presenter {
 	}
 
 	public void go(final HasWidgets container) {
-		container.clear();
+		//container.clear();
 		container.add(display.asWidget());
 		bind();
 	}
