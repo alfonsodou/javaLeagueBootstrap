@@ -10,18 +10,24 @@
 	<ui:image field='javahispano' src='../resources/images/logoJavaHispano.png' />
 
 
-	<b:Modal title="Login" ui:field="loginModal" backdrop="STATIC" keyboard="true"
-		animation="true">
+	<b:Modal title="Login" ui:field="loginModal" backdrop="STATIC"
+		keyboard="true" animation="true">
 
 
-		<!-- <b:ControlLabel> <ui:message key="email">Email</ui:message> </b:ControlLabel> 
-			<b:TextBox alternateSize="SMALL" placeholder="Email" /> <b:ControlLabel> 
-			<ui:message key="Password">Password</ui:message> </b:ControlLabel> <b:PasswordTextBox 
-			alternateSize="SMALL" placeholder="Password" /> <b:CheckBox> <ui:msg key="rememberMe"> 
-			Recu&eacute;rdame</ui:msg> </b:CheckBox> <b:SubmitButton addStyleNames="btn" 
-			ui:field="loginButton"> <ui:msg key="signIn">Entrar</ui:msg> </b:SubmitButton> 
-			<b:Button ui:field="cancelButton"> <ui:msg key="cancelSignIn">Cancelar</ui:msg> 
-			</b:Button> -->
+		<b:ControlLabel>
+			<ui:message key="email">Email</ui:message>
+		</b:ControlLabel>
+		<b:TextBox alternateSize="SMALL" placeholder="Email" />
+		<b:ControlLabel>
+			<ui:message key="Password">Password</ui:message>
+		</b:ControlLabel>
+		<b:PasswordTextBox alternateSize="SMALL"
+			placeholder="Password" />
+		<b:CheckBox>
+			<ui:msg key="rememberMe">
+				Recu&eacute;rdame</ui:msg>
+		</b:CheckBox>
+
 		<g:Label>
 			<ui:msg key="others">Identif&iacute;cate con</ui:msg>
 		</g:Label>
@@ -29,17 +35,23 @@
 		<!-- <b:Button icon="TWITTER_SIGN" ui:field="twitterButton"></b:Button> 
 			<b:Button icon="FACEBOOK_SIGN" ui:field="facebookButton"></b:Button> <b:Button 
 			icon="GOOGLE_PLUS_SIGN" ui:field="googleButton"></b:Button> -->
+		<b:Button ui:field='twitterButton'>
+			<!-- <g:upFace image='{twitter}' /> -->
+		</b:Button>
+		<b:Button ui:field='googleButton'>
+			<!-- <g:upFace image='{google}' /> -->
+		</b:Button>
+		<b:Button ui:field='facebookButton'>
+			<!-- <g:upFace image='{facebook}' /> -->
+		</b:Button>
 
 		<b:ModalFooter>
-			<b:Button ui:field='twitterButton'>
-				<!-- <g:upFace image='{twitter}' /> -->
+			<b:Button ui:field="cancelButton">
+				<ui:msg key="cancelSignIn">Cancelar</ui:msg>
 			</b:Button>
-			<b:Button ui:field='googleButton'>
-				<!-- <g:upFace image='{google}' /> -->
-			</b:Button>
-			<b:Button ui:field='facebookButton'>
-				<!-- <g:upFace image='{facebook}' /> -->
-			</b:Button>
+			<b:SubmitButton addStyleNames="btn-primary" ui:field="loginButton">
+				<ui:msg key="signIn">Entrar</ui:msg>
+			</b:SubmitButton>
 		</b:ModalFooter>
 
 

@@ -56,9 +56,9 @@ public class LoginView extends Composite implements LoginPresenter.Display {
             }
         };
        
-        twitterButton.getElement().getStyle().setBackgroundImage("../resources/images/twitterlogo.gif");
+        /*twitterButton.getElement().getStyle().setBackgroundImage("../resources/images/twitterlogo.gif");
         facebookButton.getElement().getStyle().setBackgroundImage("../resources/images/facebooklogo.jpeg");
-        googleButton.getElement().getStyle().setBackgroundImage("../resources/images/googlelogo.gif");
+        googleButton.getElement().getStyle().setBackgroundImage("../resources/images/googlelogo.gif");*/
         
     }
 

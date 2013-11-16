@@ -18,7 +18,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class MyCenterPanel extends Composite {
 	
 	@UiField
-	ScrollPanel mainPanel;
+	VerticalPanel mainPanel;
 
 	private static MyCenterPanelUiBinder uiBinder = GWT
 			.create(MyCenterPanelUiBinder.class);
@@ -41,7 +41,7 @@ public class MyCenterPanel extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
-	public ScrollPanel getMainPanel() {
+	public VerticalPanel getMainPanel() {
 		return mainPanel;
 	}
 }

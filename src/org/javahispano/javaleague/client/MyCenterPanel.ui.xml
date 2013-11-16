@@ -5,5 +5,5 @@
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
 
-	<g:ScrollPanel ui:field="mainPanel"></g:ScrollPanel>
+	<g:VerticalPanel ui:field="mainPanel"></g:VerticalPanel>
 </ui:UiBinder> 
