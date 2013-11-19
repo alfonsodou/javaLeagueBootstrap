@@ -1,12 +1,10 @@
 package org.javahispano.javaleague.client.presenter;
 
 import org.javahispano.javaleague.client.JavaLeagueApp;
-import org.javahispano.javaleague.client.presenter.MenuPrivatePresenter.Display;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 

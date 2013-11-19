@@ -10,6 +10,6 @@
 			<app:MyHeaderPanel ui:field='myHeaderPanel'></app:MyHeaderPanel>
 			<app:MyCenterPanel ui:field='myCenterPanel'></app:MyCenterPanel>
 			<app:MyFooterPanel ui:field='myFooterPanel'></app:MyFooterPanel>
-
 	</g:HTMLPanel>
+	
 </ui:UiBinder> 

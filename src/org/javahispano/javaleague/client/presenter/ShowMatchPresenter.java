@@ -1,10 +1,7 @@
 package org.javahispano.javaleague.client.presenter;
 
-import java.util.Date;
-
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.service.MatchServiceAsync;
-import org.javahispano.javaleague.server.domain.MatchDAO;
 import org.javahispano.javaleague.shared.MatchDTO;
 
 import com.google.gwt.event.shared.SimpleEventBus;

@@ -6,7 +6,6 @@ package org.javahispano.javaleague.client.event;
 import org.javahispano.javaleague.shared.UserDTO;
 
 import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.event.shared.GwtEvent.Type;
 
 /**
  * @author adou

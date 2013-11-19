@@ -6,29 +6,35 @@
 	ui:generateLocales='default'>
 
 
-		<b:ResponsiveNavbar>
+	<b:ResponsiveNavbar>
 
-			<b:Brand>
-				javaLeague
-			</b:Brand>
+		<b:Brand>
+			javaLeague
+		</b:Brand>
 
-			<b:NavCollapse>
-				<b:Nav>
-					<b:NavLink ui:field="homeLink">
-						<ui:msg key="homeLink">Inicio</ui:msg>
-					</b:NavLink>
-					<b:VerticalDivider />
-				</b:Nav>
-				<b:Nav alignment="RIGHT">
-					<b:NavLink ui:field="loginLink">
-						<ui:msg key="loginLink">Login</ui:msg>
-					</b:NavLink>
-					<b:VerticalDivider />
-					<!-- <b:NavLink ui:field="registerLink"> <ui:msg key="registerLink">Registro</ui:msg> 
-						</b:NavLink> -->
-				</b:Nav>
-			</b:NavCollapse>
-		</b:ResponsiveNavbar>
+		<b:NavCollapse>
+			<b:Nav>
+				<b:NavLink ui:field="homeLink">
+					<ui:msg key="homeLink">Inicio</ui:msg>
+				</b:NavLink>
+				<b:VerticalDivider />
+			</b:Nav>
+			<b:Nav alignment="RIGHT">
+				<b:NavLink ui:field="loginLink">
+					<ui:msg key="loginLink">Login</ui:msg>
+				</b:NavLink>
+				<b:VerticalDivider />
+				<b:NavLink ui:field="registerLink">
+					<ui:msg key="registerLink">Registro</ui:msg>
+				</b:NavLink>
+				<b:VerticalDivider />
+				<b:Dropdown text="Español (es)" icon="GLOBE">
+					<b:NavLink>Español (es)</b:NavLink>
+					<b:NavLink>English (en)</b:NavLink>
+				</b:Dropdown>
+			</b:Nav>
+		</b:NavCollapse>
+	</b:ResponsiveNavbar>
 
 
 </ui:UiBinder> 

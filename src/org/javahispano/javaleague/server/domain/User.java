@@ -11,7 +11,6 @@ import javax.jdo.listener.StoreCallback;
 import javax.persistence.Id;
 
 import org.javahispano.javaleague.server.PMF;
-import org.javahispano.javaleague.server.utils.Utils;
 import org.javahispano.javaleague.server.utils.cache.CacheSupport;
 import org.javahispano.javaleague.server.utils.cache.Cacheable;
 import org.javahispano.javaleague.shared.UserDTO;

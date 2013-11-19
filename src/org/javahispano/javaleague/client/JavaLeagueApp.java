@@ -34,8 +34,6 @@ import org.javahispano.javaleague.client.view.MenuPrivateView;
 import org.javahispano.javaleague.client.view.MenuView;
 import org.javahispano.javaleague.client.view.ShowHomeView;
 import org.javahispano.javaleague.client.view.TacticView;
-import org.javahispano.javaleague.server.domain.FrameWork;
-import org.javahispano.javaleague.server.domain.FrameWorkDAO;
 import org.javahispano.javaleague.shared.UserDTO;
 import org.javahispano.javaleague.shared.messages.ChannelTextMessage;
 import org.javahispano.javaleague.shared.messages.Message;
@@ -50,7 +48,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.client.rpc.SerializationStreamFactory;
 import com.google.gwt.user.client.rpc.SerializationStreamReader;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 /**

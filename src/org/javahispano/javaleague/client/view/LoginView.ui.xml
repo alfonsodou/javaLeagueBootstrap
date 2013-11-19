@@ -14,44 +14,66 @@
 		keyboard="true" animation="true">
 
 
-		<b:ControlLabel>
-			<ui:message key="email">Email</ui:message>
-		</b:ControlLabel>
-		<b:TextBox alternateSize="SMALL" placeholder="Email" />
-		<b:ControlLabel>
-			<ui:message key="Password">Password</ui:message>
-		</b:ControlLabel>
-		<b:PasswordTextBox alternateSize="SMALL"
-			placeholder="Password" />
-		<b:CheckBox>
-			<ui:msg key="rememberMe">
-				Recu&eacute;rdame</ui:msg>
-		</b:CheckBox>
+		<b:Form type="HORIZONTAL">
+			<b:Fieldset>
+				<b:ControlGroup>
+					<b:ControlLabel for="formEmail" addStyleNames="col-lg-2">
+						<ui:message key="email">Email</ui:message>
+					</b:ControlLabel>
+					<b:Controls>
+						<g:FlowPanel addStyleNames="col-lg-10">
+							<b:TextBox b:id="formEmail"></b:TextBox>
+						</g:FlowPanel>
+					</b:Controls>
+				</b:ControlGroup>
 
-		<g:Label>
-			<ui:msg key="others">Identif&iacute;cate con</ui:msg>
-		</g:Label>
+				<b:ControlGroup>
+					<b:ControlLabel for="formPassword" addStyleNames="col-lg-2">
+						<ui:message key="Password">Password</ui:message>
+					</b:ControlLabel>
+					<b:Controls>
+						<g:FlowPanel addStyleNames="col-lg-10">
+							<b:PasswordTextBox b:id="formPassword"></b:PasswordTextBox>
+						</g:FlowPanel>
+					</b:Controls>
+				</b:ControlGroup>
+				<b:ControlGroup>
+					<b:Controls>
+						<b:CheckBox>
+							<ui:msg key="rememberMe">
+								Recu&eacute;rdame</ui:msg>
+						</b:CheckBox>
+					</b:Controls>
+				</b:ControlGroup>
 
-		<!-- <b:Button icon="TWITTER_SIGN" ui:field="twitterButton"></b:Button> 
-			<b:Button icon="FACEBOOK_SIGN" ui:field="facebookButton"></b:Button> <b:Button 
-			icon="GOOGLE_PLUS_SIGN" ui:field="googleButton"></b:Button> -->
-		<b:Button ui:field='twitterButton'>
-			<!-- <g:upFace image='{twitter}' /> -->
-		</b:Button>
-		<b:Button ui:field='googleButton'>
-			<!-- <g:upFace image='{google}' /> -->
-		</b:Button>
-		<b:Button ui:field='facebookButton'>
-			<!-- <g:upFace image='{facebook}' /> -->
-		</b:Button>
+				<b:ControlGroup>
+					<b:ControlLabel>
+						<ui:msg key="others">o identif&iacute;cate con</ui:msg>
+					</b:ControlLabel>
+					<b:Controls>
+						<b:Button icon="TWITTER_SIGN" ui:field="twitterButton"></b:Button>
+						<b:Button icon="FACEBOOK_SIGN" ui:field="facebookButton"></b:Button>
+						<b:Button icon="GOOGLE_PLUS_SIGN" ui:field="googleButton"></b:Button>
+					</b:Controls>
+				</b:ControlGroup>
+			</b:Fieldset>
+		</b:Form>
+
+
+ 
+
 
 		<b:ModalFooter>
-			<b:Button ui:field="cancelButton">
-				<ui:msg key="cancelSignIn">Cancelar</ui:msg>
-			</b:Button>
 			<b:SubmitButton ui:field="loginButton" type="PRIMARY">
 				<ui:msg key="signIn">Entrar</ui:msg>
 			</b:SubmitButton>
+			<b:Button ui:field="registerButton">
+			    <ui:msg key="registerButton">Registrarme</ui:msg>
+			</b:Button>
+			<b:Button ui:field="cancelButton">
+				<ui:msg key="cancelSignIn">Cancelar</ui:msg>
+			</b:Button>
+
 		</b:ModalFooter>
 
 

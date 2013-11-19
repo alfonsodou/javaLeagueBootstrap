@@ -1,7 +1,6 @@
 package org.javahispano.javaleague.shared;
 
 import java.io.Serializable;
-import java.util.Set;
 import java.util.Vector;
 
 /**
