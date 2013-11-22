@@ -21,7 +21,7 @@
 			</b:Nav>
 			<b:Nav alignment="RIGHT">
 				<b:NavLink ui:field="loginLink">
-					<ui:msg key="loginLink">Login</ui:msg>
+					<ui:msg key="loginLink">Entrar</ui:msg>
 				</b:NavLink>
 				<b:VerticalDivider />
 				<b:NavLink ui:field="registerLink">

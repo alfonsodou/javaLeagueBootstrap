@@ -22,8 +22,8 @@ public class JavaLeagueMain extends Composite {
 	@UiField
 	FlowPanel myCenterPanel;
 	
-	@UiField
-	FlowPanel myFooterPanel;
+	/*@UiField
+	FlowPanel myFooterPanel;*/
 
 	private static JavaLeagueMainUiBinder uiBinder = GWT
 			.create(JavaLeagueMainUiBinder.class);
@@ -43,9 +43,9 @@ public class JavaLeagueMain extends Composite {
 		return myCenterPanel;
 	}
 
-	public FlowPanel getMyFooterPanel() {
+	/*public FlowPanel getMyFooterPanel() {
 		return myFooterPanel;
-	}
+	}*/
 
 
 

@@ -6,15 +6,34 @@
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
 
-	<g:FlowPanel>
-			<!--  
-			<app:MyHeaderPanel ui:field='myHeaderPanel'></app:MyHeaderPanel>
-			<app:MyCenterPanel ui:field='myCenterPanel'></app:MyCenterPanel>
-			<app:MyFooterPanel ui:field='myFooterPanel'></app:MyFooterPanel>
-			 -->
-			 <g:FlowPanel ui:field='myHeaderPanel'></g:FlowPanel>
-			 <g:FlowPanel ui:field='myCenterPanel'></g:FlowPanel>
-			 <g:FlowPanel ui:field='myFooterPanel'></g:FlowPanel>
-	</g:FlowPanel>
-	
+	<ui:image field='logo_javahispano' src='resources/images/logoJavaHispano.png' />
+	<ui:image field='duke_on_gae' src='resources/images/duke-on-gae.png' />
+
+	<g:HTMLPanel>
+		<!-- <app:MyHeaderPanel ui:field='myHeaderPanel'></app:MyHeaderPanel> <app:MyCenterPanel 
+			ui:field='myCenterPanel'></app:MyCenterPanel> <app:MyFooterPanel ui:field='myFooterPanel'></app:MyFooterPanel> -->
+		<g:FlowPanel ui:field='myHeaderPanel'></g:FlowPanel>
+		<g:FlowPanel ui:field='myCenterPanel'></g:FlowPanel>
+		<g:FlowPanel>
+			<b:Container>
+
+
+				<b:Alert type="INFO" close="false" animation="true">
+					2013 :: javaLeague :: Organizado por
+					<a href="http://www.javahispano.org">
+						<g:Image resource="{logo_javahispano}"></g:Image>
+					</a>
+					:: Desarrollado con
+					<a href="http://appengine.google.com">
+						<g:Image resource="{duke_on_gae}"></g:Image>
+					</a>
+					::
+					<a href="http://gwtbootstrap.github.io/">GWT-Bootstrap</a>
+
+				</b:Alert>
+
+			</b:Container>
+		</g:FlowPanel>
+	</g:HTMLPanel>
+
 </ui:UiBinder> 
