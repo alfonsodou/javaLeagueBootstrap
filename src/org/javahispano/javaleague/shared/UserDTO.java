@@ -5,13 +5,18 @@ package org.javahispano.javaleague.shared;
 
 import java.io.Serializable;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @SuppressWarnings("serial")
 public class UserDTO implements Serializable {
 
 	private String id;
+	@NotEmpty
 	private String name;
+	@NotEmpty
 	private String emailAddress;
 	private String channelId;
+	@NotEmpty
 	private String uniqueId;
 	/**
 	 * 
@@ -22,8 +27,7 @@ public class UserDTO implements Serializable {
 
 	}
 
-	public UserDTO(String email, String name, String uniqueId,
-			String tacticId) {
+	public UserDTO(String email, String name, String uniqueId, String tacticId) {
 		this();
 		this.setEmailAddress(email);
 		this.setName(name);
