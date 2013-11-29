@@ -1,6 +1,9 @@
 package org.javahispano.javaleague.client.presenter;
 
+import org.javahispano.javaleague.client.JavaLeagueApp;
+
 import com.github.gwtbootstrap.client.ui.Modal;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -22,10 +25,8 @@ public class LoginPresenter implements Presenter {
 		HasClickHandlers getTwitterButton();
 
 		HasClickHandlers getFacebookButton();
-
-		//HasClickHandlers getLoginButton();
 		
-		//HasClickHandlers getCancelButton();
+		HasClickHandlers getCancelButton();
 		
 		Modal getLoginModal();
 
@@ -63,17 +64,17 @@ public class LoginPresenter implements Presenter {
 				GWT.log("Click on Login Button!");
 			}
 		});
-
+*/
 		this.display.getCancelButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				GWT.log("Click on Cancel Button!");
+				doCancel();
 			}
 		});
-	*/	
+	
 	}
 
 	public void go(final HasWidgets container) {
-		//container.clear();
 		container.add(display.asWidget());
 		bind();
 	}
@@ -90,4 +91,7 @@ public class LoginPresenter implements Presenter {
 		Window.Location.assign("/logintwitter");
 	}
 
+	private void doCancel() {
+		this.display.getLoginModal().hide();
+	}
 }

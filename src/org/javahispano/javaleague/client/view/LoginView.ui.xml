@@ -10,11 +10,14 @@
 	<ui:image field='javahispano' src='../resources/images/logoJavaHispano.png' />
 
 
-	<b:Modal title="Login" ui:field="loginModal" backdrop="STATIC"
-		keyboard="true" animation="true">
+	<b:Modal ui:field="loginModal" backdrop="STATIC" keyboard="true"
+		animation="true">
 
 
 		<b:Form type="HORIZONTAL">
+			<b:Caption>
+				<ui:message key="caption">Login</ui:message>
+			</b:Caption>
 			<b:Fieldset>
 				<b:ControlGroup>
 					<b:ControlLabel for="formEmail" addStyleNames="col-lg-2">
@@ -41,14 +44,18 @@
 					<b:Controls>
 						<b:CheckBox>
 							<ui:msg key="rememberMe">
-								Recu&eacute;rdame</ui:msg>
+								Recu&eacute;rdame
+							</ui:msg>
 						</b:CheckBox>
 					</b:Controls>
 				</b:ControlGroup>
 
 				<b:ControlGroup>
 					<b:ControlLabel>
-						<ui:msg key="others">o identif&iacute;cate con</ui:msg>
+						<ui:msg key="others">o
+							identif&iacute;cate
+							con
+						</ui:msg>
 					</b:ControlLabel>
 					<b:Controls>
 						<b:Button icon="TWITTER_SIGN" ui:field="twitterButton"></b:Button>
@@ -60,7 +67,7 @@
 		</b:Form>
 
 
- 
+
 
 
 		<b:ModalFooter>
@@ -68,7 +75,7 @@
 				<ui:msg key="signIn">Entrar</ui:msg>
 			</b:SubmitButton>
 			<b:Button ui:field="registerButton">
-			    <ui:msg key="registerButton">Registrarme</ui:msg>
+				<ui:msg key="registerButton">Registrarme</ui:msg>
 			</b:Button>
 			<b:Button ui:field="cancelButton">
 				<ui:msg key="cancelSignIn">Cancelar</ui:msg>

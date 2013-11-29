@@ -28,12 +28,8 @@ public class LoginView extends Composite implements LoginPresenter.Display {
 	Button facebookButton;
 	@UiField
 	Modal loginModal;
-/*
-	@UiField
-	SubmitButton loginButton;
 	@UiField
 	Button cancelButton;
-*/
 	
 	private static UserBadgeUiBinder uiBinder = GWT
 			.create(UserBadgeUiBinder.class);
@@ -55,11 +51,7 @@ public class LoginView extends Composite implements LoginPresenter.Display {
                 LoginView.this.hide();
             }
         };
-       
-        /*twitterButton.getElement().getStyle().setBackgroundImage("../resources/images/twitterlogo.gif");
-        facebookButton.getElement().getStyle().setBackgroundImage("../resources/images/facebooklogo.jpeg");
-        googleButton.getElement().getStyle().setBackgroundImage("../resources/images/googlelogo.gif");*/
-        
+               
     }
 
     public final void hide() {
@@ -95,15 +87,10 @@ public class LoginView extends Composite implements LoginPresenter.Display {
 		return loginModal;
 	}
 
-	/*
-	@Override
-	public HasClickHandlers getLoginButton() {
-		return loginButton;
-	}
 
 	@Override
 	public HasClickHandlers getCancelButton() {
 		return cancelButton;
 	}
-*/
+
 }
