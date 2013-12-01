@@ -6,6 +6,7 @@
 
 # gwt caches and compiled units #
 war/javaLeague/
+war/javaleague/
 gwt-unitCache/
 test-classes/
 www-test/
