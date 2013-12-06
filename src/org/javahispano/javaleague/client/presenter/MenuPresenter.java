@@ -37,12 +37,13 @@ public class MenuPresenter implements Presenter {
 			}
 		});
 
-		/*
+		
 		this.display.getRegisterLink().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				JavaLeagueApp.get().showRegisterUserView();
 			}
 		});
-*/
+
 	}
 
 

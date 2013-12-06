@@ -32,10 +32,10 @@ public class MenuView extends Composite implements MenuPresenter.Display {
 	@UiField
 	NavLink loginLink;
 	
-	/*
+	
 	@UiField
 	NavLink registerLink;
-	*/
+	
 
 	public MenuView(String firstName) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -54,8 +54,7 @@ public class MenuView extends Composite implements MenuPresenter.Display {
 	
 	@Override
 	public HasClickHandlers getRegisterLink() {
-	//	return registerLink;
-		return null;
+		return registerLink;
 	}
 
 

@@ -28,6 +28,8 @@ public class LoginPresenter implements Presenter {
 		
 		HasClickHandlers getCancelButton();
 		
+		HasClickHandlers getRegisterUserButton();
+		
 		Modal getLoginModal();
 
 		Widget asWidget();
@@ -71,6 +73,13 @@ public class LoginPresenter implements Presenter {
 				doCancel();
 			}
 		});
+		
+		this.display.getRegisterUserButton().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				GWT.log("Click on RegisterUser Button!");
+				doRegisterUser();
+			}
+		});
 	
 	}
 
@@ -93,5 +102,10 @@ public class LoginPresenter implements Presenter {
 
 	private void doCancel() {
 		this.display.getLoginModal().hide();
+	}
+	
+	private void doRegisterUser() {
+		doCancel();
+		JavaLeagueApp.get().showRegisterUserView();
 	}
 }

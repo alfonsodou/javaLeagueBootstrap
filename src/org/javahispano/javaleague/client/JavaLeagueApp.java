@@ -13,6 +13,7 @@ import org.javahispano.javaleague.client.presenter.BusyIndicatorPresenter;
 import org.javahispano.javaleague.client.presenter.LoginPresenter;
 import org.javahispano.javaleague.client.presenter.MenuPresenter;
 import org.javahispano.javaleague.client.presenter.MenuPrivatePresenter;
+import org.javahispano.javaleague.client.presenter.RegisterUserPresenter;
 import org.javahispano.javaleague.client.presenter.ShowHomePresenter;
 import org.javahispano.javaleague.client.presenter.TacticPresenter;
 import org.javahispano.javaleague.client.presenter.UserBadgePresenter;
@@ -32,6 +33,7 @@ import org.javahispano.javaleague.client.view.BusyIndicatorView;
 import org.javahispano.javaleague.client.view.LoginView;
 import org.javahispano.javaleague.client.view.MenuPrivateView;
 import org.javahispano.javaleague.client.view.MenuView;
+import org.javahispano.javaleague.client.view.RegisterUserView;
 import org.javahispano.javaleague.client.view.ShowHomeView;
 import org.javahispano.javaleague.client.view.TacticView;
 import org.javahispano.javaleague.shared.UserDTO;
@@ -202,6 +204,15 @@ public class JavaLeagueApp implements EntryPoint {
 		loginView.getLoginModal().show();
 		
 		loginPresenter.go(myCenterPanel);
+	}
+	
+	public void showRegisterUserView() {
+		RegisterUserView registerUserView = new RegisterUserView();
+		
+		RegisterUserPresenter registerUserPresenter = new RegisterUserPresenter(eventBus, registerUserView);
+		registerUserView.getRegisterUserModal().show();
+		
+		registerUserPresenter.go(myCenterPanel);
 	}
 
 	public SimpleEventBus getEventBus() {

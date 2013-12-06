@@ -30,6 +30,8 @@ public class LoginView extends Composite implements LoginPresenter.Display {
 	Modal loginModal;
 	@UiField
 	Button cancelButton;
+	@UiField
+	Button registerUserButton;
 	
 	private static UserBadgeUiBinder uiBinder = GWT
 			.create(UserBadgeUiBinder.class);
@@ -91,6 +93,11 @@ public class LoginView extends Composite implements LoginPresenter.Display {
 	@Override
 	public HasClickHandlers getCancelButton() {
 		return cancelButton;
+	}
+
+	@Override
+	public HasClickHandlers getRegisterUserButton() {
+		return registerUserButton;
 	}
 
 }
