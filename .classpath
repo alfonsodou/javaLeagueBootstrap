@@ -49,7 +49,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-io-2.4.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-bootstrap-2.3.2.0-20131116.210910-51.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/hibernate-validator-5.0.1.Final.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/objectify-3.1.jar"/>
@@ -180,5 +179,6 @@
 			<attribute name="javadoc_location" value="file:/home/adou/eclipse/plugins/com.google.appengine.eclipse.sdkbundle_1.8.8/appengine-java-sdk-1.8.8/docs/javadoc/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gwtbootstrap3-0.3-20131211.183208-2.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

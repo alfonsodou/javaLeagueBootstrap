@@ -11,8 +11,9 @@
 	<!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/> -->
 
 	<!-- Other module inherits -->
-	<inherits name="com.github.gwtbootstrap.Bootstrap" />
-	<set-property name="bootstrap.responsiveDesign" value="true" />
+	<!-- <inherits name="com.github.gwtbootstrap.Bootstrap" />  -->
+	<inherits name="com.svenjacobs.gwtbootstrap3.GwtBootstrap3"/>
+	<!-- <set-property name="bootstrap.responsiveDesign" value="true" />  -->
 
 	<!-- Internacionalization -->
 	<inherits name='com.google.gwt.i18n.I18N' />

@@ -16,14 +16,6 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class JavaLeagueMain extends Composite {
 	
-	@UiField
-	FlowPanel myHeaderPanel;
-	
-	@UiField
-	FlowPanel myCenterPanel;
-	
-	/*@UiField
-	FlowPanel myFooterPanel;*/
 
 	private static JavaLeagueMainUiBinder uiBinder = GWT
 			.create(JavaLeagueMainUiBinder.class);
@@ -35,17 +27,6 @@ public class JavaLeagueMain extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
-	public FlowPanel getMyHeaderPanel() {
-		return myHeaderPanel;
-	}
-
-	public FlowPanel getMyCenterPanel() {
-		return myCenterPanel;
-	}
-
-	/*public FlowPanel getMyFooterPanel() {
-		return myFooterPanel;
-	}*/
 
 
 

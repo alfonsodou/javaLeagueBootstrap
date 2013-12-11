@@ -5,7 +5,6 @@ package org.javahispano.javaleague.client.view;
 
 import org.javahispano.javaleague.client.presenter.MenuPrivatePresenter;
 
-import com.github.gwtbootstrap.client.ui.NavLink;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;

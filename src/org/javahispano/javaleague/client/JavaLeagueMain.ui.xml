@@ -1,7 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:app="urn:import:org.javahispano.javaleague.client"
-	xmlns:b="urn:import:com.github.gwtbootstrap.client.ui"
+	xmlns:b="urn:import:com.svenjacobs.gwtbootstrap3.client.ui"
 	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
@@ -9,31 +9,110 @@
 	<ui:image field='logo_javahispano' src='resources/images/logoJavaHispano.png' />
 	<ui:image field='duke_on_gae' src='resources/images/duke-on-gae.png' />
 
-	<g:HTMLPanel>
-		<!-- <app:MyHeaderPanel ui:field='myHeaderPanel'></app:MyHeaderPanel> <app:MyCenterPanel 
-			ui:field='myCenterPanel'></app:MyCenterPanel> <app:MyFooterPanel ui:field='myFooterPanel'></app:MyFooterPanel> -->
-		<g:FlowPanel ui:field='myHeaderPanel'></g:FlowPanel>
-		<g:FlowPanel ui:field='myCenterPanel'></g:FlowPanel>
-		<g:FlowPanel>
+	<ui:style>
+		.buttons button {
+			margin: 0.5em;
+		}
+		
+		.labels span {
+			margin-right: 5px;
+		}
+	</ui:style>
+
+	<b:Container>
+		<b:Navbar ui:field="menuNavBar" position="FIXED_TOP">
 			<b:Container>
-
-
-				<b:Alert type="INFO" close="false" animation="true">
-					2013 :: javaLeague :: Organizado por
-					<a href="http://www.javahispano.org">
-						<g:Image resource="{logo_javahispano}"></g:Image>
-					</a>
-					:: Desarrollado con
-					<a href="http://appengine.google.com">
-						<g:Image resource="{duke_on_gae}"></g:Image>
-					</a>
-					::
-					<a href="http://gwtbootstrap.github.io/">GWT-Bootstrap</a>
-
-				</b:Alert>
-
+				<b:NavbarHeader>
+					<b:NavbarBrand ui:field="brand">GwtBootstrap3</b:NavbarBrand>
+					<b:NavbarCollapseButton target="#navbar-collapse" />
+				</b:NavbarHeader>
+				<b:NavbarCollapse b:id="navbar-collapse">
+					<b:NavbarNav>
+						<b:ListDropDown>
+							<b:AnchorButton toggle="DROPDOWN">CSS</b:AnchorButton>
+							<b:DropDownMenu>
+								<b:ListItem ui:field="gridSystemLink">Grid System</b:ListItem>
+								<b:ListItem ui:field="typographyLink">Typography</b:ListItem>
+								<b:ListItem ui:field="codeLink">Code</b:ListItem>
+								<b:ListItem ui:field="tablesLink">Tables</b:ListItem>
+								<b:ListItem ui:field="formsLink">Forms</b:ListItem>
+								<b:ListItem ui:field="buttonsLink">Buttons</b:ListItem>
+								<b:ListItem ui:field="imagesLink">Images</b:ListItem>
+								<b:ListItem ui:field="responsiveUtilitiesLink">Responsive Utilities</b:ListItem>
+							</b:DropDownMenu>
+						</b:ListDropDown>
+						<b:ListDropDown>
+							<b:AnchorButton toggle="DROPDOWN">Components</b:AnchorButton>
+							<b:DropDownMenu>
+								<b:ListItem ui:field="alertsLink">Alerts</b:ListItem>
+								<b:ListItem ui:field="badgesLink">Badges</b:ListItem>
+								<b:ListItem ui:field="breadcrumbsLink">Breadcrumbs</b:ListItem>
+								<b:ListItem ui:field="buttonDropdownsLink">Button Dropdowns</b:ListItem>
+								<b:ListItem ui:field="buttonGroupsLink">Button Groups</b:ListItem>
+								<b:ListItem ui:field="dropdownsLink">Dropdowns</b:ListItem>
+								<b:ListItem ui:field="iconsLink">Icons</b:ListItem>
+								<b:ListItem ui:field="inputGroupsLink">Input Groups</b:ListItem>
+								<b:ListItem ui:field="jumobtronLink">Jumbotron</b:ListItem>
+								<b:ListItem ui:field="labelsLink">Labels</b:ListItem>
+								<b:ListItem ui:field="listGroupLink">List Group</b:ListItem>
+								<b:ListItem ui:field="mediaObjectsLink">Media Objects</b:ListItem>
+								<b:ListItem ui:field="navBarLink">Navbar</b:ListItem>
+								<b:ListItem ui:field="navsLink">Navs</b:ListItem>
+								<b:ListItem ui:field="pageHeaderLink">Page Header</b:ListItem>
+								<b:ListItem ui:field="paginationLink">Pagination</b:ListItem>
+								<b:ListItem ui:field="panelsLink">Panels</b:ListItem>
+								<b:ListItem ui:field="progressBarLink">Progress Bars</b:ListItem>
+								<b:ListItem ui:field="thumbnailsLink">Thumbnails</b:ListItem>
+								<b:ListItem ui:field="wellsLink">Wells</b:ListItem>
+							</b:DropDownMenu>
+						</b:ListDropDown>
+						<b:ListDropDown>
+							<b:AnchorButton toggle="DROPDOWN">JavaScript</b:AnchorButton>
+							<b:DropDownMenu>
+								<b:ListItem ui:field="affixLink">Affix</b:ListItem>
+								<b:ListItem ui:field="carouselLink">Carousel</b:ListItem>
+								<b:ListItem ui:field="collapseLink">Collapse</b:ListItem>
+								<b:ListItem ui:field="dateTimePickerLink">DateTimePicker</b:ListItem>
+								<b:ListItem ui:field="modalsLink">Modals</b:ListItem>
+								<b:ListItem ui:field="popoverLink">Popover</b:ListItem>
+							</b:DropDownMenu>
+						</b:ListDropDown>
+					</b:NavbarNav>
+				</b:NavbarCollapse>
 			</b:Container>
-		</g:FlowPanel>
-	</g:HTMLPanel>
+		</b:Navbar>
+
+		<!-- Container Content -->
+		<b:Row ui:field="container" width="100%">
+			<b:Jumbotron ui:field="jumbotron">
+				<b:Heading size="1">GwtBootstrap3</b:Heading>
+
+				<b:Paragraph>
+					A Twitter
+					<a href="http://getbootstrap.com/">Bootstrap</a>
+					wrapper for
+					<a href="http://gwtproject.org/">GWT</a>
+				</b:Paragraph>
+			</b:Jumbotron>
+		</b:Row>
+
+		<b:Row ui:field="footer" width="100%">
+			<b:Paragraph>
+				2013 :: javaLeague :: Organizado por
+				<a href="http://www.javahispano.org">
+					<g:Image resource="{logo_javahispano}"></g:Image>
+				</a>
+				:: Desarrollado con
+				<a href="http://appengine.google.com">
+					<g:Image resource="{duke_on_gae}"></g:Image>
+				</a>
+				::
+				<a href="http://gwtbootstrap.github.io/">GWT-Bootstrap</a>
+
+			</b:Paragraph>
+		</b:Row>
+
+	</b:Container>
+
 
 </ui:UiBinder> 

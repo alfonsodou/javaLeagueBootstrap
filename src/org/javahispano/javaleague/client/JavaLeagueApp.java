@@ -44,6 +44,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.event.shared.SimpleEventBus;
+import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -52,12 +53,19 @@ import com.google.gwt.user.client.rpc.SerializationStreamFactory;
 import com.google.gwt.user.client.rpc.SerializationStreamReader;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.Widget;
+import com.svenjacobs.gwtbootstrap3.client.ui.Navbar;
 
 /**
  * @author adou
  * 
  */
 public class JavaLeagueApp implements EntryPoint {
+	interface JavaLeagueAppUiBinder extends UiBinder<Widget, JavaLeagueApp> {
+    }
+	
+	private static JavaLeagueAppUiBinder ourUiBinder = GWT.create(JavaLeagueAppUiBinder.class);	
 
 	private UserDTO currentUser;
 	private final UserAccountServiceAsync userService = GWT
@@ -82,7 +90,7 @@ public class JavaLeagueApp implements EntryPoint {
 	private LoginServiceAsync loginService = GWT.create(LoginService.class);
 
 	@UiField
-	FlowPanel myHeaderPanel;
+	Navbar myHeaderPanel;
 
 	@UiField
 	FlowPanel myFooterPanel;
@@ -102,7 +110,7 @@ public class JavaLeagueApp implements EntryPoint {
 	/**
 	 * @return the myHeaderPanel
 	 */
-	public FlowPanel getMyHeaderPanel() {
+	public Navbar getMyHeaderPanel() {
 		return myHeaderPanel;
 	}
 
@@ -110,7 +118,7 @@ public class JavaLeagueApp implements EntryPoint {
 	 * @param myHeaderPanel
 	 *            the myHeaderPanel to set
 	 */
-	public void setMyHeaderPanel(FlowPanel myHeaderPanel) {
+	public void setMyHeaderPanel(Navbar myHeaderPanel) {
 		this.myHeaderPanel = myHeaderPanel;
 	}
 
@@ -150,11 +158,9 @@ public class JavaLeagueApp implements EntryPoint {
 		singleton = this;
 
 		// Globalresources.RESOURCE.styles().ensureInjected();
-		javaLeagueMain = new JavaLeagueMain();
+//		javaLeagueMain = new JavaLeagueMain();
 
-		RootLayoutPanel.get().add(javaLeagueMain);
-		myHeaderPanel = javaLeagueMain.getMyHeaderPanel();
-		myCenterPanel = javaLeagueMain.getMyCenterPanel();
+		RootPanel.get().add(ourUiBinder.createAndBindUi(this));
 		
 		// createUI();
 
@@ -166,7 +172,7 @@ public class JavaLeagueApp implements EntryPoint {
 		 * root = RootLayoutPanel.get(); root.add(outer);
 		 */
 
-		getLoggedInUser();
+	//	getLoggedInUser();
 	}
 
 	public void getLoggedInUser() {
