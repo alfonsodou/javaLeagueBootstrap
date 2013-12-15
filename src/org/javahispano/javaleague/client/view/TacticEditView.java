@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Widget;
 import com.svenjacobs.gwtbootstrap3.client.ui.Button;
 import com.svenjacobs.gwtbootstrap3.client.ui.Form;
+import com.svenjacobs.gwtbootstrap3.client.ui.FormStatic;
 import com.svenjacobs.gwtbootstrap3.client.ui.SubmitButton;
 import com.svenjacobs.gwtbootstrap3.client.ui.TextBox;
 
@@ -57,8 +58,8 @@ public class TacticEditView extends Composite implements
 		tacticId.setName("tacticId");
 		teamName.setName("teamName");
 
-		form.setEncoding(FormPanel.ENCODING_MULTIPART);
-		form.setMethod(FormPanel.METHOD_POST);
+		//form.setEncoding(FormPanel.ENCODING_MULTIPART);
+		//form.setMethod(FormPanel.METHOD_POST);
 
 	}
 

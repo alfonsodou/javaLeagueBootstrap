@@ -6,7 +6,7 @@
 	ui:generateLocales='default'>
 
 	<b:Container>
-		<b:Hero>
+		
 			<b:Row>
 				<b:Column size="12">
 					<b:Button ui:field="createLeagueButton">
@@ -27,7 +27,7 @@
 					</b:Row>
 				</b:Column>
 			</b:Row>
-		</b:Hero>
+		
 	</b:Container>
 
 </ui:UiBinder> 

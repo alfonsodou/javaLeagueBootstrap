@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 import com.svenjacobs.gwtbootstrap3.client.ui.Form;
+import com.svenjacobs.gwtbootstrap3.client.ui.FormStatic;
 
 /**
  * @author adou
@@ -51,17 +52,18 @@ public class CreateLeaguePresenter implements Presenter {
 		leagueDTO = new LeagueDTO();
 		
 		bind();
-		
+
+		/*
 		CreateLeaguePresenter.this.display.getFormPanel()
 		.addSubmitCompleteHandler(new Form.SubmitCompleteHandler() {
 
 			@Override
 			public void onSubmitComplete(
-					com.github.gwtbootstrap.client.ui.Form.SubmitCompleteEvent event) {
+					com.svenjacobs.gwtbootstrap3.client.ui.Form.SubmitCompleteEvent event) {
 				CreateLeaguePresenter.this.display.getFormPanel().reset();
 			}
 		});
-		
+		*/
 	}
 
 	@Override

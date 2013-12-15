@@ -4,40 +4,48 @@
 	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
+
 	<ui:style>
+		.danger {
+			background-color: #fcf2f2;
+			border-color: #dFb5b4;
+		}
+		
+		.margin-fix {
+			margin-bottom: 0 !important;
+		}
 	</ui:style>
 
+	<b:Navbar>
 
-	<b:ResponsiveNavbar>
+		<b:NavbarHeader>
+			<b:NavbarBrand>javaLeague</b:NavbarBrand>
+			<b:NavbarCollapseButton target="#navbar-collapse2" />
+		</b:NavbarHeader>
 
-		<b:Brand>
-			javaLeague
-		</b:Brand>
-
-		<b:NavCollapse>
+		<b:NavbarCollapse>
 			<b:Nav>
-				<b:NavLink ui:field="myTeamLink">
+				<b:NavbarLink ui:field="myTeamLink">
 					<ui:msg key="myTeamLink">Mi equipo</ui:msg>
-				</b:NavLink>
-				<b:VerticalDivider />
-				<b:NavLink ui:field="myLeaguesLink">
+				</b:NavbarLink>
+				<b:NavbarLink ui:field="myLeaguesLink">
 					<ui:msg key="myLeaguesLink">Mis ligas</ui:msg>
-				</b:NavLink>
-				<b:VerticalDivider />
+				</b:NavbarLink>
 			</b:Nav>
 			<b:Nav alignment="RIGHT">
-				<b:NavLink ui:field="logoutLink">
+				<b:NavbarLink ui:field="logoutLink">
 					<ui:msg key="logoutLink">Salir</ui:msg>
-				</b:NavLink>
-				<b:VerticalDivider />
-				<b:Dropdown text="Español (es)" icon="GLOBE">
-					<b:NavLink>Español (es)</b:NavLink>
-					<b:NavLink>English (en)</b:NavLink>
-				</b:Dropdown>
+				</b:NavbarLink>
 
+				<b:ListDropDown text="Español (es)" icon="GLOBE">
+					<b:ListItem>Español (es)</b:ListItem>
+					<b:ListItem>English (en)</b:ListItem>
+				</b:ListDropDown>
 			</b:Nav>
-		</b:NavCollapse>
-	</b:ResponsiveNavbar>
+		</b:NavbarCollapse>
+	</b:Navbar>
+
+
 
 
 </ui:UiBinder> 

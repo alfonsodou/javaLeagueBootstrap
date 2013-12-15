@@ -51,11 +51,11 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.client.rpc.SerializationStreamFactory;
 import com.google.gwt.user.client.rpc.SerializationStreamReader;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.svenjacobs.gwtbootstrap3.client.ui.Navbar;
+import com.svenjacobs.gwtbootstrap3.client.ui.Row;
 
 /**
  * @author adou
@@ -90,15 +90,10 @@ public class JavaLeagueApp implements EntryPoint {
 	private LoginServiceAsync loginService = GWT.create(LoginService.class);
 
 	@UiField
-	Navbar myHeaderPanel;
-
+	Navbar menuNavBar;
+	
 	@UiField
-	FlowPanel myFooterPanel;
-
-	@UiField
-	FlowPanel myCenterPanel;
-
-	JavaLeagueMain javaLeagueMain;
+	Row container;
 
 	/**
 	 * Gets the singleton application instance.
@@ -107,51 +102,10 @@ public class JavaLeagueApp implements EntryPoint {
 		return singleton;
 	}
 
-	/**
-	 * @return the myHeaderPanel
-	 */
-	public Navbar getMyHeaderPanel() {
-		return myHeaderPanel;
+	public Row getContainer() {
+		return container;
 	}
-
-	/**
-	 * @param myHeaderPanel
-	 *            the myHeaderPanel to set
-	 */
-	public void setMyHeaderPanel(Navbar myHeaderPanel) {
-		this.myHeaderPanel = myHeaderPanel;
-	}
-
-	/**
-	 * @return the myFooterPanel
-	 */
-	public FlowPanel getMyFooterPanel() {
-		return myFooterPanel;
-	}
-
-	/**
-	 * @param myFooterPanel
-	 *            the myFooterPanel to set
-	 */
-	public void setMyFooterPanel(FlowPanel myFooterPanel) {
-		this.myFooterPanel = myFooterPanel;
-	}
-
-	/**
-	 * @return the myCenterPanel
-	 */
-	public FlowPanel getMyCenterPanel() {
-		return myCenterPanel;
-	}
-
-	/**
-	 * @param myCenterPanel
-	 *            the myCenterPanel to set
-	 */
-	public void setMyCenterPanel(FlowPanel myCenterPanel) {
-		this.myCenterPanel = myCenterPanel;
-	}
-
+	
 	@Override
 	public void onModuleLoad() {
 
@@ -209,7 +163,7 @@ public class JavaLeagueApp implements EntryPoint {
 		LoginPresenter loginPresenter = new LoginPresenter(eventBus, loginView);
 		loginView.getLoginModal().show();
 		
-		loginPresenter.go(myCenterPanel);
+		loginPresenter.go(container);
 	}
 	
 	public void showRegisterUserView() {
@@ -218,7 +172,7 @@ public class JavaLeagueApp implements EntryPoint {
 		RegisterUserPresenter registerUserPresenter = new RegisterUserPresenter(eventBus, registerUserView);
 		registerUserView.getRegisterUserModal().show();
 		
-		registerUserPresenter.go(myCenterPanel);
+		registerUserPresenter.go(container);
 	}
 
 	public SimpleEventBus getEventBus() {
@@ -269,10 +223,10 @@ public class JavaLeagueApp implements EntryPoint {
 
 	private void showMainView() {
 		menuPresenter = new MenuPresenter(new MenuView());
-		menuPresenter.go(myHeaderPanel);
+		menuPresenter.go(menuNavBar);
 
 		showHomePresenter = new ShowHomePresenter(new ShowHomeView());
-		showHomePresenter.go(myCenterPanel);
+		showHomePresenter.go(container);
 	}
 
 	private void showPrivateMainView() {
@@ -310,11 +264,11 @@ public class JavaLeagueApp implements EntryPoint {
 
 		menuPrivatePresenter = new MenuPrivatePresenter(loginService, eventBus,
 				currentUser, new MenuPrivateView());
-		menuPrivatePresenter.go(myHeaderPanel);
+		menuPrivatePresenter.go(menuNavBar);
 
 		tacticPresenter = new TacticPresenter(tacticService, matchService,
 				eventBus, new TacticView());
-		tacticPresenter.go(myCenterPanel);
+		tacticPresenter.go(container);
 
 		listenToChannel();
 	}

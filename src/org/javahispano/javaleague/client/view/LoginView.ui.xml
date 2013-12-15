@@ -18,71 +18,68 @@
 			<b:Caption>
 				<ui:message key="caption">Login</ui:message>
 			</b:Caption>
-			<b:Fieldset>
-				<b:ControlGroup>
-					<b:ControlLabel for="formEmail" addStyleNames="col-lg-2">
+			<b:FieldSet>
+				<b:FormGroup>
+					<b:FormLabel for="formEmail" addStyleNames="col-lg-2">
 						<ui:message key="email">Email</ui:message>
-					</b:ControlLabel>
-					<b:Controls>
-						<g:FlowPanel addStyleNames="col-lg-10">
-							<b:TextBox b:id="formEmail"></b:TextBox>
-						</g:FlowPanel>
-					</b:Controls>
-				</b:ControlGroup>
+					</b:FormLabel>
 
-				<b:ControlGroup>
-					<b:ControlLabel for="formPassword" addStyleNames="col-lg-2">
+					<g:FlowPanel addStyleNames="col-lg-10">
+						<b:TextBox b:id="formEmail"></b:TextBox>
+					</g:FlowPanel>
+
+				</b:FormGroup>
+
+				<b:FormGroup>
+					<b:FormLabel for="formPassword" addStyleNames="col-lg-2">
 						<ui:message key="Password">Password</ui:message>
-					</b:ControlLabel>
-					<b:Controls>
-						<g:FlowPanel addStyleNames="col-lg-10">
-							<b:PasswordTextBox b:id="formPassword"></b:PasswordTextBox>
-						</g:FlowPanel>
-					</b:Controls>
-				</b:ControlGroup>
-				<b:ControlGroup>
-					<b:Controls>
-						<b:CheckBox>
-							<ui:msg key="rememberMe">
-								Recu&eacute;rdame
-							</ui:msg>
-						</b:CheckBox>
-					</b:Controls>
-				</b:ControlGroup>
+					</b:FormLabel>
 
-				<b:ControlGroup>
-					<b:ControlLabel>
+					<g:FlowPanel addStyleNames="col-lg-10">
+						<b:PasswordTextBox b:id="formPassword"></b:PasswordTextBox>
+					</g:FlowPanel>
+
+				</b:FormGroup>
+
+				<b:FormGroup>
+
+					<b:CheckBoxButton>
+						<ui:msg key="rememberMe">
+							Recu&eacute;rdame
+						</ui:msg>
+					</b:CheckBoxButton>
+
+				</b:FormGroup>
+
+				<b:FormGroup>
+					<b:FormLabel>
 						<ui:msg key="others">o
 							identif&iacute;cate
 							con
 						</ui:msg>
-					</b:ControlLabel>
-					<b:Controls>
+					</b:FormLabel>
+					<b:ButtonGroup>
 						<b:Button icon="TWITTER_SIGN" ui:field="twitterButton"></b:Button>
 						<b:Button icon="FACEBOOK_SIGN" ui:field="facebookButton"></b:Button>
 						<b:Button icon="GOOGLE_PLUS_SIGN" ui:field="googleButton"></b:Button>
-					</b:Controls>
-				</b:ControlGroup>
-			</b:Fieldset>
+					</b:ButtonGroup>
+				</b:FormGroup>
+			</b:FieldSet>
 		</b:Form>
 
-
-
-
-
 		<b:ModalFooter>
-			<b:SubmitButton ui:field="loginButton" type="PRIMARY">
-				<ui:msg key="signIn">Entrar</ui:msg>
-			</b:SubmitButton>
-			<b:Button ui:field="registerUserButton">
-				<ui:msg key="registerUserButton">Registrarme</ui:msg>
-			</b:Button>
-			<b:Button ui:field="cancelButton">
-				<ui:msg key="cancelSignIn">Cancelar</ui:msg>
-			</b:Button>
-
+			<b:ButtonGroup>
+				<b:SubmitButton ui:field="loginButton" type="PRIMARY">
+					<ui:msg key="signIn">Entrar</ui:msg>
+				</b:SubmitButton>
+				<b:Button ui:field="registerUserButton">
+					<ui:msg key="registerUserButton">Registrarme</ui:msg>
+				</b:Button>
+				<b:Button ui:field="cancelButton">
+					<ui:msg key="cancelSignIn">Cancelar</ui:msg>
+				</b:Button>
+			</b:ButtonGroup>
 		</b:ModalFooter>
-
 
 	</b:Modal>
 

@@ -11,65 +11,64 @@
 			<b:Caption>
 				<ui:message key="caption">Registrar</ui:message>
 			</b:Caption>
-			<b:Fieldset>
-				<b:ControlGroup>
-					<b:ControlLabel for="formUserName" addStyleNames="col-lg-2">
+			<b:FieldSet>
+				<b:FormGroup>
+					<b:FormLabel for="formUserName" addStyleNames="col-lg-2">
 						<ui:message key="UserName">Nombre</ui:message>
-					</b:ControlLabel>
-					<b:Controls>
-						<g:FlowPanel addStyleNames="col-lg-10">
-							<b:TextBox b:id="formUserName"></b:TextBox>
-						</g:FlowPanel>
-					</b:Controls>
-				</b:ControlGroup>
+					</b:FormLabel>
 
-				<b:ControlGroup>
-					<b:ControlLabel for="formEmail" addStyleNames="col-lg-2">
+					<g:FlowPanel addStyleNames="col-lg-10">
+						<b:TextBox b:id="formUserName"></b:TextBox>
+					</g:FlowPanel>
+
+				</b:FormGroup>
+
+				<b:FormGroup>
+					<b:FormLabel for="formEmail" addStyleNames="col-lg-2">
 						<ui:message key="email">Email</ui:message>
-					</b:ControlLabel>
-					<b:Controls>
-						<g:FlowPanel addStyleNames="col-lg-10">
-							<b:TextBox b:id="formEmail"></b:TextBox>
-						</g:FlowPanel>
-					</b:Controls>
-				</b:ControlGroup>
+					</b:FormLabel>
 
-				<b:ControlGroup>
-					<b:ControlLabel for="formPassword" addStyleNames="col-lg-2">
+					<g:FlowPanel addStyleNames="col-lg-10">
+						<b:TextBox b:id="formEmail"></b:TextBox>
+					</g:FlowPanel>
+
+				</b:FormGroup>
+
+				<b:FormGroup>
+					<b:FormLabel for="formPassword" addStyleNames="col-lg-2">
 						<ui:message key="Password">Contraseña</ui:message>
-					</b:ControlLabel>
-					<b:Controls>
-						<g:FlowPanel addStyleNames="col-lg-10">
-							<b:PasswordTextBox b:id="formPassword"></b:PasswordTextBox>
-						</g:FlowPanel>
-					</b:Controls>
-				</b:ControlGroup>
+					</b:FormLabel>
 
-				<b:ControlGroup>
-					<b:ControlLabel for="formRePassword" addStyleNames="col-lg-2">
+					<g:FlowPanel addStyleNames="col-lg-10">
+						<b:PasswordTextBox b:id="formPassword"></b:PasswordTextBox>
+					</g:FlowPanel>
+
+				</b:FormGroup>
+
+				<b:FormGroup>
+					<b:FormLabel for="formRePassword" addStyleNames="col-lg-2">
 						<ui:message key="RePassword">Repite la contraseña</ui:message>
-					</b:ControlLabel>
-					<b:Controls>
-						<g:FlowPanel addStyleNames="col-lg-10">
-							<b:PasswordTextBox b:id="formRePassword"></b:PasswordTextBox>
-						</g:FlowPanel>
-					</b:Controls>
-				</b:ControlGroup>
+					</b:FormLabel>
 
+					<g:FlowPanel addStyleNames="col-lg-10">
+						<b:PasswordTextBox b:id="formRePassword"></b:PasswordTextBox>
+					</g:FlowPanel>
 
+				</b:FormGroup>
 
-			</b:Fieldset>
+			</b:FieldSet>
 		</b:Form>
 
 		<b:ModalFooter>
-			<b:SubmitButton ui:field="registerButton" type="PRIMARY">
-				<ui:msg key="register">Registrar</ui:msg>
-			</b:SubmitButton>
-			<b:Button ui:field="cancelButton">
-				<ui:msg key="cancelRegisterUser">Cancelar</ui:msg>
-			</b:Button>
+			<b:ButtonGroup>
+				<b:SubmitButton ui:field="registerButton" type="PRIMARY">
+					<ui:msg key="register">Registrar</ui:msg>
+				</b:SubmitButton>
+				<b:Button ui:field="cancelButton">
+					<ui:msg key="cancelRegisterUser">Cancelar</ui:msg>
+				</b:Button>
+			</b:ButtonGroup>
 		</b:ModalFooter>
-
 
 	</b:Modal>
 </ui:UiBinder> 

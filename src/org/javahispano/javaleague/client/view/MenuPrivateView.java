@@ -11,6 +11,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
+import com.svenjacobs.gwtbootstrap3.client.ui.NavbarLink;
 
 /**
  * @author adou
@@ -20,11 +21,11 @@ public class MenuPrivateView extends Composite implements
 		MenuPrivatePresenter.Display {
 
 	@UiField
-	NavLink logoutLink;
+	NavbarLink logoutLink;
 	@UiField
-	NavLink myTeamLink;
+	NavbarLink myTeamLink;
 	@UiField
-	NavLink myLeaguesLink;
+	NavbarLink myLeaguesLink;
 
 	private static MenuPrivateViewUiBinder uiBinder = GWT
 			.create(MenuPrivateViewUiBinder.class);

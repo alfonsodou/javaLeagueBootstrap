@@ -112,16 +112,17 @@ public class TacticEditPresenter implements Presenter {
 
 		startNewBlobstoreSession();
 
+		/*
 		TacticEditPresenter.this.display.getFormPanel()
 				.addSubmitCompleteHandler(new Form.SubmitCompleteHandler() {
 
 					@Override
 					public void onSubmitComplete(
-							com.github.gwtbootstrap.client.ui.Form.SubmitCompleteEvent event) {
+							com.svenjacobs.gwtbootstrap3.client.ui.Form.SubmitCompleteEvent event) {
 						TacticEditPresenter.this.display.getFormPanel().reset();
 					}
 				});
-
+*/
 	}
 
 	private void startNewBlobstoreSession() {
@@ -135,9 +136,11 @@ public class TacticEditPresenter implements Presenter {
 
 			@Override
 			public void onSuccess(Object result) {
+				/*
 				TacticEditPresenter.this.display.getFormPanel().setAction(
 						(String) result);
 				GWT.log("TacticEditPresenter -> setAction: " + result);
+				*/
 			}
 
 			@Override
@@ -166,7 +169,7 @@ public class TacticEditPresenter implements Presenter {
 	}
 
 	private void doSave() {
-		TacticEditPresenter.this.display.getFormPanel().submit();
+		//TacticEditPresenter.this.display.getFormPanel().submit();
 		userTactic.setTeamName(display.getTeamName().getValue().trim());
 
 		new RPCCall<TacticDTO>() {

@@ -4,24 +4,29 @@
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default' xmlns:b="urn:import:com.svenjacobs.gwtbootstrap3.client.ui">
 
-    
-    <b:Form type="HORIZONTAL" ui:field="form">
-  <b:Fieldset>
-    <b:ControlGroup>
-      <b:ControlLabel for="leagueName"><ui:message key="leagueName">Nombre</ui:message></b:ControlLabel>
-      <b:Controls>
-        <!-- If you add id attribute to element,You should use b:id attribute. -->
-        <b:TextBox alternateSize="XLARGE" b:id="leagueName" ui:field="leagueName"></b:TextBox>
-        <b:HelpBlock><ui:message key="helpLeagueName">Introduce el nombre de la liga.</ui:message></b:HelpBlock>
-      </b:Controls>
-    </b:ControlGroup>
-		<b:Button addStyleNames="btn" ui:field="createLeagueButton">
-			<ui:msg key="createLeague">Crear liga</ui:msg>
-		</b:Button>
-		<b:Button ui:field="cancelLeagueButton">
-			<ui:msg key="cancelLeague">Cancelar</ui:msg>
-		</b:Button>    
-    
-    </b:Fieldset>
-</b:Form>
+
+	<b:Form type="HORIZONTAL" ui:field="form">
+		<b:FieldSet>
+			<b:FormGroup>
+				<b:FormLabel for="leagueName">
+					<ui:message key="leagueName">Nombre</ui:message>
+				</b:FormLabel>
+
+					<!-- If you add id attribute to element,You should use b:id attribute. -->
+					<b:TextBox alternateSize="XLARGE" b:id="leagueName"
+						ui:field="leagueName"></b:TextBox>
+					<b:HelpBlock>
+						<ui:message key="helpLeagueName">Introduce el nombre de la liga.</ui:message>
+					</b:HelpBlock>
+
+			</b:FormGroup>
+			<b:Button addStyleNames="btn" ui:field="createLeagueButton">
+				<ui:msg key="createLeague">Crear liga</ui:msg>
+			</b:Button>
+			<b:Button ui:field="cancelLeagueButton">
+				<ui:msg key="cancelLeague">Cancelar</ui:msg>
+			</b:Button>
+
+		</b:FieldSet>
+	</b:Form>
 </ui:UiBinder> 

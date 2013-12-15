@@ -6,9 +6,103 @@
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
 
-	<g:HTMLPanel>
-		<app:MyHeaderPanel ui:field='myHeaderPanel'></app:MyHeaderPanel>
-		<app:MyCenterPanel ui:field='myCenterPanel'></app:MyCenterPanel>
-		<app:MyFooterPanel ui:field='myFooterPanel'></app:MyFooterPanel>
-	</g:HTMLPanel>
-</ui:UiBinder> 
+	<ui:image field='logo_javahispano' src='resources/images/logoJavaHispano.png' />
+	<ui:image field='duke_on_gae' src='resources/images/duke-on-gae.png' />
+
+	<ui:style>
+		.buttons button {
+			margin: 0.5em;
+		}
+		
+		.labels span {
+			margin-right: 5px;
+		}
+		
+		.margin-fix {
+			margin-bottom: 0 !important;
+		}
+	</ui:style>
+
+	<b:Container>
+
+		<!-- <g:FlowPanel ui:field="headerPanel"> -->
+
+		<b:Navbar ui:field="menuNavBar">
+			<b:Container>
+
+				<b:NavbarHeader>
+					<b:NavbarBrand>javaLeague</b:NavbarBrand>
+					<b:NavbarCollapseButton target="#navbar-collapse" />
+				</b:NavbarHeader>
+
+				<b:NavbarCollapse b:id="navbar-collapse">
+					<b:NavbarNav>
+						<b:ListItem ui:field="homeLink">
+							<ui:msg key="homeLink">Inicio</ui:msg>
+						</b:ListItem>
+
+						<b:ListItem ui:field="loginLink">
+							<ui:msg key="loginLink">Entrar</ui:msg>
+						</b:ListItem>
+
+						<b:ListItem ui:field="registerLink">
+							<ui:msg key="registerLink">Registro</ui:msg>
+						</b:ListItem>
+
+						<b:ListDropDown>
+							<b:AnchorButton toggle="DROPDOWN" icon="GLOBE">Español
+								(es)</b:AnchorButton>
+							<b:DropDownMenu>
+								<b:ListItem>Español (es)</b:ListItem>
+								<b:ListItem>English (en)</b:ListItem>
+							</b:DropDownMenu>
+						</b:ListDropDown>
+
+					</b:NavbarNav>
+				</b:NavbarCollapse>
+			</b:Container>
+		</b:Navbar>
+		<!-- </g:FlowPanel> -->
+		<!-- Container Content -->
+		<g:FlowPanel ui:field="centerPanel">
+			<b:Row ui:field="container">
+				<b:Jumbotron ui:field="jumbotron">
+					<b:Heading size="1">Demo javaLeague</b:Heading>
+
+					<b:Paragraph>
+						<ui:msg key="intro1">Programa
+							tu propio equipo de fútbol !!!
+						</ui:msg>
+					</b:Paragraph>
+					<b:Paragraph>
+						<ui:msg key="intro2">
+							javaLeague te
+							permitirá crear y participar en diferentes
+							ligas.
+						</ui:msg>
+					</b:Paragraph>
+					<b:Paragraph>
+						<ui:msg key="intro3">
+							Crea tus
+							propias ligas y reta a tus compañeros de
+							trabajo/estudios, amigos,
+							etc.
+						</ui:msg>
+					</b:Paragraph>
+
+				</b:Jumbotron>
+			</b:Row>
+		</g:FlowPanel>
+
+		<g:FlowPanel ui:field="footerPanel">
+			<b:Paragraph>
+				2013 -
+				<a href="http://www.javahispano.org">javaHispano</a>
+				::
+				<a href="https://github.com/svenjacobs/gwtbootstrap3">GwtBootstrap3</a>
+			</b:Paragraph>
+		</g:FlowPanel>
+
+	</b:Container>
+
+</ui:UiBinder>
