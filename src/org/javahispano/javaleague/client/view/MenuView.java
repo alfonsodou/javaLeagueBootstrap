@@ -11,7 +11,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
-import com.svenjacobs.gwtbootstrap3.client.ui.NavbarLink;
+import com.svenjacobs.gwtbootstrap3.client.ui.ListItem;
 
 /**
  * @author adou
@@ -30,11 +30,11 @@ public class MenuView extends Composite implements MenuPresenter.Display {
 	}
 
 	@UiField
-	NavbarLink loginLink;
+	ListItem loginLink;
 	
 	
 	@UiField
-	NavbarLink registerLink;
+	ListItem registerLink;
 	
 
 	public MenuView(String firstName) {

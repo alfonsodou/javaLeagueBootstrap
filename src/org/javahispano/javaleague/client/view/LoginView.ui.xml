@@ -15,9 +15,11 @@
 
 
 		<b:Form type="HORIZONTAL">
+			<!-- 
 			<b:Caption>
 				<ui:message key="caption">Login</ui:message>
 			</b:Caption>
+			 -->
 			<b:FieldSet>
 				<b:FormGroup>
 					<b:FormLabel for="formEmail" addStyleNames="col-lg-2">

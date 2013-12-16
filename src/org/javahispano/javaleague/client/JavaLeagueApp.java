@@ -127,6 +127,7 @@ public class JavaLeagueApp implements EntryPoint {
 		 */
 
 	//	getLoggedInUser();
+		showMainView();
 	}
 
 	public void getLoggedInUser() {
@@ -225,8 +226,10 @@ public class JavaLeagueApp implements EntryPoint {
 		menuPresenter = new MenuPresenter(new MenuView());
 		menuPresenter.go(menuNavBar);
 
+		/*
 		showHomePresenter = new ShowHomePresenter(new ShowHomeView());
 		showHomePresenter.go(container);
+		*/
 	}
 
 	private void showPrivateMainView() {
