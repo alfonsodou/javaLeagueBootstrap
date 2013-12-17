@@ -32,9 +32,7 @@ import org.javahispano.javaleague.client.service.UserFileServiceAsync;
 import org.javahispano.javaleague.client.view.BusyIndicatorView;
 import org.javahispano.javaleague.client.view.LoginView;
 import org.javahispano.javaleague.client.view.MenuPrivateView;
-import org.javahispano.javaleague.client.view.MenuView;
 import org.javahispano.javaleague.client.view.RegisterUserView;
-import org.javahispano.javaleague.client.view.ShowHomeView;
 import org.javahispano.javaleague.client.view.TacticView;
 import org.javahispano.javaleague.shared.UserDTO;
 import org.javahispano.javaleague.shared.messages.ChannelTextMessage;
@@ -43,6 +41,8 @@ import org.javahispano.javaleague.shared.messages.Message;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -54,6 +54,7 @@ import com.google.gwt.user.client.rpc.SerializationStreamReader;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.svenjacobs.gwtbootstrap3.client.ui.ListItem;
 import com.svenjacobs.gwtbootstrap3.client.ui.Navbar;
 import com.svenjacobs.gwtbootstrap3.client.ui.Row;
 
@@ -94,6 +95,9 @@ public class JavaLeagueApp implements EntryPoint {
 	
 	@UiField
 	Row container;
+	
+	@UiField
+	ListItem loginLink;
 
 	/**
 	 * Gets the singleton application instance.
@@ -115,6 +119,14 @@ public class JavaLeagueApp implements EntryPoint {
 //		javaLeagueMain = new JavaLeagueMain();
 
 		RootPanel.get().add(ourUiBinder.createAndBindUi(this));
+		
+		loginLink.addClickHandler(new ClickHandler() {
+			@Override
+			 public void onClick(ClickEvent event) {
+				showLoginView();
+			}
+			
+		});
 		
 		// createUI();
 
@@ -223,10 +235,11 @@ public class JavaLeagueApp implements EntryPoint {
 	}
 
 	private void showMainView() {
+		/*
 		menuPresenter = new MenuPresenter(new MenuView());
 		menuPresenter.go(menuNavBar);
 
-		/*
+		
 		showHomePresenter = new ShowHomePresenter(new ShowHomeView());
 		showHomePresenter.go(container);
 		*/

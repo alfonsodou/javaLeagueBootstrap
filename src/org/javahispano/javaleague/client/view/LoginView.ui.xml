@@ -1,8 +1,9 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:b="urn:import:com.svenjacobs.gwtbootstrap3.client.ui"
+	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
-	ui:generateLocales='default' xmlns:b="urn:import:com.svenjacobs.gwtbootstrap3.client.ui">
+	ui:generateLocales='default'>
 	<ui:image field='logo' src='../resources/images/logo_small.png' />
 	<ui:image field='twitter' src='../resources/images/twitterlogo.gif' />
 	<ui:image field='google' src='../resources/images/googlelogo.gif' />
@@ -10,20 +11,15 @@
 	<ui:image field='javahispano' src='../resources/images/logoJavaHispano.png' />
 
 
-	<b:Modal ui:field="loginModal" backdrop="STATIC" keyboard="true"
-		animation="true">
+	<b:Modal ui:field="loginModal" backdrop="STATIC" keyboard="true">
 
 
 		<b:Form type="HORIZONTAL">
-			<!-- 
-			<b:Caption>
-				<ui:message key="caption">Login</ui:message>
-			</b:Caption>
-			 -->
+			<!-- <b:Caption> <ui:msg key="caption">Login</ui:msg> </b:Caption> -->
 			<b:FieldSet>
 				<b:FormGroup>
 					<b:FormLabel for="formEmail" addStyleNames="col-lg-2">
-						<ui:message key="email">Email</ui:message>
+						<ui:msg key="email">Email</ui:msg>
 					</b:FormLabel>
 
 					<g:FlowPanel addStyleNames="col-lg-10">
@@ -34,7 +30,7 @@
 
 				<b:FormGroup>
 					<b:FormLabel for="formPassword" addStyleNames="col-lg-2">
-						<ui:message key="Password">Password</ui:message>
+						<ui:msg key="Password">Password</ui:msg>
 					</b:FormLabel>
 
 					<g:FlowPanel addStyleNames="col-lg-10">
@@ -42,7 +38,7 @@
 					</g:FlowPanel>
 
 				</b:FormGroup>
-
+<!-- 
 				<b:FormGroup>
 
 					<b:CheckBoxButton>
@@ -52,7 +48,7 @@
 					</b:CheckBoxButton>
 
 				</b:FormGroup>
-
+ -->
 				<b:FormGroup>
 					<b:FormLabel>
 						<ui:msg key="others">o
@@ -60,10 +56,16 @@
 							con
 						</ui:msg>
 					</b:FormLabel>
-					<b:ButtonGroup>
-						<b:Button icon="TWITTER_SIGN" ui:field="twitterButton"></b:Button>
-						<b:Button icon="FACEBOOK_SIGN" ui:field="facebookButton"></b:Button>
-						<b:Button icon="GOOGLE_PLUS_SIGN" ui:field="googleButton"></b:Button>
+					<b:ButtonGroup justified="true">
+						<b:AnchorButton ui:field="twitterButton">
+							<ui:msg key="twitterButton">Twitter</ui:msg>
+						</b:AnchorButton>
+						<b:AnchorButton ui:field="facebookButton">
+							<ui:msg key="facebookButton">FaceBook</ui:msg>
+						</b:AnchorButton>
+						<b:AnchorButton ui:field="googleButton">
+							<ui:msg key="googleButton">Google</ui:msg>
+						</b:AnchorButton>
 					</b:ButtonGroup>
 				</b:FormGroup>
 			</b:FieldSet>
