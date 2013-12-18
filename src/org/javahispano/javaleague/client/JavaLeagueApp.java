@@ -3,6 +3,9 @@
  */
 package org.javahispano.javaleague.client;
 
+import org.gwtbootstrap3.client.ui.ListItem;
+import org.gwtbootstrap3.client.ui.Navbar;
+import org.gwtbootstrap3.client.ui.Row;
 import org.javahispano.javaleague.client.channel.Channel;
 import org.javahispano.javaleague.client.channel.ChannelFactory;
 import org.javahispano.javaleague.client.channel.SocketListener;
@@ -54,9 +57,7 @@ import com.google.gwt.user.client.rpc.SerializationStreamReader;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.svenjacobs.gwtbootstrap3.client.ui.ListItem;
-import com.svenjacobs.gwtbootstrap3.client.ui.Navbar;
-import com.svenjacobs.gwtbootstrap3.client.ui.Row;
+
 
 /**
  * @author adou

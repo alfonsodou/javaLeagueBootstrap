@@ -16,9 +16,9 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/twitter4j-core-3.0.3.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/twitter4j-media-support-3.0.3.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/twitter4j-stream-3.0.3.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/gwtbootstrap3-0.4-20131215.102639-2.jar"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/hibernate-validator-5.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gwtbootstrap3-0.5.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

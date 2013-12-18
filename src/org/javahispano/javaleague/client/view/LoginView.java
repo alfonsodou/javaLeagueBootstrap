@@ -22,11 +22,11 @@ public class LoginView extends Composite implements LoginPresenter.Display {
 	protected Widget widget;
 	
 	@UiField
-	AnchorButton googleButton;
+	Button googleButton;
 	@UiField
-	AnchorButton twitterButton;
+	Button twitterButton;
 	@UiField
-	AnchorButton facebookButton;
+	Button facebookButton;
 	@UiField
 	Modal loginModal;
 	@UiField

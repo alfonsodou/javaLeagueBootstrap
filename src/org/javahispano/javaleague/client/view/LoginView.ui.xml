@@ -57,15 +57,15 @@
 						</ui:msg>
 					</b:FormLabel>
 					<b:ButtonGroup justified="true">
-						<b:AnchorButton ui:field="twitterButton">
+						<b:Button ui:field="twitterButton">
 							<ui:msg key="twitterButton">Twitter</ui:msg>
-						</b:AnchorButton>
-						<b:AnchorButton ui:field="facebookButton">
+						</b:Button>
+						<b:Button ui:field="facebookButton">
 							<ui:msg key="facebookButton">FaceBook</ui:msg>
-						</b:AnchorButton>
-						<b:AnchorButton ui:field="googleButton">
+						</b:Button>
+						<b:Button ui:field="googleButton">
 							<ui:msg key="googleButton">Google</ui:msg>
-						</b:AnchorButton>
+						</b:Button>
 					</b:ButtonGroup>
 				</b:FormGroup>
 			</b:FieldSet>
