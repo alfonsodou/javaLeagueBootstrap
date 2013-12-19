@@ -4,6 +4,8 @@
 package org.javahispano.javaleague.client.presenter;
 
 
+import org.gwtbootstrap3.client.ui.Modal;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -11,7 +13,7 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
-import com.svenjacobs.gwtbootstrap3.client.ui.Modal;
+
 
 /**
  * @author adou

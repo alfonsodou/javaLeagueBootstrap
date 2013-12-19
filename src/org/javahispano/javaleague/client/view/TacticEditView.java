@@ -3,6 +3,10 @@
  */
 package org.javahispano.javaleague.client.view;
 
+import org.gwtbootstrap3.client.ui.Button;
+import org.gwtbootstrap3.client.ui.Form;
+import org.gwtbootstrap3.client.ui.SubmitButton;
+import org.gwtbootstrap3.client.ui.TextBox;
 import org.javahispano.javaleague.client.presenter.TacticEditPresenter;
 
 import com.google.gwt.core.client.GWT;
@@ -11,14 +15,9 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FileUpload;
-import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Widget;
-import com.svenjacobs.gwtbootstrap3.client.ui.Button;
-import com.svenjacobs.gwtbootstrap3.client.ui.Form;
-import com.svenjacobs.gwtbootstrap3.client.ui.FormStatic;
-import com.svenjacobs.gwtbootstrap3.client.ui.SubmitButton;
-import com.svenjacobs.gwtbootstrap3.client.ui.TextBox;
+
 
 /**
  * @author adou

@@ -12,7 +12,7 @@
 
 	<!-- Other module inherits -->
 	<!-- <inherits name="com.github.gwtbootstrap.Bootstrap" />  -->
-	<inherits name="com.svenjacobs.gwtbootstrap3.GwtBootstrap3"/>
+	<inherits name="org.gwtbootstrap3.GwtBootstrap3"/>
 	<!-- <set-property name="bootstrap.responsiveDesign" value="true" />  -->
 
 	<!-- Internacionalization -->

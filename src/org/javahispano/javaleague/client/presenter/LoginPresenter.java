@@ -1,5 +1,6 @@
 package org.javahispano.javaleague.client.presenter;
 
+import org.gwtbootstrap3.client.ui.Modal;
 import org.javahispano.javaleague.client.JavaLeagueApp;
 
 import com.google.gwt.core.client.GWT;
@@ -10,7 +11,7 @@ import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
-import com.svenjacobs.gwtbootstrap3.client.ui.Modal;
+
 
 /**
  * 

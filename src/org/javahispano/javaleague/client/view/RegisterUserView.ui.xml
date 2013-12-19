@@ -1,64 +1,65 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:b="urn:import:org.gwtbootstrap3.client.ui"
+	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
-	ui:generateLocales='default' xmlns:b="urn:import:com.svenjacobs.gwtbootstrap3.client.ui">
+	ui:generateLocales='default'>
 
 	<b:Modal ui:field="registerUserModal" backdrop="STATIC"
-		keyboard="true" animation="true">
+		keyboard="true" closable="true" fade="true">
+		<b:ModalBody>
+			<b:Form type="HORIZONTAL">
+				<b:Legend>
+					<ui:msg key="caption">Registrar</ui:msg>
+				</b:Legend>
+				<b:FieldSet>
+					<b:FormGroup>
+						<b:FormLabel for="formUserName" addStyleNames="col-lg-2">
+							<ui:msg key="UserName">Nombre</ui:msg>
+						</b:FormLabel>
 
-		<b:Form type="HORIZONTAL">
-			<b:Caption>
-				<ui:message key="caption">Registrar</ui:message>
-			</b:Caption>
-			<b:FieldSet>
-				<b:FormGroup>
-					<b:FormLabel for="formUserName" addStyleNames="col-lg-2">
-						<ui:message key="UserName">Nombre</ui:message>
-					</b:FormLabel>
+						<g:FlowPanel addStyleNames="col-lg-10">
+							<b:TextBox b:id="formUserName"></b:TextBox>
+						</g:FlowPanel>
 
-					<g:FlowPanel addStyleNames="col-lg-10">
-						<b:TextBox b:id="formUserName"></b:TextBox>
-					</g:FlowPanel>
+					</b:FormGroup>
 
-				</b:FormGroup>
+					<b:FormGroup>
+						<b:FormLabel for="formEmail" addStyleNames="col-lg-2">
+							<ui:msg key="email">Email</ui:msg>
+						</b:FormLabel>
 
-				<b:FormGroup>
-					<b:FormLabel for="formEmail" addStyleNames="col-lg-2">
-						<ui:message key="email">Email</ui:message>
-					</b:FormLabel>
+						<g:FlowPanel addStyleNames="col-lg-10">
+							<b:TextBox b:id="formEmail"></b:TextBox>
+						</g:FlowPanel>
 
-					<g:FlowPanel addStyleNames="col-lg-10">
-						<b:TextBox b:id="formEmail"></b:TextBox>
-					</g:FlowPanel>
+					</b:FormGroup>
 
-				</b:FormGroup>
+					<b:FormGroup>
+						<b:FormLabel for="formPassword" addStyleNames="col-lg-2">
+							<ui:msg key="Password">Contraseña</ui:msg>
+						</b:FormLabel>
 
-				<b:FormGroup>
-					<b:FormLabel for="formPassword" addStyleNames="col-lg-2">
-						<ui:message key="Password">Contraseña</ui:message>
-					</b:FormLabel>
+						<g:FlowPanel addStyleNames="col-lg-10">
+							<b:PasswordTextBox b:id="formPassword"></b:PasswordTextBox>
+						</g:FlowPanel>
 
-					<g:FlowPanel addStyleNames="col-lg-10">
-						<b:PasswordTextBox b:id="formPassword"></b:PasswordTextBox>
-					</g:FlowPanel>
+					</b:FormGroup>
 
-				</b:FormGroup>
+					<b:FormGroup>
+						<b:FormLabel for="formRePassword" addStyleNames="col-lg-2">
+							<ui:msg key="RePassword">Repite la contraseña</ui:msg>
+						</b:FormLabel>
 
-				<b:FormGroup>
-					<b:FormLabel for="formRePassword" addStyleNames="col-lg-2">
-						<ui:message key="RePassword">Repite la contraseña</ui:message>
-					</b:FormLabel>
+						<g:FlowPanel addStyleNames="col-lg-10">
+							<b:PasswordTextBox b:id="formRePassword"></b:PasswordTextBox>
+						</g:FlowPanel>
 
-					<g:FlowPanel addStyleNames="col-lg-10">
-						<b:PasswordTextBox b:id="formRePassword"></b:PasswordTextBox>
-					</g:FlowPanel>
+					</b:FormGroup>
 
-				</b:FormGroup>
-
-			</b:FieldSet>
-		</b:Form>
-
+				</b:FieldSet>
+			</b:Form>
+		</b:ModalBody>
 		<b:ModalFooter>
 			<b:ButtonGroup>
 				<b:SubmitButton ui:field="registerButton" type="PRIMARY">

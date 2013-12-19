@@ -3,6 +3,7 @@
  */
 package org.javahispano.javaleague.client.presenter;
 
+import org.gwtbootstrap3.client.ui.Form;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
 import org.javahispano.javaleague.shared.LeagueDTO;
@@ -16,8 +17,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
-import com.svenjacobs.gwtbootstrap3.client.ui.Form;
-import com.svenjacobs.gwtbootstrap3.client.ui.FormStatic;
+
 
 /**
  * @author adou

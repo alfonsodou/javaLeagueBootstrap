@@ -1,5 +1,6 @@
 package org.javahispano.javaleague.client.presenter;
 
+import org.gwtbootstrap3.client.ui.Form;
 import org.javahispano.javaleague.client.event.CancelUpdateTacticEvent;
 import org.javahispano.javaleague.client.event.UpdateTacticEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
@@ -19,7 +20,7 @@ import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
-import com.svenjacobs.gwtbootstrap3.client.ui.Form;
+
 
 public class TacticEditPresenter implements Presenter {
 
