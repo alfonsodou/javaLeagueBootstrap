@@ -14,61 +14,37 @@
 
 
 	<ui:style>
-		.redBox {
-		background-color: pink;
-		border: 1px solid red;
-		}
+
 	</ui:style>
 
-	<b:Container>
-		<b:Alert type="WARNING" close="false" animation="true">
-			<ui:msg key="warning">AVISO :: Esto es un prototipo :: Estamos
-				en pruebas
-				:: Es posible que se
-				produzcan interrupciones del servicio
-				y/o
-				pérdidas de datos
-				::</ui:msg>
-		</b:Alert>
+			<b:Row ui:field="container">
+				<b:Jumbotron ui:field="jumbotron">
+					<b:Heading size="1">Demo javaLeague</b:Heading>
 
-		
-			<b:Row addStyleNames="show-grid">
-				<b:Column size="4">
-					<g:Label>
+					<b:Paragraph>
 						<ui:msg key="intro1">Programa
 							tu propio equipo de fútbol !!!
+						</ui:msg>
+					</b:Paragraph>
+					<b:Paragraph>
+						<ui:msg key="intro2">
 							javaLeague te
-							permitirá crear y participar en diferentes
+							permitirá crear y participar en
+							diferentes
 							ligas.
+						</ui:msg>
+					</b:Paragraph>
+					<b:Paragraph>
+						<ui:msg key="intro3">
 							Crea tus
-							propias ligas y reta a tus compañeros de
+							propias ligas y reta a tus compañeros
+							de
 							trabajo/estudios, amigos,
-							etc. Descárgate ya el
+							etc.
 						</ui:msg>
-					</g:Label>
-					<g:Anchor href="">
+					</b:Paragraph>
 
-						<ui:msg key="link_framework">framework</ui:msg>
-
-					</g:Anchor>
-					<g:Label>
-						<ui:msg key="intro1_1"> y comienza a desarrollar tu equipo!
-						</ui:msg>
-					</g:Label>
-				</b:Column>
-				<b:Column size="4">
-					<g:Image addStyleNames="{style.redBox}" resource="{logo_duke1}"></g:Image>
-				</b:Column>
-				<!-- <b:Column size="4"> <g:Label> <ui:msg key="intro2">¿ Necesitas ayuda 
-					para crear tú táctica ?</ui:msg> </g:Label> <g:Label> <ui:msg key="intro3">No 
-					te preocupes. Visita los tutoriales que te ayudarán a crear una táctica básica</ui:msg> 
-					</g:Label> <d:HyperLink resource="{eclipse}"> </d:HyperLink> <g:Label> <ui:msg 
-					key="eclipse">Tutorial para Eclipse</ui:msg> </g:Label> <d:HyperLink resource="{netbeans}"> 
-					</d:HyperLink> <g:Label> <ui:msg key="netbeand">Tutorial para NeBeans</ui:msg> 
-					</g:Label> </b:Column> -->
+				</b:Jumbotron>
 			</b:Row>
-
-		
-	</b:Container>
 
 </ui:UiBinder> 

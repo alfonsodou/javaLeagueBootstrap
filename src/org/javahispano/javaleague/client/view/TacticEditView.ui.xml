@@ -11,26 +11,26 @@
 		<b:FieldSet>
 			<b:FormGroup>
 				<b:FormLabel for="teamName">
-					<ui:message key="teamName">Nombre</ui:message>
+					<ui:msg key="teamName">Nombre</ui:msg>
 				</b:FormLabel>
 
 				<!-- If you add id attribute to element,You should use b:id attribute. -->
-				<b:TextBox alternateSize="XLARGE" b:id="teamName"
+				<b:TextBox b:id="teamName"
 					ui:field="teamName"></b:TextBox>
 				<b:TextBox ui:field="tacticId" visible="false"></b:TextBox>
 				<b:HelpBlock>
-					<ui:message key="helpTeamName">Introduce el nombre de tu equipo.</ui:message>
+					<ui:msg key="helpTeamName">Introduce el nombre de tu equipo.</ui:msg>
 				</b:HelpBlock>
 
 			</b:FormGroup>
 			<b:FormGroup>
 				<b:FormLabel for="zipClasses">
-					<ui:message key="zipClasses">Clases</ui:message>
+					<ui:msg key="zipClasses">Clases</ui:msg>
 				</b:FormLabel>
 
 				<!-- If you add id attribute to element,You should use b:id attribute. -->
 
-				<g:FileUpload b:id="zipClasses" ui:field="fileUpload"></g:FileUpload>
+				<g:FileUpload ui:field="fileUpload"></g:FileUpload>
 
 			</b:FormGroup>
 			<b:ButtonGroup>

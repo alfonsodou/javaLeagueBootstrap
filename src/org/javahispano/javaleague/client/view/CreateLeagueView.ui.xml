@@ -11,14 +11,14 @@
 		<b:FieldSet>
 			<b:FormGroup>
 				<b:FormLabel for="leagueName">
-					<ui:message key="leagueName">Nombre</ui:message>
+					<ui:msg key="leagueName">Nombre</ui:msg>
 				</b:FormLabel>
 
 					<!-- If you add id attribute to element,You should use b:id attribute. -->
-					<b:TextBox alternateSize="XLARGE" b:id="leagueName"
+					<b:TextBox b:id="leagueName"
 						ui:field="leagueName"></b:TextBox>
 					<b:HelpBlock>
-						<ui:message key="helpLeagueName">Introduce el nombre de la liga.</ui:message>
+						<ui:msg key="helpLeagueName">Introduce el nombre de la liga.</ui:msg>
 					</b:HelpBlock>
 
 			</b:FormGroup>

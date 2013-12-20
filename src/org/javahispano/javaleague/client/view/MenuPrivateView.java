@@ -3,7 +3,7 @@
  */
 package org.javahispano.javaleague.client.view;
 
-import org.gwtbootstrap3.client.ui.NavbarLink;
+import org.gwtbootstrap3.client.ui.ListItem;
 import org.javahispano.javaleague.client.presenter.MenuPrivatePresenter;
 
 import com.google.gwt.core.client.GWT;
@@ -22,11 +22,11 @@ public class MenuPrivateView extends Composite implements
 		MenuPrivatePresenter.Display {
 
 	@UiField
-	NavbarLink logoutLink;
+	ListItem logoutLink;
 	@UiField
-	NavbarLink myTeamLink;
+	ListItem myTeamLink;
 	@UiField
-	NavbarLink myLeaguesLink;
+	ListItem myLeaguesLink;
 
 	private static MenuPrivateViewUiBinder uiBinder = GWT
 			.create(MenuPrivateViewUiBinder.class);

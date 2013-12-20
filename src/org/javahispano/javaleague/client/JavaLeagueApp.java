@@ -3,9 +3,8 @@
  */
 package org.javahispano.javaleague.client;
 
-import org.gwtbootstrap3.client.ui.ListItem;
-import org.gwtbootstrap3.client.ui.Navbar;
-import org.gwtbootstrap3.client.ui.Row;
+import org.gwtbootstrap3.client.ui.Container;
+import org.gwtbootstrap3.client.ui.FlowPanel;
 import org.javahispano.javaleague.client.channel.Channel;
 import org.javahispano.javaleague.client.channel.ChannelFactory;
 import org.javahispano.javaleague.client.channel.SocketListener;
@@ -19,7 +18,6 @@ import org.javahispano.javaleague.client.presenter.MenuPrivatePresenter;
 import org.javahispano.javaleague.client.presenter.RegisterUserPresenter;
 import org.javahispano.javaleague.client.presenter.ShowHomePresenter;
 import org.javahispano.javaleague.client.presenter.TacticPresenter;
-import org.javahispano.javaleague.client.presenter.UserBadgePresenter;
 import org.javahispano.javaleague.client.service.LeagueService;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
 import org.javahispano.javaleague.client.service.LoginService;
@@ -35,7 +33,9 @@ import org.javahispano.javaleague.client.service.UserFileServiceAsync;
 import org.javahispano.javaleague.client.view.BusyIndicatorView;
 import org.javahispano.javaleague.client.view.LoginView;
 import org.javahispano.javaleague.client.view.MenuPrivateView;
+import org.javahispano.javaleague.client.view.MenuView;
 import org.javahispano.javaleague.client.view.RegisterUserView;
+import org.javahispano.javaleague.client.view.ShowHomeView;
 import org.javahispano.javaleague.client.view.TacticView;
 import org.javahispano.javaleague.shared.UserDTO;
 import org.javahispano.javaleague.shared.messages.ChannelTextMessage;
@@ -43,9 +43,6 @@ import org.javahispano.javaleague.shared.messages.Message;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -58,16 +55,16 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-
 /**
  * @author adou
  * 
  */
 public class JavaLeagueApp implements EntryPoint {
 	interface JavaLeagueAppUiBinder extends UiBinder<Widget, JavaLeagueApp> {
-    }
-	
-	private static JavaLeagueAppUiBinder ourUiBinder = GWT.create(JavaLeagueAppUiBinder.class);	
+	}
+
+	private static JavaLeagueAppUiBinder ourUiBinder = GWT
+			.create(JavaLeagueAppUiBinder.class);
 
 	private UserDTO currentUser;
 	private final UserAccountServiceAsync userService = GWT
@@ -82,7 +79,6 @@ public class JavaLeagueApp implements EntryPoint {
 	SerializationStreamFactory pushServiceStreamFactory;
 
 	// Presenters
-	private UserBadgePresenter userBadgePresenter;
 	private MenuPresenter menuPresenter;
 	private MenuPrivatePresenter menuPrivatePresenter;
 	private TacticPresenter tacticPresenter;
@@ -92,13 +88,9 @@ public class JavaLeagueApp implements EntryPoint {
 	private LoginServiceAsync loginService = GWT.create(LoginService.class);
 
 	@UiField
-	Navbar menuNavBar;
-	
+	FlowPanel centerPanel;
 	@UiField
-	Row container;
-	
-	@UiField
-	ListItem loginLink;
+	Container headerPanel;
 
 	/**
 	 * Gets the singleton application instance.
@@ -107,40 +99,23 @@ public class JavaLeagueApp implements EntryPoint {
 		return singleton;
 	}
 
-	public Row getContainer() {
-		return container;
+	public FlowPanel getCenterPanel() {
+		return centerPanel;
 	}
-	
+
+	public Container getHeaderPanel() {
+		return headerPanel;
+	}
+
 	@Override
 	public void onModuleLoad() {
 
 		singleton = this;
 
-		// Globalresources.RESOURCE.styles().ensureInjected();
-//		javaLeagueMain = new JavaLeagueMain();
-
 		RootPanel.get().add(ourUiBinder.createAndBindUi(this));
-		
-		loginLink.addClickHandler(new ClickHandler() {
-			@Override
-			 public void onClick(ClickEvent event) {
-				showLoginView();
-			}
-			
-		});
-		
-		// createUI();
 
-		/*
-		 * //Inject the contents of the CSS file
-		 * Globalresources.RESOURCE.styles().ensureInjected(); DockLayoutPanel
-		 * outer = uiBinder.createAndBindUi(this);
-		 * 
-		 * root = RootLayoutPanel.get(); root.add(outer);
-		 */
+		getLoggedInUser();
 
-	//	getLoggedInUser();
-		showMainView();
 	}
 
 	public void getLoggedInUser() {
@@ -153,13 +128,12 @@ public class JavaLeagueApp implements EntryPoint {
 			@Override
 			public void onSuccess(UserDTO loggedInUserDTO) {
 				if (loggedInUserDTO == null) {
-					// nobody is logged in
-					// showLoginView();
-					createUI();
+					showMainView();
 				} else {
 					// user is logged in
 					setCurrentUser(loggedInUserDTO);
-					createPrivateUI();
+					goAfterLogin();
+					eventBus.fireEvent(new LoginEvent(currentUser));
 				}
 			}
 
@@ -176,17 +150,18 @@ public class JavaLeagueApp implements EntryPoint {
 
 		LoginPresenter loginPresenter = new LoginPresenter(eventBus, loginView);
 		loginView.getLoginModal().show();
-		
-		loginPresenter.go(container);
+
+		loginPresenter.go(centerPanel);
 	}
-	
+
 	public void showRegisterUserView() {
 		RegisterUserView registerUserView = new RegisterUserView();
-		
-		RegisterUserPresenter registerUserPresenter = new RegisterUserPresenter(eventBus, registerUserView);
+
+		RegisterUserPresenter registerUserPresenter = new RegisterUserPresenter(
+				eventBus, registerUserView);
 		registerUserView.getRegisterUserModal().show();
-		
-		registerUserPresenter.go(container);
+
+		registerUserPresenter.go(centerPanel);
 	}
 
 	public SimpleEventBus getEventBus() {
@@ -197,56 +172,16 @@ public class JavaLeagueApp implements EntryPoint {
 		this.eventBus = eventBus;
 	}
 
-	private void createUI() {
-
-		GWT.runAsync(new RunAsyncCallback() {
-			@Override
-			public void onFailure(Throwable reason) {
-				Window.alert("Code download error: " + reason.getMessage());
-			}
-
-			@Override
-			public void onSuccess() {
-				/*
-				 * goAfterLogin(); eventBus.fireEvent(new
-				 * LoginEvent(currentUser));
-				 */
-				showMainView();
-			}
-		});
-	}
-
-	private void createPrivateUI() {
-
-		GWT.runAsync(new RunAsyncCallback() {
-			@Override
-			public void onFailure(Throwable reason) {
-				Window.alert("Code download error: " + reason.getMessage());
-			}
-
-			@Override
-			public void onSuccess() {
-
-				goAfterLogin();
-				eventBus.fireEvent(new LoginEvent(currentUser));
-
-				// showPrivateMainView();
-			}
-		});
-	}
-
 	private void showMainView() {
-		/*
+
+		headerPanel.clear();
 		menuPresenter = new MenuPresenter(new MenuView());
-		menuPresenter.go(menuNavBar);
+		menuPresenter.go(headerPanel);
 
-		
+		centerPanel.clear();
 		showHomePresenter = new ShowHomePresenter(new ShowHomeView());
-		showHomePresenter.go(container);
-		*/
-	}
+		showHomePresenter.go(centerPanel);
 
-	private void showPrivateMainView() {
 	}
 
 	public UserDTO getCurrentUser() {
@@ -259,10 +194,6 @@ public class JavaLeagueApp implements EntryPoint {
 
 	private void goAfterLogin() {
 
-		/*
-		 * DockLayoutPanel outer = uiBinder.createAndBindUi(this); root =
-		 * RootLayoutPanel.get(); root.clear(); root.add(outer);
-		 */
 		TacticServiceAsync tacticService = GWT.create(TacticService.class);
 		UserFileServiceAsync userFileService = GWT
 				.create(UserFileService.class);
@@ -273,19 +204,15 @@ public class JavaLeagueApp implements EntryPoint {
 				eventBus);
 		appViewer.go();
 
-		/*
-		 * userBadgePresenter = new UserBadgePresenter(loginService, eventBus,
-		 * new UserBadgeView());
-		 * userBadgePresenter.go(myHeaderPanel.getUserBadgePanel());
-		 */
-
+		headerPanel.clear();
 		menuPrivatePresenter = new MenuPrivatePresenter(loginService, eventBus,
 				currentUser, new MenuPrivateView());
-		menuPrivatePresenter.go(menuNavBar);
+		menuPrivatePresenter.go(headerPanel);
 
+		centerPanel.clear();
 		tacticPresenter = new TacticPresenter(tacticService, matchService,
 				eventBus, new TacticView());
-		tacticPresenter.go(container);
+		tacticPresenter.go(centerPanel);
 
 		listenToChannel();
 	}
