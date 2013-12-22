@@ -16,7 +16,7 @@
 		}
 	</ui:style>
 
-	<b:Navbar ui:field="menuNavBar" position="FIXED_TOP">
+	<b:Navbar ui:field="menuNavBar">
 		<b:Container>
 
 			<b:NavbarHeader>

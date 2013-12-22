@@ -9,28 +9,23 @@
 	<ui:image field='duke_on_gae' src='resources/images/duke-on-gae.png' />
 
 	<ui:style>
-		.buttons button {
-			margin: 0.5em;
-		}
-		
-		.labels span {
-			margin-right: 5px;
-		}
-		
-		.margin-fix {
-			margin-bottom: 0 !important;
-		}
+	.buttons button {
+		margin: 0.5em;
+	}
+	
+	.labels span {
+		margin-right: 5px;
+	}
+	
+	.margin-fix {
+		margin-bottom: 0 !important;
+	}
 	</ui:style>
 
 	<b:Container>
+		<b:FlowPanel ui:field="headerPanel">
+		</b:FlowPanel>
 
-		<!-- <g:FlowPanel ui:field="headerPanel"> -->
-
-		<b:Container ui:field="headerPanel">
-
-		</b:Container>
-		<!-- </g:FlowPanel> -->
-		<!-- Container Content -->
 		<b:FlowPanel ui:field="centerPanel">
 		</b:FlowPanel>
 

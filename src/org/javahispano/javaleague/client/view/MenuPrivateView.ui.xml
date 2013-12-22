@@ -16,7 +16,7 @@
 		}
 	</ui:style>
 
-	<b:Navbar position="FIXED_TOP">
+	<b:Navbar ui:field="menuNavBar">
 		<b:Container>
 			<b:NavbarHeader>
 				<b:NavbarBrand>javaLeague</b:NavbarBrand>

@@ -223,7 +223,9 @@ public class AppController implements ValueChangeHandler<String> {
 			Presenter presenter = null;
 
 			if (token.equals("login")) {
-				JavaLeagueApp.get().getLoggedInUser();
+				
+				JavaLeagueApp.get().setCurrentUser(null);
+				JavaLeagueApp.get().showMainView();;
 
 				return;
 			} else if (token.equals("showHome")) {

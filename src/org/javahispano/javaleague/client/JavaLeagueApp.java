@@ -90,7 +90,7 @@ public class JavaLeagueApp implements EntryPoint {
 	@UiField
 	FlowPanel centerPanel;
 	@UiField
-	Container headerPanel;
+	FlowPanel headerPanel;
 
 	/**
 	 * Gets the singleton application instance.
@@ -103,7 +103,7 @@ public class JavaLeagueApp implements EntryPoint {
 		return centerPanel;
 	}
 
-	public Container getHeaderPanel() {
+	public FlowPanel getHeaderPanel() {
 		return headerPanel;
 	}
 
@@ -114,8 +114,11 @@ public class JavaLeagueApp implements EntryPoint {
 
 		RootPanel.get().add(ourUiBinder.createAndBindUi(this));
 
-		getLoggedInUser();
-
+		if (currentUser == null) {
+			showMainView();
+		} else {
+			goAfterLogin();
+		}
 	}
 
 	public void getLoggedInUser() {
@@ -172,7 +175,7 @@ public class JavaLeagueApp implements EntryPoint {
 		this.eventBus = eventBus;
 	}
 
-	private void showMainView() {
+	public void showMainView() {
 
 		headerPanel.clear();
 		menuPresenter = new MenuPresenter(new MenuView());

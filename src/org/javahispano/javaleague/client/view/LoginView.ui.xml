@@ -44,6 +44,8 @@
 					</b:FormGroup>
 					<!-- <b:FormGroup> <b:CheckBoxButton> <ui:msg key="rememberMe"> Recu&eacute;rdame 
 						</ui:msg> </b:CheckBoxButton> </b:FormGroup> -->
+						
+						<!-- 
 					<b:FormGroup>
 						<g:FlowPanel addStyleNames="col-lg-10">
 							<b:FormStatic>
@@ -69,6 +71,7 @@
 							</b:ButtonGroup>
 						</g:FlowPanel>
 					</b:FormGroup>
+					 -->
 				</b:FieldSet>
 			</b:Form>
 		</b:ModalBody>

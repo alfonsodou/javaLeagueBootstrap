@@ -21,12 +21,14 @@ public class LoginView extends Composite implements LoginPresenter.Display {
 	
 	protected Widget widget;
 	
+	/*
 	@UiField
 	Button googleButton;
 	@UiField
 	Button twitterButton;
 	@UiField
 	Button facebookButton;
+	*/
 	@UiField
 	Modal loginModal;
 	@UiField
@@ -70,6 +72,7 @@ public class LoginView extends Composite implements LoginPresenter.Display {
 		return widget;
 	}
 
+	/*
 	@Override
 	public HasClickHandlers getFacebookButton() {
 		return facebookButton;
@@ -84,6 +87,7 @@ public class LoginView extends Composite implements LoginPresenter.Display {
 	public HasClickHandlers getTwitterButton() {
 		return twitterButton;
 	}
+	*/
 	
 	@Override
 	public Modal getLoginModal() {

@@ -21,12 +21,13 @@ import com.google.gwt.user.client.ui.Widget;
 public class LoginPresenter implements Presenter {
 
 	public interface Display {
+		/*
 		HasClickHandlers getGoogleButton();
 
 		HasClickHandlers getTwitterButton();
 
 		HasClickHandlers getFacebookButton();
-		
+		*/
 		HasClickHandlers getCancelButton();
 		
 		HasClickHandlers getRegisterUserButton();
@@ -43,7 +44,7 @@ public class LoginPresenter implements Presenter {
 	}
 
 	public void bind() {
-
+		/*
 		this.display.getGoogleButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				doLoginGoogle();
@@ -61,6 +62,7 @@ public class LoginPresenter implements Presenter {
 				doLoginFacebook();
 			}
 		});
+		*/
 /*
 		this.display.getLoginButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
