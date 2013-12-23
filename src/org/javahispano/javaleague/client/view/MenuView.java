@@ -30,9 +30,6 @@ public class MenuView extends Composite implements MenuPresenter.Display {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
-	@UiField
-	ListItem loginLink;
-	
 	
 	@UiField
 	ListItem registerLink;
@@ -45,11 +42,6 @@ public class MenuView extends Composite implements MenuPresenter.Display {
 	@Override
 	public Widget asWidget() {
 		return this;
-	}
-
-	@Override
-	public HasClickHandlers getLoginLink() {
-		return loginLink;
 	}
 
 	

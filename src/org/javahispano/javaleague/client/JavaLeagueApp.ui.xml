@@ -9,17 +9,17 @@
 	<ui:image field='duke_on_gae' src='resources/images/duke-on-gae.png' />
 
 	<ui:style>
-	.buttons button {
-		margin: 0.5em;
-	}
-	
-	.labels span {
-		margin-right: 5px;
-	}
-	
-	.margin-fix {
-		margin-bottom: 0 !important;
-	}
+		.buttons button {
+			margin: 0.5em;
+		}
+		
+		.labels span {
+			margin-right: 5px;
+		}
+		
+		.margin-fix {
+			margin-bottom: 0 !important;
+		}
 	</ui:style>
 
 	<b:Container>
@@ -30,12 +30,14 @@
 		</b:FlowPanel>
 
 		<b:FlowPanel ui:field="footerPanel">
+		
 			<b:Paragraph>
 				2013 -
 				<a href="http://www.javahispano.org">javaHispano</a>
 				::
 				<a href="https://github.com/svenjacobs/gwtbootstrap3">GwtBootstrap3</a>
 			</b:Paragraph>
+			
 		</b:FlowPanel>
 
 	</b:Container>

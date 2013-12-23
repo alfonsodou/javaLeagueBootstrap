@@ -16,7 +16,6 @@ import com.google.gwt.user.client.ui.Widget;
 public class MenuPresenter implements Presenter {
 
 	public interface Display {
-		HasClickHandlers getLoginLink();
 
 		HasClickHandlers getRegisterLink();
 
@@ -31,12 +30,6 @@ public class MenuPresenter implements Presenter {
 	}
 
 	public void bind() {
-		this.display.getLoginLink().addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				JavaLeagueApp.get().showLoginView();
-			}
-		});
-
 		
 		this.display.getRegisterLink().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
