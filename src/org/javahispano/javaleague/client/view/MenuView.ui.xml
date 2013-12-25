@@ -6,17 +6,17 @@
 	ui:generateLocales='default'>
 
 	<ui:style>
-		.danger {
-			background-color: #fcf2f2;
-			border-color: #dFb5b4;
-		}
-		
-		.margin-fix {
-			margin-bottom: 0 !important;
-		}
+	.danger {
+		background-color: #fcf2f2;
+		border-color: #dFb5b4;
+	}
+	
+	.margin-fix {
+		margin-bottom: 0 !important;
+	}
 	</ui:style>
 
-	<b:Navbar ui:field="menuNavBar">
+	<b:Navbar ui:field="menuNavBar" position="FIXED_TOP">
 		<b:Container>
 
 			<b:NavbarHeader>
@@ -30,7 +30,7 @@
 					<b:ListItem ui:field="registerLink">
 						<ui:msg key="registerLink">Registro</ui:msg>
 					</b:ListItem>
-					
+
 					<b:ListDropDown>
 						<b:AnchorButton toggle="DROPDOWN" icon="GLOBE">Español
 							(es)</b:AnchorButton>
@@ -39,38 +39,36 @@
 							<b:ListItem>English (en)</b:ListItem>
 						</b:DropDownMenu>
 					</b:ListDropDown>
-					
+
 				</b:NavbarNav>
 
-				
 
-					<b:NavbarForm pull="RIGHT">
-						<b:FieldSet>
-							<b:FormGroup>
-								<b:TextBox placeholder="Enter email" />
-							</b:FormGroup>
 
-							<b:FormGroup>
-								<b:PasswordTextBox placeholder="Enter password" />
-							</b:FormGroup>
+				<b:NavbarForm pull="RIGHT">
+					<b:FieldSet>
+						<b:FormGroup>
+							<b:TextBox placeholder="Enter email" />
+						</b:FormGroup>
 
-							<b:FormGroup>
-								<b:CheckBox text="Remember me" />
-							</b:FormGroup>
+						<b:FormGroup>
+							<b:PasswordTextBox placeholder="Enter password" />
+						</b:FormGroup>
+<!-- 
+						<b:FormGroup>
+							<b:CheckBox text="Remember me" />
+						</b:FormGroup>
+ -->
+						<b:FormGroup>
+							<b:Button>
+								<ui:msg key="loginButton">Enviar</ui:msg>
+							</b:Button>
+						</b:FormGroup>
+					</b:FieldSet>
+				</b:NavbarForm>
 
-							<b:FormGroup>
-								<b:Button>
-									<ui:msg key="loginButton">Enviar</ui:msg>
-								</b:Button>
-							</b:FormGroup>
-						</b:FieldSet>
-					</b:NavbarForm>
-				
 
 			</b:NavbarCollapse>
+
 		</b:Container>
 	</b:Navbar>
-
-
-
 </ui:UiBinder> 

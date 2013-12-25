@@ -23,21 +23,19 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	@Id
 	private Long id;
 	
-	private String firstName;
-
-	private String lastName;
-
 	private String name;
 
-	private String nickName;
-
 	private String emailAddress;
+	
+	private String password;
 
 	private String tacticId;
 
 	private Date lastLoginOn;
 
 	private Date lastActive;
+	
+	private String tokenActivate;
 
 	/**
 	 * loginId and loginProvider form a unique key. E.g.: loginId = supercobra,
@@ -74,33 +72,6 @@ public class User implements StoreCallback, Serializable, Cacheable {
 		this.id = id;
 	}
 
-	/**
-	 * @return the firstName
-	 */
-	public String getFirstName() {
-		return firstName;
-	}
-
-	/**
-	 * @param firstName the firstName to set
-	 */
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	/**
-	 * @return the lastName
-	 */
-	public String getLastName() {
-		return lastName;
-	}
-
-	/**
-	 * @param lastName the lastName to set
-	 */
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
 
 	/**
 	 * @return the name
@@ -114,20 +85,6 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	 */
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	/**
-	 * @return the nickName
-	 */
-	public String getNickName() {
-		return nickName;
-	}
-
-	/**
-	 * @param nickName the nickName to set
-	 */
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
 	}
 
 	/**
@@ -209,6 +166,36 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	 */
 	public void setChannelId(String channelId) {
 		this.channelId = channelId;
+	}
+
+	
+	
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
+	 * @return the tokenActivate
+	 */
+	public String getTokenActivate() {
+		return tokenActivate;
+	}
+
+	/**
+	 * @param tokenActivate the tokenActivate to set
+	 */
+	public void setTokenActivate(String tokenActivate) {
+		this.tokenActivate = tokenActivate;
 	}
 
 	public static UserDTO toDTO(User user) {

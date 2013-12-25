@@ -35,7 +35,7 @@ public class MyHeaderPresenter implements Presenter {
 	public void bind() {
 		this.display.getLoginLink().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				JavaLeagueApp.get().showLoginView();
+				//JavaLeagueApp.get().showLoginView();
 			}
 		});
 

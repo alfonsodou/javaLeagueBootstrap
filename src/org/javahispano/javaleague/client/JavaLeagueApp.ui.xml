@@ -9,37 +9,37 @@
 	<ui:image field='duke_on_gae' src='resources/images/duke-on-gae.png' />
 
 	<ui:style>
-		.buttons button {
-			margin: 0.5em;
-		}
-		
-		.labels span {
-			margin-right: 5px;
-		}
-		
-		.margin-fix {
-			margin-bottom: 0 !important;
-		}
+        .buttons button {
+            margin: 0.5em;
+        }
+
+        .labels span {
+            margin-right: 5px;
+        }
+
+        .push {
+            padding-top: 70px;
+        }
 	</ui:style>
 
-	<b:Container>
-		<b:FlowPanel ui:field="headerPanel">
-		</b:FlowPanel>
+	<g:ScrollPanel>
+		<b:Container>
+			<g:SimplePanel ui:field="headerPanel"></g:SimplePanel>
 
-		<b:FlowPanel ui:field="centerPanel">
-		</b:FlowPanel>
+			<g:SimplePanel ui:field="centerPanel" addStyleNames="{style.push}">
+			</g:SimplePanel>
 
-		<b:FlowPanel ui:field="footerPanel">
-		
-			<b:Paragraph>
-				2013 -
-				<a href="http://www.javahispano.org">javaHispano</a>
-				::
-				<a href="https://github.com/svenjacobs/gwtbootstrap3">GwtBootstrap3</a>
-			</b:Paragraph>
-			
-		</b:FlowPanel>
+			<g:SimplePanel ui:field="footerPanel">
 
-	</b:Container>
+				<b:Paragraph>
+					2013 -
+					<a href="http://www.javahispano.org">javaHispano</a>
+					::
+					<a href="https://github.com/svenjacobs/gwtbootstrap3">GwtBootstrap3</a>
+				</b:Paragraph>
+
+			</g:SimplePanel>
+		</b:Container>
+	</g:ScrollPanel>
 
 </ui:UiBinder>

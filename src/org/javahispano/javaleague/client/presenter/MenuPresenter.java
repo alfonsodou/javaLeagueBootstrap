@@ -1,6 +1,7 @@
 package org.javahispano.javaleague.client.presenter;
 
 import org.javahispano.javaleague.client.JavaLeagueApp;
+import org.javahispano.javaleague.client.view.RegisterUserView;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -30,15 +31,14 @@ public class MenuPresenter implements Presenter {
 	}
 
 	public void bind() {
-		
+
 		this.display.getRegisterLink().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				JavaLeagueApp.get().showRegisterUserView();
+				doRegisterUser();
 			}
 		});
 
 	}
-
 
 	@Override
 	public void go(HasWidgets container) {
@@ -46,6 +46,11 @@ public class MenuPresenter implements Presenter {
 		container.add(display.asWidget());
 		bind();
 	}
-		
 
+	private void doRegisterUser() {
+		JavaLeagueApp.get().getCenterPanel().clear();
+		RegisterUserPresenter registerUserPresenter = new RegisterUserPresenter(
+				new RegisterUserView());
+		registerUserPresenter.go(JavaLeagueApp.get().getCenterPanel());
+	}
 }

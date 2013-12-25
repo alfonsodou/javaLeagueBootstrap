@@ -5,16 +5,20 @@ package org.javahispano.javaleague.shared;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Size;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 @SuppressWarnings("serial")
 public class UserDTO implements Serializable {
 
 	private String id;
-	@NotEmpty
+	@NotEmpty @Size(min = 4)
 	private String name;
 	@NotEmpty
 	private String emailAddress;
+	@NotEmpty
+	private String password;
 	private String channelId;
 	@NotEmpty
 	private String uniqueId;
@@ -82,5 +86,35 @@ public class UserDTO implements Serializable {
 	public void setTactic(String tacticId) {
 		this.tacticId = tacticId;
 	}
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
+	 * @return the tacticId
+	 */
+	public String getTacticId() {
+		return tacticId;
+	}
+
+	/**
+	 * @param tacticId the tacticId to set
+	 */
+	public void setTacticId(String tacticId) {
+		this.tacticId = tacticId;
+	}
+	
+	
 
 }

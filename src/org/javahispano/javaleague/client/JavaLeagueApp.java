@@ -3,8 +3,6 @@
  */
 package org.javahispano.javaleague.client;
 
-import org.gwtbootstrap3.client.ui.Container;
-import org.gwtbootstrap3.client.ui.FlowPanel;
 import org.javahispano.javaleague.client.channel.Channel;
 import org.javahispano.javaleague.client.channel.ChannelFactory;
 import org.javahispano.javaleague.client.channel.SocketListener;
@@ -53,6 +51,7 @@ import com.google.gwt.user.client.rpc.SerializationStreamFactory;
 import com.google.gwt.user.client.rpc.SerializationStreamReader;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -88,9 +87,9 @@ public class JavaLeagueApp implements EntryPoint {
 	private LoginServiceAsync loginService = GWT.create(LoginService.class);
 
 	@UiField
-	FlowPanel centerPanel;
+	SimplePanel centerPanel;
 	@UiField
-	FlowPanel headerPanel;
+	SimplePanel headerPanel;
 
 	/**
 	 * Gets the singleton application instance.
@@ -99,11 +98,11 @@ public class JavaLeagueApp implements EntryPoint {
 		return singleton;
 	}
 
-	public FlowPanel getCenterPanel() {
+	public SimplePanel getCenterPanel() {
 		return centerPanel;
 	}
 
-	public FlowPanel getHeaderPanel() {
+	public SimplePanel getHeaderPanel() {
 		return headerPanel;
 	}
 
@@ -146,25 +145,6 @@ public class JavaLeagueApp implements EntryPoint {
 			}
 		}.retry(3);
 
-	}
-
-	public void showLoginView() {
-		LoginView loginView = new LoginView();
-
-		LoginPresenter loginPresenter = new LoginPresenter(eventBus, loginView);
-		loginView.getLoginModal().show();
-
-		loginPresenter.go(centerPanel);
-	}
-
-	public void showRegisterUserView() {
-		RegisterUserView registerUserView = new RegisterUserView();
-
-		RegisterUserPresenter registerUserPresenter = new RegisterUserPresenter(
-				eventBus, registerUserView);
-		registerUserView.getRegisterUserModal().show();
-
-		registerUserPresenter.go(centerPanel);
 	}
 
 	public SimpleEventBus getEventBus() {

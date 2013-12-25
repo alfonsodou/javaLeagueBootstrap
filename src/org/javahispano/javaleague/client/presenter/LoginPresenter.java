@@ -77,12 +77,6 @@ public class LoginPresenter implements Presenter {
 			}
 		});
 		
-		this.display.getRegisterUserButton().addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				GWT.log("Click on RegisterUser Button!");
-				doRegisterUser();
-			}
-		});
 	
 	}
 
@@ -107,8 +101,4 @@ public class LoginPresenter implements Presenter {
 		this.display.getLoginModal().hide();
 	}
 	
-	private void doRegisterUser() {
-		doCancel();
-		JavaLeagueApp.get().showRegisterUserView();
-	}
 }
