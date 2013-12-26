@@ -6,18 +6,17 @@ package org.javahispano.javaleague.client.presenter;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
 import javax.validation.Validator;
 
 import org.gwtbootstrap3.client.ui.Label;
 import org.gwtbootstrap3.client.ui.TextBox;
-import org.javahispano.javaleague.client.validation.MyValidatorFactory;
 import org.javahispano.javaleague.shared.UserDTO;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -41,7 +40,7 @@ public class RegisterUserPresenter implements Presenter {
 		TextBox getPassword();
 
 		TextBox getRePassword();
-		
+
 		Label getErrorLabel();
 	}
 
@@ -77,18 +76,19 @@ public class RegisterUserPresenter implements Presenter {
 	}
 
 	private void doCancel() {
-		
+
 	}
 
 	private void doRegister() {
 
 		userDTO.setName(this.display.getUserName().getValue());
 		userDTO.setPassword(this.display.getPassword().getValue());
-		Validator validator = GWT.create(MyValidatorFactory.class);
+		Validator validator = Validation.buildDefaultValidatorFactory()
+				.getValidator();
 		Set<ConstraintViolation<UserDTO>> violations = validator
 				.validate(userDTO);
+		StringBuffer errorMessage = new StringBuffer();
 		if (!violations.isEmpty()) {
-			StringBuffer errorMessage = new StringBuffer();
 			for (ConstraintViolation<UserDTO> constraintViolation : violations) {
 				if (errorMessage.length() == 0) {
 					errorMessage.append('\n');
@@ -96,7 +96,12 @@ public class RegisterUserPresenter implements Presenter {
 				errorMessage.append(constraintViolation.getMessage());
 			}
 			this.display.getErrorLabel().setText(errorMessage.toString());
-			return;
+		} else if (!this.display.getPassword().getValue()
+				.equals(this.display.getRePassword().getValue())) {
+			errorMessage.append("Las conraseñas no coinciden");
+			this.display.getErrorLabel().setText(errorMessage.toString());
+		} else { // Validacion en el servidor
+			
 		}
 
 	}

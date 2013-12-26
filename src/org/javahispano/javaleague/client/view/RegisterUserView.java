@@ -5,7 +5,6 @@ package org.javahispano.javaleague.client.view;
 
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Label;
-import org.gwtbootstrap3.client.ui.Modal;
 import org.gwtbootstrap3.client.ui.SubmitButton;
 import org.gwtbootstrap3.client.ui.TextBox;
 import org.javahispano.javaleague.client.presenter.RegisterUserPresenter;

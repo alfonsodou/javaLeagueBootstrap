@@ -5,7 +5,7 @@
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
 
-	<b:Container>
+	<b:Row>
 		<b:Form type="HORIZONTAL">
 			<b:Legend>
 				<ui:msg key="caption">Registrar</ui:msg>
@@ -19,8 +19,6 @@
 					<g:FlowPanel addStyleNames="col-lg-10">
 						<b:TextBox ui:field="userName" b:id="formUserName"></b:TextBox>
 					</g:FlowPanel>
-
-					<b:Label ui:field="errorLabel"></b:Label>
 
 				</b:FormGroup>
 
@@ -56,6 +54,10 @@
 					</g:FlowPanel>
 
 				</b:FormGroup>
+
+				<b:FormGroup>
+					<b:Label ui:field="errorLabel" type="DANGER"></b:Label>
+				</b:FormGroup>
 				<b:ButtonGroup>
 					<b:SubmitButton ui:field="registerButton" type="PRIMARY">
 						<ui:msg key="register">Registrar</ui:msg>
@@ -67,5 +69,5 @@
 
 			</b:FieldSet>
 		</b:Form>
-	</b:Container>
+	</b:Row>
 </ui:UiBinder> 
