@@ -14,6 +14,8 @@ import org.javahispano.javaleague.client.event.ShowHomeEvent;
 import org.javahispano.javaleague.client.event.ShowHomeEventHandler;
 import org.javahispano.javaleague.client.event.ShowMyLeaguesEvent;
 import org.javahispano.javaleague.client.event.ShowMyLeaguesEventHandler;
+import org.javahispano.javaleague.client.event.ShowRegisterUserEvent;
+import org.javahispano.javaleague.client.event.ShowRegisterUserEventHandler;
 import org.javahispano.javaleague.client.event.TacticEditEvent;
 import org.javahispano.javaleague.client.event.TacticEditEventHandler;
 import org.javahispano.javaleague.client.event.UpdateTacticEvent;
@@ -23,14 +25,17 @@ import org.javahispano.javaleague.client.event.ViewMatchEventHandler;
 import org.javahispano.javaleague.client.presenter.CreateLeaguePresenter;
 import org.javahispano.javaleague.client.presenter.MyLeaguesPresenter;
 import org.javahispano.javaleague.client.presenter.Presenter;
+import org.javahispano.javaleague.client.presenter.RegisterUserPresenter;
 import org.javahispano.javaleague.client.presenter.TacticEditPresenter;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
 import org.javahispano.javaleague.client.service.LoginServiceAsync;
 import org.javahispano.javaleague.client.service.MatchServiceAsync;
 import org.javahispano.javaleague.client.service.TacticServiceAsync;
+import org.javahispano.javaleague.client.service.UserAccountServiceAsync;
 import org.javahispano.javaleague.client.service.UserFileServiceAsync;
 import org.javahispano.javaleague.client.view.CreateLeagueView;
 import org.javahispano.javaleague.client.view.MyLeaguesView;
+import org.javahispano.javaleague.client.view.RegisterUserView;
 import org.javahispano.javaleague.client.view.TacticEditView;
 import org.javahispano.javaleague.shared.MatchDTO;
 import org.javahispano.javaleague.shared.UserDTO;
@@ -48,6 +53,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
  * 
  */
 public class AppController implements ValueChangeHandler<String> {
+	// RPC services
 
 	private final SimpleEventBus eventBus;
 	private final TacticServiceAsync userTacticService;
@@ -55,23 +61,25 @@ public class AppController implements ValueChangeHandler<String> {
 	private final UserFileServiceAsync userFileService;
 	private final MatchServiceAsync matchService;
 	private final LeagueServiceAsync leagueService;
+	private final UserAccountServiceAsync userAccountService;
 
 	private UserDTO currentUser;
 	private String currentTacticId;
 	private String matchID;
 	private MatchDTO matchDTO;
 
-	// RPC services
-
+	
 	public AppController(TacticServiceAsync rpcService,
 			LoginServiceAsync loginService,
 			UserFileServiceAsync userFileService,
-			MatchServiceAsync matchService, LeagueServiceAsync leagueService, SimpleEventBus eventBus) {
+			MatchServiceAsync matchService, LeagueServiceAsync leagueService,
+			UserAccountServiceAsync userAccountService, SimpleEventBus eventBus) {
 		this.userTacticService = rpcService;
 		this.loginService = loginService;
 		this.userFileService = userFileService;
 		this.matchService = matchService;
 		this.leagueService = leagueService;
+		this.userAccountService = userAccountService;
 		this.eventBus = eventBus;
 
 		bind();
@@ -139,6 +147,7 @@ public class AppController implements ValueChangeHandler<String> {
 					public void onCancelUpdateTactic(
 							CancelUpdateTacticEvent event) {
 						GWT.log("AppController: CancelUpdateTactic Event received.");
+						eventBus.fireEvent(new CancelUpdateTacticEvent());
 						doCancelUpdateTactic();
 					}
 
@@ -173,6 +182,7 @@ public class AppController implements ValueChangeHandler<String> {
 					}
 
 				});
+
 	}
 
 	private void doLogout() {
@@ -223,9 +233,9 @@ public class AppController implements ValueChangeHandler<String> {
 			Presenter presenter = null;
 
 			if (token.equals("login")) {
-				
+
 				JavaLeagueApp.get().setCurrentUser(null);
-				JavaLeagueApp.get().showMainView();;
+				JavaLeagueApp.get().showMainView();
 
 				return;
 			} else if (token.equals("showHome")) {
@@ -240,6 +250,13 @@ public class AppController implements ValueChangeHandler<String> {
 
 				presenter = new MyLeaguesPresenter(userTacticService,
 						matchService, eventBus, new MyLeaguesView());
+				presenter.go(JavaLeagueApp.get().getCenterPanel());
+
+				return;
+			} else if (token.equals("showRegisterUser")) {
+				presenter = new RegisterUserPresenter(userAccountService,
+						eventBus, new RegisterUserView());
+				JavaLeagueApp.get().getCenterPanel().clear();
 				presenter.go(JavaLeagueApp.get().getCenterPanel());
 
 				return;
@@ -276,8 +293,8 @@ public class AppController implements ValueChangeHandler<String> {
 				createLeaguePopup.setAutoHideEnabled(true);
 				createLeaguePopup.center();
 
-				presenter = new CreateLeaguePresenter(leagueService,
-						eventBus, createLeagueView);
+				presenter = new CreateLeaguePresenter(leagueService, eventBus,
+						createLeagueView);
 
 				presenter.go(createLeaguePopup);
 

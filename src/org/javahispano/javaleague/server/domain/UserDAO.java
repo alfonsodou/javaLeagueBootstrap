@@ -36,4 +36,11 @@ public class UserDAO extends DAOBase {
 		
 		return q.get();
 	}
+	
+	public User findByEmail(String emailAddress) {
+		Query<User> q = ofy().query(User.class).filter("emailAddress", emailAddress);
+		
+		return q.get();
+	}
+
 }

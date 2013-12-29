@@ -37,9 +37,11 @@
 		/> </replace-with> <public path="resources"> <exclude name="** /*.java" /> 
 		<exclude name="** /*.class" /> </public> -->
 
+	<!-- 
 	<inherits name="org.hibernate.validator.HibernateValidator" />
 	<replace-with
 		class="org.javahispano.javaleague.client.validation.MyValidatorFactory">
 		<when-type-is class="javax.validation.ValidatorFactory" />
 	</replace-with>
+	 -->
 </module>

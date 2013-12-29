@@ -66,7 +66,7 @@ public class JavaLeagueApp implements EntryPoint {
 			.create(JavaLeagueAppUiBinder.class);
 
 	private UserDTO currentUser;
-	private final UserAccountServiceAsync userService = GWT
+	private final UserAccountServiceAsync userAccountService = GWT
 			.create(UserAccountService.class);
 
 	RootLayoutPanel root;
@@ -113,6 +113,9 @@ public class JavaLeagueApp implements EntryPoint {
 
 		RootPanel.get().add(ourUiBinder.createAndBindUi(this));
 
+		MenuController menuController = new MenuController(userAccountService,
+				eventBus);
+
 		if (currentUser == null) {
 			showMainView();
 		} else {
@@ -158,7 +161,7 @@ public class JavaLeagueApp implements EntryPoint {
 	public void showMainView() {
 
 		headerPanel.clear();
-		menuPresenter = new MenuPresenter(new MenuView());
+		menuPresenter = new MenuPresenter(eventBus, new MenuView());
 		menuPresenter.go(headerPanel);
 
 		centerPanel.clear();
@@ -184,7 +187,7 @@ public class JavaLeagueApp implements EntryPoint {
 		LeagueServiceAsync leagueService = GWT.create(LeagueService.class);
 		AppController appViewer = new AppController(tacticService,
 				loginService, userFileService, matchService, leagueService,
-				eventBus);
+				userAccountService, eventBus);
 		appViewer.go();
 
 		headerPanel.clear();

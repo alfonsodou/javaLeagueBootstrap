@@ -19,4 +19,6 @@ public interface UserAccountService extends RemoteService {
    */
   UserDTO login(String email, String password);
   
+  UserDTO register(UserDTO userDTO);
+  
 }

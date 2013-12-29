@@ -39,8 +39,15 @@ public class RegisterUserView extends Composite implements
 	@UiField
 	TextBox rePassword;
 	@UiField
-	Label errorLabel;
+	Label errorUserName;
+	@UiField
+	Label errorEmail;
+	@UiField
+	Label errorPassword;
+	@UiField
+	Label errorPasswordSize;
 
+	
 	private static RegisterUserViewUiBinder uiBinder = GWT
 			.create(RegisterUserViewUiBinder.class);
 
@@ -94,7 +101,24 @@ public class RegisterUserView extends Composite implements
 	}
 
 	@Override
-	public Label getErrorLabel() {
-		return errorLabel;
+	public Label getErrorUserName() {
+		return errorUserName;
 	}
+
+
+	@Override
+	public Label getErrorEmail() {
+		return errorEmail;
+	}
+
+
+	@Override
+	public Label getErrorPassword() {
+		return errorPassword;
+	}
+	
+	@Override
+	public Label getErrorPasswordSize() {
+		return errorPasswordSize;
+	}	
 }

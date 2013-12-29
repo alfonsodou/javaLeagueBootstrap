@@ -19,4 +19,6 @@ public interface UserAccountServiceAsync {
 	void login(String email, String password, 
 			AsyncCallback<UserDTO> callback);
 
+	void register(UserDTO userDTO, AsyncCallback<UserDTO> callback);
+
 }
