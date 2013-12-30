@@ -1,8 +1,6 @@
 package org.javahispano.javaleague.client.presenter;
 
-import org.javahispano.javaleague.client.JavaLeagueApp;
 import org.javahispano.javaleague.client.event.ShowRegisterUserEvent;
-import org.javahispano.javaleague.client.view.RegisterUserView;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -39,9 +37,8 @@ public class MenuPresenter implements Presenter {
 
 		this.display.getRegisterLink().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				eventBus.fireEvent(new ShowRegisterUserEvent());
 				GWT.log("MenuPresenter: Firing ShowRegisterUserEvent");
-
+				eventBus.fireEvent(new ShowRegisterUserEvent());
 			}
 		});
 

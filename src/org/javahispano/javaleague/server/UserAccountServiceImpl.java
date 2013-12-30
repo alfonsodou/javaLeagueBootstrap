@@ -3,9 +3,12 @@
  */
 package org.javahispano.javaleague.server;
 
+import java.util.Date;
+
 import org.javahispano.javaleague.client.service.UserAccountService;
 import org.javahispano.javaleague.server.domain.User;
 import org.javahispano.javaleague.server.domain.UserDAO;
+import org.javahispano.javaleague.server.utils.SessionIdentifierGenerator;
 import org.javahispano.javaleague.shared.UserDTO;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -35,6 +38,13 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 		if (user != null) { 
 			return null;
 		}
+		
+		SessionIdentifierGenerator userTokenGenerator = new SessionIdentifierGenerator();
+		user.setDateTokenActivate(new Date());
+		user.setTokenActivate(userTokenGenerator.nextSessionId());
+		user.setEmailAddress(userDTO.getEmailAddress());
+		user.setName(userDTO.getName());
+		user.setPassword(userDTO.getPassword());
 		
 		return userDTO;
 	}

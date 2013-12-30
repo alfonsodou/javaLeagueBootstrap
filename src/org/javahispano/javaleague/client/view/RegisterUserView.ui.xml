@@ -37,6 +37,9 @@
 								<b:Label ui:field="errorEmail" type="DANGER">
 									<ui:msg key="errorEmail">Dirección de correo inválida</ui:msg>
 								</b:Label>
+								<b:Label ui:field="errorRegisterEmail" type="DANGER">
+									<ui:msg key="errorRegisterEmail">Dirección de correo ya registrada</ui:msg>
+								</b:Label>								
 							</g:FlowPanel>
 
 						</b:FormGroup>

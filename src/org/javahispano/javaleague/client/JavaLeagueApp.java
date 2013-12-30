@@ -10,10 +10,8 @@ import org.javahispano.javaleague.client.event.ContentAvailableEvent;
 import org.javahispano.javaleague.client.event.LoginEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.presenter.BusyIndicatorPresenter;
-import org.javahispano.javaleague.client.presenter.LoginPresenter;
 import org.javahispano.javaleague.client.presenter.MenuPresenter;
 import org.javahispano.javaleague.client.presenter.MenuPrivatePresenter;
-import org.javahispano.javaleague.client.presenter.RegisterUserPresenter;
 import org.javahispano.javaleague.client.presenter.ShowHomePresenter;
 import org.javahispano.javaleague.client.presenter.TacticPresenter;
 import org.javahispano.javaleague.client.service.LeagueService;
@@ -29,10 +27,8 @@ import org.javahispano.javaleague.client.service.UserAccountServiceAsync;
 import org.javahispano.javaleague.client.service.UserFileService;
 import org.javahispano.javaleague.client.service.UserFileServiceAsync;
 import org.javahispano.javaleague.client.view.BusyIndicatorView;
-import org.javahispano.javaleague.client.view.LoginView;
 import org.javahispano.javaleague.client.view.MenuPrivateView;
 import org.javahispano.javaleague.client.view.MenuView;
-import org.javahispano.javaleague.client.view.RegisterUserView;
 import org.javahispano.javaleague.client.view.ShowHomeView;
 import org.javahispano.javaleague.client.view.TacticView;
 import org.javahispano.javaleague.shared.UserDTO;
@@ -66,14 +62,10 @@ public class JavaLeagueApp implements EntryPoint {
 			.create(JavaLeagueAppUiBinder.class);
 
 	private UserDTO currentUser;
-	private final UserAccountServiceAsync userAccountService = GWT
-			.create(UserAccountService.class);
 
 	RootLayoutPanel root;
 	private static JavaLeagueApp singleton;
 	private SimpleEventBus eventBus = new SimpleEventBus();
-	BusyIndicatorPresenter busyIndicator = new BusyIndicatorPresenter(eventBus,
-			new BusyIndicatorView("Working hard..."));
 
 	SerializationStreamFactory pushServiceStreamFactory;
 
@@ -82,9 +74,22 @@ public class JavaLeagueApp implements EntryPoint {
 	private MenuPrivatePresenter menuPrivatePresenter;
 	private TacticPresenter tacticPresenter;
 	private ShowHomePresenter showHomePresenter;
+	private BusyIndicatorPresenter busyIndicator = new BusyIndicatorPresenter(
+			eventBus, new BusyIndicatorView("Working hard..."));
 
 	// RPC services
 	private LoginServiceAsync loginService = GWT.create(LoginService.class);
+	private final UserAccountServiceAsync userAccountService = GWT
+			.create(UserAccountService.class);
+	private TacticServiceAsync tacticService = GWT.create(TacticService.class);
+	private UserFileServiceAsync userFileService = GWT
+			.create(UserFileService.class);
+	private MatchServiceAsync matchService = GWT.create(MatchService.class);
+	private LeagueServiceAsync leagueService = GWT.create(LeagueService.class);
+
+	// Controllers
+	private MenuController menuController;
+	private AppController appViewer;
 
 	@UiField
 	SimplePanel centerPanel;
@@ -113,8 +118,8 @@ public class JavaLeagueApp implements EntryPoint {
 
 		RootPanel.get().add(ourUiBinder.createAndBindUi(this));
 
-		MenuController menuController = new MenuController(userAccountService,
-				eventBus);
+		menuController = new MenuController(userAccountService, eventBus);
+		menuController.go();
 
 		if (currentUser == null) {
 			showMainView();
@@ -180,13 +185,8 @@ public class JavaLeagueApp implements EntryPoint {
 
 	private void goAfterLogin() {
 
-		TacticServiceAsync tacticService = GWT.create(TacticService.class);
-		UserFileServiceAsync userFileService = GWT
-				.create(UserFileService.class);
-		MatchServiceAsync matchService = GWT.create(MatchService.class);
-		LeagueServiceAsync leagueService = GWT.create(LeagueService.class);
-		AppController appViewer = new AppController(tacticService,
-				loginService, userFileService, matchService, leagueService,
+		appViewer = new AppController(tacticService, loginService,
+				userFileService, matchService, leagueService,
 				userAccountService, eventBus);
 		appViewer.go();
 

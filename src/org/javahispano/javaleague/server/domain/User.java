@@ -36,6 +36,8 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	private Date lastActive;
 	
 	private String tokenActivate;
+	
+	private Date dateTokenActivate;
 
 	/**
 	 * loginId and loginProvider form a unique key. E.g.: loginId = supercobra,
@@ -196,6 +198,20 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	 */
 	public void setTokenActivate(String tokenActivate) {
 		this.tokenActivate = tokenActivate;
+	}
+
+	/**
+	 * @return the dateTokenActivate
+	 */
+	public Date getDateTokenActivate() {
+		return dateTokenActivate;
+	}
+
+	/**
+	 * @param dateTokenActivate the dateTokenActivate to set
+	 */
+	public void setDateTokenActivate(Date dateTokenActivate) {
+		this.dateTokenActivate = dateTokenActivate;
 	}
 
 	public static UserDTO toDTO(User user) {

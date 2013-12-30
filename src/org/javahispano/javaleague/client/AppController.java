@@ -14,8 +14,6 @@ import org.javahispano.javaleague.client.event.ShowHomeEvent;
 import org.javahispano.javaleague.client.event.ShowHomeEventHandler;
 import org.javahispano.javaleague.client.event.ShowMyLeaguesEvent;
 import org.javahispano.javaleague.client.event.ShowMyLeaguesEventHandler;
-import org.javahispano.javaleague.client.event.ShowRegisterUserEvent;
-import org.javahispano.javaleague.client.event.ShowRegisterUserEventHandler;
 import org.javahispano.javaleague.client.event.TacticEditEvent;
 import org.javahispano.javaleague.client.event.TacticEditEventHandler;
 import org.javahispano.javaleague.client.event.UpdateTacticEvent;

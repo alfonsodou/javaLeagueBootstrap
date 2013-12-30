@@ -69,5 +69,13 @@ public class MenuController implements ValueChangeHandler<String> {
 		}
 
 	}
+	
+	public void go() {
+		if ("".equals(History.getToken())) {
+			History.newItem("showHome");
+		} else {
+			History.fireCurrentHistoryState();
+		}
+	}	
 
 }

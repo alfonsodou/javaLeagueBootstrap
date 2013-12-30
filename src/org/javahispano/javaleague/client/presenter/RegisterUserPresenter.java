@@ -5,6 +5,8 @@ package org.javahispano.javaleague.client.presenter;
 
 import org.gwtbootstrap3.client.ui.Label;
 import org.gwtbootstrap3.client.ui.TextBox;
+import org.javahispano.javaleague.client.event.RegisterUserEvent;
+import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.service.UserAccountServiceAsync;
 import org.javahispano.javaleague.shared.UserDTO;
 
@@ -13,6 +15,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.SimpleEventBus;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -44,6 +48,8 @@ public class RegisterUserPresenter implements Presenter {
 		Label getErrorPasswordSize();
 
 		Label getErrorUserName();
+		
+		Label getErrorRegisterEmail();
 	}
 
 	private final Display display;
@@ -131,6 +137,30 @@ public class RegisterUserPresenter implements Presenter {
 		}
 
 		if (!error) {
+			userDTO.setEmailAddress(this.display.getEmail().getValue());
+			userDTO.setName(this.display.getUserName().getValue());
+			userDTO.setPassword(this.display.getPassword().getValue());
+			new RPCCall<UserDTO>() {
+				@Override
+				protected void callService(AsyncCallback<UserDTO> cb) {
+					userAccountService.register(userDTO, cb);
+				}
+
+				@Override
+				public void onSuccess(UserDTO result) {
+					if (result != null) {
+						GWT.log("RegisterUserPresenter: Firing RegisterUserEvent");
+						eventBus.fireEvent(new RegisterUserEvent(result));
+					} else {
+						display.getErrorRegisterEmail().setVisible(true);
+					}
+				}
+
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert("Error retrieve user...");
+				}
+			}.retry(3);
 
 		}
 
@@ -146,6 +176,7 @@ public class RegisterUserPresenter implements Presenter {
 		this.display.getErrorEmail().setVisible(false);
 		this.display.getErrorPassword().setVisible(false);
 		this.display.getErrorPasswordSize().setVisible(false);
+		this.display.getErrorRegisterEmail().setVisible(false);
 
 	}
 }
