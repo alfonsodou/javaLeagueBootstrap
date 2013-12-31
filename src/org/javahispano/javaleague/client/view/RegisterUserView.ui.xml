@@ -8,7 +8,7 @@
 	<b:Row>
 		<b:Panel>
 			<b:PanelBody>
-				<b:Form type="HORIZONTAL">
+				<b:Form ui:field="formRegisterUser" type="HORIZONTAL">
 					<b:Legend>
 						<ui:msg key="caption">Registrar</ui:msg>
 					</b:Legend>
@@ -39,7 +39,7 @@
 								</b:Label>
 								<b:Label ui:field="errorRegisterEmail" type="DANGER">
 									<ui:msg key="errorRegisterEmail">Dirección de correo ya registrada</ui:msg>
-								</b:Label>								
+								</b:Label>
 							</g:FlowPanel>
 
 						</b:FormGroup>
@@ -85,6 +85,11 @@
 
 					</b:FieldSet>
 				</b:Form>
+				<b:Alert ui:field="alertSendEmail">
+					<ui:msg key="alertSendEmail">Gracias por registrarte en javaLeague. Recibirás
+						un correo con las instrucciones a seguir para confirmar tu
+						registro.</ui:msg>
+				</b:Alert>
 			</b:PanelBody>
 		</b:Panel>
 	</b:Row>

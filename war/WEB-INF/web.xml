@@ -5,6 +5,17 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
 
+	<!-- ===================== UserAccount Service ===================== -->
+	<servlet>
+		<servlet-name>userAccountService</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.UserAccountServiceImpl
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>userAccountService</servlet-name>
+		<url-pattern>/javaleague/userAccountService</url-pattern>
+	</servlet-mapping>   
 
 	<!-- ===================== League Service ===================== -->
 	<servlet>

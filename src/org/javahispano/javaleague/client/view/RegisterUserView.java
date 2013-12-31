@@ -3,7 +3,9 @@
  */
 package org.javahispano.javaleague.client.view;
 
+import org.gwtbootstrap3.client.ui.Alert;
 import org.gwtbootstrap3.client.ui.Button;
+import org.gwtbootstrap3.client.ui.Form;
 import org.gwtbootstrap3.client.ui.Label;
 import org.gwtbootstrap3.client.ui.SubmitButton;
 import org.gwtbootstrap3.client.ui.TextBox;
@@ -46,6 +48,12 @@ public class RegisterUserView extends Composite implements
 	Label errorPassword;
 	@UiField
 	Label errorPasswordSize;
+	@UiField
+	Label errorRegisterEmail;
+	@UiField
+	Form formRegisterUser;
+	@UiField
+	Alert alertSendEmail;
 
 	
 	private static RegisterUserViewUiBinder uiBinder = GWT
@@ -120,5 +128,21 @@ public class RegisterUserView extends Composite implements
 	@Override
 	public Label getErrorPasswordSize() {
 		return errorPasswordSize;
+	}
+
+
+	@Override
+	public Label getErrorRegisterEmail() {
+		return errorRegisterEmail;
 	}	
+	
+	@Override
+	public Form getFormRegisterUser() {
+		return formRegisterUser;
+	}
+	
+	@Override
+	public Alert getAlertSendEmail() {
+		return alertSendEmail;
+	}
 }

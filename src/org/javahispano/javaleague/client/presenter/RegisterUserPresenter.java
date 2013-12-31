@@ -3,6 +3,8 @@
  */
 package org.javahispano.javaleague.client.presenter;
 
+import org.gwtbootstrap3.client.ui.Alert;
+import org.gwtbootstrap3.client.ui.Form;
 import org.gwtbootstrap3.client.ui.Label;
 import org.gwtbootstrap3.client.ui.TextBox;
 import org.javahispano.javaleague.client.event.RegisterUserEvent;
@@ -48,8 +50,12 @@ public class RegisterUserPresenter implements Presenter {
 		Label getErrorPasswordSize();
 
 		Label getErrorUserName();
-		
+
 		Label getErrorRegisterEmail();
+
+		Form getFormRegisterUser();
+
+		Alert getAlertSendEmail();
 	}
 
 	private final Display display;
@@ -63,20 +69,22 @@ public class RegisterUserPresenter implements Presenter {
 		this.eventBus = eventBus;
 		this.userAccountService = userAccountService;
 		userDTO = new UserDTO();
+		this.display.getAlertSendEmail().setVisible(false);
+
 		hideErrorLabel();
 	}
 
 	public void bind() {
 		this.display.getCancelButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				GWT.log("Click on Cancel Button!");
+				GWT.log("RegisterUserPresenter: Click on Cancel Button!");
 				doCancel();
 			}
 		});
 
 		this.display.getRegisterButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				GWT.log("Click on Register Button!");
+				GWT.log("RegisterUserPresenter: Click on Register Button!");
 				doRegister();
 			}
 		});
@@ -95,22 +103,6 @@ public class RegisterUserPresenter implements Presenter {
 
 	private void doRegister() {
 
-		/*
-		 * userDTO.setName(this.display.getUserName().getValue());
-		 * userDTO.setPassword(this.display.getPassword().getValue()); Validator
-		 * validator = Validation.buildDefaultValidatorFactory()
-		 * .getValidator(); Set<ConstraintViolation<UserDTO>> violations =
-		 * validator .validate(userDTO); StringBuffer errorMessage = new
-		 * StringBuffer(); if (!violations.isEmpty()) { for
-		 * (ConstraintViolation<UserDTO> constraintViolation : violations) { if
-		 * (errorMessage.length() == 0) { errorMessage.append('\n'); }
-		 * errorMessage.append(constraintViolation.getMessage()); break; }
-		 * this.display.getErrorLabel().setText(errorMessage.toString()); } else
-		 * { // Validacion en el servidor
-		 * 
-		 * }
-		 */
-
 		boolean error = false;
 
 		hideErrorLabel();
@@ -120,11 +112,11 @@ public class RegisterUserPresenter implements Presenter {
 			error = true;
 		}
 
-		if (!validateEmail(this.display.getEmail().getValue())) {
+/*		if (!validateEmail(this.display.getEmail().getValue())) {
 			this.display.getErrorEmail().setVisible(true);
 			error = true;
 		}
-
+*/
 		if (this.display.getPassword().getValue().length() < 4) {
 			this.display.getErrorPasswordSize().setVisible(true);
 			error = true;
@@ -151,6 +143,9 @@ public class RegisterUserPresenter implements Presenter {
 					if (result != null) {
 						GWT.log("RegisterUserPresenter: Firing RegisterUserEvent");
 						eventBus.fireEvent(new RegisterUserEvent(result));
+						display.getFormRegisterUser().setVisible(false);
+						display.getAlertSendEmail().setVisible(true);
+
 					} else {
 						display.getErrorRegisterEmail().setVisible(true);
 					}
@@ -166,11 +161,17 @@ public class RegisterUserPresenter implements Presenter {
 
 	}
 
-	private boolean validateEmail(String email) {
-		return email
-				.matches("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.\\-[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+/*	private boolean validateEmail(String email) {
+		boolean result = true;
+		try {
+			InternetAddress emailAddr = new InternetAddress(email);
+			emailAddr.validate();
+		} catch (AddressException ex) {
+			result = false;
+		}
+		return result;
 	}
-
+*/
 	private void hideErrorLabel() {
 		this.display.getErrorUserName().setVisible(false);
 		this.display.getErrorEmail().setVisible(false);
