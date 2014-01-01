@@ -14,18 +14,20 @@ import com.google.appengine.api.users.UserServiceFactory;
 /**
  * 
  * @author adou
- *
+ * 
  */
 public class LoginGoogleServlet extends LoginSuperServlet {
-  private static final long serialVersionUID = -4565961422877273742L;
-  private static Logger log = Logger.getLogger(LoginGoogleServlet.class
-      .getName());
-  
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String callbackURL = buildCallBackURL(request, AuthenticationProvider.GOOGLE);
-    UserService userService = UserServiceFactory.getUserService();
-    String googleLoginUrl = userService.createLoginURL(callbackURL);
-    log.info("Going to Google login URL: " + googleLoginUrl);
-    response.sendRedirect(googleLoginUrl);
-    }
-  }
+	private static final long serialVersionUID = -4565961422877273742L;
+	private static Logger log = Logger.getLogger(LoginGoogleServlet.class
+			.getName());
+
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		String callbackURL = buildCallBackURL(request,
+				AuthenticationProvider.GOOGLE);
+		UserService userService = UserServiceFactory.getUserService();
+		String googleLoginUrl = userService.createLoginURL(callbackURL);
+		log.info("Going to Google login URL: " + googleLoginUrl);
+		response.sendRedirect(googleLoginUrl);
+	}
+}

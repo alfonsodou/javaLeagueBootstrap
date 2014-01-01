@@ -39,6 +39,7 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	
 	private Date dateTokenActivate;
 
+	private boolean active;
 	/**
 	 * loginId and loginProvider form a unique key. E.g.: loginId = supercobra,
 	 * loginProvider = LoginProvider.TWITTER
@@ -51,6 +52,7 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	private static TacticUserDAO tacticUserDAO = new TacticUserDAO();
 	
 	public User() {
+		this.active = false;
 	}
 
 	public User(String loginId, Integer loginProvider) {
@@ -212,6 +214,21 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	 */
 	public void setDateTokenActivate(Date dateTokenActivate) {
 		this.dateTokenActivate = dateTokenActivate;
+	}
+	
+
+	/**
+	 * @return the active
+	 */
+	public boolean isActive() {
+		return active;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	public static UserDTO toDTO(User user) {

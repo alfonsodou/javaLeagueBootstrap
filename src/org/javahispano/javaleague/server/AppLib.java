@@ -18,7 +18,7 @@ import com.google.appengine.api.files.FileServiceFactory;
 import com.google.appengine.api.files.FileWriteChannel;
 
 public class AppLib {
-
+	public static String baseURL = "http://javaleague.appspot.com";
 	public static boolean isDevelopment = false;
 	public static final String INFONOTFOUND = "<h1>Error #AF31-G</h1><p>Login service credentials missing in appengine-web.xml."
 			+ " Please update this file as indicated with OAuth key information and restart the application.</p>"

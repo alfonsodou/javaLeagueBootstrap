@@ -61,7 +61,8 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 		Properties props = new Properties();
 		Session session = Session.getDefaultInstance(props, null);
 
-		String msgBody = "...";
+		String msgBody = AppLib.baseURL + "/authenticateUser?token="
+				+ user.getTokenActivate();
 
 		try {
 			Message msg = new MimeMessage(session);

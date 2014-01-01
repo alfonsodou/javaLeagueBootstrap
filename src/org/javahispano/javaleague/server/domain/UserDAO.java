@@ -43,4 +43,9 @@ public class UserDAO extends DAOBase {
 		return q.get();
 	}
 
+	public User findByToken(String token) {
+		Query<User> q = ofy().query(User.class).filter("tokenActivate", token);
+		
+		return q.get();
+	}
 }

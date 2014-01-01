@@ -160,6 +160,56 @@ public class RegisterUserPresenter implements Presenter {
 		}
 
 	}
+	
+    /**
+     * minimum email l@n.co
+     * */
+    public static boolean checkEmail(final String emlId, int dbgPrint) {
+        // ex:ak@bv.gh
+        if (emlId == null){
+            return false;
+        }
+        final int lngth = emlId.length();
+        if (lngth < 6) {
+            if (dbgPrint > 1) {
+                System.out.println(" lngth < 6");
+            }
+            return false;
+        }
+        final int locationAt = emlId.indexOf('@');
+        if (locationAt < 1) {
+            if (dbgPrint > 1) {
+                System.out.println("locationAt < 1 : " + locationAt);
+            }
+            return false;//
+        }
+        final int postLastPeriod = emlId.lastIndexOf('.');
+        if (postLastPeriod < 0) {
+            if (dbgPrint > 1) {
+                System.out.println("postLastPeriod < 0, locationAt " + locationAt);
+            }
+            return false;
+        }
+        if (dbgPrint > 1) {
+            System.out.println(" locationAt " + locationAt + ", postLastPeriod :" + postLastPeriod + " lngth " + lngth);
+        }
+        if (lngth - postLastPeriod < 3) {
+            if (dbgPrint > 1) {
+                System.out.println(" lngth - postLastPeriod < 2");
+            }
+            return false;
+        }
+        if (postLastPeriod - locationAt < 1) {
+            if (dbgPrint > 1) {
+                System.out.println(" postLastPeriod - locationAt < 1");
+            }
+            return false;
+        }
+        return true;
+
+    }
+
+
 
 /*	private boolean validateEmail(String email) {
 		boolean result = true;

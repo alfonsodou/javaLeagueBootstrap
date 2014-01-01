@@ -5,6 +5,18 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
 
+	<!-- ===================== UserFile Service ===================== -->
+	<servlet>
+		<servlet-name>userFileService</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.UserFileServiceImpl
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>userFileService</servlet-name>
+		<url-pattern>/javaleague/userFileService</url-pattern>
+	</servlet-mapping>
+
 	<!-- ===================== UserAccount Service ===================== -->
 	<servlet>
 		<servlet-name>userAccountService</servlet-name>
@@ -126,17 +138,6 @@
 		<url-pattern>/loginfacebook</url-pattern>
 	</servlet-mapping>
 
-	<!-- ===================== UserFile Service ===================== -->
-	<servlet>
-		<servlet-name>userFileService</servlet-name>
-		<servlet-class>org.javahispano.javaleague.server.UserFileServiceImpl
-		</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>userFileService</servlet-name>
-		<url-pattern>/javaleague/userFileService</url-pattern>
-	</servlet-mapping>
 
 	<!-- ===================== Upload Servlet ===================== -->
 	<servlet>
@@ -189,6 +190,16 @@
 	<servlet-mapping>
 		<servlet-name>Daytime</servlet-name>
 		<url-pattern>/daytime</url-pattern>
+	</servlet-mapping>
+
+	<!-- ===================== AuthenticateUser  Servlet ===================== -->
+	<servlet>
+		<servlet-name>AuthenticateUser</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.servlets.AuthenticateUserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AuthenticateUser</servlet-name>
+		<url-pattern>/authenticateUser</url-pattern>
 	</servlet-mapping>
 	
 	<!-- Default page to serve -->
