@@ -85,11 +85,11 @@
 
 					</b:FieldSet>
 				</b:Form>
-				<b:Alert ui:field="alertSendEmail">
-					<ui:msg key="alertSendEmail">Gracias por registrarte en javaLeague. Recibirás
+				<b:Paragraph ui:field="textSendEmail">
+					<ui:msg key="textSendEmail">Gracias por registrarte en javaLeague. Recibirás
 						un correo con las instrucciones a seguir para confirmar tu
 						registro.</ui:msg>
-				</b:Alert>
+				</b:Paragraph>
 			</b:PanelBody>
 		</b:Panel>
 	</b:Row>

@@ -3,12 +3,13 @@
  */
 package org.javahispano.javaleague.client.presenter;
 
-import org.gwtbootstrap3.client.ui.Alert;
 import org.gwtbootstrap3.client.ui.Form;
 import org.gwtbootstrap3.client.ui.Label;
+import org.gwtbootstrap3.client.ui.Paragraph;
 import org.gwtbootstrap3.client.ui.TextBox;
 import org.javahispano.javaleague.client.event.RegisterUserEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
+import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.UserAccountServiceAsync;
 import org.javahispano.javaleague.shared.UserDTO;
 
@@ -55,7 +56,7 @@ public class RegisterUserPresenter implements Presenter {
 
 		Form getFormRegisterUser();
 
-		Alert getAlertSendEmail();
+		Paragraph getTextSendEmail();
 	}
 
 	private final Display display;
@@ -63,13 +64,16 @@ public class RegisterUserPresenter implements Presenter {
 	private final SimpleEventBus eventBus;
 	private final UserAccountServiceAsync userAccountService;
 
+	private JavaLeagueMessages javaLeagueMessages = GWT
+			.create(JavaLeagueMessages.class);
+
 	public RegisterUserPresenter(UserAccountServiceAsync userAccountService,
 			SimpleEventBus eventBus, Display display) {
 		this.display = display;
 		this.eventBus = eventBus;
 		this.userAccountService = userAccountService;
 		userDTO = new UserDTO();
-		this.display.getAlertSendEmail().setVisible(false);
+		this.display.getTextSendEmail().setVisible(false);
 
 		hideErrorLabel();
 	}
@@ -112,11 +116,11 @@ public class RegisterUserPresenter implements Presenter {
 			error = true;
 		}
 
-/*		if (!validateEmail(this.display.getEmail().getValue())) {
+		if (!checkEmail(this.display.getEmail().getValue())) {
 			this.display.getErrorEmail().setVisible(true);
 			error = true;
 		}
-*/
+
 		if (this.display.getPassword().getValue().length() < 4) {
 			this.display.getErrorPasswordSize().setVisible(true);
 			error = true;
@@ -135,7 +139,10 @@ public class RegisterUserPresenter implements Presenter {
 			new RPCCall<UserDTO>() {
 				@Override
 				protected void callService(AsyncCallback<UserDTO> cb) {
-					userAccountService.register(userDTO, cb);
+					userAccountService.register(userDTO,
+							javaLeagueMessages.adminJavaLeague(),
+							javaLeagueMessages.subjectEmailRegisterUser(),
+							javaLeagueMessages.bodyEmailRegisterUser(), cb);
 				}
 
 				@Override
@@ -144,7 +151,7 @@ public class RegisterUserPresenter implements Presenter {
 						GWT.log("RegisterUserPresenter: Firing RegisterUserEvent");
 						eventBus.fireEvent(new RegisterUserEvent(result));
 						display.getFormRegisterUser().setVisible(false);
-						display.getAlertSendEmail().setVisible(true);
+						display.getTextSendEmail().setVisible(true);
 
 					} else {
 						display.getErrorRegisterEmail().setVisible(true);
@@ -160,68 +167,43 @@ public class RegisterUserPresenter implements Presenter {
 		}
 
 	}
-	
-    /**
-     * minimum email l@n.co
-     * */
-    public static boolean checkEmail(final String emlId, int dbgPrint) {
-        // ex:ak@bv.gh
-        if (emlId == null){
-            return false;
-        }
-        final int lngth = emlId.length();
-        if (lngth < 6) {
-            if (dbgPrint > 1) {
-                System.out.println(" lngth < 6");
-            }
-            return false;
-        }
-        final int locationAt = emlId.indexOf('@');
-        if (locationAt < 1) {
-            if (dbgPrint > 1) {
-                System.out.println("locationAt < 1 : " + locationAt);
-            }
-            return false;//
-        }
-        final int postLastPeriod = emlId.lastIndexOf('.');
-        if (postLastPeriod < 0) {
-            if (dbgPrint > 1) {
-                System.out.println("postLastPeriod < 0, locationAt " + locationAt);
-            }
-            return false;
-        }
-        if (dbgPrint > 1) {
-            System.out.println(" locationAt " + locationAt + ", postLastPeriod :" + postLastPeriod + " lngth " + lngth);
-        }
-        if (lngth - postLastPeriod < 3) {
-            if (dbgPrint > 1) {
-                System.out.println(" lngth - postLastPeriod < 2");
-            }
-            return false;
-        }
-        if (postLastPeriod - locationAt < 1) {
-            if (dbgPrint > 1) {
-                System.out.println(" postLastPeriod - locationAt < 1");
-            }
-            return false;
-        }
-        return true;
 
-    }
-
-
-
-/*	private boolean validateEmail(String email) {
-		boolean result = true;
-		try {
-			InternetAddress emailAddr = new InternetAddress(email);
-			emailAddr.validate();
-		} catch (AddressException ex) {
-			result = false;
+	/**
+	 * minimum email l@n.co
+	 * */
+	public static boolean checkEmail(final String emlId) {
+		// ex:ak@bv.gh
+		if (emlId == null) {
+			return false;
 		}
-		return result;
+		final int lngth = emlId.length();
+		if (lngth < 6) {
+			return false;
+		}
+		final int locationAt = emlId.indexOf('@');
+		if (locationAt < 1) {
+			return false;
+		}
+		final int postLastPeriod = emlId.lastIndexOf('.');
+		if (postLastPeriod < 0) {
+			return false;
+		}
+		if (lngth - postLastPeriod < 3) {
+			return false;
+		}
+		if (postLastPeriod - locationAt < 1) {
+			return false;
+		}
+		return true;
+
 	}
-*/
+
+	/*
+	 * private boolean validateEmail(String email) { boolean result = true; try
+	 * { InternetAddress emailAddr = new InternetAddress(email);
+	 * emailAddr.validate(); } catch (AddressException ex) { result = false; }
+	 * return result; }
+	 */
 	private void hideErrorLabel() {
 		this.display.getErrorUserName().setVisible(false);
 		this.display.getErrorEmail().setVisible(false);

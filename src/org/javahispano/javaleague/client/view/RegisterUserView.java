@@ -7,6 +7,7 @@ import org.gwtbootstrap3.client.ui.Alert;
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Form;
 import org.gwtbootstrap3.client.ui.Label;
+import org.gwtbootstrap3.client.ui.Paragraph;
 import org.gwtbootstrap3.client.ui.SubmitButton;
 import org.gwtbootstrap3.client.ui.TextBox;
 import org.javahispano.javaleague.client.presenter.RegisterUserPresenter;
@@ -53,7 +54,7 @@ public class RegisterUserView extends Composite implements
 	@UiField
 	Form formRegisterUser;
 	@UiField
-	Alert alertSendEmail;
+	Paragraph textSendEmail;
 
 	
 	private static RegisterUserViewUiBinder uiBinder = GWT
@@ -142,7 +143,7 @@ public class RegisterUserView extends Composite implements
 	}
 	
 	@Override
-	public Alert getAlertSendEmail() {
-		return alertSendEmail;
+	public Paragraph getTextSendEmail() {
+		return textSendEmail;
 	}
 }

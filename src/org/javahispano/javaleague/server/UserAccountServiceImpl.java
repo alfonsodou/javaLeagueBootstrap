@@ -15,12 +15,14 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.UserAccountService;
 import org.javahispano.javaleague.server.domain.User;
 import org.javahispano.javaleague.server.domain.UserDAO;
 import org.javahispano.javaleague.server.utils.SessionIdentifierGenerator;
 import org.javahispano.javaleague.shared.UserDTO;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -39,7 +41,8 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public UserDTO register(UserDTO userDTO) {
+	public UserDTO register(UserDTO userDTO, String msgFrom, String msgSubject,
+			String msgBody) {
 		User user = userDAO.findByEmail(userDTO.getEmailAddress());
 
 		// Ya está registrada esa dirección de correo
@@ -61,16 +64,23 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 		Properties props = new Properties();
 		Session session = Session.getDefaultInstance(props, null);
 
-		String msgBody = AppLib.baseURL + "/authenticateUser?token="
-				+ user.getTokenActivate();
+		msgBody.replaceAll("[0]", user.getName());
+		msgBody.replaceAll("[1]", AppLib.baseURL + "/authenticateUser?token="
+				+ user.getTokenActivate());
+		msgBody.replaceAll("[2]", AppLib.emailAdmin);
 
+		/*
+		 * String msgBody = javaLeagueMessages.bodyEmailRegisterUser(
+		 * user.getName(), AppLib.baseURL + "/authenticateUser?token=" +
+		 * user.getTokenActivate(), AppLib.emailAdmin);
+		 */
 		try {
 			Message msg = new MimeMessage(session);
-			msg.setFrom(new InternetAddress("javaleague@gmail.com",
-					"javaLeague Admin"));
+			msg.setFrom(new InternetAddress(AppLib.emailAdmin,
+					msgFrom));
 			msg.addRecipient(Message.RecipientType.TO,
 					new InternetAddress(user.getEmailAddress(), user.getName()));
-			msg.setSubject("Your javaLeague account has been activated");
+			msg.setSubject(msgSubject);
 			msg.setText(msgBody);
 			Transport.send(msg);
 
