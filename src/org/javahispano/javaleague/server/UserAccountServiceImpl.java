@@ -64,10 +64,11 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 		Properties props = new Properties();
 		Session session = Session.getDefaultInstance(props, null);
 
-		msgBody.replaceAll("#0#", user.getName());
-		msgBody.replaceAll("#1#", AppLib.baseURL + "/authenticateUser?token="
-				+ user.getTokenActivate());
-		msgBody.replaceAll("#2#", AppLib.emailAdmin);
+		msgBody = msgBody.replace("#0#", user.getName());
+		msgBody = msgBody.replace("#1#", AppLib.baseURL
+				+ "/authenticateUser?token=" + user.getTokenActivate());
+		msgBody = msgBody.replace("#2#", AppLib.emailAdmin);
+		msgBody = msgBody.replace("#3#", msgFrom);
 
 		/*
 		 * String msgBody = javaLeagueMessages.bodyEmailRegisterUser(
@@ -76,8 +77,7 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 		 */
 		try {
 			Message msg = new MimeMessage(session);
-			msg.setFrom(new InternetAddress(AppLib.emailAdmin,
-					msgFrom));
+			msg.setFrom(new InternetAddress(AppLib.emailAdmin, msgFrom));
 			msg.addRecipient(Message.RecipientType.TO,
 					new InternetAddress(user.getEmailAddress(), user.getName()));
 			msg.setSubject(msgSubject);

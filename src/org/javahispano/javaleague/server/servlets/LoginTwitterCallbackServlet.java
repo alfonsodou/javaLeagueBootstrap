@@ -50,6 +50,6 @@ public class LoginTwitterCallbackServlet extends HttpServlet {
       e.printStackTrace();
     }
 
-    response.sendRedirect(LoginHelper.getApplitionURL(request));
+    response.sendRedirect(LoginHelper.getApplicationURL(request));
   }
 }

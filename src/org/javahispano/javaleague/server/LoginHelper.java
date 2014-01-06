@@ -30,7 +30,7 @@ public class LoginHelper extends RemoteServiceServlet {
 	private static final int NUM_RETRIES = 5;
 	private static UserDAO userDAO = new UserDAO();	
 
-	static public String getApplitionURL(HttpServletRequest request) {
+	static public String getApplicationURL(HttpServletRequest request) {
 
 		if (ServletHelper.isDevelopment(request)) {
 			AppLib.isDevelopment = true;

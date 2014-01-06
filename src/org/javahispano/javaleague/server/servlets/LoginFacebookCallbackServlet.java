@@ -60,7 +60,7 @@ public class LoginFacebookCallbackServlet extends HttpServlet {
       /*
        * All done. Let's go home.
        */
-      response.sendRedirect(LoginHelper.getApplitionURL(request));
+      response.sendRedirect(LoginHelper.getApplicationURL(request));
 
     }
   }

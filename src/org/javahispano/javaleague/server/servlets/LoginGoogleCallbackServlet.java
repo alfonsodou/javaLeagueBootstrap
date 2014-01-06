@@ -33,6 +33,6 @@ public class LoginGoogleCallbackServlet extends HttpServlet {
   
       log.info("User id:" + connectr.getId().toString() + " " + request.getUserPrincipal().getName());
     }
-    response.sendRedirect(LoginHelper.getApplitionURL(request));
+    response.sendRedirect(LoginHelper.getApplicationURL(request));
   }
 }

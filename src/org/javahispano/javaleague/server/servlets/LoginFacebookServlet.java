@@ -76,7 +76,7 @@ public class LoginFacebookServlet extends LoginSuperServlet {
       /*
        * All done. Let's go home.
        */
-      response.sendRedirect(LoginHelper.getApplitionURL(request));
+      response.sendRedirect(LoginHelper.getApplicationURL(request));
 
     } else { 
       // Redirect to Facebook login page

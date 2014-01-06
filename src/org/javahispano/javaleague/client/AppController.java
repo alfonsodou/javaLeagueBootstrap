@@ -258,6 +258,13 @@ public class AppController implements ValueChangeHandler<String> {
 				presenter.go(JavaLeagueApp.get().getCenterPanel());
 
 				return;
+			} else if (token.equals("showAuthenticateUser")) {
+				presenter = new RegisterUserPresenter(userAccountService,
+						eventBus, new RegisterUserView());
+				JavaLeagueApp.get().getCenterPanel().clear();
+				presenter.go(JavaLeagueApp.get().getCenterPanel());
+
+				return;
 			} else if (token.equals("showTactics")) {
 				TacticEditView tacticEditView = new TacticEditView();
 

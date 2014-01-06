@@ -40,9 +40,10 @@ public class AuthenticateUserServlet extends HttpServlet {
 				user.setActive(true);
 				user.setLastActive(new Date());
 				user.setLastLoginOn(new Date());
+				
+				user = new LoginHelper().loginStarts(req.getSession(), user);
+				userDAO.save(user);
 			}
-			userDAO.save(user);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.warning(e.getMessage());
@@ -50,8 +51,8 @@ public class AuthenticateUserServlet extends HttpServlet {
 
 		/*
 		 * All done. Let's go home.
-		 */
-		resp.sendRedirect(LoginHelper.getApplitionURL(req));
+		 */	
+		resp.sendRedirect(LoginHelper.getApplicationURL(req) + "/?#showAuthenticateUser");
 
 	}
 
