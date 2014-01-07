@@ -8,6 +8,7 @@ import org.gwtbootstrap3.client.ui.Label;
 import org.gwtbootstrap3.client.ui.Paragraph;
 import org.gwtbootstrap3.client.ui.TextBox;
 import org.javahispano.javaleague.client.event.RegisterUserEvent;
+import org.javahispano.javaleague.client.event.ShowHomeEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.UserAccountServiceAsync;
@@ -102,7 +103,8 @@ public class RegisterUserPresenter implements Presenter {
 	}
 
 	private void doCancel() {
-
+		GWT.log("RegisterUserPresenter: Firing ShowHomeEvent");
+		eventBus.fireEvent(new ShowHomeEvent());
 	}
 
 	private void doRegister() {
@@ -199,12 +201,6 @@ public class RegisterUserPresenter implements Presenter {
 
 	}
 
-	/*
-	 * private boolean validateEmail(String email) { boolean result = true; try
-	 * { InternetAddress emailAddr = new InternetAddress(email);
-	 * emailAddr.validate(); } catch (AddressException ex) { result = false; }
-	 * return result; }
-	 */
 	private void hideErrorLabel() {
 		this.display.getErrorUserName().setVisible(false);
 		this.display.getErrorEmail().setVisible(false);

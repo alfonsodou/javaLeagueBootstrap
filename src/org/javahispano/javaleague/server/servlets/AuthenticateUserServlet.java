@@ -41,7 +41,6 @@ public class AuthenticateUserServlet extends HttpServlet {
 				user.setLastActive(new Date());
 				user.setLastLoginOn(new Date());
 				
-				user = new LoginHelper().loginStarts(req.getSession(), user);
 				userDAO.save(user);
 				
 				/*
