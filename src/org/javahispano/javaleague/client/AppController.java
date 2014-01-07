@@ -66,7 +66,6 @@ public class AppController implements ValueChangeHandler<String> {
 	private String matchID;
 	private MatchDTO matchDTO;
 
-	
 	public AppController(TacticServiceAsync rpcService,
 			LoginServiceAsync loginService,
 			UserFileServiceAsync userFileService,
@@ -91,14 +90,6 @@ public class AppController implements ValueChangeHandler<String> {
 			public void onLogout(LogoutEvent event) {
 				GWT.log("AppController: Logout event received");
 				doLogout();
-			}
-		});
-
-		eventBus.addHandler(ShowHomeEvent.TYPE, new ShowHomeEventHandler() {
-			@Override
-			public void onShowHome(ShowHomeEvent event) {
-				GWT.log("AppController: ShowHome Event received");
-				doShowHome();
 			}
 		});
 
@@ -187,10 +178,6 @@ public class AppController implements ValueChangeHandler<String> {
 		History.newItem("login");
 	}
 
-	private void doShowHome() {
-		History.newItem("showHome");
-	}
-
 	private void doShowMyLeagues() {
 		History.newItem("showMyLeagues");
 	}
@@ -234,14 +221,6 @@ public class AppController implements ValueChangeHandler<String> {
 
 				JavaLeagueApp.get().setCurrentUser(null);
 				JavaLeagueApp.get().showMainView();
-
-				return;
-			} else if (token.equals("showHome")) {
-				/*
-				 * presenter = new ShowHomePresenter(userTacticService,
-				 * matchService, eventBus, new ShowHomeView());
-				 * presenter.go(JavaLeagueApp.get().getMainPanel());
-				 */
 
 				return;
 			} else if (token.equals("showMyLeagues")) {
