@@ -43,16 +43,20 @@ public class AuthenticateUserServlet extends HttpServlet {
 				
 				user = new LoginHelper().loginStarts(req.getSession(), user);
 				userDAO.save(user);
+				
+				/*
+				 * All done. 
+				 */	
+				resp.sendRedirect(LoginHelper.getApplicationURL(req) + "/authuser.jsp");
+				
+			} else {
+				resp.sendRedirect(LoginHelper.getApplicationURL(req));				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.warning(e.getMessage());
 		}
 
-		/*
-		 * All done. Let's go home.
-		 */	
-		resp.sendRedirect(LoginHelper.getApplicationURL(req) + "/?#showAuthenticateUser");
 
 	}
 

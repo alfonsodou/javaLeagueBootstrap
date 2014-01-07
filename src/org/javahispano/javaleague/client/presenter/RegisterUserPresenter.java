@@ -136,6 +136,7 @@ public class RegisterUserPresenter implements Presenter {
 			userDTO.setEmailAddress(this.display.getEmail().getValue());
 			userDTO.setName(this.display.getUserName().getValue());
 			userDTO.setPassword(this.display.getPassword().getValue());
+			this.display.getFormRegisterUser().setVisible(false);
 			new RPCCall<UserDTO>() {
 				@Override
 				protected void callService(AsyncCallback<UserDTO> cb) {
@@ -149,11 +150,11 @@ public class RegisterUserPresenter implements Presenter {
 				public void onSuccess(UserDTO result) {
 					if (result != null) {
 						GWT.log("RegisterUserPresenter: Firing RegisterUserEvent");
-						eventBus.fireEvent(new RegisterUserEvent(result));
-						display.getFormRegisterUser().setVisible(false);
+						eventBus.fireEvent(new RegisterUserEvent(result));					
 						display.getTextSendEmail().setVisible(true);
 
 					} else {
+						display.getFormRegisterUser().setVisible(true);
 						display.getErrorRegisterEmail().setVisible(true);
 					}
 				}
