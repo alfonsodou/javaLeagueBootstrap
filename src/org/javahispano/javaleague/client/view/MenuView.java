@@ -3,7 +3,9 @@
  */
 package org.javahispano.javaleague.client.view;
 
+import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.ListItem;
+import org.gwtbootstrap3.client.ui.TextBox;
 import org.javahispano.javaleague.client.presenter.MenuPresenter;
 
 import com.google.gwt.core.client.GWT;
@@ -33,7 +35,12 @@ public class MenuView extends Composite implements MenuPresenter.Display {
 	
 	@UiField
 	ListItem registerLink;
-	
+	@UiField
+	Button loginButton;
+	@UiField
+	TextBox emailTextBox;
+	@UiField
+	TextBox passwordTextBox;
 
 	public MenuView(String firstName) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -48,6 +55,21 @@ public class MenuView extends Composite implements MenuPresenter.Display {
 	@Override
 	public HasClickHandlers getRegisterLink() {
 		return registerLink;
+	}
+
+	@Override
+	public HasClickHandlers getLoginButton() {
+		return loginButton;
+	}
+
+	@Override
+	public TextBox getEmailTextBox() {
+		return emailTextBox;
+	}
+
+	@Override
+	public TextBox getPasswordTextBox() {
+		return passwordTextBox;
 	}
 
 

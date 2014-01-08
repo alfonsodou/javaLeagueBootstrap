@@ -47,11 +47,11 @@
 				<b:NavbarForm pull="RIGHT">
 					<b:FieldSet>
 						<b:FormGroup>
-							<b:TextBox placeholder="Enter email" />
+							<b:TextBox ui:field="emailTextBox" placeholder="Enter email" />
 						</b:FormGroup>
 
 						<b:FormGroup>
-							<b:PasswordTextBox placeholder="Enter password" />
+							<b:PasswordTextBox ui:field="passwordTextBox" placeholder="Enter password" />
 						</b:FormGroup>
 <!-- 
 						<b:FormGroup>
@@ -59,7 +59,7 @@
 						</b:FormGroup>
  -->
 						<b:FormGroup>
-							<b:Button>
+							<b:Button ui:field="loginButton">
 								<ui:msg key="loginButton">Enviar</ui:msg>
 							</b:Button>
 						</b:FormGroup>

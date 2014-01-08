@@ -14,15 +14,14 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpSession;
 
-import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.UserAccountService;
 import org.javahispano.javaleague.server.domain.User;
 import org.javahispano.javaleague.server.domain.UserDAO;
 import org.javahispano.javaleague.server.utils.SessionIdentifierGenerator;
 import org.javahispano.javaleague.shared.UserDTO;
 
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -36,7 +35,24 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public UserDTO login(String email, String password) {
-		// TODO Auto-generated method stub
+		User user = userDAO.findByEmail(email);
+		
+		if ((user != null) && (user.getPassword().equals(password))) {
+			UserDTO userDTO = User.toDTO(user);
+			
+			HttpSession session = getThreadLocalRequest().getSession();
+			// update session if successful
+			session.setAttribute("userId", String.valueOf(user.getId()));
+			session.setAttribute("loggedin", true);
+
+			user.setLastActive(new Date());
+			user.setLastLoginOn(new Date());
+			
+			userDAO.save(user);
+			
+			return userDTO;	
+		}
+		
 		return null;
 	}
 
@@ -70,11 +86,6 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 		msgBody = msgBody.replace("#2#", AppLib.emailAdmin);
 		msgBody = msgBody.replace("#3#", msgFrom);
 
-		/*
-		 * String msgBody = javaLeagueMessages.bodyEmailRegisterUser(
-		 * user.getName(), AppLib.baseURL + "/authenticateUser?token=" +
-		 * user.getTokenActivate(), AppLib.emailAdmin);
-		 */
 		try {
 			Message msg = new MimeMessage(session);
 			msg.setFrom(new InternetAddress(AppLib.emailAdmin, msgFrom));

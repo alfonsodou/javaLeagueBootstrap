@@ -5,25 +5,15 @@ package org.javahispano.javaleague.shared;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.validation.constraints.Pattern;
-
 @SuppressWarnings("serial")
 public class UserDTO implements Serializable {
 
 	private String id;
 
-	@NotNull
-	@Size(min = 4, message = "El nombre debe tener una longitud de 4 caracteres como mínimo\n")
 	private String name;
 
-	@NotNull(message = "La dirección de correo no puede estar vacía\n")
 	private String emailAddress;
 
-	@NotNull
-	@Size(min = 4, message = "La contraseña debe tener una longitud de 4 caracteres como mínimo\n")
-	@Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "Debes introducir una dirección de correo válida\n")
 	private String password;
 
 	private String channelId;
@@ -38,8 +28,9 @@ public class UserDTO implements Serializable {
 
 	}
 
-	public UserDTO(String email, String name, String uniqueId, String tacticId) {
+	public UserDTO(String id, String email, String name, String uniqueId, String tacticId) {
 		this();
+		this.setId(id);
 		this.setEmailAddress(email);
 		this.setName(name);
 		this.setUniqueId(uniqueId);

@@ -166,7 +166,8 @@ public class JavaLeagueApp implements EntryPoint {
 	public void showMainView() {
 
 		headerPanel.clear();
-		menuPresenter = new MenuPresenter(eventBus, new MenuView());
+		menuPresenter = new MenuPresenter(eventBus, userAccountService,
+				new MenuView());
 		menuPresenter.go(headerPanel);
 
 		centerPanel.clear();

@@ -19,14 +19,14 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	private static final int CACHE_EXPIR = 600; // in seconds
 	private static final int NUM_RETRIES = 5;
 	private static final Logger log = Logger.getLogger(User.class.getName());
-	
+
 	@Id
 	private Long id;
-	
+
 	private String name;
 
 	private String emailAddress;
-	
+
 	private String password;
 
 	private String tacticId;
@@ -34,9 +34,9 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	private Date lastLoginOn;
 
 	private Date lastActive;
-	
+
 	private String tokenActivate;
-	
+
 	private Date dateTokenActivate;
 
 	private boolean active;
@@ -47,10 +47,10 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	private String uniqueId;
 
 	private String channelId;
-	
+
 	private static UserDAO userDAO = new UserDAO();
 	private static TacticUserDAO tacticUserDAO = new TacticUserDAO();
-	
+
 	public User() {
 		this.active = false;
 	}
@@ -60,8 +60,8 @@ public class User implements StoreCallback, Serializable, Cacheable {
 		this.setUniqueId(loginId + "-" + loginProvider);
 		this.setName(loginId);
 
-	}	
-	
+	}
+
 	/**
 	 * @return the id
 	 */
@@ -70,12 +70,12 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 
 	/**
 	 * @return the name
@@ -85,7 +85,8 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -99,7 +100,8 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	}
 
 	/**
-	 * @param emailAddress the emailAddress to set
+	 * @param emailAddress
+	 *            the emailAddress to set
 	 */
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
@@ -113,7 +115,8 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	}
 
 	/**
-	 * @param tactic the tactic to set
+	 * @param tactic
+	 *            the tactic to set
 	 */
 	public void setTactic(String tacticId) {
 		this.tacticId = tacticId;
@@ -127,7 +130,8 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	}
 
 	/**
-	 * @param lastLoginOn the lastLoginOn to set
+	 * @param lastLoginOn
+	 *            the lastLoginOn to set
 	 */
 	public void setLastLoginOn(Date lastLoginOn) {
 		this.lastLoginOn = lastLoginOn;
@@ -152,7 +156,8 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	}
 
 	/**
-	 * @param uniqueId the uniqueId to set
+	 * @param uniqueId
+	 *            the uniqueId to set
 	 */
 	public void setUniqueId(String uniqueId) {
 		this.uniqueId = uniqueId;
@@ -166,14 +171,13 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	}
 
 	/**
-	 * @param channelId the channelId to set
+	 * @param channelId
+	 *            the channelId to set
 	 */
 	public void setChannelId(String channelId) {
 		this.channelId = channelId;
 	}
 
-	
-	
 	/**
 	 * @return the password
 	 */
@@ -182,7 +186,8 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	}
 
 	/**
-	 * @param password the password to set
+	 * @param password
+	 *            the password to set
 	 */
 	public void setPassword(String password) {
 		this.password = password;
@@ -196,7 +201,8 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	}
 
 	/**
-	 * @param tokenActivate the tokenActivate to set
+	 * @param tokenActivate
+	 *            the tokenActivate to set
 	 */
 	public void setTokenActivate(String tokenActivate) {
 		this.tokenActivate = tokenActivate;
@@ -210,12 +216,12 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	}
 
 	/**
-	 * @param dateTokenActivate the dateTokenActivate to set
+	 * @param dateTokenActivate
+	 *            the dateTokenActivate to set
 	 */
 	public void setDateTokenActivate(Date dateTokenActivate) {
 		this.dateTokenActivate = dateTokenActivate;
 	}
-	
 
 	/**
 	 * @return the active
@@ -225,7 +231,8 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	}
 
 	/**
-	 * @param active the active to set
+	 * @param active
+	 *            the active to set
 	 */
 	public void setActive(boolean active) {
 		this.active = active;
@@ -235,18 +242,18 @@ public class User implements StoreCallback, Serializable, Cacheable {
 		if (user == null) {
 			return null;
 		}
-		
-		return new UserDTO(user.getEmailAddress(), user.getName(),
-				user.getUniqueId(), user.getTactic());
+
+		return new UserDTO(user.getId().toString(), user.getEmailAddress(),
+				user.getName(), user.getUniqueId(), user.getTactic());
 	}
-	
+
 	public static User findOrCreateUser(User user) {
 
 		PersistenceManager pm = PMF.getTxnPm();
 		Transaction tx = null;
 		User oneResult = null, detached = null;
 
-		String uniqueId = user.getUniqueId();	
+		String uniqueId = user.getUniqueId();
 
 		// perform the query and creation under transactional control,
 		// to prevent another process from creating an acct with the same id.
@@ -258,7 +265,7 @@ public class User implements StoreCallback, Serializable, Cacheable {
 				if (oneResult != null) {
 					log.info("User uniqueId already exists: " + uniqueId);
 					detached = oneResult;
-					//detached = pm.detachCopy(oneResult);
+					// detached = pm.detachCopy(oneResult);
 				} else {
 					log.info("UserAccount " + uniqueId
 							+ " does not exist, creating...");
@@ -266,10 +273,10 @@ public class User implements StoreCallback, Serializable, Cacheable {
 					tacticUser.addSampleTacticClass();
 					tacticUserDAO.save(tacticUser);
 					user.setTactic(tacticUser.getId().toString());
-					//AppLib.addTactic(user);
+					// AppLib.addTactic(user);
 					userDAO.save(user);
 					detached = user;
-					//detached = pm.detachCopy(user);
+					// detached = pm.detachCopy(user);
 				}
 				try {
 					tx.commit();
@@ -291,8 +298,7 @@ public class User implements StoreCallback, Serializable, Cacheable {
 
 		return detached;
 	}
-	
-	
+
 	@Override
 	public void addToCache() {
 		getTactic();
@@ -307,7 +313,7 @@ public class User implements StoreCallback, Serializable, Cacheable {
 
 	@Override
 	public void jdoPreStore() {
-				
+
 	}
 
 }
