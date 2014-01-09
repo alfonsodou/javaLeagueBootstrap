@@ -16,6 +16,7 @@ public class BusyIndicatorView extends PopupPanel implements
 	private Label message = new Label("Working...");
 
 	public BusyIndicatorView() {
+		center();
 		setAnimationEnabled(false);
 		add(message);
 	}

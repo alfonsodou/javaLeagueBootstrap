@@ -37,6 +37,7 @@ import org.javahispano.javaleague.shared.messages.Message;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.GWT.UncaughtExceptionHandler;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -114,18 +115,32 @@ public class JavaLeagueApp implements EntryPoint {
 	@Override
 	public void onModuleLoad() {
 
+		GWT.setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
+
+			@Override
+			public void onUncaughtException(Throwable e) {
+				Window.alert("uncaught: " + e.getMessage());
+				String s = buildStackTrace(e, "RuntimeExceotion:\n");
+				Window.alert(s);
+				e.printStackTrace();
+
+			}
+		});
+
 		singleton = this;
 
 		RootPanel.get().add(ourUiBinder.createAndBindUi(this));
 
 		menuController = new MenuController(userAccountService, eventBus);
 		menuController.go();
+		
+		showMainView();
 
-		if (currentUser == null) {
+		/*if (currentUser == null) {
 			showMainView();
 		} else {
-			goAfterLogin();
-		}
+			goAfterLogin(currentUser);
+		}*/
 	}
 
 	public void getLoggedInUser() {
@@ -142,7 +157,7 @@ public class JavaLeagueApp implements EntryPoint {
 				} else {
 					// user is logged in
 					setCurrentUser(loggedInUserDTO);
-					goAfterLogin();
+					goAfterLogin(loggedInUserDTO);
 					eventBus.fireEvent(new LoginEvent(currentUser));
 				}
 			}
@@ -184,23 +199,26 @@ public class JavaLeagueApp implements EntryPoint {
 		this.currentUser = currentUser;
 	}
 
-	private void goAfterLogin() {
+	public void goAfterLogin(UserDTO user) {
+		
+		setCurrentUser(user);
+		
 
 		appViewer = new AppController(tacticService, loginService,
 				userFileService, matchService, leagueService,
 				userAccountService, eventBus);
-		appViewer.go();
-
+		//appViewer.go();
+		
 		headerPanel.clear();
 		menuPrivatePresenter = new MenuPrivatePresenter(loginService, eventBus,
 				currentUser, new MenuPrivateView());
 		menuPrivatePresenter.go(headerPanel);
-
+		
 		centerPanel.clear();
 		tacticPresenter = new TacticPresenter(tacticService, matchService,
 				eventBus, new TacticView());
 		tacticPresenter.go(centerPanel);
-
+		
 		listenToChannel();
 	}
 
@@ -250,6 +268,36 @@ public class JavaLeagueApp implements EntryPoint {
 		default:
 			Window.alert("Unknown message type: " + msg.getType());
 		}
+	}
+
+	private String buildStackTrace(Throwable t, String log) {
+		// return "disabled";
+		if (t != null) {
+			log += t.getClass().toString();
+			log += t.getMessage();
+			//
+			StackTraceElement[] stackTrace = t.getStackTrace();
+			if (stackTrace != null) {
+				StringBuffer trace = new StringBuffer();
+
+				for (int i = 0; i < stackTrace.length; i++) {
+					trace.append(stackTrace[i].getClassName() + "."
+							+ stackTrace[i].getMethodName() + "("
+							+ stackTrace[i].getFileName() + ":"
+							+ stackTrace[i].getLineNumber());
+				}
+
+				log += trace.toString();
+			}
+			//
+			Throwable cause = t.getCause();
+			if (cause != null && cause != t) {
+
+				log += buildStackTrace(cause, "CausedBy:\n");
+
+			}
+		}
+		return log;
 	}
 
 }

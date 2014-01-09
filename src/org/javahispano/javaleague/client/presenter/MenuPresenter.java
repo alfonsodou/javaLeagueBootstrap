@@ -1,6 +1,7 @@
 package org.javahispano.javaleague.client.presenter;
 
 import org.gwtbootstrap3.client.ui.TextBox;
+import org.javahispano.javaleague.client.event.LoginEvent;
 import org.javahispano.javaleague.client.event.ShowRegisterUserEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.service.UserAccountServiceAsync;
@@ -76,8 +77,8 @@ public class MenuPresenter implements Presenter {
 
 			@Override
 			public void onSuccess(UserDTO result) {
-				GWT.log("MenuPresenter: Firing UserLoginEvent");
-				eventBus.fireEvent(new ShowRegisterUserEvent());
+				GWT.log("MenuPresenter: Firing LoginEvent");
+				eventBus.fireEvent(new LoginEvent(result));
 			}
 
 			@Override
