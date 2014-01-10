@@ -9,7 +9,6 @@ import org.javahispano.javaleague.client.channel.SocketListener;
 import org.javahispano.javaleague.client.event.ContentAvailableEvent;
 import org.javahispano.javaleague.client.event.LoginEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
-import org.javahispano.javaleague.client.presenter.BusyIndicatorPresenter;
 import org.javahispano.javaleague.client.presenter.MenuPresenter;
 import org.javahispano.javaleague.client.presenter.MenuPrivatePresenter;
 import org.javahispano.javaleague.client.presenter.ShowHomePresenter;
@@ -26,7 +25,6 @@ import org.javahispano.javaleague.client.service.UserAccountService;
 import org.javahispano.javaleague.client.service.UserAccountServiceAsync;
 import org.javahispano.javaleague.client.service.UserFileService;
 import org.javahispano.javaleague.client.service.UserFileServiceAsync;
-import org.javahispano.javaleague.client.view.BusyIndicatorView;
 import org.javahispano.javaleague.client.view.MenuPrivateView;
 import org.javahispano.javaleague.client.view.MenuView;
 import org.javahispano.javaleague.client.view.ShowHomeView;
@@ -75,8 +73,8 @@ public class JavaLeagueApp implements EntryPoint {
 	private MenuPrivatePresenter menuPrivatePresenter;
 	private TacticPresenter tacticPresenter;
 	private ShowHomePresenter showHomePresenter;
-	private BusyIndicatorPresenter busyIndicator = new BusyIndicatorPresenter(
-			eventBus, new BusyIndicatorView("Working hard..."));
+//	private BusyIndicatorPresenter busyIndicator = new BusyIndicatorPresenter(
+//			eventBus, new BusyIndicatorView("Working hard..."));
 
 	// RPC services
 	private LoginServiceAsync loginService = GWT.create(LoginService.class);
