@@ -18,5 +18,8 @@ public interface JavaLeagueMessages extends Messages {
 	
 	@DefaultMessage("¡ Bienvenido a javaLeague !")
 	String subjectEmailRegisterUser();
+	
+	@DefaultMessage("Usuario y/o contraseña incorrectos !")
+	String errorEmailPassword();
 
 }

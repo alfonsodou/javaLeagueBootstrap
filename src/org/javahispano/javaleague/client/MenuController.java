@@ -5,6 +5,8 @@ package org.javahispano.javaleague.client;
 
 import org.javahispano.javaleague.client.event.LoginEvent;
 import org.javahispano.javaleague.client.event.LoginEventHandler;
+import org.javahispano.javaleague.client.event.LogoutEvent;
+import org.javahispano.javaleague.client.event.LogoutEventHandler;
 import org.javahispano.javaleague.client.event.ShowHomeEvent;
 import org.javahispano.javaleague.client.event.ShowHomeEventHandler;
 import org.javahispano.javaleague.client.event.ShowRegisterUserEvent;
@@ -22,7 +24,6 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.Window;
 
 /**
  * @author adou
@@ -71,8 +72,21 @@ public class MenuController implements ValueChangeHandler<String> {
 				doLogin(event.getUser());
 			}
 		});
+		
+
+		eventBus.addHandler(LogoutEvent.TYPE, new LogoutEventHandler() {
+			@Override
+			public void onLogout(LogoutEvent event) {
+				GWT.log("AppController: Logout event received");
+				doLogout();
+			}
+		});
 	}
 
+	private void doLogout() {
+		History.newItem("showHome");
+	}
+	
 	private void doShowRegisterUser() {
 		History.newItem("showRegisterUser");
 	}

@@ -3,6 +3,7 @@
  */
 package org.javahispano.javaleague.client.view;
 
+import org.gwtbootstrap3.client.ui.AnchorButton;
 import org.gwtbootstrap3.client.ui.ListItem;
 import org.javahispano.javaleague.client.presenter.MenuPrivatePresenter;
 
@@ -27,6 +28,8 @@ public class MenuPrivateView extends Composite implements
 	ListItem myTeamLink;
 	@UiField
 	ListItem myLeaguesLink;
+	@UiField
+	AnchorButton userName;
 
 	private static MenuPrivateViewUiBinder uiBinder = GWT
 			.create(MenuPrivateViewUiBinder.class);
@@ -57,6 +60,11 @@ public class MenuPrivateView extends Composite implements
 	@Override
 	public HasClickHandlers getMyLeaguesLink() {
 		return myLeaguesLink;
+	}
+
+	@Override
+	public AnchorButton getUserName() {
+		return userName;
 	}
 
 }

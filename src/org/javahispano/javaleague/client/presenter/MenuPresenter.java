@@ -4,6 +4,7 @@ import org.gwtbootstrap3.client.ui.TextBox;
 import org.javahispano.javaleague.client.event.LoginEvent;
 import org.javahispano.javaleague.client.event.ShowRegisterUserEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
+import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.UserAccountServiceAsync;
 import org.javahispano.javaleague.shared.UserDTO;
 
@@ -41,6 +42,9 @@ public class MenuPresenter implements Presenter {
 	private final Display display;
 	private final SimpleEventBus eventBus;
 	private final UserAccountServiceAsync userAccountService;
+	
+	private JavaLeagueMessages javaLeagueMessages = GWT
+			.create(JavaLeagueMessages.class);
 
 	public MenuPresenter(SimpleEventBus eventBus,
 			UserAccountServiceAsync userAccountService, Display display) {
@@ -77,8 +81,12 @@ public class MenuPresenter implements Presenter {
 
 			@Override
 			public void onSuccess(UserDTO result) {
-				GWT.log("MenuPresenter: Firing LoginEvent");
-				eventBus.fireEvent(new LoginEvent(result));
+				if (result != null) {
+					GWT.log("MenuPresenter: Firing LoginEvent");
+					eventBus.fireEvent(new LoginEvent(result));
+				} else {
+					Window.alert(javaLeagueMessages.errorEmailPassword());
+				}
 			}
 
 			@Override

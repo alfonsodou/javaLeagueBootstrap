@@ -6,17 +6,17 @@
 	ui:generateLocales='default'>
 
 	<ui:style>
-		.danger {
-			background-color: #fcf2f2;
-			border-color: #dFb5b4;
-		}
-		
-		.margin-fix {
-			margin-bottom: 0 !important;
-		}
+	.danger {
+		background-color: #fcf2f2;
+		border-color: #dFb5b4;
+	}
+	
+	.margin-fix {
+		margin-bottom: 0 !important;
+	}
 	</ui:style>
 
-	<b:Navbar ui:field="menuNavBar">
+	<b:Navbar ui:field="menuNavBar" position="FIXED_TOP">
 		<b:Container>
 			<b:NavbarHeader>
 				<b:NavbarBrand>javaLeague</b:NavbarBrand>
@@ -32,9 +32,6 @@
 						<ui:msg key="myLeaguesLink">Mis ligas</ui:msg>
 					</b:ListItem>
 
-					<b:ListItem ui:field="logoutLink">
-						<ui:msg key="logoutLink">Salir</ui:msg>
-					</b:ListItem>
 
 					<b:ListDropDown>
 						<b:AnchorButton toggle="DROPDOWN" icon="GLOBE">Español
@@ -43,7 +40,20 @@
 							<b:ListItem>Español (es)</b:ListItem>
 							<b:ListItem>English (en)</b:ListItem>
 						</b:DropDownMenu>
+					</b:ListDropDown>		
+
+					<b:ListDropDown>
+						<b:AnchorButton ui:field="userName" toggle="DROPDOWN"></b:AnchorButton>
+						<b:DropDownMenu>
+							<b:ListItem ui:field="perfilLink">
+								<ui:msg key="perfilLink">Perfil</ui:msg>
+							</b:ListItem>
+							<b:ListItem ui:field="logoutLink">
+								<ui:msg key="logoutLink">Salir</ui:msg>
+							</b:ListItem>
+						</b:DropDownMenu>
 					</b:ListDropDown>
+
 
 				</b:NavbarNav>
 

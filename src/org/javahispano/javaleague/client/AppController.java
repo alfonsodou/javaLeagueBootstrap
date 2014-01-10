@@ -6,12 +6,9 @@ import org.javahispano.javaleague.client.event.CancelUpdateTacticEvent;
 import org.javahispano.javaleague.client.event.CancelUpdateTacticEventHandler;
 import org.javahispano.javaleague.client.event.CreateLeagueEvent;
 import org.javahispano.javaleague.client.event.CreateLeagueEventHandler;
-import org.javahispano.javaleague.client.event.LogoutEvent;
-import org.javahispano.javaleague.client.event.LogoutEventHandler;
 import org.javahispano.javaleague.client.event.PlayMatchEvent;
 import org.javahispano.javaleague.client.event.PlayMatchEventHandler;
 import org.javahispano.javaleague.client.event.ShowHomeEvent;
-import org.javahispano.javaleague.client.event.ShowHomeEventHandler;
 import org.javahispano.javaleague.client.event.ShowMyLeaguesEvent;
 import org.javahispano.javaleague.client.event.ShowMyLeaguesEventHandler;
 import org.javahispano.javaleague.client.event.TacticEditEvent;
@@ -84,14 +81,6 @@ public class AppController implements ValueChangeHandler<String> {
 
 	private void bind() {
 		History.addValueChangeHandler(this);
-
-		eventBus.addHandler(LogoutEvent.TYPE, new LogoutEventHandler() {
-			@Override
-			public void onLogout(LogoutEvent event) {
-				GWT.log("AppController: Logout event received");
-				doLogout();
-			}
-		});
 
 		eventBus.addHandler(ShowMyLeaguesEvent.TYPE,
 				new ShowMyLeaguesEventHandler() {
@@ -174,10 +163,6 @@ public class AppController implements ValueChangeHandler<String> {
 
 	}
 
-	private void doLogout() {
-		History.newItem("login");
-	}
-
 	private void doShowMyLeagues() {
 		History.newItem("showMyLeagues");
 	}
@@ -217,7 +202,7 @@ public class AppController implements ValueChangeHandler<String> {
 		if (token != null) {
 			Presenter presenter = null;
 
-			if (token.equals("login")) {
+			if (token.equals("showHome")) {
 
 				JavaLeagueApp.get().setCurrentUser(null);
 				JavaLeagueApp.get().showMainView();

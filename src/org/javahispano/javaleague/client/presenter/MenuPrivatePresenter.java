@@ -1,11 +1,14 @@
 package org.javahispano.javaleague.client.presenter;
 
+import org.gwtbootstrap3.client.ui.AnchorButton;
+import org.javahispano.javaleague.client.event.LogoutEvent;
 import org.javahispano.javaleague.client.event.ShowMyLeaguesEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.service.LoginServiceAsync;
 import org.javahispano.javaleague.shared.AuthTypes;
 import org.javahispano.javaleague.shared.UserDTO;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -26,6 +29,8 @@ public class MenuPrivatePresenter implements Presenter {
 		HasClickHandlers getLogoutLink();
 		HasClickHandlers getMyTeamLink();
 		HasClickHandlers getMyLeaguesLink();
+		
+		AnchorButton getUserName();
 
 		Widget asWidget();
 
@@ -43,6 +48,7 @@ public class MenuPrivatePresenter implements Presenter {
 		this.loginService = loginService;
 		this.eventBus = eventBus;
 		this.currentUser = currentUser;
+		this.display.getUserName().setText(currentUser.getName());
 	}
 
 	public void bind() {
@@ -73,16 +79,19 @@ public class MenuPrivatePresenter implements Presenter {
 		new RPCCall<Void>() {
 			@Override
 			protected void callService(AsyncCallback<Void> cb) {
-				if (facebookUser()) {
+				/*if (facebookUser()) {
 					Window.Location.assign("/facebooklogout.jsp");
 				} else {
 					loginService.logout(cb);
-				}
+				}*/
+				
+				loginService.logout(cb);
 			}
 
 			@Override
 			public void onSuccess(Void result) {
-				// logout event already fired by RPCCall
+				GWT.log("MenuPrivatePresenter: firing LogoutEvent");
+				eventBus.fireEvent(new LogoutEvent());
 			}
 
 			@Override
