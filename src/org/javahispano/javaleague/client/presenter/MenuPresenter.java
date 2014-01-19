@@ -1,5 +1,6 @@
 package org.javahispano.javaleague.client.presenter;
 
+import org.gwtbootstrap3.client.ui.Input;
 import org.gwtbootstrap3.client.ui.TextBox;
 import org.javahispano.javaleague.client.event.LoginEvent;
 import org.javahispano.javaleague.client.event.ShowRegisterUserEvent;
@@ -33,7 +34,7 @@ public class MenuPresenter implements Presenter {
 
 		TextBox getEmailTextBox();
 
-		TextBox getPasswordTextBox();
+		Input getPasswordTextBox();
 
 		Widget asWidget();
 
@@ -76,7 +77,7 @@ public class MenuPresenter implements Presenter {
 			@Override
 			protected void callService(AsyncCallback<UserDTO> cb) {
 				userAccountService.login(display.getEmailTextBox().getValue(),
-						display.getPasswordTextBox().getValue(), cb);
+						display.getPasswordTextBox().getFormValue(), cb);
 			}
 
 			@Override

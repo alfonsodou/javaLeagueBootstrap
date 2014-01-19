@@ -51,13 +51,10 @@
 						</b:FormGroup>
 
 						<b:FormGroup>
-							<b:PasswordTextBox ui:field="passwordTextBox" placeholder="Enter password" />
+							<b:Input type="PASSWORD" ui:field="passwordTextBox"
+								placeholder="Enter password" />
 						</b:FormGroup>
-<!-- 
-						<b:FormGroup>
-							<b:CheckBox text="Remember me" />
-						</b:FormGroup>
- -->
+						<!-- <b:FormGroup> <b:CheckBox text="Remember me" /> </b:FormGroup> -->
 						<b:FormGroup>
 							<b:Button ui:field="loginButton">
 								<ui:msg key="loginButton">Enviar</ui:msg>

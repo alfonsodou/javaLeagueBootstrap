@@ -4,6 +4,7 @@
 package org.javahispano.javaleague.client.view;
 
 import org.gwtbootstrap3.client.ui.Button;
+import org.gwtbootstrap3.client.ui.Input;
 import org.gwtbootstrap3.client.ui.ListItem;
 import org.gwtbootstrap3.client.ui.TextBox;
 import org.javahispano.javaleague.client.presenter.MenuPresenter;
@@ -40,7 +41,7 @@ public class MenuView extends Composite implements MenuPresenter.Display {
 	@UiField
 	TextBox emailTextBox;
 	@UiField
-	TextBox passwordTextBox;
+	Input passwordTextBox;
 
 	public MenuView(String firstName) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -68,7 +69,7 @@ public class MenuView extends Composite implements MenuPresenter.Display {
 	}
 
 	@Override
-	public TextBox getPasswordTextBox() {
+	public Input getPasswordTextBox() {
 		return passwordTextBox;
 	}
 

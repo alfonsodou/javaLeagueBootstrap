@@ -32,7 +32,7 @@
 			<g:SimplePanel ui:field="footerPanel">
 
 				<b:Paragraph>
-					2013 -
+					2014 -
 					<a href="http://www.javahispano.org">javaHispano</a>
 					::
 					<a href="https://github.com/svenjacobs/gwtbootstrap3">GwtBootstrap3</a>

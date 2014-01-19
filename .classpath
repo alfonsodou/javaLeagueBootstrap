@@ -11,10 +11,10 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/snakeyaml-1.8.jar"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/gwtbootstrap3-0.5-20131219.144307-3.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/twitter4j-async-3.0.3.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/twitter4j-core-3.0.3.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/twitter4j-media-support-3.0.3.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/twitter4j-stream-3.0.3.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gwtbootstrap3-0.5-20140115.202210-4.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

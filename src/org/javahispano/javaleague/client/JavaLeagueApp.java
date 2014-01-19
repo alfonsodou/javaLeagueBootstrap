@@ -118,7 +118,7 @@ public class JavaLeagueApp implements EntryPoint {
 			@Override
 			public void onUncaughtException(Throwable e) {
 				Window.alert("uncaught: " + e.getMessage());
-				String s = buildStackTrace(e, "RuntimeExceotion:\n");
+				String s = buildStackTrace(e, "RuntimeException:\n");
 				Window.alert(s);
 				e.printStackTrace();
 
@@ -134,11 +134,11 @@ public class JavaLeagueApp implements EntryPoint {
 		
 		showMainView();
 
-		/*if (currentUser == null) {
+		if (currentUser == null) {
 			showMainView();
 		} else {
 			goAfterLogin(currentUser);
-		}*/
+		}
 	}
 
 	public void getLoggedInUser() {

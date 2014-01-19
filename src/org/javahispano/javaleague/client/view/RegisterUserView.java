@@ -3,9 +3,9 @@
  */
 package org.javahispano.javaleague.client.view;
 
-import org.gwtbootstrap3.client.ui.Alert;
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Form;
+import org.gwtbootstrap3.client.ui.Input;
 import org.gwtbootstrap3.client.ui.Label;
 import org.gwtbootstrap3.client.ui.Paragraph;
 import org.gwtbootstrap3.client.ui.SubmitButton;
@@ -38,9 +38,9 @@ public class RegisterUserView extends Composite implements
 	@UiField
 	TextBox email;
 	@UiField
-	TextBox password;
+	Input password;
 	@UiField
-	TextBox rePassword;
+	Input rePassword;
 	@UiField
 	Label errorUserName;
 	@UiField
@@ -100,12 +100,12 @@ public class RegisterUserView extends Composite implements
 	}
 
 	@Override
-	public TextBox getPassword() {
+	public Input getPassword() {
 		return password;
 	}
 
 	@Override
-	public TextBox getRePassword() {
+	public Input getRePassword() {
 		return rePassword;
 	}
 

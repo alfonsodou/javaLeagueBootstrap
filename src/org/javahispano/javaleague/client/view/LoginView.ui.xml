@@ -38,7 +38,7 @@
 						</b:FormLabel>
 
 						<g:FlowPanel addStyleNames="col-lg-10">
-							<b:PasswordTextBox b:id="formPassword"></b:PasswordTextBox>
+							<b:Input type="PASSWORD" b:id="formPassword"></b:Input>
 						</g:FlowPanel>
 
 					</b:FormGroup>

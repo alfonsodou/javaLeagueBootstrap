@@ -4,6 +4,7 @@
 package org.javahispano.javaleague.client.presenter;
 
 import org.gwtbootstrap3.client.ui.Form;
+import org.gwtbootstrap3.client.ui.Input;
 import org.gwtbootstrap3.client.ui.Label;
 import org.gwtbootstrap3.client.ui.Paragraph;
 import org.gwtbootstrap3.client.ui.TextBox;
@@ -41,9 +42,9 @@ public class RegisterUserPresenter implements Presenter {
 
 		TextBox getEmail();
 
-		TextBox getPassword();
+		Input getPassword();
 
-		TextBox getRePassword();
+		Input getRePassword();
 
 		Label getErrorEmail();
 
@@ -123,13 +124,13 @@ public class RegisterUserPresenter implements Presenter {
 			error = true;
 		}
 
-		if (this.display.getPassword().getValue().length() < 4) {
+		if (this.display.getPassword().getFormValue().length() < 4) {
 			this.display.getErrorPasswordSize().setVisible(true);
 			error = true;
 		}
 
-		if (!this.display.getPassword().getValue()
-				.equals(this.display.getRePassword().getValue())) {
+		if (!this.display.getPassword().getFormValue()
+				.equals(this.display.getRePassword().getFormValue())) {
 			this.display.getErrorPassword().setVisible(true);
 			error = true;
 		}
@@ -137,7 +138,7 @@ public class RegisterUserPresenter implements Presenter {
 		if (!error) {
 			userDTO.setEmailAddress(this.display.getEmail().getValue());
 			userDTO.setName(this.display.getUserName().getValue());
-			userDTO.setPassword(this.display.getPassword().getValue());
+			userDTO.setPassword(this.display.getPassword().getFormValue());
 			this.display.getFormRegisterUser().setVisible(false);
 			new RPCCall<UserDTO>() {
 				@Override
