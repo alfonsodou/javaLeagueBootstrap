@@ -30,10 +30,11 @@ public class FrameWorkDAO extends DAOBase {
 		Key<FrameWork> key = new Key<FrameWork>(FrameWork.class, id);
 		return ofy().get(key);
 	}
-	
+
 	public FrameWork findByDefaultFrameWork(Boolean defaultFrameWork) {
-		Query<FrameWork> q = ofy().query(FrameWork.class).filter("defaultFrameWork", defaultFrameWork);
-		
+		Query<FrameWork> q = ofy().query(FrameWork.class).filter(
+				"defaultFrameWork", defaultFrameWork);
+
 		return q.get();
-	}	
+	}
 }

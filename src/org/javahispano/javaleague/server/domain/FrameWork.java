@@ -44,16 +44,18 @@ public class FrameWork implements StoreCallback, Serializable, Cacheable {
 
 	private String summary;
 
+	private String version;
+
 	private Date creation;
 
 	private Date updated;
 
 	private BlobKey framework;
-	
+
 	private Boolean active;
-	
+
 	private Boolean defaultFrameWork;
-	
+
 	private String urlDownload;
 
 	public FrameWork() {
@@ -119,8 +121,6 @@ public class FrameWork implements StoreCallback, Serializable, Cacheable {
 		this.framework = framework;
 	}
 
-	
-	
 	public Boolean getActive() {
 		return active;
 	}
@@ -129,33 +129,23 @@ public class FrameWork implements StoreCallback, Serializable, Cacheable {
 		this.active = active;
 	}
 
-	public Boolean getDefaultFramework() {
-		return defaultFrameWork;
-	}
-
-	public void setDefaultFramework(Boolean defaultFramework) {
-		this.defaultFrameWork = defaultFramework;
-	}
-
 	public void addSampleFrameWork() {
 		try {
 
-			
-			 this.setFramework(SaveFile(
-			  "http://javaleague.appspot.com/framework/framework.jar",
-			  "framework.jar"));
+			this.setFramework(SaveFile(
+					"http://javaleague.appspot.com/framework/framework.jar",
+					"framework.jar"));
 
-			 /*this.setFramework(SaveFile(
-					  "http://localhost:8888/framework/framework.jar",
-					  "framework.jar"));*/
-
+			/*
+			 * this.setFramework(SaveFile(
+			 * "http://localhost:8888/framework/framework.jar",
+			 * "framework.jar"));
+			 */
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
 
 	/**
 	 * @return the defaultFrameWork
@@ -165,7 +155,8 @@ public class FrameWork implements StoreCallback, Serializable, Cacheable {
 	}
 
 	/**
-	 * @param defaultFrameWork the defaultFrameWork to set
+	 * @param defaultFrameWork
+	 *            the defaultFrameWork to set
 	 */
 	public void setDefaultFrameWork(Boolean defaultFrameWork) {
 		this.defaultFrameWork = defaultFrameWork;
@@ -179,10 +170,26 @@ public class FrameWork implements StoreCallback, Serializable, Cacheable {
 	}
 
 	/**
-	 * @param urlDownload the urlDownload to set
+	 * @param urlDownload
+	 *            the urlDownload to set
 	 */
 	public void setUrlDownload(String urlDownload) {
 		this.urlDownload = urlDownload;
+	}
+
+	/**
+	 * @return the version
+	 */
+	public String getVersion() {
+		return version;
+	}
+
+	/**
+	 * @param version
+	 *            the version to set
+	 */
+	public void setVersion(String version) {
+		this.version = version;
 	}
 
 	@Override
