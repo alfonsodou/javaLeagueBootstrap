@@ -7,6 +7,8 @@ import org.javahispano.javaleague.client.event.LoginEvent;
 import org.javahispano.javaleague.client.event.LoginEventHandler;
 import org.javahispano.javaleague.client.event.LogoutEvent;
 import org.javahispano.javaleague.client.event.LogoutEventHandler;
+import org.javahispano.javaleague.client.event.ShowFrameWorkEvent;
+import org.javahispano.javaleague.client.event.ShowFrameWorkEventHandler;
 import org.javahispano.javaleague.client.event.ShowHomeEvent;
 import org.javahispano.javaleague.client.event.ShowHomeEventHandler;
 import org.javahispano.javaleague.client.event.ShowLoginEvent;
@@ -60,6 +62,17 @@ public class MenuController implements ValueChangeHandler<String> {
 
 				});
 
+		eventBus.addHandler(ShowFrameWorkEvent.TYPE,
+				new ShowFrameWorkEventHandler() {
+					@Override
+					public void onShowFrameWork(ShowFrameWorkEvent event) {
+						GWT.log("MenuController: ShowFrameWork Event received");
+						doShowFrameWork();
+					}
+
+				});
+
+
 		eventBus.addHandler(ShowHomeEvent.TYPE, new ShowHomeEventHandler() {
 			@Override
 			public void onShowHome(ShowHomeEvent event) {
@@ -98,6 +111,10 @@ public class MenuController implements ValueChangeHandler<String> {
 		History.newItem("showHome");
 	}
 
+	private void doShowFrameWork() {
+		History.newItem("showFrameWork");
+	}
+	
 	private void doShowRegisterUser() {
 		History.newItem("showRegisterUser");
 	}
@@ -146,6 +163,9 @@ public class MenuController implements ValueChangeHandler<String> {
 
 				JavaLeagueApp.get().goAfterLogin(userDTO);
 
+				return;
+			} else if (token.equals("showFrameWork")) {
+				
 				return;
 			}
 		}

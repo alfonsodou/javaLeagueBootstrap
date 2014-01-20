@@ -26,6 +26,10 @@
 
 			<b:NavbarCollapse b:id="navbar-collapse">
 				<b:NavbarNav>
+				
+					<b:ListItem ui:field="frameWorkLink">
+					<ui:msg key="frameWorkLink">FrameWork</ui:msg>
+					</b:ListItem>
 
 					<b:ListItem ui:field="loginLink">
 						<ui:msg key="loginLink">Login</ui:msg>

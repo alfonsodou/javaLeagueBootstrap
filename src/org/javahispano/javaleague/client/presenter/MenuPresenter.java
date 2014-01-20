@@ -1,22 +1,16 @@
 package org.javahispano.javaleague.client.presenter;
 
-import org.gwtbootstrap3.client.ui.Input;
-import org.gwtbootstrap3.client.ui.TextBox;
-import org.javahispano.javaleague.client.event.LoginEvent;
+import org.javahispano.javaleague.client.event.ShowFrameWorkEvent;
 import org.javahispano.javaleague.client.event.ShowLoginEvent;
 import org.javahispano.javaleague.client.event.ShowRegisterUserEvent;
-import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.UserAccountServiceAsync;
-import org.javahispano.javaleague.shared.UserDTO;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.SimpleEventBus;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -32,6 +26,8 @@ public class MenuPresenter implements Presenter {
 		HasClickHandlers getRegisterLink();
 
 		HasClickHandlers getLoginLink();
+		
+		HasClickHandlers getFrameWorkLink();
 
 		Widget asWidget();
 
@@ -64,6 +60,13 @@ public class MenuPresenter implements Presenter {
 			public void onClick(ClickEvent event) {
 				GWT.log("MenuPresenter: Firing ShowLoginEvent");
 				eventBus.fireEvent(new ShowLoginEvent());
+			}
+		});
+		
+		this.display.getFrameWorkLink().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				GWT.log("MenuPresenter: Firing ShowFrameWorkEvent");
+				eventBus.fireEvent(new ShowFrameWorkEvent());
 			}
 		});
 	}
