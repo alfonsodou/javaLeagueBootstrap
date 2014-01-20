@@ -11,85 +11,74 @@
 	<ui:image field='javahispano' src='../resources/images/logoJavaHispano.png' />
 
 
-	<b:Modal ui:field="loginModal" backdrop="STATIC" keyboard="true"
-		closable="true" fade="true">
-		<b:ModalBody>
+	<b:Panel>
+		<b:PanelBody>
+			<b:Row>
+				<b:Column size="MD_6">
+					<b:Form type="HORIZONTAL">
+						<b:FieldSet>
+							<b:Legend>
+								<ui:msg key="caption">Login</ui:msg>
+							</b:Legend>
 
-			<b:Form type="HORIZONTAL">
-				<b:FieldSet>
-					<b:Legend>
-						<ui:msg key="caption">Login</ui:msg>
-					</b:Legend>
+							<b:FormGroup>
+								<b:FormLabel for="formEmail" addStyleNames="col-lg-2">
+									<ui:msg key="email">Email</ui:msg>
+								</b:FormLabel>
 
-					<b:FormGroup>
-						<b:FormLabel for="formEmail" addStyleNames="col-lg-2">
-							<ui:msg key="email">Email</ui:msg>
-						</b:FormLabel>
+								<g:FlowPanel addStyleNames="col-lg-10">
+									<b:TextBox ui:field="emailTextBox" b:id="formEmail"></b:TextBox>
+								</g:FlowPanel>
+							</b:FormGroup>
 
-						<g:FlowPanel addStyleNames="col-lg-10">
-							<b:TextBox b:id="formEmail"></b:TextBox>
-						</g:FlowPanel>
+							<b:FormGroup>
+								<b:FormLabel for="formPassword" addStyleNames="col-lg-2">
+									<ui:msg key="Password">Password</ui:msg>
+								</b:FormLabel>
 
-					</b:FormGroup>
+								<g:FlowPanel addStyleNames="col-lg-10">
+									<b:Input ui:field="passwordTextBox" type="PASSWORD"
+										b:id="formPassword"></b:Input>
+								</g:FlowPanel>
+							</b:FormGroup>
 
-					<b:FormGroup>
-						<b:FormLabel for="formPassword" addStyleNames="col-lg-2">
-							<ui:msg key="Password">Password</ui:msg>
-						</b:FormLabel>
+							<b:FormGroup>
+								<g:FlowPanel addStyleNames="col-lg-10">
+									<b:CheckBoxButton>
+										<ui:msg key="rememberMe">
+											Recu&eacute;rdame
+										</ui:msg>
+									</b:CheckBoxButton>
+								</g:FlowPanel>
+							</b:FormGroup>
 
-						<g:FlowPanel addStyleNames="col-lg-10">
-							<b:Input type="PASSWORD" b:id="formPassword"></b:Input>
-						</g:FlowPanel>
-
-					</b:FormGroup>
-					<!-- <b:FormGroup> <b:CheckBoxButton> <ui:msg key="rememberMe"> Recu&eacute;rdame 
-						</ui:msg> </b:CheckBoxButton> </b:FormGroup> -->
-						
-						<!-- 
-					<b:FormGroup>
-						<g:FlowPanel addStyleNames="col-lg-10">
-							<b:FormStatic>
-								<ui:msg key="others">o
-									identif&iacute;cate
-									con
-								</ui:msg>
-							</b:FormStatic>
-						</g:FlowPanel>
-					</b:FormGroup>
-					<b:FormGroup>
-						<g:FlowPanel addStyleNames="col-lg-10">
-							<b:ButtonGroup justified="true">
-								<b:Button ui:field="twitterButton" icon="TWITTER">
-									
+							<b:ButtonGroup>
+								<b:SubmitButton ui:field="loginButton" type="PRIMARY">
+									<ui:msg key="signIn">Entrar</ui:msg>
+								</b:SubmitButton>
+								<b:Button ui:field="registerUserButton">
+									<ui:msg key="registerUserButton">Registrarme</ui:msg>
 								</b:Button>
-								<b:Button ui:field="facebookButton" icon="FACEBOOK">
-									
-								</b:Button>
-								<b:Button ui:field="googleButton" icon="GOOGLE_PLUS">
-									
+								<b:Button ui:field="cancelButton" type="DANGER"
+									dismiss="MODAL">
+									<ui:msg key="cancelSignIn">Cancelar</ui:msg>
 								</b:Button>
 							</b:ButtonGroup>
-						</g:FlowPanel>
-					</b:FormGroup>
-					 -->
-				</b:FieldSet>
-			</b:Form>
-		</b:ModalBody>
-		<b:ModalFooter>
-			<b:ButtonGroup>
-				<b:SubmitButton ui:field="loginButton" type="PRIMARY">
-					<ui:msg key="signIn">Entrar</ui:msg>
-				</b:SubmitButton>
-				<b:Button ui:field="registerUserButton">
-					<ui:msg key="registerUserButton">Registrarme</ui:msg>
-				</b:Button>
-				<b:Button ui:field="cancelButton" type="DANGER" dismiss="MODAL">
-					<ui:msg key="cancelSignIn">Cancelar</ui:msg>
-				</b:Button>
-			</b:ButtonGroup>
-		</b:ModalFooter>
 
-	</b:Modal>
+						</b:FieldSet>
+					</b:Form>
+				</b:Column>
+				<b:Column size="MD_5" offset="MD_1">
+					<b:Paragraph>
+						<ui:msg key="registerUserText">Registrándote en javaLeague podrás crear tus
+							propias ligas y competir contra tus amigos !!!</ui:msg>
+					</b:Paragraph>
+					<b:Image type="CIRCLE" url="images/logo_small.png" />
+					<b:Image type="ROUNDED" url="images/logoJavaHispano.png" />
+				</b:Column>
+			</b:Row>
+		</b:PanelBody>
+	</b:Panel>
 
 </ui:UiBinder> 
 

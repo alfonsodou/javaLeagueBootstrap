@@ -37,11 +37,7 @@ public class MenuView extends Composite implements MenuPresenter.Display {
 	@UiField
 	ListItem registerLink;
 	@UiField
-	Button loginButton;
-	@UiField
-	TextBox emailTextBox;
-	@UiField
-	Input passwordTextBox;
+	ListItem loginLink;
 
 	public MenuView(String firstName) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -52,27 +48,15 @@ public class MenuView extends Composite implements MenuPresenter.Display {
 		return this;
 	}
 
-	
 	@Override
 	public HasClickHandlers getRegisterLink() {
 		return registerLink;
 	}
 
 	@Override
-	public HasClickHandlers getLoginButton() {
-		return loginButton;
+	public HasClickHandlers getLoginLink() {
+		return loginLink;
 	}
-
-	@Override
-	public TextBox getEmailTextBox() {
-		return emailTextBox;
-	}
-
-	@Override
-	public Input getPasswordTextBox() {
-		return passwordTextBox;
-	}
-
 
 
 }

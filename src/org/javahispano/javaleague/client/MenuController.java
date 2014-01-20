@@ -9,12 +9,16 @@ import org.javahispano.javaleague.client.event.LogoutEvent;
 import org.javahispano.javaleague.client.event.LogoutEventHandler;
 import org.javahispano.javaleague.client.event.ShowHomeEvent;
 import org.javahispano.javaleague.client.event.ShowHomeEventHandler;
+import org.javahispano.javaleague.client.event.ShowLoginEvent;
+import org.javahispano.javaleague.client.event.ShowLoginEventHandler;
 import org.javahispano.javaleague.client.event.ShowRegisterUserEvent;
 import org.javahispano.javaleague.client.event.ShowRegisterUserEventHandler;
+import org.javahispano.javaleague.client.presenter.LoginPresenter;
 import org.javahispano.javaleague.client.presenter.Presenter;
 import org.javahispano.javaleague.client.presenter.RegisterUserPresenter;
 import org.javahispano.javaleague.client.presenter.ShowHomePresenter;
 import org.javahispano.javaleague.client.service.UserAccountServiceAsync;
+import org.javahispano.javaleague.client.view.LoginView;
 import org.javahispano.javaleague.client.view.RegisterUserView;
 import org.javahispano.javaleague.client.view.ShowHomeView;
 import org.javahispano.javaleague.shared.UserDTO;
@@ -32,7 +36,7 @@ import com.google.gwt.user.client.History;
 public class MenuController implements ValueChangeHandler<String> {
 	private final SimpleEventBus eventBus;
 	private final UserAccountServiceAsync userAccountService;
-	
+
 	private UserDTO userDTO;
 
 	public MenuController(UserAccountServiceAsync userAccountService,
@@ -64,15 +68,22 @@ public class MenuController implements ValueChangeHandler<String> {
 			}
 		});
 
+		eventBus.addHandler(ShowLoginEvent.TYPE, new ShowLoginEventHandler() {
+			@Override
+			public void onShowLogin(ShowLoginEvent event) {
+				GWT.log("MenuController: ShowLogin Event received");
+				doShowLogin();
+			}
+		});
+
 		eventBus.addHandler(LoginEvent.TYPE, new LoginEventHandler() {
 			@Override
 			public void onLogin(LoginEvent event) {
 				GWT.log("MenuController: Login Event received");
-				//userDTO = event.getUser();
+				// userDTO = event.getUser();
 				doLogin(event.getUser());
 			}
 		});
-		
 
 		eventBus.addHandler(LogoutEvent.TYPE, new LogoutEventHandler() {
 			@Override
@@ -86,13 +97,17 @@ public class MenuController implements ValueChangeHandler<String> {
 	private void doLogout() {
 		History.newItem("showHome");
 	}
-	
+
 	private void doShowRegisterUser() {
 		History.newItem("showRegisterUser");
 	}
 
 	private void doShowHome() {
 		History.newItem("showHome");
+	}
+
+	private void doShowLogin() {
+		History.newItem("showLogin");
 	}
 
 	private void doLogin(UserDTO userDTO) {
@@ -117,6 +132,13 @@ public class MenuController implements ValueChangeHandler<String> {
 			} else if (token.equals("showHome")) {
 
 				presenter = new ShowHomePresenter(new ShowHomeView());
+				presenter.go(JavaLeagueApp.get().getCenterPanel());
+
+				return;
+			} else if (token.equals("showLogin")) {
+				presenter = new LoginPresenter(userAccountService,
+						eventBus, new LoginView());
+				JavaLeagueApp.get().getCenterPanel().clear();
 				presenter.go(JavaLeagueApp.get().getCenterPanel());
 
 				return;

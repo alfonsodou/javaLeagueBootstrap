@@ -3,6 +3,7 @@ package org.javahispano.javaleague.client.presenter;
 import org.gwtbootstrap3.client.ui.Input;
 import org.gwtbootstrap3.client.ui.TextBox;
 import org.javahispano.javaleague.client.event.LoginEvent;
+import org.javahispano.javaleague.client.event.ShowLoginEvent;
 import org.javahispano.javaleague.client.event.ShowRegisterUserEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
@@ -30,11 +31,7 @@ public class MenuPresenter implements Presenter {
 
 		HasClickHandlers getRegisterLink();
 
-		HasClickHandlers getLoginButton();
-
-		TextBox getEmailTextBox();
-
-		Input getPasswordTextBox();
+		HasClickHandlers getLoginLink();
 
 		Widget asWidget();
 
@@ -43,7 +40,7 @@ public class MenuPresenter implements Presenter {
 	private final Display display;
 	private final SimpleEventBus eventBus;
 	private final UserAccountServiceAsync userAccountService;
-	
+
 	private JavaLeagueMessages javaLeagueMessages = GWT
 			.create(JavaLeagueMessages.class);
 
@@ -63,38 +60,12 @@ public class MenuPresenter implements Presenter {
 			}
 		});
 
-		this.display.getLoginButton().addClickHandler(new ClickHandler() {
+		this.display.getLoginLink().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				GWT.log("MenuPresenter: Click LoginButton");
-				doLogin();
+				GWT.log("MenuPresenter: Firing ShowLoginEvent");
+				eventBus.fireEvent(new ShowLoginEvent());
 			}
 		});
-
-	}
-
-	private void doLogin() {
-		new RPCCall<UserDTO>() {
-			@Override
-			protected void callService(AsyncCallback<UserDTO> cb) {
-				userAccountService.login(display.getEmailTextBox().getValue(),
-						display.getPasswordTextBox().getFormValue(), cb);
-			}
-
-			@Override
-			public void onSuccess(UserDTO result) {
-				if (result != null) {
-					GWT.log("MenuPresenter: Firing LoginEvent");
-					eventBus.fireEvent(new LoginEvent(result));
-				} else {
-					Window.alert(javaLeagueMessages.errorEmailPassword());
-				}
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("Error user login ...");
-			}
-		}.retry(3);
 	}
 
 	@Override

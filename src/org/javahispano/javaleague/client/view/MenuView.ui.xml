@@ -27,6 +27,10 @@
 			<b:NavbarCollapse b:id="navbar-collapse">
 				<b:NavbarNav>
 
+					<b:ListItem ui:field="loginLink">
+						<ui:msg key="loginLink">Login</ui:msg>
+					</b:ListItem>
+
 					<b:ListItem ui:field="registerLink">
 						<ui:msg key="registerLink">Registro</ui:msg>
 					</b:ListItem>
@@ -41,27 +45,6 @@
 					</b:ListDropDown>
 
 				</b:NavbarNav>
-
-
-
-				<b:NavbarForm pull="RIGHT">
-					<b:FieldSet>
-						<b:FormGroup>
-							<b:TextBox ui:field="emailTextBox" placeholder="Enter email" />
-						</b:FormGroup>
-
-						<b:FormGroup>
-							<b:Input type="PASSWORD" ui:field="passwordTextBox"
-								placeholder="Enter password" />
-						</b:FormGroup>
-						<!-- <b:FormGroup> <b:CheckBox text="Remember me" /> </b:FormGroup> -->
-						<b:FormGroup>
-							<b:Button ui:field="loginButton">
-								<ui:msg key="loginButton">Enviar</ui:msg>
-							</b:Button>
-						</b:FormGroup>
-					</b:FieldSet>
-				</b:NavbarForm>
 
 
 			</b:NavbarCollapse>

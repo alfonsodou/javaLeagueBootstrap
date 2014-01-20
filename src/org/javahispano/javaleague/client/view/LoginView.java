@@ -1,7 +1,9 @@
 package org.javahispano.javaleague.client.view;
 
 import org.gwtbootstrap3.client.ui.Button;
-import org.gwtbootstrap3.client.ui.Modal;
+import org.gwtbootstrap3.client.ui.Input;
+import org.gwtbootstrap3.client.ui.SubmitButton;
+import org.gwtbootstrap3.client.ui.TextBox;
 import org.javahispano.javaleague.client.presenter.LoginPresenter;
 
 import com.google.gwt.core.client.GWT;
@@ -20,21 +22,17 @@ import com.google.gwt.user.client.ui.Widget;
 public class LoginView extends Composite implements LoginPresenter.Display {
 	
 	protected Widget widget;
-	
-	/*
+
 	@UiField
-	Button googleButton;
-	@UiField
-	Button twitterButton;
-	@UiField
-	Button facebookButton;
-	*/
-	@UiField
-	Modal loginModal;
+	SubmitButton loginButton;
 	@UiField
 	Button cancelButton;
 	@UiField
 	Button registerUserButton;
+	@UiField
+	TextBox emailTextBox;
+	@UiField
+	Input passwordTextBox;
 	
 	private static UserBadgeUiBinder uiBinder = GWT
 			.create(UserBadgeUiBinder.class);
@@ -43,25 +41,9 @@ public class LoginView extends Composite implements LoginPresenter.Display {
 	}
 
 	public LoginView() {
-		setUpDialog();
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 	
-	   // DialogBox must be overridden to let the presenter handle changes onUnload
-    private void setUpDialog() {
-        loginModal = new Modal() {
-
-            @Override
-            protected void onUnload() {
-                LoginView.this.hide();
-            }
-        };
-               
-    }
-
-    public final void hide() {
-        loginModal.hide();
-    }
     
     protected final void initWidget(final Widget widget) {
         this.widget = widget;
@@ -70,28 +52,6 @@ public class LoginView extends Composite implements LoginPresenter.Display {
 	@Override
 	public Widget asWidget() {
 		return widget;
-	}
-
-	/*
-	@Override
-	public HasClickHandlers getFacebookButton() {
-		return facebookButton;
-	}
-
-	@Override
-	public HasClickHandlers getGoogleButton() {
-		return googleButton;
-	}
-
-	@Override
-	public HasClickHandlers getTwitterButton() {
-		return twitterButton;
-	}
-	*/
-	
-	@Override
-	public Modal getLoginModal() {
-		return loginModal;
 	}
 
 
@@ -103,6 +63,24 @@ public class LoginView extends Composite implements LoginPresenter.Display {
 	@Override
 	public HasClickHandlers getRegisterUserButton() {
 		return registerUserButton;
+	}
+
+
+	@Override
+	public HasClickHandlers getLoginButton() {
+		return loginButton;
+	}
+
+
+	@Override
+	public TextBox getEmailTextBox() {
+		return emailTextBox;
+	}
+
+
+	@Override
+	public Input getPasswordTextBox() {
+		return passwordTextBox;
 	}
 
 }
