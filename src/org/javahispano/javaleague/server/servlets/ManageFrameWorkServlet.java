@@ -41,7 +41,7 @@ public class ManageFrameWorkServlet extends HttpServlet {
 
 			try {
 				frameWork.setName(req.getParameter("name"));
-				frameWork.setFramework(SaveFile(req.getParameter("url"),
+				frameWork.setFrameWork(SaveFile(req.getParameter("url"),
 						req.getParameter("url")));
 				frameWork.setUrlDownload(req.getParameter("urlSource"));
 				

@@ -13,6 +13,8 @@ import org.javahispano.javaleague.client.presenter.MenuPresenter;
 import org.javahispano.javaleague.client.presenter.MenuPrivatePresenter;
 import org.javahispano.javaleague.client.presenter.ShowHomePresenter;
 import org.javahispano.javaleague.client.presenter.TacticPresenter;
+import org.javahispano.javaleague.client.service.FrameWorkService;
+import org.javahispano.javaleague.client.service.FrameWorkServiceAsync;
 import org.javahispano.javaleague.client.service.LeagueService;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
 import org.javahispano.javaleague.client.service.LoginService;
@@ -73,8 +75,9 @@ public class JavaLeagueApp implements EntryPoint {
 	private MenuPrivatePresenter menuPrivatePresenter;
 	private TacticPresenter tacticPresenter;
 	private ShowHomePresenter showHomePresenter;
-//	private BusyIndicatorPresenter busyIndicator = new BusyIndicatorPresenter(
-//			eventBus, new BusyIndicatorView("Working hard..."));
+	// private BusyIndicatorPresenter busyIndicator = new
+	// BusyIndicatorPresenter(
+	// eventBus, new BusyIndicatorView("Working hard..."));
 
 	// RPC services
 	private LoginServiceAsync loginService = GWT.create(LoginService.class);
@@ -85,6 +88,8 @@ public class JavaLeagueApp implements EntryPoint {
 			.create(UserFileService.class);
 	private MatchServiceAsync matchService = GWT.create(MatchService.class);
 	private LeagueServiceAsync leagueService = GWT.create(LeagueService.class);
+	private FrameWorkServiceAsync frameWorkService = GWT
+			.create(FrameWorkService.class);
 
 	// Controllers
 	private MenuController menuController;
@@ -129,9 +134,9 @@ public class JavaLeagueApp implements EntryPoint {
 
 		RootPanel.get().add(ourUiBinder.createAndBindUi(this));
 
-		menuController = new MenuController(userAccountService, eventBus);
+		menuController = new MenuController(userAccountService, frameWorkService, eventBus);
 		menuController.go();
-		
+
 		showMainView();
 
 		if (currentUser == null) {
@@ -198,25 +203,24 @@ public class JavaLeagueApp implements EntryPoint {
 	}
 
 	public void goAfterLogin(UserDTO user) {
-		
+
 		setCurrentUser(user);
-		
 
 		appViewer = new AppController(tacticService, loginService,
 				userFileService, matchService, leagueService,
 				userAccountService, eventBus);
-		//appViewer.go();
-		
+		// appViewer.go();
+
 		headerPanel.clear();
 		menuPrivatePresenter = new MenuPrivatePresenter(loginService, eventBus,
 				currentUser, new MenuPrivateView());
 		menuPrivatePresenter.go(headerPanel);
-		
+
 		centerPanel.clear();
 		tacticPresenter = new TacticPresenter(tacticService, matchService,
 				eventBus, new TacticView());
 		tacticPresenter.go(centerPanel);
-		
+
 		listenToChannel();
 	}
 

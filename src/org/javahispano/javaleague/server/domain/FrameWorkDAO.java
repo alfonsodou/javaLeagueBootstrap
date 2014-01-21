@@ -3,6 +3,9 @@
  */
 package org.javahispano.javaleague.server.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
@@ -36,5 +39,19 @@ public class FrameWorkDAO extends DAOBase {
 				"defaultFrameWork", defaultFrameWork);
 
 		return q.get();
+	}
+
+	public List<FrameWork> findAllFrameWorks() {
+		List<FrameWork> frameWorks = new ArrayList<FrameWork>();
+
+		Query<FrameWork> q = ofy().query(FrameWork.class)
+				.filter("active", true).order("defaultFrameWork")
+				.order("-updated");
+
+		for (FrameWork fetched : q) {
+			frameWorks.add(fetched);
+		}
+
+		return frameWorks;
 	}
 }

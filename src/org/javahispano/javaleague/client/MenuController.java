@@ -15,11 +15,14 @@ import org.javahispano.javaleague.client.event.ShowLoginEvent;
 import org.javahispano.javaleague.client.event.ShowLoginEventHandler;
 import org.javahispano.javaleague.client.event.ShowRegisterUserEvent;
 import org.javahispano.javaleague.client.event.ShowRegisterUserEventHandler;
+import org.javahispano.javaleague.client.presenter.FrameWorkPresenter;
 import org.javahispano.javaleague.client.presenter.LoginPresenter;
 import org.javahispano.javaleague.client.presenter.Presenter;
 import org.javahispano.javaleague.client.presenter.RegisterUserPresenter;
 import org.javahispano.javaleague.client.presenter.ShowHomePresenter;
+import org.javahispano.javaleague.client.service.FrameWorkServiceAsync;
 import org.javahispano.javaleague.client.service.UserAccountServiceAsync;
+import org.javahispano.javaleague.client.view.FrameWorkView;
 import org.javahispano.javaleague.client.view.LoginView;
 import org.javahispano.javaleague.client.view.RegisterUserView;
 import org.javahispano.javaleague.client.view.ShowHomeView;
@@ -38,13 +41,15 @@ import com.google.gwt.user.client.History;
 public class MenuController implements ValueChangeHandler<String> {
 	private final SimpleEventBus eventBus;
 	private final UserAccountServiceAsync userAccountService;
+	private final FrameWorkServiceAsync frameWorkService;
 
 	private UserDTO userDTO;
 
 	public MenuController(UserAccountServiceAsync userAccountService,
-			SimpleEventBus eventBus) {
+			FrameWorkServiceAsync frameWorkService, SimpleEventBus eventBus) {
 		this.eventBus = eventBus;
 		this.userAccountService = userAccountService;
+		this.frameWorkService = frameWorkService;
 
 		bind();
 	}
@@ -71,7 +76,6 @@ public class MenuController implements ValueChangeHandler<String> {
 					}
 
 				});
-
 
 		eventBus.addHandler(ShowHomeEvent.TYPE, new ShowHomeEventHandler() {
 			@Override
@@ -114,7 +118,7 @@ public class MenuController implements ValueChangeHandler<String> {
 	private void doShowFrameWork() {
 		History.newItem("showFrameWork");
 	}
-	
+
 	private void doShowRegisterUser() {
 		History.newItem("showRegisterUser");
 	}
@@ -153,8 +157,8 @@ public class MenuController implements ValueChangeHandler<String> {
 
 				return;
 			} else if (token.equals("showLogin")) {
-				presenter = new LoginPresenter(userAccountService,
-						eventBus, new LoginView());
+				presenter = new LoginPresenter(userAccountService, eventBus,
+						new LoginView());
 				JavaLeagueApp.get().getCenterPanel().clear();
 				presenter.go(JavaLeagueApp.get().getCenterPanel());
 
@@ -165,7 +169,11 @@ public class MenuController implements ValueChangeHandler<String> {
 
 				return;
 			} else if (token.equals("showFrameWork")) {
-				
+				presenter = new FrameWorkPresenter(frameWorkService, eventBus,
+						new FrameWorkView());
+				JavaLeagueApp.get().getCenterPanel().clear();
+				presenter.go(JavaLeagueApp.get().getCenterPanel());
+
 				return;
 			}
 		}

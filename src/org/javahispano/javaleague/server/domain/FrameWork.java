@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.javahispano.javaleague.server.utils.cache.CacheSupport;
 import org.javahispano.javaleague.server.utils.cache.Cacheable;
+import org.javahispano.javaleague.shared.FrameWorkDTO;
 
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.files.AppEngineFile;
@@ -46,11 +47,13 @@ public class FrameWork implements StoreCallback, Serializable, Cacheable {
 
 	private String version;
 
+	private int state;
+
 	private Date creation;
 
 	private Date updated;
 
-	private BlobKey framework;
+	private BlobKey frameWork;
 
 	private Boolean active;
 
@@ -113,14 +116,6 @@ public class FrameWork implements StoreCallback, Serializable, Cacheable {
 		this.updated = updated;
 	}
 
-	public BlobKey getFramework() {
-		return framework;
-	}
-
-	public void setFramework(BlobKey framework) {
-		this.framework = framework;
-	}
-
 	public Boolean getActive() {
 		return active;
 	}
@@ -129,10 +124,40 @@ public class FrameWork implements StoreCallback, Serializable, Cacheable {
 		this.active = active;
 	}
 
+	/**
+	 * @return the state
+	 */
+	public int getState() {
+		return state;
+	}
+
+	/**
+	 * @param state
+	 *            the state to set
+	 */
+	public void setState(int state) {
+		this.state = state;
+	}
+
+	/**
+	 * @return the frameWork
+	 */
+	public BlobKey getFrameWork() {
+		return frameWork;
+	}
+
+	/**
+	 * @param frameWork
+	 *            the frameWork to set
+	 */
+	public void setFrameWork(BlobKey frameWork) {
+		this.frameWork = frameWork;
+	}
+
 	public void addSampleFrameWork() {
 		try {
 
-			this.setFramework(SaveFile(
+			this.setFrameWork(SaveFile(
 					"http://javaleague.appspot.com/framework/framework.jar",
 					"framework.jar"));
 
@@ -190,6 +215,15 @@ public class FrameWork implements StoreCallback, Serializable, Cacheable {
 	 */
 	public void setVersion(String version) {
 		this.version = version;
+	}
+
+	public FrameWorkDTO toDTO() {
+		FrameWorkDTO frameWorkDTO = new FrameWorkDTO(this.id, this.name,
+				this.description, this.summary, this.version, this.state,
+				this.creation.toString(), this.updated.toString(), this.active,
+				this.defaultFrameWork, this.urlDownload);
+
+		return frameWorkDTO;
 	}
 
 	@Override

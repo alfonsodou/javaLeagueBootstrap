@@ -60,7 +60,7 @@ public class PlayMatchServlet extends HttpServlet {
 					.getClassLoader());
 
 			// Cargamos el framework
-			myDataStoreClassLoader.addClassJarFramework(frameWork.getFramework());
+			myDataStoreClassLoader.addClassJarFramework(frameWork.getFrameWork());
 
 	        Class<? extends Agent> cz = Class.forName("org.javahispano.javacup.model.engine.AgentPartido", true, myDataStoreClassLoader).asSubclass(Agent.class);
 	        

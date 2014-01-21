@@ -77,6 +77,18 @@
 		<url-pattern>/javaleague/matchService</url-pattern>
 	</servlet-mapping>
 
+	<!-- ===================== frameWorkService ===================== -->
+	<servlet>
+		<servlet-name>frameWorkService</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.FrameWorkServiceImpl
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>frameWorkService</servlet-name>
+		<url-pattern>/javaleague/frameWorkService</url-pattern>
+	</servlet-mapping>
+
 	<!-- ===================== Login Google Servlet ===================== -->
 
 	<servlet>

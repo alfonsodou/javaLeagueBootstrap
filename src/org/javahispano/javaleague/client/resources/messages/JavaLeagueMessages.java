@@ -21,5 +21,8 @@ public interface JavaLeagueMessages extends Messages {
 	
 	@DefaultMessage("Usuario y/o contraseña incorrectos !")
 	String errorEmailPassword();
+	
+	@DefaultMessage("Nombre")
+	String nameFrameWork();
 
 }

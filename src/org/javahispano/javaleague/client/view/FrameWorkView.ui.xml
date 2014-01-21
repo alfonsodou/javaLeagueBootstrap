@@ -1,0 +1,23 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:b="urn:import:org.gwtbootstrap3.client.ui"
+	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
+	ui:generateLocales='default'>
+
+	<b:Row>
+		<b:Panel>
+			<b:PanelHeader>
+				<b:Heading size="3">
+					<ui:msg key="headerText">FrameWorks</ui:msg>
+				</b:Heading>
+			</b:PanelHeader>
+			<b:PanelBody>
+				<b:CellTable bordered="true" condensed="true" striped="true"
+					hover="true" width="100%" ui:field="cellTableFrameWorks" />
+			</b:PanelBody>
+
+		</b:Panel>
+	</b:Row>
+
+</ui:UiBinder> 
