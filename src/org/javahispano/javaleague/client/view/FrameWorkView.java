@@ -87,6 +87,51 @@ public class FrameWorkView extends Composite implements
 		};
 		cellTableFrameWorks.addColumn(col1, javaLeagueMessages.nameFrameWork());
 		
+		TextColumn<FrameWorkDTO> col2 = new TextColumn<FrameWorkDTO>() {
+
+			@Override
+			public String getValue(FrameWorkDTO object) {
+				return String.valueOf(object.getVersion());
+			}
+		};
+		cellTableFrameWorks.addColumn(col2, javaLeagueMessages.versionFrameWork());
+
+		TextColumn<FrameWorkDTO> col3 = new TextColumn<FrameWorkDTO>() {
+
+			@Override
+			public String getValue(FrameWorkDTO object) {
+				return String.valueOf(object.getSummary());
+			}
+		};
+		cellTableFrameWorks.addColumn(col3, javaLeagueMessages.summaryFrameWork());
+
+		TextColumn<FrameWorkDTO> col4 = new TextColumn<FrameWorkDTO>() {
+
+			@Override
+			public String getValue(FrameWorkDTO object) {
+				return String.valueOf(object.getCreation());
+			}
+		};
+		cellTableFrameWorks.addColumn(col4, javaLeagueMessages.creationFrameWork());
+
+		TextColumn<FrameWorkDTO> col5 = new TextColumn<FrameWorkDTO>() {
+
+			@Override
+			public String getValue(FrameWorkDTO object) {
+				return String.valueOf(object.getUpdated());
+			}
+		};
+		cellTableFrameWorks.addColumn(col5, javaLeagueMessages.updatedFrameWork());
+
+		TextColumn<FrameWorkDTO> col6 = new TextColumn<FrameWorkDTO>() {
+
+			@Override
+			public String getValue(FrameWorkDTO object) {
+				return String.valueOf(object.getUrlDownload());
+			}
+		};
+		cellTableFrameWorks.addColumn(col6, javaLeagueMessages.urlDownloadFrameWork());
+
 		dataGridProvider.addDataDisplay(cellTableFrameWorks);
 		
 		for(FrameWorkDTO f : frameWorks) {

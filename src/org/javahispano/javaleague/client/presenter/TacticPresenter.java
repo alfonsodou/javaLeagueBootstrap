@@ -102,7 +102,7 @@ public class TacticPresenter implements Presenter {
 	public void go(final HasWidgets container) {
 		container.clear();
 		container.add(display.asWidget());
-		fetchTacticSummaryDTO();
+		// fetchTacticSummaryDTO();
 	}
 
 	private void fetchTacticSummaryDTO() {

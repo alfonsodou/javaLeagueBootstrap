@@ -24,5 +24,20 @@ public interface JavaLeagueMessages extends Messages {
 	
 	@DefaultMessage("Nombre")
 	String nameFrameWork();
+	
+	@DefaultMessage("Versión")
+	String versionFrameWork();
+	
+	@DefaultMessage("Descripción")
+	String summaryFrameWork();
+	
+	@DefaultMessage("Creado")
+	String creationFrameWork();
+	
+	@DefaultMessage("Actualizado")
+	String updatedFrameWork();
+	
+	@DefaultMessage("Descargar")
+	String urlDownloadFrameWork();
 
 }
