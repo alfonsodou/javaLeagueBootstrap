@@ -46,6 +46,20 @@
 
 							</b:FormGroup>
 
+
+							<b:FormGroup>
+								<b:FormLabel for="formCountry" addStyleNames="col-lg-2">
+									<ui:msg key="country">País</ui:msg>
+								</b:FormLabel>
+								<g:FlowPanel addStyleNames="col-lg-10">
+									<b:ListBox b:id="formCountry" ui:field="country">
+										<g:item>USA</g:item>
+										<g:item>Germany</g:item>
+										<g:item>Other</g:item>
+									</b:ListBox>
+								</g:FlowPanel>
+							</b:FormGroup>
+
 							<b:FormGroup>
 								<b:FormLabel for="formPassword" addStyleNames="col-lg-2">
 									<ui:msg key="Password">Contraseña</ui:msg>
@@ -76,14 +90,16 @@
 
 							</b:FormGroup>
 
-							<b:ButtonGroup>
-								<b:SubmitButton ui:field="registerButton" type="PRIMARY">
-									<ui:msg key="register">Registrar</ui:msg>
-								</b:SubmitButton>
-								<b:Button ui:field="cancelButton">
-									<ui:msg key="cancelRegisterUser">Cancelar</ui:msg>
-								</b:Button>
-							</b:ButtonGroup>
+							<b:FormGroup>
+								<g:FlowPanel addStyleNames="col-lg-offset-2 col-lg-10">
+									<b:SubmitButton ui:field="registerButton" type="PRIMARY">
+										<ui:msg key="register">Registrar</ui:msg>
+									</b:SubmitButton>
+									<b:Button ui:field="cancelButton">
+										<ui:msg key="cancelRegisterUser">Cancelar</ui:msg>
+									</b:Button>
+								</g:FlowPanel>
+							</b:FormGroup>
 
 						</b:FieldSet>
 					</b:Form>

@@ -32,7 +32,7 @@ public class TacticServiceImpl extends RemoteServiceServlet implements
 
 	private static UserDAO userDAO = new UserDAO();
 	private static TacticUserDAO tacticDAO = new TacticUserDAO();
-	
+
 	public TacticServiceImpl() {
 
 	}
@@ -48,33 +48,27 @@ public class TacticServiceImpl extends RemoteServiceServlet implements
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@Override
 	public TacticDTO getTactic(String id) {
 		TacticUser tacticUser = tacticDAO.findById(Long.valueOf(id));
-		
+
 		if (tacticUser != null) {
 			return tacticUser.toDTO();
 		}
-		
+
 		return null;
 	}
-/*
-    @Override
-	public TacticDTO getTactic(String id) {
 
-		PersistenceManager pm = PMF.getNonTxnPm();
-		TacticUser detached = null;
-
-		try {
-			detached = getTacticViaCache(id, pm);
-		} finally {
-			pm.close();
-		}
-		// logger.fine("in getTactic- class are: " + detached.getClass());
-		return detached.toDTO();
-	}
-*/
+	/*
+	 * @Override public TacticDTO getTactic(String id) {
+	 * 
+	 * PersistenceManager pm = PMF.getNonTxnPm(); TacticUser detached = null;
+	 * 
+	 * try { detached = getTacticViaCache(id, pm); } finally { pm.close(); } //
+	 * logger.fine("in getTactic- class are: " + detached.getClass()); return
+	 * detached.toDTO(); }
+	 */
 	private TacticUser getTacticViaCache(String id, PersistenceManager pm) {
 		TacticUser dsTactic = null, detached = null;
 
@@ -87,7 +81,7 @@ public class TacticServiceImpl extends RemoteServiceServlet implements
 		} else {
 			dsTactic = pm.getObjectById(TacticUser.class, id); // the get adds
 			// to cache
-			
+
 			detached = pm.detachCopy(dsTactic);
 
 			// String[] loadedFieldNames =
@@ -101,8 +95,8 @@ public class TacticServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public UserDTO getUserAccount() {
 		PersistenceManager pm = PMF.getTxnPm();
-		User currentUser = LoginHelper.getLoggedInUser(
-				getThreadLocalRequest().getSession(), pm);
+		User currentUser = LoginHelper.getLoggedInUser(getThreadLocalRequest()
+				.getSession(), pm);
 
 		return currentUser.toDTO(currentUser);
 	}
@@ -119,10 +113,11 @@ public class TacticServiceImpl extends RemoteServiceServlet implements
 		try {
 			for (int i = 0; i < NUM_RETRIES; i++) {
 				pm.currentTransaction().begin();
-				tactic = tacticDAO.findById(Long.valueOf(userTacticDTO.getId()));
+				tactic = tacticDAO
+						.findById(Long.valueOf(userTacticDTO.getId()));
 
 				tactic.updatedFromDTO(userTacticDTO);
-				
+
 				tacticDAO.save(tactic);
 				try {
 					logger.fine("about to start commit");
@@ -166,7 +161,7 @@ public class TacticServiceImpl extends RemoteServiceServlet implements
 
 				userTactic = new TacticUser(userTacticDTO);
 				currentUser.setTactic(userTactic.getId().toString());
-				//pm.makePersistent(currentUser);
+				// pm.makePersistent(currentUser);
 				userDAO.save(currentUser);
 				uid = userTactic.getId().toString();
 
@@ -197,20 +192,22 @@ public class TacticServiceImpl extends RemoteServiceServlet implements
 
 	public TacticDTO getUserTacticSummary() {
 
-		TacticDTO userTacticSummary = new TacticDTO();
+		TacticDTO userTacticSummary = null;
 		PersistenceManager pm = PMF.getNonTxnPm();
 
 		try {
-			User user = LoginHelper.getLoggedInUser(
-					getThreadLocalRequest().getSession(), pm);
+			User user = LoginHelper.getLoggedInUser(getThreadLocalRequest()
+					.getSession(), pm);
 			if (user == null)
 				return null;
 
-			userTacticSummary = tacticDAO.findById(Long.valueOf(Long.valueOf(user.getTactic()))).toDTO();
-		//	if (user.getTactic() == null)
-			//	return null;
+			if (user.getTactic() == null)
+				return null;
 
-			//userTacticSummary = user.getTactic().toDTO();
+			userTacticSummary = tacticDAO.findById(
+					Long.valueOf(Long.valueOf(user.getTactic()))).toDTO();
+
+			// userTacticSummary = user.getTactic().toDTO();
 		} finally {
 			pm.close();
 		}

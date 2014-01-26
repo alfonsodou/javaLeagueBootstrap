@@ -32,18 +32,22 @@ public class TacticPresenter implements Presenter {
 		HasClickHandlers getUpdateButton();
 
 		void setTeamName(String teamName);
-		
+
 		void setMatchWins(String matchWins);
-		
+
 		void setMatchLost(String matchLost);
-		
+
 		void setMatchTied(String matchTied);
-		
+
 		void setGoalsFor(String goalsFor);
-		
+
 		void setGoalsAgainst(String goalsAgainst);
 
 		HasClickHandlers getPlayMatchButton();
+		
+		void setVisibleUpdateButton(boolean visible);
+		
+		void setVisibleAddButton(boolean visible);
 	}
 
 	private TacticDTO tacticDTO;
@@ -52,8 +56,9 @@ public class TacticPresenter implements Presenter {
 	private final TacticServiceAsync tacticService;
 	private final MatchServiceAsync matchService;
 
-	public TacticPresenter(TacticServiceAsync tacticService, MatchServiceAsync matchService,
-			SimpleEventBus eventBus, Display display) {
+	public TacticPresenter(TacticServiceAsync tacticService,
+			MatchServiceAsync matchService, SimpleEventBus eventBus,
+			Display display) {
 		this.display = display;
 		this.eventBus = eventBus;
 		this.tacticService = tacticService;
@@ -68,11 +73,11 @@ public class TacticPresenter implements Presenter {
 				eventBus.fireEvent(new TacticEditEvent(tacticDTO.getId()));
 			}
 		});
-		
+
 		this.display.getPlayMatchButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				eventBus.fireEvent(new PlayMatchEvent(tacticDTO.getId()));
-				
+
 				new RPCCall() {
 
 					@Override
@@ -83,26 +88,27 @@ public class TacticPresenter implements Presenter {
 
 					@Override
 					public void onSuccess(Object result) {
-						GWT.log("Dispathing Match for Tactic: " + tacticDTO.getId());
-						
+						GWT.log("Dispathing Match for Tactic: "
+								+ tacticDTO.getId());
+
 					}
 
 					@Override
-					protected void callService(AsyncCallback cb) {					
+					protected void callService(AsyncCallback cb) {
 						matchService.dispatchMatch(tacticDTO.getId(), cb);
 					}
-					
+
 				}.retry(3);
 			}
 		});
-		
+
 	}
 
 	@Override
 	public void go(final HasWidgets container) {
 		container.clear();
 		container.add(display.asWidget());
-		// fetchTacticSummaryDTO();
+		fetchTacticSummaryDTO();
 	}
 
 	private void fetchTacticSummaryDTO() {
@@ -122,13 +128,21 @@ public class TacticPresenter implements Presenter {
 
 			@Override
 			public void onSuccess(TacticDTO result) {
-				tacticDTO = result;
-				display.setTeamName(result.getTeamName());
-				display.setGoalsAgainst(Integer.toString(result.getGoalsAgainst()));
-				display.setGoalsFor(Integer.toString(result.getGoalsFor()));
-				display.setMatchLost(Integer.toString(result.getMatchLost()));
-				display.setMatchTied(Integer.toString(result.getMatchTied()));
-				display.setMatchWins(Integer.toString(result.getMatchWins()));
+				if (result != null) {
+					tacticDTO = result;
+					display.setVisibleUpdateButton(true);
+					display.setVisibleAddButton(false);
+					display.setTeamName(result.getTeamName());
+					display.setGoalsAgainst(Integer.toString(result
+							.getGoalsAgainst()));
+					display.setGoalsFor(Integer.toString(result.getGoalsFor()));
+					display.setMatchLost(Integer.toString(result.getMatchLost()));
+					display.setMatchTied(Integer.toString(result.getMatchTied()));
+					display.setMatchWins(Integer.toString(result.getMatchWins()));
+				} else {
+					display.setVisibleUpdateButton(false);
+					display.setVisibleAddButton(true);					
+				}
 			}
 
 		}.retry(3);

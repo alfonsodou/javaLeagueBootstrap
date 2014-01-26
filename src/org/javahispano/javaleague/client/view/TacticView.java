@@ -4,6 +4,7 @@
 package org.javahispano.javaleague.client.view;
 
 import org.gwtbootstrap3.client.ui.Button;
+import org.gwtbootstrap3.client.ui.Label;
 import org.javahispano.javaleague.client.presenter.TacticPresenter;
 
 import com.google.gwt.core.client.GWT;
@@ -11,9 +12,7 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-
 
 /**
  * @author adou
@@ -24,7 +23,9 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	@UiField
 	Label teamNameField;
 	@UiField
-	Button updateButton;
+	Button updateTacticButton;
+	@UiField
+	Button addTacticButton;
 	@UiField
 	Label winsField;
 	@UiField
@@ -50,25 +51,20 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	}
 
 	@Override
-	protected void onLoad() {
-		super.onLoad();
-	}
-
-	@Override
 	public Widget asWidget() {
 		return this;
 	}
 
 	@Override
 	public HasClickHandlers getUpdateButton() {
-		return updateButton;
+		return updateTacticButton;
 	}
 
 	@Override
 	public HasClickHandlers getPlayMatchButton() {
 		return playMatchButton;
 	}
-	
+
 	@Override
 	public void setTeamName(String teamName) {
 		teamNameField.setText(teamName);
@@ -98,6 +94,16 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	@Override
 	public void setGoalsAgainst(String goalsAgainst) {
 		goalsAgainstField.setText(goalsAgainst);
+	}
+
+	@Override
+	public void setVisibleUpdateButton(boolean visible) {
+		updateTacticButton.setVisible(visible);
+	}
+
+	@Override
+	public void setVisibleAddButton(boolean visible) {
+		addTacticButton.setVisible(visible);
 	}
 
 }

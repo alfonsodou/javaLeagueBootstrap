@@ -5,49 +5,91 @@
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
 
-
-
 	<b:Row>
 		<b:Panel>
+			<b:PanelHeader>
+				<b:Heading size="3">
+					<ui:msg key="myTactic">Mi
+						Táctica
+					</ui:msg>
+				</b:Heading>
+			</b:PanelHeader>
+			<b:PanelBody>
+				<b:Row>
+					<b:Column size="MD_6">
+						<b:Form type="HORIZONTAL" ui:field="formTactic">
+							<b:FieldSet>
+								<b:FormGroup>
+									<b:FormLabel for="teamName" addStyleNames="col-lg-2">
+										<ui:msg key="teamName">Nombre</ui:msg>
+									</b:FormLabel>
+									<g:FlowPanel addStyleNames="col-lg-10">
+										<b:TextBox b:id="teamName" ui:field="teamName"></b:TextBox>
+										<b:Label ui:field="erroTeamName" type="DANGER">
+											<ui:msg key="errorTeamName">El nombre no puede estar vacío</ui:msg>
+										</b:Label>
 
-			<g:Label>
-				<ui:msg key="teamName" description="Team Name">Nombre del equipo</ui:msg>
-			</g:Label>
-			<g:Label ui:field="teamNameField"></g:Label>
-			<g:Label>
-				<ui:msg key="winsMatch">Ganados: </ui:msg>
-			</g:Label>
-			<g:Label ui:field="winsField"></g:Label>
-			<g:Label>
-				<ui:msg key="tiedMatch">Empatados:
-				</ui:msg>
-			</g:Label>
-			<g:Label ui:field="tiedField"></g:Label>
-			<g:Label>
-				<ui:msg key="lostMatch">Perdidos:
-				</ui:msg>
-			</g:Label>
-			<g:Label ui:field="lostField"></g:Label>
-			<g:Label>
-				<ui:msg key="goalsFor">Goles
-					a favor:
-				</ui:msg>
-			</g:Label>
-			<g:Label ui:field="goalsForField"></g:Label>
-			<g:Label>
-				<ui:msg key="goalsAgainst">Goles en contra: </ui:msg>
-			</g:Label>
-			<g:Label ui:field="goalsAgainstField"></g:Label>
-			<b:Button ui:field="updateButton">
-				<ui:msg key="updateButton" description="Update Button">Editar
-					Táctica
-				</ui:msg>
-			</b:Button>
-			<b:Button ui:field="playMatchButton">
-				<ui:msg key="playMatchButton" description="Play Match Button">Jugar Partido
-				</ui:msg>
-			</b:Button>
+									</g:FlowPanel>
+								</b:FormGroup>
+								<b:FormGroup>
+									<b:FormLabel for="jarFile" addStyleNames="col-lg-2">
+										<ui:msg key="jarFile">Fichero jar</ui:msg>
+									</b:FormLabel>
+									<g:FlowPanel addStyleNames="col-lg-10">
+										<g:FileUpload ui:field="fileUpload"></g:FileUpload>
+									</g:FlowPanel>
+								</b:FormGroup>
+								<b:FormGroup>
+									<g:FlowPanel addStyleNames="col-lg-offset-2 col-lg-10">
+										<b:Button ui:field="updateTacticButton">
+											<ui:msg key="updateTactic">Actualizar</ui:msg>
+										</b:Button>
+										<b:Button ui:field="addTacticButton">
+											<ui:msg key="addTactic">Añadir</ui:msg>
+										</b:Button>
+									</g:FlowPanel>
+								</b:FormGroup>
+							</b:FieldSet>
+						</b:Form>
 
+					</b:Column>
+					<b:Column size="MD_5" offset="MD_1">
+						<b:Label>
+							<ui:msg key="teamName" description="Team Name">Nombre del equipo</ui:msg>
+						</b:Label>
+						<b:Label ui:field="teamNameField"></b:Label>
+						<b:Label>
+							<ui:msg key="winsMatch">Ganados: </ui:msg>
+						</b:Label>
+						<b:Label ui:field="winsField"></b:Label>
+						<b:Label>
+							<ui:msg key="tiedMatch">Empatados:
+							</ui:msg>
+						</b:Label>
+						<b:Label ui:field="tiedField"></b:Label>
+						<b:Label>
+							<ui:msg key="lostMatch">Perdidos:
+							</ui:msg>
+						</b:Label>
+						<b:Label ui:field="lostField"></b:Label>
+						<b:Label>
+							<ui:msg key="goalsFor">Goles
+								a favor:
+							</ui:msg>
+						</b:Label>
+						<b:Label ui:field="goalsForField"></b:Label>
+						<b:Label>
+							<ui:msg key="goalsAgainst">Goles en contra: </ui:msg>
+						</b:Label>
+						<b:Label ui:field="goalsAgainstField"></b:Label>
+						<b:Button ui:field="playMatchButton">
+							<ui:msg key="playMatchButton" description="Play Match Button">Jugar Partido
+								Amistoso
+							</ui:msg>
+						</b:Button>
+					</b:Column>
+				</b:Row>
+			</b:PanelBody>
 		</b:Panel>
 	</b:Row>
 
