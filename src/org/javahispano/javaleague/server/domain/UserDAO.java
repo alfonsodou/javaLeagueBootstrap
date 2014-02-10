@@ -3,6 +3,7 @@
  */
 package org.javahispano.javaleague.server.domain;
 
+
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;

@@ -4,7 +4,9 @@
 package org.javahispano.javaleague.client.view;
 
 import org.gwtbootstrap3.client.ui.Button;
+import org.gwtbootstrap3.client.ui.Form;
 import org.gwtbootstrap3.client.ui.Label;
+import org.gwtbootstrap3.client.ui.TextBox;
 import org.javahispano.javaleague.client.presenter.TacticPresenter;
 
 import com.google.gwt.core.client.GWT;
@@ -12,6 +14,8 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FileUpload;
+import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -21,7 +25,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class TacticView extends Composite implements TacticPresenter.Display {
 
 	@UiField
-	Label teamNameField;
+	TextBox teamName;
 	@UiField
 	Button updateTacticButton;
 	@UiField
@@ -38,6 +42,17 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	Label goalsAgainstField;
 	@UiField
 	Button playMatchButton;
+	@UiField
+	FormPanel formPanelTactic;
+	@UiField
+	Label errorTeamName;
+	@UiField
+	FileUpload fileUpload;
+	@UiField
+	Label errorFileUpload;
+	@UiField
+	Form formTactic;
+
 
 	private static TacticViewUiBinder uiBinder = GWT
 			.create(TacticViewUiBinder.class);
@@ -47,6 +62,11 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 
 	public TacticView() {
 		initWidget(uiBinder.createAndBindUi(this));
+		
+		teamName.setName("teamName");
+		fileUpload.setName("fileUpload");
+		formPanelTactic.setEncoding(FormPanel.ENCODING_MULTIPART);
+		formPanelTactic.setMethod(FormPanel.METHOD_POST);
 
 	}
 
@@ -66,9 +86,8 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	}
 
 	@Override
-	public void setTeamName(String teamName) {
-		teamNameField.setText(teamName);
-
+	public void setTeamName(String teamNameParam) {
+		teamName.setValue(teamNameParam);
 	}
 
 	@Override
@@ -104,6 +123,41 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	@Override
 	public void setVisibleAddButton(boolean visible) {
 		addTacticButton.setVisible(visible);
+	}
+
+	@Override
+	public HasClickHandlers getAddButton() {
+		return addTacticButton;
+	}
+
+	@Override
+	public Label getErrorTeamName() {	
+		return errorTeamName;
+	}
+
+	@Override
+	public TextBox getTeamName() {
+		return teamName;
+	}
+
+	@Override
+	public FileUpload getFileUpload() {
+		return fileUpload;
+	}
+
+	@Override
+	public Label getErrorFileUpload() {
+		return errorFileUpload;
+	}
+
+	@Override
+	public FormPanel getFormPanelTactic() {
+		return formPanelTactic;
+	}
+
+	@Override
+	public Form getFormTactic() {
+		return formTactic;
 	}
 
 }

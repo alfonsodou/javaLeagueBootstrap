@@ -17,7 +17,7 @@
 	<div class="container">
 		<div class="jumbotron">
 			<h1>Bienvenido a javaLeague !</h1>
-			<p>Tu usuario ya est· registrado correctamente. Entra en javaLeague y empieza a competir con tu equipo !</p>
+			<p>Tu usuario ya est√° registrado correctamente. Entra en javaLeague y empieza a competir con tu equipo !</p>
 			<p>
 				<a class="btn btn-primary btn-lg" role="button" href="/">Ir a javaLeague</a>
 			</p>

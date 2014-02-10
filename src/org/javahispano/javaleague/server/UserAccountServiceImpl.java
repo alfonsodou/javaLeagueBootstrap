@@ -38,8 +38,6 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 		User user = userDAO.findByEmail(email);
 		
 		if ((user != null) && (user.getPassword().equals(password))) {
-			UserDTO userDTO = User.toDTO(user);
-			
 			HttpSession session = getThreadLocalRequest().getSession();
 			// update session if successful
 			session.setAttribute("userId", String.valueOf(user.getId()));
@@ -49,6 +47,8 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 			user.setLastLoginOn(new Date());
 			
 			userDAO.save(user);
+			
+			UserDTO userDTO = User.toDTO(user);
 			
 			return userDTO;	
 		}

@@ -17,7 +17,8 @@ public class UserFileServiceImpl extends RemoteServiceServlet implements
 		UserFileService {
 
 	@Override
-	public String getBlobstoreUploadUrl() {
+	public String getBlobstoreUploadUrl() {		
+		
 		BlobstoreService blobstoreService = BlobstoreServiceFactory
 				.getBlobstoreService();
 		return blobstoreService.createUploadUrl("/upload");

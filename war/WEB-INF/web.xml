@@ -8,8 +8,7 @@
 	<!-- ===================== UserFile Service ===================== -->
 	<servlet>
 		<servlet-name>userFileService</servlet-name>
-		<servlet-class>org.javahispano.javaleague.server.UserFileServiceImpl
-		</servlet-class>
+		<servlet-class>org.javahispano.javaleague.server.UserFileServiceImpl</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -20,32 +19,29 @@
 	<!-- ===================== UserAccount Service ===================== -->
 	<servlet>
 		<servlet-name>userAccountService</servlet-name>
-		<servlet-class>org.javahispano.javaleague.server.UserAccountServiceImpl
-		</servlet-class>
+		<servlet-class>org.javahispano.javaleague.server.UserAccountServiceImpl</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>userAccountService</servlet-name>
 		<url-pattern>/javaleague/userAccountService</url-pattern>
-	</servlet-mapping>   
+	</servlet-mapping>
 
 	<!-- ===================== League Service ===================== -->
 	<servlet>
 		<servlet-name>leagueService</servlet-name>
-		<servlet-class>org.javahispano.javaleague.server.LeagueServiceImpl
-		</servlet-class>
+		<servlet-class>org.javahispano.javaleague.server.LeagueServiceImpl</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>leagueService</servlet-name>
 		<url-pattern>/javaleague/leagueService</url-pattern>
-	</servlet-mapping>    
+	</servlet-mapping>
 
 	<!-- ===================== Login Service ===================== -->
 	<servlet>
 		<servlet-name>loginService</servlet-name>
-		<servlet-class>org.javahispano.javaleague.server.LoginServiceImpl
-		</servlet-class>
+		<servlet-class>org.javahispano.javaleague.server.LoginServiceImpl</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -56,8 +52,7 @@
 	<!-- ===================== tacticService ===================== -->
 	<servlet>
 		<servlet-name>tacticService</servlet-name>
-		<servlet-class>org.javahispano.javaleague.server.TacticServiceImpl
-		</servlet-class>
+		<servlet-class>org.javahispano.javaleague.server.TacticServiceImpl</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -68,8 +63,7 @@
 	<!-- ===================== matchService ===================== -->
 	<servlet>
 		<servlet-name>matchService</servlet-name>
-		<servlet-class>org.javahispano.javaleague.server.MatchServiceImpl
-		</servlet-class>
+		<servlet-class>org.javahispano.javaleague.server.MatchServiceImpl</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -80,8 +74,7 @@
 	<!-- ===================== frameWorkService ===================== -->
 	<servlet>
 		<servlet-name>frameWorkService</servlet-name>
-		<servlet-class>org.javahispano.javaleague.server.FrameWorkServiceImpl
-		</servlet-class>
+		<servlet-class>org.javahispano.javaleague.server.FrameWorkServiceImpl</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -93,8 +86,7 @@
 
 	<servlet>
 		<servlet-name>logingoogle</servlet-name>
-		<servlet-class>org.javahispano.javaleague.server.servlets.LoginGoogleServlet
-		</servlet-class>
+		<servlet-class>org.javahispano.javaleague.server.servlets.LoginGoogleServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -104,8 +96,7 @@
 
 	<servlet>
 		<servlet-name>logingooglecallback</servlet-name>
-		<servlet-class>org.javahispano.javaleague.server.servlets.LoginGoogleCallbackServlet
-		</servlet-class>
+		<servlet-class>org.javahispano.javaleague.server.servlets.LoginGoogleCallbackServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -117,8 +108,7 @@
 
 	<servlet>
 		<servlet-name>logintwitter</servlet-name>
-		<servlet-class>org.javahispano.javaleague.server.servlets.LoginTwitterServlet
-		</servlet-class>
+		<servlet-class>org.javahispano.javaleague.server.servlets.LoginTwitterServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -128,8 +118,7 @@
 
 	<servlet>
 		<servlet-name>logintwittercallback</servlet-name>
-		<servlet-class>org.javahispano.javaleague.server.servlets.LoginTwitterCallbackServlet
-		</servlet-class>
+		<servlet-class>org.javahispano.javaleague.server.servlets.LoginTwitterCallbackServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -141,8 +130,7 @@
 
 	<servlet>
 		<servlet-name>loginfacebook</servlet-name>
-		<servlet-class>org.javahispano.javaleague.server.servlets.LoginFacebookServlet
-		</servlet-class>
+		<servlet-class>org.javahispano.javaleague.server.servlets.LoginFacebookServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -152,21 +140,19 @@
 
 
 	<!-- ===================== Upload Servlet ===================== -->
-	<servlet>
+	<!-- <servlet>
 		<servlet-name>upload</servlet-name>
-		<servlet-class>org.javahispano.javaleague.server.servlets.UploadServlet
-		</servlet-class>
+		<servlet-class>org.javahispano.javaleague.server.servlets.UploadServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>upload</servlet-name>
 		<url-pattern>/upload</url-pattern>
 	</servlet-mapping>
-
+ -->
 	<!-- ===================== Dispatch Match Servlet ===================== -->
 	<servlet>
 		<servlet-name>dispatchMatch</servlet-name>
-		<servlet-class>org.javahispano.javaleague.server.servlets.DispatchMatchServlet
-		</servlet-class>
+		<servlet-class>org.javahispano.javaleague.server.servlets.DispatchMatchServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>dispatchMatch</servlet-name>
@@ -176,8 +162,7 @@
 	<!-- ===================== Play Match Servlet ===================== -->
 	<servlet>
 		<servlet-name>playMatch</servlet-name>
-		<servlet-class>org.javahispano.javaleague.server.servlets.PlayMatchServlet
-		</servlet-class>
+		<servlet-class>org.javahispano.javaleague.server.servlets.PlayMatchServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>playMatch</servlet-name>
@@ -193,8 +178,8 @@
 		<servlet-name>Serve</servlet-name>
 		<url-pattern>/serve</url-pattern>
 	</servlet-mapping>
-	
-	<!-- ===================== Daytime  Servlet ===================== -->
+
+	<!-- ===================== Daytime Servlet ===================== -->
 	<servlet>
 		<servlet-name>Daytime</servlet-name>
 		<servlet-class>org.javahispano.javaleague.server.servlets.DaytimeServlet</servlet-class>
@@ -204,7 +189,7 @@
 		<url-pattern>/daytime</url-pattern>
 	</servlet-mapping>
 
-	<!-- ===================== AuthenticateUser  Servlet ===================== -->
+	<!-- ===================== AuthenticateUser Servlet ===================== -->
 	<servlet>
 		<servlet-name>AuthenticateUser</servlet-name>
 		<servlet-class>org.javahispano.javaleague.server.servlets.AuthenticateUserServlet</servlet-class>
@@ -214,7 +199,7 @@
 		<url-pattern>/authenticateUser</url-pattern>
 	</servlet-mapping>
 
-	<!-- ===================== ManageFrameWork  Servlet ===================== -->
+	<!-- ===================== ManageFrameWork Servlet ===================== -->
 	<servlet>
 		<servlet-name>ManageFrameWork</servlet-name>
 		<servlet-class>org.javahispano.javaleague.server.servlets.ManageFrameWorkServlet</servlet-class>
@@ -223,7 +208,35 @@
 		<servlet-name>ManageFrameWork</servlet-name>
 		<url-pattern>/manageFrameWork</url-pattern>
 	</servlet-mapping>
-	
+
+	<!-- ===================== GWTUpload Servlet ===================== -->
+	<context-param>
+		<!-- max size of the upload request -->
+		<param-name>maxSize</param-name>
+		<param-value>3145728</param-value>
+	</context-param>
+	<context-param>
+		<!-- Useful in development mode to slow down the uploads in fast networks. 
+			Put the number of milliseconds to sleep in each block received in the server. 
+			false or 0, means don't use slow uploads -->
+		<param-name>slowUploads</param-name>
+		<param-value>200</param-value>
+	</context-param>
+
+	<servlet>
+		<servlet-name>uploadServlet</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.servlets.MyCustomizedUploadServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>uploadServlet</servlet-name>
+		<url-pattern>*.gupld</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>uploadServlet</servlet-name>
+		<url-pattern>/upload</url-pattern>
+	</servlet-mapping>
+
+
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
@@ -233,8 +246,7 @@
 
 	<servlet>
 		<servlet-name>SystemServiceServlet</servlet-name>
-		<servlet-class>com.google.api.server.spi.SystemServiceServlet
-		</servlet-class>
+		<servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
 		<init-param>
 			<param-name>services</param-name>
 			<param-value />

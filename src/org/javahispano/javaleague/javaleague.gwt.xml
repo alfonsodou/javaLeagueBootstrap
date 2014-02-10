@@ -11,9 +11,9 @@
 	<!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/> -->
 
 	<!-- Other module inherits -->
-	<!-- <inherits name="com.github.gwtbootstrap.Bootstrap" />  -->
-	<inherits name="org.gwtbootstrap3.GwtBootstrap3"/>
-	<!-- <set-property name="bootstrap.responsiveDesign" value="true" />  -->
+	<!-- <inherits name="com.github.gwtbootstrap.Bootstrap" /> -->
+	<inherits name="org.gwtbootstrap3.GwtBootstrap3" />
+	<!-- <set-property name="bootstrap.responsiveDesign" value="true" /> -->
 
 	<!-- Internacionalization -->
 	<inherits name='com.google.gwt.i18n.I18N' />
@@ -37,11 +37,14 @@
 		/> </replace-with> <public path="resources"> <exclude name="** /*.java" /> 
 		<exclude name="** /*.class" /> </public> -->
 
-	<!-- 
-	<inherits name="org.hibernate.validator.HibernateValidator" />
-	<replace-with
-		class="org.javahispano.javaleague.client.validation.MyValidatorFactory">
-		<when-type-is class="javax.validation.ValidatorFactory" />
-	</replace-with>
-	 -->
+	<!-- <inherits name="org.hibernate.validator.HibernateValidator" /> <replace-with 
+		class="org.javahispano.javaleague.client.validation.MyValidatorFactory"> 
+		<when-type-is class="javax.validation.ValidatorFactory" /> </replace-with> -->
+
+	<!-- Include GWTUpload library -->
+	<inherits name="gwtupload.GWTUpload" />
+	<!-- Load dinamically predefined styles in the library when the application 
+		starts -->
+	<stylesheet src="Upload.css" />
+
 </module>

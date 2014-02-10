@@ -116,6 +116,7 @@ public class LoginPresenter implements Presenter {
 
 			@Override
 			public void onFailure(Throwable caught) {
+				GWT.log(caught.getMessage());
 				Window.alert("Error user login ...");
 			}
 		}.retry(3);

@@ -134,7 +134,8 @@ public class JavaLeagueApp implements EntryPoint {
 
 		RootPanel.get().add(ourUiBinder.createAndBindUi(this));
 
-		menuController = new MenuController(userAccountService, frameWorkService, eventBus);
+		menuController = new MenuController(userAccountService,
+				frameWorkService, eventBus);
 		menuController.go();
 
 		showMainView();
@@ -218,7 +219,7 @@ public class JavaLeagueApp implements EntryPoint {
 
 		centerPanel.clear();
 		tacticPresenter = new TacticPresenter(tacticService, matchService,
-				eventBus, new TacticView());
+				userFileService, eventBus, new TacticView());
 		tacticPresenter.go(centerPanel);
 
 		listenToChannel();
