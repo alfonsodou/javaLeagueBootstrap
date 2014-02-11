@@ -39,7 +39,7 @@ public class MyCustomizedUploadServlet extends BlobstoreUploadAction {
 			List<FileItem> sessionFiles) throws UploadActionException {
 		String out = super.executeAction(request, sessionFiles);
 
-		for (FileItem imgItem : sessionFiles) {
+		for (FileItem item : sessionFiles) {
 			PersistenceManager pm = PMF.getTxnPm();
 			User currentUser = LoginHelper.getLoggedInUser(
 					request.getSession(), pm);
@@ -48,39 +48,45 @@ public class MyCustomizedUploadServlet extends BlobstoreUploadAction {
 				// Start the transaction
 				pm.currentTransaction().begin();
 
-				BlobstoreFileItem b = (BlobstoreFileItem) imgItem;
+				if (item.isFormField()) {
+					log.warning("FormITEM: " + item.getFieldName() + " :: " + item.getString());
 
-				log.warning(currentUser.getName() + " :: " + b.getName()
-						+ " :: " + b.getSize() + " :: " + b.getKeyString());
+				} else {
 
-				// Commit the transaction, flushing the object to the datastore
+					BlobstoreFileItem b = (BlobstoreFileItem) item;
 
-				if (currentUser.getTactic() != null) { // update
-					String tacticIdField = currentUser.getTactic();
+					log.warning(currentUser.getName() + " :: " + b.getName()
+							+ " :: " + b.getSize() + " :: " + b.getKeyString());
 
-					TacticUser tactic = tacticDAO.findById(Long
-							.valueOf(tacticIdField));
-					tactic.setTeamName(request.getParameter("teamName"));
-					tactic.setUpdated(new Date());
 
-					BlobstoreUtil.delete(tactic.getZipClasses().getKeyString());
-					tactic.setZipClasses(b.getKey());
+					if (currentUser.getTactic() != null) { // update
+						String tacticIdField = currentUser.getTactic();
 
-					tacticDAO.save(tactic);
-				} else { // add
+						TacticUser tactic = tacticDAO.findById(Long
+								.valueOf(tacticIdField));
+						tactic.setTeamName(request.getParameter("teamName"));
+						tactic.setUpdated(new Date());
 
-					log.warning("dentro de add. TeamName: "
-							+ request.getParameter("teamName"));
+						BlobstoreUtil.delete(tactic.getZipClasses()
+								.getKeyString());
+						tactic.setZipClasses(b.getKey());
 
-					TacticUser tactic = new TacticUser();
-					tactic.setTeamName(request.getParameter("teamName"));
-					tactic.setZipClasses(b.getKey());
+						tacticDAO.save(tactic);
+					} else { // add
 
-					tactic = tacticDAO.save(tactic);
+						log.warning("dentro de add. TeamName: "
+								+ request.getParameter("teamName"));
 
-					currentUser.setTactic(tactic.getId().toString());
+						TacticUser tactic = new TacticUser();
+						tactic.setTeamName(request.getParameter("teamName"));
+						tactic.setZipClasses(b.getKey());
 
-					userDAO.save(currentUser);
+						tactic = tacticDAO.save(tactic);
+
+						currentUser.setTactic(tactic.getId().toString());
+
+						userDAO.save(currentUser);
+					}
 				}
 
 				pm.currentTransaction().commit();

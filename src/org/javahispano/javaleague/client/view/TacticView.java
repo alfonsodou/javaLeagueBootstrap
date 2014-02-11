@@ -3,6 +3,8 @@
  */
 package org.javahispano.javaleague.client.view;
 
+import gwtupload.client.SingleUploader;
+
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Form;
 import org.gwtbootstrap3.client.ui.Label;
@@ -47,12 +49,13 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	@UiField
 	Label errorTeamName;
 	@UiField
-	FileUpload fileUpload;
-	@UiField
 	Label errorFileUpload;
 	@UiField
 	Form formTactic;
-
+	@UiField
+	SingleUploader uploader;
+	@UiField
+	Label fileName;
 
 	private static TacticViewUiBinder uiBinder = GWT
 			.create(TacticViewUiBinder.class);
@@ -64,7 +67,7 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 		initWidget(uiBinder.createAndBindUi(this));
 		
 		teamName.setName("teamName");
-		fileUpload.setName("fileUpload");
+
 		formPanelTactic.setEncoding(FormPanel.ENCODING_MULTIPART);
 		formPanelTactic.setMethod(FormPanel.METHOD_POST);
 
@@ -141,11 +144,6 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	}
 
 	@Override
-	public FileUpload getFileUpload() {
-		return fileUpload;
-	}
-
-	@Override
 	public Label getErrorFileUpload() {
 		return errorFileUpload;
 	}
@@ -158,6 +156,16 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	@Override
 	public Form getFormTactic() {
 		return formTactic;
+	}
+
+	@Override
+	public SingleUploader getUploader() {
+		return uploader;
+	}
+
+	@Override
+	public Label getFileName() {
+		return fileName;
 	}
 
 }

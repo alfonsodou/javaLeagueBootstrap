@@ -34,13 +34,14 @@
 										</g:FlowPanel>
 									</b:FormGroup>
 									<b:FormGroup>
-										<b:FormLabel for="jarFile" addStyleNames="col-lg-2">
+										<b:FormLabel for="uploader" addStyleNames="col-lg-2">
 											<ui:msg key="jarFile">Fichero jar</ui:msg>
 										</b:FormLabel>
 										<g:FlowPanel addStyleNames="col-lg-10">
-											<g:FileUpload ui:field="fileUpload"></g:FileUpload>
+											<b:Label ui:field="fileName"></b:Label>
 											<upload:SingleUploader ui:field="uploader"
-												type="BROWSER_INPUT" validExtensions="jar" />
+												type="BROWSER_INPUT" validExtensions="jar">
+											</upload:SingleUploader>
 											<b:Label ui:field="errorFileUpload" type="DANGER">
 												<ui:msg key="errorFileUpload">Debes seleccionar un fichero .jar</ui:msg>
 											</b:Label>

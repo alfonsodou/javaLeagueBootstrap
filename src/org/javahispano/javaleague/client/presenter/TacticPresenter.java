@@ -3,10 +3,14 @@
  */
 package org.javahispano.javaleague.client.presenter;
 
+import gwtupload.client.IUploadStatus.Status;
+import gwtupload.client.IUploader;
+import gwtupload.client.IUploader.UploadedInfo;
+import gwtupload.client.SingleUploader;
+
 import org.gwtbootstrap3.client.ui.Form;
 import org.gwtbootstrap3.client.ui.Label;
 import org.gwtbootstrap3.client.ui.TextBox;
-import org.javahispano.javaleague.client.JavaLeagueApp;
 import org.javahispano.javaleague.client.event.AddTacticEvent;
 import org.javahispano.javaleague.client.event.PlayMatchEvent;
 import org.javahispano.javaleague.client.event.TacticEditEvent;
@@ -17,9 +21,7 @@ import org.javahispano.javaleague.client.service.TacticServiceAsync;
 import org.javahispano.javaleague.client.service.UserFileServiceAsync;
 import org.javahispano.javaleague.shared.TacticDTO;
 
-import com.google.gwt.core.shared.GWT;
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -67,13 +69,15 @@ public class TacticPresenter implements Presenter {
 
 		TextBox getTeamName();
 
-		FileUpload getFileUpload();
-
 		Label getErrorFileUpload();
 
 		FormPanel getFormPanelTactic();
-		
+
 		Form getFormTactic();
+
+		SingleUploader getUploader();
+		
+		Label getFileName();
 
 	}
 
@@ -98,29 +102,38 @@ public class TacticPresenter implements Presenter {
 
 		bind();
 
-		//startNewBlobstoreSession();
+		// startNewBlobstoreSession();
 
 	}
 
 	public void bind() {
-		/*display.getFileUpload().addChangeHandler(new ChangeHandler() {
-			@Override
-			public void onChange(ChangeEvent event) {
-				startNewBlobstoreSession();
-				display.getFormPanelTactic().submit();
-			}
-		});*/
-		
+		/*
+		 * display.getFileUpload().addChangeHandler(new ChangeHandler() {
+		 * 
+		 * @Override public void onChange(ChangeEvent event) {
+		 * startNewBlobstoreSession(); display.getFormPanelTactic().submit(); }
+		 * });
+		 */
+
+		TextBox teamNameTextBox = new TextBox();
+		Label teamNameLabel = new Label();
+
+		teamNameLabel.setText("Nombre del Equipo:");
+		display.getUploader().add(teamNameLabel, 0);
+		display.getUploader().add(teamNameTextBox, 1);
+
+		display.getUploader().addOnFinishUploadHandler(onFinishUploaderHandler);
+
 		display.getFormPanelTactic().addSubmitCompleteHandler(
 				new FormPanel.SubmitCompleteHandler() {
 					@Override
 					public void onSubmitComplete(SubmitCompleteEvent event) {
 						Window.alert("Submit Complete!");
-						
+
 						GWT.log("TacticPresenter: Firing UpdateTacticEvent");
 						eventBus.fireEvent(new UpdateTacticEvent(tacticDTO));
-							
-						//startNewBlobstoreSession();
+
+						// startNewBlobstoreSession();
 					}
 				});
 
@@ -150,6 +163,17 @@ public class TacticPresenter implements Presenter {
 
 	}
 
+	private IUploader.OnFinishUploaderHandler onFinishUploaderHandler = new IUploader.OnFinishUploaderHandler() {
+		public void onFinish(IUploader uploader) {
+			if (uploader.getStatus() == Status.SUCCESS) {
+				UploadedInfo info = uploader.getServerInfo();
+				
+				display.getFileName().setText(info.name + " :: " + info.size);
+				
+			}
+		}
+	};
+
 	private void doUpdateTactic() {
 		boolean error = false;
 
@@ -160,17 +184,17 @@ public class TacticPresenter implements Presenter {
 			error = true;
 		}
 
-		if (display.getFileUpload().getFilename().isEmpty()) {
+/*		if (display.getFileUpload().getFilename().isEmpty()) {
 			display.getErrorFileUpload().setVisible(true);
 			error = true;
-		}
+		}*/
 
 		if (!error) {
 			tacticDTO = new TacticDTO();
 			tacticDTO.setTeamName(display.getTeamName().getValue());
 
 			display.getFormPanelTactic().submit();
-			
+
 		}
 	}
 
@@ -184,18 +208,19 @@ public class TacticPresenter implements Presenter {
 			error = true;
 		}
 
-		if (display.getFileUpload().getFilename().isEmpty()) {
+/*		if (display.getFileUpload().getFilename().isEmpty()) {
 			display.getErrorFileUpload().setVisible(true);
 			error = true;
-		}
+		}*/
 
 		if (!error) {
 			tacticDTO = new TacticDTO();
 			tacticDTO.setTeamName(display.getTeamName().getValue());
 
-			//Window.alert("doAddTactic: " + display.getFormPanelTactic().getAction());
+			// Window.alert("doAddTactic: " +
+			// display.getFormPanelTactic().getAction());
 			startNewBlobstoreSession();
-					
+
 			display.getFormPanelTactic().submit();
 
 			/*
@@ -297,8 +322,8 @@ public class TacticPresenter implements Presenter {
 			public void onSuccess(String result) {
 				GWT.log("TacticPresenter -> setAction: " + result);
 
-				//Window.alert("Action: " + result);
-				
+				// Window.alert("Action: " + result);
+
 				display.getFormPanelTactic().setAction(result);
 				display.getFormPanelTactic().setEncoding(
 						FormPanel.ENCODING_MULTIPART);
