@@ -1,7 +1,6 @@
 package org.javahispano.javaleague.shared;
 
 import java.io.Serializable;
-import java.util.Vector;
 
 /**
  * 
@@ -30,14 +29,10 @@ public class TacticDTO implements Serializable {
 	 */
 	private String updated;
 
-	/**
-	 * 
-	 */
-	private Vector<TacticClassDTO> tacticsClass = new Vector<TacticClassDTO>();
+	private String fileName;
+	
+	private long bytes;
 
-	/**
-	 * 
-	 */
 	private boolean isValid;
 
 	private int firendlyMatch;
@@ -57,7 +52,7 @@ public class TacticDTO implements Serializable {
 	}
 
 	public TacticDTO(String id, String teamName, String creation,
-			String updated, Vector<TacticClassDTO> tacticsClass, boolean isValid,
+			String updated, String fileName, int bytes, boolean isValid,
 			int state, int goalsFor, int goalsAgainst, int matchWins,
 			int matchLost, int matchTied) {
 		this();
@@ -65,7 +60,8 @@ public class TacticDTO implements Serializable {
 		this.setTeamName(teamName);
 		this.setCreation(creation);
 		this.setUpdated(updated);
-		this.setTacticsClass(tacticsClass);
+		this.setFileName(fileName);
+		this.setBytes(bytes);
 		this.setValid(isValid);
 		this.setFriendlyMatch(state);
 		this.setGoalsAgainst(goalsAgainst);
@@ -97,14 +93,6 @@ public class TacticDTO implements Serializable {
 
 	public void setUpdated(String updated) {
 		this.updated = updated;
-	}
-
-	public Vector<TacticClassDTO> getTacticsClass() {
-		return tacticsClass;
-	}
-
-	public void setTacticsClass(Vector<TacticClassDTO> tacticsClass) {
-		this.tacticsClass = tacticsClass;
 	}
 
 	public String getTeamName() {
@@ -170,5 +158,49 @@ public class TacticDTO implements Serializable {
 	public void setMatchTied(int matchTied) {
 		this.matchTied = matchTied;
 	}
+
+	/**
+	 * @return the fileName
+	 */
+	public String getFileName() {
+		return fileName;
+	}
+
+	/**
+	 * @param fileName the fileName to set
+	 */
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	/**
+	 * @return the bytes
+	 */
+	public long getBytes() {
+		return bytes;
+	}
+
+	/**
+	 * @param bytes the bytes to set
+	 */
+	public void setBytes(long bytes) {
+		this.bytes = bytes;
+	}
+
+	/**
+	 * @return the firendlyMatch
+	 */
+	public int getFirendlyMatch() {
+		return firendlyMatch;
+	}
+
+	/**
+	 * @param firendlyMatch the firendlyMatch to set
+	 */
+	public void setFirendlyMatch(int firendlyMatch) {
+		this.firendlyMatch = firendlyMatch;
+	}
+	
+	
 
 }

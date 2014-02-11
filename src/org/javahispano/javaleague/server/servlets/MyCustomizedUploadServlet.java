@@ -37,7 +37,9 @@ public class MyCustomizedUploadServlet extends BlobstoreUploadAction {
 	@Override
 	public String executeAction(HttpServletRequest request,
 			List<FileItem> sessionFiles) throws UploadActionException {
-		String out = super.executeAction(request, sessionFiles);
+		//String out = super.executeAction(request, sessionFiles);
+		
+		String out = "";
 
 		for (FileItem item : sessionFiles) {
 			PersistenceManager pm = PMF.getTxnPm();
@@ -52,11 +54,13 @@ public class MyCustomizedUploadServlet extends BlobstoreUploadAction {
 					log.warning("FormITEM: " + item.getFieldName() + " :: " + item.getString());
 
 				} else {
+					
+					out += item.getFieldName();
 
 					BlobstoreFileItem b = (BlobstoreFileItem) item;
 
-					log.warning(currentUser.getName() + " :: " + b.getName()
-							+ " :: " + b.getSize() + " :: " + b.getKeyString());
+					log.warning(currentUser.getName() + " :: " + item.getName()
+							+ " :: " + item.getSize() + " :: " + b.getKeyString());
 
 
 					if (currentUser.getTactic() != null) { // update

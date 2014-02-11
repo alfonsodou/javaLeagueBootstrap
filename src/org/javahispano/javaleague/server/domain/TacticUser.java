@@ -17,6 +17,8 @@ import org.javahispano.javaleague.server.utils.cache.CacheSupport;
 import org.javahispano.javaleague.server.utils.cache.Cacheable;
 import org.javahispano.javaleague.shared.TacticDTO;
 
+import com.google.appengine.api.blobstore.BlobInfo;
+import com.google.appengine.api.blobstore.BlobInfoFactory;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.files.AppEngineFile;
 import com.google.appengine.api.files.FileService;
@@ -28,7 +30,8 @@ import com.google.appengine.api.files.FileWriteChannel;
  * @author adou
  * 
  */
-//@PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
+// @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable =
+// "true")
 public class TacticUser implements StoreCallback, Serializable, Cacheable {
 
 	/**
@@ -52,7 +55,7 @@ public class TacticUser implements StoreCallback, Serializable, Cacheable {
 	/**
 	 * Team's Name
 	 */
-//	@Persistent
+	// @Persistent
 	private String teamName;
 
 	/**
@@ -65,43 +68,43 @@ public class TacticUser implements StoreCallback, Serializable, Cacheable {
 	/**
 	 * Is tactic validated ?.
 	 */
-	//@Persistent
+	// @Persistent
 	private boolean valid;
 
 	/**
 	 * Date/Time first upload.
 	 */
-	//@Persistent
+	// @Persistent
 	private Date creation;
 
 	/**
 	 * Date/Time last updated.
 	 */
-	//@Persistent
+	// @Persistent
 	private Date updated;
 
-	//@Persistent
+	// @Persistent
 	private int friendlyMatch;
 
-	//@Persistent
+	// @Persistent
 	private int goalsFor;
 
-	//@Persistent
+	// @Persistent
 	private int goalsAgainst;
 
-	//@Persistent
+	// @Persistent
 	private int matchWins;
 
-	//@Persistent
+	// @Persistent
 	private int matchLost;
 
-	//@Persistent
+	// @Persistent
 	private int matchTied;
-	
+
 	/**
 	 * Blob key for zip
 	 */
-	//@Persistent
+	// @Persistent
 	private BlobKey zipClasses;
 
 	public TacticUser() {
@@ -181,7 +184,6 @@ public class TacticUser implements StoreCallback, Serializable, Cacheable {
 		this.updated = updated;
 	}
 
-
 	public String getTeamName() {
 		return teamName;
 	}
@@ -189,7 +191,6 @@ public class TacticUser implements StoreCallback, Serializable, Cacheable {
 	public void setTeamName(String teamName) {
 		this.teamName = teamName;
 	}
-
 
 	/**
 	 * @return the friendlyMatch
@@ -300,8 +301,6 @@ public class TacticUser implements StoreCallback, Serializable, Cacheable {
 	public void setMatchTied(int matchTied) {
 		this.matchTied = matchTied;
 	}
-	
-	
 
 	/**
 	 * @return the zipClasses
@@ -311,14 +310,16 @@ public class TacticUser implements StoreCallback, Serializable, Cacheable {
 	}
 
 	/**
-	 * @param zipClasses the zipClasses to set
+	 * @param zipClasses
+	 *            the zipClasses to set
 	 */
 	public void setZipClasses(BlobKey zipClasses) {
 		this.zipClasses = zipClasses;
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -326,10 +327,14 @@ public class TacticUser implements StoreCallback, Serializable, Cacheable {
 
 	public TacticDTO toDTO() {
 		TacticDTO userTacticDTO = new TacticDTO();
+		BlobInfoFactory infoFactory = new BlobInfoFactory();
+		BlobInfo blobInfo = infoFactory.loadBlobInfo(this.getZipClasses());
+		
 		userTacticDTO.setId(this.getId().toString());
 		userTacticDTO.setCreation(this.getCreation().toString());
 		userTacticDTO.setUpdated(this.getUpdated().toString());
-
+		userTacticDTO.setFileName(blobInfo.getFilename());
+		userTacticDTO.setBytes(blobInfo.getSize());
 		userTacticDTO.setTeamName(this.getTeamName());
 		userTacticDTO.setFriendlyMatch(this.getFriendlyMatch());
 		userTacticDTO.setGoalsAgainst(this.getGoalsAgainst());
@@ -343,14 +348,15 @@ public class TacticUser implements StoreCallback, Serializable, Cacheable {
 
 	public void addSampleTacticClass() {
 		try {
-			
-			
-			/*this.setZipClasses(SaveFile(
-					"http://localhost:8888/tactic/samples/TacticaEjemplo.jar", 
-					"TacticaEjemplo.jar"));*/
-					
+
+			/*
+			 * this.setZipClasses(SaveFile(
+			 * "http://localhost:8888/tactic/samples/TacticaEjemplo.jar",
+			 * "TacticaEjemplo.jar"));
+			 */
+
 			this.setZipClasses(SaveFile(
-					"http://javaleague.appspot.com/tactic/samples/TacticaEjemplo.jar", 
+					"http://javaleague.appspot.com/tactic/samples/TacticaEjemplo.jar",
 					"TacticaEjemplo.jar"));
 
 		} catch (Exception e) {
@@ -372,7 +378,6 @@ public class TacticUser implements StoreCallback, Serializable, Cacheable {
 		// force load of lazily-loaded fields
 		// getUserAccount();
 		// getUserTacticDetail();
-		
 
 		CacheSupport.cachePutExp(this.getClass().getName(), id, this,
 				CACHE_EXPIR);
@@ -423,5 +428,5 @@ public class TacticUser implements StoreCallback, Serializable, Cacheable {
 		}
 		return result;
 	}
-	
+
 }

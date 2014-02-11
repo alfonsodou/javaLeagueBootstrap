@@ -76,7 +76,7 @@ public class TacticPresenter implements Presenter {
 		Form getFormTactic();
 
 		SingleUploader getUploader();
-		
+
 		Label getFileName();
 
 	}
@@ -167,9 +167,12 @@ public class TacticPresenter implements Presenter {
 		public void onFinish(IUploader uploader) {
 			if (uploader.getStatus() == Status.SUCCESS) {
 				UploadedInfo info = uploader.getServerInfo();
-				
-				display.getFileName().setText(info.name + " :: " + info.size);
-				
+
+				display.getFileName().setText(
+						uploader.getServerMessage().getUploadedFileNames()
+								.get(0)
+								+ " :: " + info.name + " :: " + info.size);
+
 			}
 		}
 	};
@@ -184,10 +187,10 @@ public class TacticPresenter implements Presenter {
 			error = true;
 		}
 
-/*		if (display.getFileUpload().getFilename().isEmpty()) {
-			display.getErrorFileUpload().setVisible(true);
-			error = true;
-		}*/
+		/*
+		 * if (display.getFileUpload().getFilename().isEmpty()) {
+		 * display.getErrorFileUpload().setVisible(true); error = true; }
+		 */
 
 		if (!error) {
 			tacticDTO = new TacticDTO();
@@ -208,10 +211,10 @@ public class TacticPresenter implements Presenter {
 			error = true;
 		}
 
-/*		if (display.getFileUpload().getFilename().isEmpty()) {
-			display.getErrorFileUpload().setVisible(true);
-			error = true;
-		}*/
+		/*
+		 * if (display.getFileUpload().getFilename().isEmpty()) {
+		 * display.getErrorFileUpload().setVisible(true); error = true; }
+		 */
 
 		if (!error) {
 			tacticDTO = new TacticDTO();
@@ -298,6 +301,10 @@ public class TacticPresenter implements Presenter {
 					display.setMatchLost(Integer.toString(result.getMatchLost()));
 					display.setMatchTied(Integer.toString(result.getMatchTied()));
 					display.setMatchWins(Integer.toString(result.getMatchWins()));
+
+					display.getFileName().setText(
+							result.getFileName() + " :: " + result.getBytes()
+									+ " bytes");
 				} else {
 					display.setVisibleUpdateButton(false);
 					display.setVisibleAddButton(true);

@@ -33,6 +33,9 @@ public class TacticServiceImpl extends RemoteServiceServlet implements
 	private static UserDAO userDAO = new UserDAO();
 	private static TacticUserDAO tacticDAO = new TacticUserDAO();
 
+	private BlobstoreService blobstoreService = BlobstoreServiceFactory
+			.getBlobstoreService();
+
 	public TacticServiceImpl() {
 
 	}
@@ -193,6 +196,8 @@ public class TacticServiceImpl extends RemoteServiceServlet implements
 	public TacticDTO getUserTacticSummary() {
 
 		TacticDTO userTacticSummary = null;
+		TacticUser userTactic;
+
 		PersistenceManager pm = PMF.getNonTxnPm();
 
 		try {
@@ -204,10 +209,10 @@ public class TacticServiceImpl extends RemoteServiceServlet implements
 			if (user.getTactic() == null)
 				return null;
 
-			userTacticSummary = tacticDAO.findById(
-					Long.valueOf(Long.valueOf(user.getTactic()))).toDTO();
+			userTactic = tacticDAO.findById(Long.valueOf(Long.valueOf(user
+					.getTactic())));
 
-			// userTacticSummary = user.getTactic().toDTO();
+			userTacticSummary = userTactic.toDTO();
 		} finally {
 			pm.close();
 		}
