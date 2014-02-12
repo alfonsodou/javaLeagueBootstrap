@@ -187,19 +187,7 @@ public class TacticDTO implements Serializable {
 		this.bytes = bytes;
 	}
 
-	/**
-	 * @return the firendlyMatch
-	 */
-	public int getFirendlyMatch() {
-		return firendlyMatch;
-	}
 
-	/**
-	 * @param firendlyMatch the firendlyMatch to set
-	 */
-	public void setFirendlyMatch(int firendlyMatch) {
-		this.firendlyMatch = firendlyMatch;
-	}
 	
 	
 

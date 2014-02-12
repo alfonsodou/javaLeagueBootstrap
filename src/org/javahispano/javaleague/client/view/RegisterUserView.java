@@ -36,6 +36,8 @@ public class RegisterUserView extends Composite implements
 	@UiField
 	TextBox userName;
 	@UiField
+	TextBox teamName;	
+	@UiField
 	TextBox email;
 	@UiField
 	Input password;
@@ -43,6 +45,8 @@ public class RegisterUserView extends Composite implements
 	Input rePassword;
 	@UiField
 	Label errorUserName;
+	@UiField
+	Label errorTeamName;
 	@UiField
 	Label errorEmail;
 	@UiField
@@ -145,5 +149,17 @@ public class RegisterUserView extends Composite implements
 	@Override
 	public Paragraph getTextSendEmail() {
 		return textSendEmail;
+	}
+
+
+	@Override
+	public TextBox getTeamName() {
+		return teamName;
+	}
+
+
+	@Override
+	public Label getErrorTeamName() {
+		return errorTeamName;
 	}
 }

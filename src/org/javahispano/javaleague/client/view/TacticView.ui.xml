@@ -30,7 +30,9 @@
 											<b:Label ui:field="errorTeamName" type="DANGER">
 												<ui:msg key="errorTeamName">El nombre no puede estar vacío</ui:msg>
 											</b:Label>
-
+											<b:Button ui:field="updateTacticButton">
+												<ui:msg key="updateTactic">Actualizar</ui:msg>
+											</b:Button>
 										</g:FlowPanel>
 									</b:FormGroup>
 									<b:FormGroup>
@@ -38,23 +40,10 @@
 											<ui:msg key="jarFile">Fichero jar</ui:msg>
 										</b:FormLabel>
 										<g:FlowPanel addStyleNames="col-lg-10">
-											<b:Label ui:field="fileName"></b:Label>
+											<b:Badge ui:field="fileName"></b:Badge>
 											<upload:SingleUploader ui:field="uploader"
 												type="BROWSER_INPUT" validExtensions="jar">
 											</upload:SingleUploader>
-											<b:Label ui:field="errorFileUpload" type="DANGER">
-												<ui:msg key="errorFileUpload">Debes seleccionar un fichero .jar</ui:msg>
-											</b:Label>
-										</g:FlowPanel>
-									</b:FormGroup>
-									<b:FormGroup>
-										<g:FlowPanel addStyleNames="col-lg-offset-2 col-lg-10">
-											<b:Button ui:field="updateTacticButton">
-												<ui:msg key="updateTactic">Actualizar</ui:msg>
-											</b:Button>
-											<b:Button ui:field="addTacticButton">
-												<ui:msg key="addTactic">Añadir</ui:msg>
-											</b:Button>
 										</g:FlowPanel>
 									</b:FormGroup>
 

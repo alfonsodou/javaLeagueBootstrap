@@ -22,7 +22,7 @@ public interface UserAccountService extends RemoteService {
 	 */
 	UserDTO login(String email, String password);
 
-	UserDTO register(UserDTO userDTO, String msgFrom, String msgSubject,
+	UserDTO register(UserDTO userDTO, String teamName, String msgFrom, String msgSubject,
 			String msgBody);
 
 }

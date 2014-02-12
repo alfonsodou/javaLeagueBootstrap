@@ -39,5 +39,8 @@ public interface JavaLeagueMessages extends Messages {
 	
 	@DefaultMessage("Descargar")
 	String urlDownloadFrameWork();
+	
+	@DefaultMessage(":: Sin táctica ::")
+	String emptyUserTactic();
 
 }

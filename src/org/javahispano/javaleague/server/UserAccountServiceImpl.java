@@ -17,6 +17,8 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.javahispano.javaleague.client.service.UserAccountService;
+import org.javahispano.javaleague.server.domain.TacticUser;
+import org.javahispano.javaleague.server.domain.TacticUserDAO;
 import org.javahispano.javaleague.server.domain.User;
 import org.javahispano.javaleague.server.domain.UserDAO;
 import org.javahispano.javaleague.server.utils.SessionIdentifierGenerator;
@@ -32,11 +34,12 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 		UserAccountService {
 
 	private static UserDAO userDAO = new UserDAO();
+	private static TacticUserDAO tacticUserDAO = new TacticUserDAO();
 
 	@Override
 	public UserDTO login(String email, String password) {
 		User user = userDAO.findByEmail(email);
-		
+
 		if ((user != null) && (user.getPassword().equals(password))) {
 			HttpSession session = getThreadLocalRequest().getSession();
 			// update session if successful
@@ -45,20 +48,20 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 
 			user.setLastActive(new Date());
 			user.setLastLoginOn(new Date());
-			
+
 			userDAO.save(user);
-			
+
 			UserDTO userDTO = User.toDTO(user);
-			
-			return userDTO;	
+
+			return userDTO;
 		}
-		
+
 		return null;
 	}
 
 	@Override
-	public UserDTO register(UserDTO userDTO, String msgFrom, String msgSubject,
-			String msgBody) {
+	public UserDTO register(UserDTO userDTO, String teamName, String msgFrom,
+			String msgSubject, String msgBody) {
 		User user = userDAO.findByEmail(userDTO.getEmailAddress());
 
 		// Ya está registrada esa dirección de correo
@@ -69,6 +72,10 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 		}
 
 		SessionIdentifierGenerator userTokenGenerator = new SessionIdentifierGenerator();
+		TacticUser tacticUser = new TacticUser();
+		tacticUser.setTeamName(teamName);
+		tacticUser = tacticUserDAO.save(tacticUser);
+		
 		user = new User();
 		user.setDateTokenActivate(new Date());
 		user.setTokenActivate(userTokenGenerator.nextSessionId());
@@ -76,6 +83,7 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 		user.setName(userDTO.getName());
 		// Falta guardar la contraseña encriptada
 		user.setPassword(userDTO.getPassword());
+		user.setTactic(tacticUser.getId().toString());
 
 		Properties props = new Properties();
 		Session session = Session.getDefaultInstance(props, null);

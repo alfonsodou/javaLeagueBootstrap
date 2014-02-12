@@ -146,20 +146,6 @@ public class TacticUser implements StoreCallback, Serializable, Cacheable {
 		return id;
 	}
 
-	/*
-	 * public UserAccount getUserAccount() { return userPrefs; }
-	 * 
-	 * public void setUserAccount(UserAccount userAccount) { this.userPrefs =
-	 * userAccount; }
-	 */
-
-	/*
-	 * public TacticDetail getUserTacticDetail() { return userTacticDetail; }
-	 * 
-	 * public void setUserTacticDetail(TacticDetail userTacticDetail) {
-	 * this.userTacticDetail = userTacticDetail; }
-	 */
-
 	public boolean isValid() {
 		return valid;
 	}
@@ -327,14 +313,16 @@ public class TacticUser implements StoreCallback, Serializable, Cacheable {
 
 	public TacticDTO toDTO() {
 		TacticDTO userTacticDTO = new TacticDTO();
-		BlobInfoFactory infoFactory = new BlobInfoFactory();
-		BlobInfo blobInfo = infoFactory.loadBlobInfo(this.getZipClasses());
-		
+
+		if (this.getZipClasses() != null) {
+			BlobInfoFactory infoFactory = new BlobInfoFactory();
+			BlobInfo blobInfo = infoFactory.loadBlobInfo(this.getZipClasses());
+			userTacticDTO.setFileName(blobInfo.getFilename());
+			userTacticDTO.setBytes(blobInfo.getSize());
+		}
 		userTacticDTO.setId(this.getId().toString());
 		userTacticDTO.setCreation(this.getCreation().toString());
 		userTacticDTO.setUpdated(this.getUpdated().toString());
-		userTacticDTO.setFileName(blobInfo.getFilename());
-		userTacticDTO.setBytes(blobInfo.getSize());
 		userTacticDTO.setTeamName(this.getTeamName());
 		userTacticDTO.setFriendlyMatch(this.getFriendlyMatch());
 		userTacticDTO.setGoalsAgainst(this.getGoalsAgainst());

@@ -78,6 +78,7 @@ public class LoginPresenter implements Presenter {
 			}
 		});
 
+		display.getEmailTextBox().setFocus(true);
 
 	}
 

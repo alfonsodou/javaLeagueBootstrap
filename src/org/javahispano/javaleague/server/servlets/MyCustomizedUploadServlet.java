@@ -23,6 +23,9 @@ import org.javahispano.javaleague.server.domain.User;
 import org.javahispano.javaleague.server.domain.UserDAO;
 import org.javahispano.javaleague.server.utils.BlobstoreUtil;
 
+import com.google.appengine.api.blobstore.BlobInfo;
+import com.google.appengine.api.blobstore.BlobInfoFactory;
+
 /**
  * @author adou
  * 
@@ -37,10 +40,10 @@ public class MyCustomizedUploadServlet extends BlobstoreUploadAction {
 	@Override
 	public String executeAction(HttpServletRequest request,
 			List<FileItem> sessionFiles) throws UploadActionException {
-		//String out = super.executeAction(request, sessionFiles);
+		String out = ""; 
 		
-		String out = "";
-
+		super.executeAction(request, sessionFiles);
+		
 		for (FileItem item : sessionFiles) {
 			PersistenceManager pm = PMF.getTxnPm();
 			User currentUser = LoginHelper.getLoggedInUser(
@@ -55,20 +58,17 @@ public class MyCustomizedUploadServlet extends BlobstoreUploadAction {
 
 				} else {
 					
-					out += item.getFieldName();
-
 					BlobstoreFileItem b = (BlobstoreFileItem) item;
-
-					log.warning(currentUser.getName() + " :: " + item.getName()
-							+ " :: " + item.getSize() + " :: " + b.getKeyString());
-
+					BlobInfoFactory infoFactory = new BlobInfoFactory();
+					BlobInfo blobInfo = infoFactory.loadBlobInfo(b.getKey());
+					
+					out = blobInfo.getFilename() + " :: " + blobInfo.getSize() + " bytes";
 
 					if (currentUser.getTactic() != null) { // update
 						String tacticIdField = currentUser.getTactic();
 
 						TacticUser tactic = tacticDAO.findById(Long
 								.valueOf(tacticIdField));
-						tactic.setTeamName(request.getParameter("teamName"));
 						tactic.setUpdated(new Date());
 
 						BlobstoreUtil.delete(tactic.getZipClasses()
@@ -77,12 +77,7 @@ public class MyCustomizedUploadServlet extends BlobstoreUploadAction {
 
 						tacticDAO.save(tactic);
 					} else { // add
-
-						log.warning("dentro de add. TeamName: "
-								+ request.getParameter("teamName"));
-
 						TacticUser tactic = new TacticUser();
-						tactic.setTeamName(request.getParameter("teamName"));
 						tactic.setZipClasses(b.getKey());
 
 						tactic = tacticDAO.save(tactic);

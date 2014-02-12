@@ -5,6 +5,7 @@ package org.javahispano.javaleague.client.view;
 
 import gwtupload.client.SingleUploader;
 
+import org.gwtbootstrap3.client.ui.Badge;
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Form;
 import org.gwtbootstrap3.client.ui.Label;
@@ -16,7 +17,6 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -30,8 +30,6 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	TextBox teamName;
 	@UiField
 	Button updateTacticButton;
-	@UiField
-	Button addTacticButton;
 	@UiField
 	Label winsField;
 	@UiField
@@ -49,13 +47,11 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	@UiField
 	Label errorTeamName;
 	@UiField
-	Label errorFileUpload;
-	@UiField
 	Form formTactic;
 	@UiField
 	SingleUploader uploader;
 	@UiField
-	Label fileName;
+	Badge fileName;
 
 	private static TacticViewUiBinder uiBinder = GWT
 			.create(TacticViewUiBinder.class);
@@ -123,15 +119,6 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 		updateTacticButton.setVisible(visible);
 	}
 
-	@Override
-	public void setVisibleAddButton(boolean visible) {
-		addTacticButton.setVisible(visible);
-	}
-
-	@Override
-	public HasClickHandlers getAddButton() {
-		return addTacticButton;
-	}
 
 	@Override
 	public Label getErrorTeamName() {	
@@ -141,11 +128,6 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	@Override
 	public TextBox getTeamName() {
 		return teamName;
-	}
-
-	@Override
-	public Label getErrorFileUpload() {
-		return errorFileUpload;
 	}
 
 	@Override
@@ -164,7 +146,7 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	}
 
 	@Override
-	public Label getFileName() {
+	public Badge getFileName() {
 		return fileName;
 	}
 

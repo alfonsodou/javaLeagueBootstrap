@@ -22,7 +22,7 @@ public interface UserAccountServiceAsync {
 	 */
 	void login(String email, String password, AsyncCallback<UserDTO> callback);
 
-	void register(UserDTO userDTO, String msgFrom, String msgSubject,
+	void register(UserDTO userDTO, String teamName, String msgFrom, String msgSubject,
 			String msgBody, AsyncCallback<UserDTO> callback);
 
 }

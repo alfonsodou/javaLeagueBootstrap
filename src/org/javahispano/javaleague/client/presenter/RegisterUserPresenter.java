@@ -39,6 +39,8 @@ public class RegisterUserPresenter implements Presenter {
 		HasClickHandlers getRegisterButton();
 
 		TextBox getUserName();
+		
+		TextBox getTeamName();
 
 		TextBox getEmail();
 
@@ -53,6 +55,8 @@ public class RegisterUserPresenter implements Presenter {
 		Label getErrorPasswordSize();
 
 		Label getErrorUserName();
+		
+		Label getErrorTeamName();
 
 		Label getErrorRegisterEmail();
 
@@ -119,6 +123,11 @@ public class RegisterUserPresenter implements Presenter {
 			error = true;
 		}
 
+		if (this.display.getTeamName().getValue().isEmpty()) {
+			this.display.getErrorTeamName().setVisible(true);
+			error = true;
+		}
+
 		if (!checkEmail(this.display.getEmail().getValue())) {
 			this.display.getErrorEmail().setVisible(true);
 			error = true;
@@ -143,7 +152,7 @@ public class RegisterUserPresenter implements Presenter {
 			new RPCCall<UserDTO>() {
 				@Override
 				protected void callService(AsyncCallback<UserDTO> cb) {
-					userAccountService.register(userDTO,
+					userAccountService.register(userDTO, display.getTeamName().getText(),
 							javaLeagueMessages.adminJavaLeague(),
 							javaLeagueMessages.subjectEmailRegisterUser(),
 							javaLeagueMessages.bodyEmailRegisterUser(), cb);
@@ -208,6 +217,7 @@ public class RegisterUserPresenter implements Presenter {
 		this.display.getErrorPassword().setVisible(false);
 		this.display.getErrorPasswordSize().setVisible(false);
 		this.display.getErrorRegisterEmail().setVisible(false);
+		this.display.getErrorTeamName().setVisible(false);
 
 	}
 }

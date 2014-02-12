@@ -209,8 +209,8 @@ public class TacticServiceImpl extends RemoteServiceServlet implements
 			if (user.getTactic() == null)
 				return null;
 
-			userTactic = tacticDAO.findById(Long.valueOf(Long.valueOf(user
-					.getTactic())));
+			userTactic = tacticDAO.findById(Long.valueOf(user
+					.getTactic()));
 
 			userTacticSummary = userTactic.toDTO();
 		} finally {

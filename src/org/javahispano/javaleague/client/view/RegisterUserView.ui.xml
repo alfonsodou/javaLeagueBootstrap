@@ -46,6 +46,18 @@
 
 							</b:FormGroup>
 
+							<b:FormGroup>
+								<b:FormLabel for="formTeamName" addStyleNames="col-lg-2">
+									<ui:msg key="TeamName">Nombre del Equipo</ui:msg>
+								</b:FormLabel>
+
+								<g:FlowPanel addStyleNames="col-lg-10">
+									<b:TextBox ui:field="teamName" b:id="formTeamName"></b:TextBox>
+									<b:Label ui:field="errorTeamName" type="DANGER">
+										<ui:msg key="errorTeamName">El nombre del equipo no puede estar vacío</ui:msg>
+									</b:Label>
+								</g:FlowPanel>
+							</b:FormGroup>
 
 							<b:FormGroup>
 								<b:FormLabel for="formCountry" addStyleNames="col-lg-2">
