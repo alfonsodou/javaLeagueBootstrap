@@ -1,6 +1,7 @@
 package org.javahispano.javaleague.server;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Logger;
 
 import javax.jdo.JDOCanRetryException;
@@ -120,6 +121,7 @@ public class TacticServiceImpl extends RemoteServiceServlet implements
 						.findById(Long.valueOf(userTacticDTO.getId()));
 
 				tactic.updatedFromDTO(userTacticDTO);
+				tactic.setUpdated(new Date());
 
 				tacticDAO.save(tactic);
 				try {
@@ -219,20 +221,6 @@ public class TacticServiceImpl extends RemoteServiceServlet implements
 
 		return userTacticSummary;
 	}
-
-	/*
-	 * @Override public String deleteTacticClass(String name) { String[] names =
-	 * name.split("-", 2); String packageName = names[0].trim(); String
-	 * className = names[1].trim();
-	 * 
-	 * PersistenceManager pm = PMF.getNonTxnPm(); Query q =
-	 * pm.newQuery(TacticClass.class, "className == :cn && packageName == :pn");
-	 * try { q.setUnique(true); TacticClass tc = (TacticClass)
-	 * q.execute(className, packageName); BlobstoreService blobstoreService =
-	 * BlobstoreServiceFactory .getBlobstoreService();
-	 * blobstoreService.delete(tc.getBlob()); pm.deletePersistent(tc); } finally
-	 * { q.closeAll(); pm.close(); } return className; }
-	 */
 
 	@Override
 	public void deleteTacticClass(String tacticClassId) {

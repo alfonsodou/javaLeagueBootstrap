@@ -70,6 +70,8 @@ public class TacticPresenter implements Presenter {
 
 		Badge getFileName();
 
+		Label getUpdatedTactic();
+
 	}
 
 	private TacticDTO tacticDTO;
@@ -126,8 +128,9 @@ public class TacticPresenter implements Presenter {
 				GWT.log("TacticPresenter: Firing UpdateTacticEvent");
 				eventBus.fireEvent(new UpdateTacticEvent(tacticDTO));
 
-				display.getFileName().setText(
-						uploader.getServerMessage().getMessage());
+				String[] parts = uploader.getServerMessage().getMessage().split("#"); 
+				display.getFileName().setText(parts[0]);
+				display.getUpdatedTactic().setText(parts[1]);
 			}
 		}
 	};
@@ -165,6 +168,7 @@ public class TacticPresenter implements Presenter {
 						tacticDTO = result;
 
 						display.setVisibleUpdateButton(true);
+						display.getUpdatedTactic().setText(result.getUpdated());
 						display.setTeamName(result.getTeamName());
 						display.setGoalsAgainst(Integer.toString(result
 								.getGoalsAgainst()));
@@ -247,6 +251,7 @@ public class TacticPresenter implements Presenter {
 				if (result != null) {
 					tacticDTO = result;
 					display.setVisibleUpdateButton(true);
+					display.getUpdatedTactic().setText(result.getUpdated());
 					display.setTeamName(result.getTeamName());
 					display.setGoalsAgainst(Integer.toString(result
 							.getGoalsAgainst()));

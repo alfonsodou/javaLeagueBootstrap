@@ -62,15 +62,17 @@ public class MyCustomizedUploadServlet extends BlobstoreUploadAction {
 					BlobInfoFactory infoFactory = new BlobInfoFactory();
 					BlobInfo blobInfo = infoFactory.loadBlobInfo(b.getKey());
 					
-					out = blobInfo.getFilename() + " :: " + blobInfo.getSize() + " bytes";
+					out += blobInfo.getFilename() + " :: " + blobInfo.getSize() + " bytes";
 
 					if (currentUser.getTactic() != null) { // update
 						String tacticIdField = currentUser.getTactic();
 
 						TacticUser tactic = tacticDAO.findById(Long
 								.valueOf(tacticIdField));
-						tactic.setUpdated(new Date());
-
+						Date updated = new Date();
+						tactic.setUpdated(updated);
+						out += "#" + updated.toString();
+						
 						BlobstoreUtil.delete(tactic.getZipClasses()
 								.getKeyString());
 						tactic.setZipClasses(b.getKey());

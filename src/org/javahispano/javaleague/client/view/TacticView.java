@@ -52,6 +52,8 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	SingleUploader uploader;
 	@UiField
 	Badge fileName;
+	@UiField
+	Label updatedTactic;
 
 	private static TacticViewUiBinder uiBinder = GWT
 			.create(TacticViewUiBinder.class);
@@ -148,6 +150,11 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	@Override
 	public Badge getFileName() {
 		return fileName;
+	}
+
+	@Override
+	public Label getUpdatedTactic() {
+		return updatedTactic;
 	}
 
 }
