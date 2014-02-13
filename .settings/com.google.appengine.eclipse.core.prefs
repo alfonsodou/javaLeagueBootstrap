@@ -8,4 +8,4 @@ gaeIsEclipseDefaultInstPath=true
 gaeLaunchAppInBrowser=true
 googleCloudSqlEnabled=false
 localDevMySqlEnabled=true
-ormEnhancementInclusions=
+ormEnhancementInclusions=src/org/javahispano/javaleague/server/domain/
