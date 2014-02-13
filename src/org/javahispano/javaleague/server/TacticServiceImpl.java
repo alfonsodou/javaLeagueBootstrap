@@ -122,8 +122,9 @@ public class TacticServiceImpl extends RemoteServiceServlet implements
 
 				tactic.updatedFromDTO(userTacticDTO);
 				tactic.setUpdated(new Date());
-
+				userTacticDTO.setUpdated(tactic.getUpdated().toString());
 				tacticDAO.save(tactic);
+				
 				try {
 					logger.fine("about to start commit");
 					pm.currentTransaction().commit();
