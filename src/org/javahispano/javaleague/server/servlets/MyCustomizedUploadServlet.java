@@ -63,7 +63,11 @@ public class MyCustomizedUploadServlet extends BlobstoreUploadAction {
 					BlobInfo blobInfo = infoFactory.loadBlobInfo(b.getKey());				
 					Date updated = new Date();
 					
-					out += blobInfo.getFilename() + " :: " + blobInfo.getSize() + " bytes#" + updated.toString();
+					out += blobInfo.getFilename() + " :: " + blobInfo.getSize() + " bytes|" + updated.toString();
+					
+					//out += updated.toString();
+					
+					log.warning("OUT:" + out);
 
 					if (currentUser.getTactic() != null) { // update
 						String tacticIdField = currentUser.getTactic();

@@ -126,11 +126,16 @@ public class TacticPresenter implements Presenter {
 		public void onFinish(IUploader uploader) {
 			if (uploader.getStatus() == Status.SUCCESS) {
 				GWT.log("TacticPresenter: Firing UpdateTacticEvent");
-				eventBus.fireEvent(new UpdateTacticEvent(tacticDTO));
+				
+				String msg = uploader.getServerMessage().getMessage();
 
-				String[] parts = uploader.getServerMessage().getMessage().split("#"); 
-				display.getFileName().setText(parts[0]);
-				display.getUpdatedTactic().setText(parts[1]);
+				display.getFileName().setText(msg.substring(0, msg.indexOf('|')));
+				display.getUpdatedTactic().setText(msg.substring(msg.indexOf('|') + 1));
+
+				tacticDTO.setFileName(msg.substring(0, msg.indexOf('|')));
+				tacticDTO.setUpdated(msg.substring(msg.indexOf('|') + 1));
+				
+				eventBus.fireEvent(new UpdateTacticEvent(tacticDTO));				
 			}
 		}
 	};
