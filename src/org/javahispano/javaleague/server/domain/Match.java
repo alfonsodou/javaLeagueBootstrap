@@ -2,6 +2,7 @@ package org.javahispano.javaleague.server.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.logging.Logger;
 
 import javax.jdo.listener.StoreCallback;
 import javax.persistence.Id;
@@ -11,56 +12,35 @@ import org.javahispano.javaleague.server.utils.cache.CacheSupport;
 import org.javahispano.javaleague.server.utils.cache.Cacheable;
 import org.javahispano.javaleague.shared.MatchDTO;
 
-//@PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
 public class Match implements StoreCallback, Serializable, Cacheable {
 
 	private static final int CACHE_EXPIR = 600; // in seconds
+	private static final Logger log = Logger.getLogger(Match.class.getName());	
 
-	/*
-	 * @PrimaryKey
-	 * 
-	 * @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	 * 
-	 * @Extension(vendorName = "datanucleus", key = "gae.encoded-pk", value =
-	 * "true") private String id;
-	 */
 	@Id
 	private Long id;
 
-	// @Persistent
 	private String localTeam;
 	
 	private String nameLocalTeam;
 
-	// @Persistent
 	private String visitingTeam;
 	
 	private String nameVisitingTeam;
 
-	// @Persistent
 	private int localTeamGoals;
 
-	// @Persistent
 	private int visitingTeamGoals;
 
-	// @Persistent
 	private double localTeamPossesion;
 
-	// @Persistent
 	private byte[] match;
 
-	// @Persistent
 	private Date execution;
 
-	// @Persistent
 	private Date visualization;
 	
-	// @Persistent
 	private int state;
-
-	/*
-	 * @Persistent private Season season;
-	 */
 
 	public Match() {
 		this.execution = new Date();
@@ -72,7 +52,6 @@ public class Match implements StoreCallback, Serializable, Cacheable {
 		this.localTeamPossesion = 0;
 		this.match = null;
 		this.state = AppLib.MATCH_SCHEDULED;
-		// this.season = null;
 	}
 
 	public Long getId() {
@@ -147,12 +126,6 @@ public class Match implements StoreCallback, Serializable, Cacheable {
 		this.visualization = visualization;
 	}
 
-	/*
-	 * public Season getSeason() { return season; }
-	 * 
-	 * public void setSeason(Season season) { this.season = season; }
-	 */
-
 	public MatchDTO toDTO() {
 		MatchDTO matchDTO = new MatchDTO();
 		
@@ -187,8 +160,6 @@ public class Match implements StoreCallback, Serializable, Cacheable {
 	public void setNameForeign(String nameForeign) {
 		this.nameVisitingTeam = nameForeign;
 	}
-	
-	
 
 	/**
 	 * @return the state

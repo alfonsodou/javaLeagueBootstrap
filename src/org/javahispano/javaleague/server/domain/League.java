@@ -23,6 +23,8 @@ public class League implements StoreCallback, Serializable, Cacheable {
 	 */
 	private static final int CACHE_EXPIR = 600;  // in seconds
 	private static final Logger log = Logger.getLogger(League.class.getName());
+	
+	public static Integer PUBLIC = 1, PRIVATE = 2;
 	  
 	@Id
 	private Long id;
@@ -41,10 +43,15 @@ public class League implements StoreCallback, Serializable, Cacheable {
 	
 	private Date updated;
 	
+	private Date start;
+	
 	private Long activeSeason;
 	
+	private Integer type;
+	
 	public League() {
-		
+		this.creation = new Date();
+		this.updated = new Date();		
 	}
 	
 	public League(LeagueDTO leagueDTO) {
@@ -77,8 +84,6 @@ public class League implements StoreCallback, Serializable, Cacheable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	
 	
 	/**
 	 * @return the managerId
@@ -176,6 +181,38 @@ public class League implements StoreCallback, Serializable, Cacheable {
 	 */
 	public void setMatchs(List<Long> matchs) {
 		this.matchs = matchs;
+	}
+	
+	/**
+	 * @return the start
+	 */
+	public Date getStart() {
+		return start;
+	}
+
+	/**
+	 * @param start the start to set
+	 */
+	public void setStart(Date start) {
+		this.start = start;
+	}
+	
+	/**
+	 * @return the type
+	 */
+	public Integer getType() {
+		return type;
+	}
+
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(Integer type) {
+		this.type = type;
+	}
+	
+	public boolean isPublic() {
+		return (this.type == PUBLIC);
 	}
 
 	@Override
