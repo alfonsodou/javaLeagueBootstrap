@@ -56,7 +56,10 @@ public class MenuController implements ValueChangeHandler<String> {
 	private UserDTO userDTO;
 
 	public MenuController(UserAccountServiceAsync userAccountService,
-			FrameWorkServiceAsync frameWorkService, TacticServiceAsync tacticService, UserFileServiceAsync userFileService, MatchServiceAsync matchService, SimpleEventBus eventBus) {
+			FrameWorkServiceAsync frameWorkService,
+			TacticServiceAsync tacticService,
+			UserFileServiceAsync userFileService,
+			MatchServiceAsync matchService, SimpleEventBus eventBus) {
 		this.eventBus = eventBus;
 		this.userAccountService = userAccountService;
 		this.frameWorkService = frameWorkService;
@@ -119,7 +122,6 @@ public class MenuController implements ValueChangeHandler<String> {
 			@Override
 			public void onLogin(LoginEvent event) {
 				GWT.log("MenuController: Login Event received");
-				// userDTO = event.getUser();
 				doLogin(event.getUser());
 			}
 		});

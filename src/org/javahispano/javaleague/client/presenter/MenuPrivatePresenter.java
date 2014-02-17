@@ -69,6 +69,12 @@ public class MenuPrivatePresenter implements Presenter {
 				doShowMyTeam();
 			}
 		});
+		
+		this.display.getNavbarBrand().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				doShowMyTeam();
+			}
+		});		
 
 		this.display.getMyLeaguesLink().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
