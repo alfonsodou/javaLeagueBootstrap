@@ -34,7 +34,6 @@ public class CreateLeaguePresenter implements Presenter {
 
 		HasValue<String> getLeagueName();
 
-		Form getFormPanel();
 	}
 
 	private LeagueDTO leagueDTO;

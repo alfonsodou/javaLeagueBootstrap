@@ -15,7 +15,6 @@
 	<inherits name="org.gwtbootstrap3.GwtBootstrap3" />
 	<!-- <set-property name="bootstrap.responsiveDesign" value="true" /> -->
 	<inherits name="org.gwtbootstrap3.extras.datetimepicker.DateTimePicker"/>
-	<inherits name="org.gwtbootstrap3.extras.select.Select"/>
 
 	<!-- Internacionalization -->
 	<inherits name='com.google.gwt.i18n.I18N' />

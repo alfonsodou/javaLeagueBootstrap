@@ -13,6 +13,8 @@ import org.javahispano.javaleague.client.event.ShowHomeEvent;
 import org.javahispano.javaleague.client.event.ShowHomeEventHandler;
 import org.javahispano.javaleague.client.event.ShowLoginEvent;
 import org.javahispano.javaleague.client.event.ShowLoginEventHandler;
+import org.javahispano.javaleague.client.event.ShowMyTacticEvent;
+import org.javahispano.javaleague.client.event.ShowMyTacticEventHandler;
 import org.javahispano.javaleague.client.event.ShowRegisterUserEvent;
 import org.javahispano.javaleague.client.event.ShowRegisterUserEventHandler;
 import org.javahispano.javaleague.client.presenter.FrameWorkPresenter;
@@ -20,12 +22,17 @@ import org.javahispano.javaleague.client.presenter.LoginPresenter;
 import org.javahispano.javaleague.client.presenter.Presenter;
 import org.javahispano.javaleague.client.presenter.RegisterUserPresenter;
 import org.javahispano.javaleague.client.presenter.ShowHomePresenter;
+import org.javahispano.javaleague.client.presenter.TacticPresenter;
 import org.javahispano.javaleague.client.service.FrameWorkServiceAsync;
+import org.javahispano.javaleague.client.service.MatchServiceAsync;
+import org.javahispano.javaleague.client.service.TacticServiceAsync;
 import org.javahispano.javaleague.client.service.UserAccountServiceAsync;
+import org.javahispano.javaleague.client.service.UserFileServiceAsync;
 import org.javahispano.javaleague.client.view.FrameWorkView;
 import org.javahispano.javaleague.client.view.LoginView;
 import org.javahispano.javaleague.client.view.RegisterUserView;
 import org.javahispano.javaleague.client.view.ShowHomeView;
+import org.javahispano.javaleague.client.view.TacticView;
 import org.javahispano.javaleague.shared.UserDTO;
 
 import com.google.gwt.core.client.GWT;
@@ -42,14 +49,20 @@ public class MenuController implements ValueChangeHandler<String> {
 	private final SimpleEventBus eventBus;
 	private final UserAccountServiceAsync userAccountService;
 	private final FrameWorkServiceAsync frameWorkService;
+	private final TacticServiceAsync tacticService;
+	private final UserFileServiceAsync userFileService;
+	private final MatchServiceAsync matchService;
 
 	private UserDTO userDTO;
 
 	public MenuController(UserAccountServiceAsync userAccountService,
-			FrameWorkServiceAsync frameWorkService, SimpleEventBus eventBus) {
+			FrameWorkServiceAsync frameWorkService, TacticServiceAsync tacticService, UserFileServiceAsync userFileService, MatchServiceAsync matchService, SimpleEventBus eventBus) {
 		this.eventBus = eventBus;
 		this.userAccountService = userAccountService;
 		this.frameWorkService = frameWorkService;
+		this.tacticService = tacticService;
+		this.userFileService = userFileService;
+		this.matchService = matchService;
 
 		bind();
 	}
@@ -93,6 +106,15 @@ public class MenuController implements ValueChangeHandler<String> {
 			}
 		});
 
+		eventBus.addHandler(ShowMyTacticEvent.TYPE,
+				new ShowMyTacticEventHandler() {
+					@Override
+					public void onShowMyTactic(ShowMyTacticEvent event) {
+						GWT.log("MenuController: ShowMyTactic Event received");
+						doShowMyTactic();
+					}
+				});
+
 		eventBus.addHandler(LoginEvent.TYPE, new LoginEventHandler() {
 			@Override
 			public void onLogin(LoginEvent event) {
@@ -117,6 +139,10 @@ public class MenuController implements ValueChangeHandler<String> {
 
 	private void doShowFrameWork() {
 		History.newItem("showFrameWork");
+	}
+
+	private void doShowMyTactic() {
+		History.newItem("showMyTactic");
 	}
 
 	private void doShowRegisterUser() {
@@ -151,14 +177,21 @@ public class MenuController implements ValueChangeHandler<String> {
 
 				return;
 			} else if (token.equals("showHome")) {
-
 				presenter = new ShowHomePresenter(new ShowHomeView());
+				JavaLeagueApp.get().getCenterPanel().clear();
 				presenter.go(JavaLeagueApp.get().getCenterPanel());
 
 				return;
 			} else if (token.equals("showLogin")) {
 				presenter = new LoginPresenter(userAccountService, eventBus,
 						new LoginView());
+				JavaLeagueApp.get().getCenterPanel().clear();
+				presenter.go(JavaLeagueApp.get().getCenterPanel());
+
+				return;
+			} else if (token.equals("showMyTactic")) {
+				presenter = new TacticPresenter(tacticService, matchService,
+						userFileService, eventBus, new TacticView());
 				JavaLeagueApp.get().getCenterPanel().clear();
 				presenter.go(JavaLeagueApp.get().getCenterPanel());
 

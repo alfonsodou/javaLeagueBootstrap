@@ -135,7 +135,8 @@ public class JavaLeagueApp implements EntryPoint {
 		RootPanel.get().add(ourUiBinder.createAndBindUi(this));
 
 		menuController = new MenuController(userAccountService,
-				frameWorkService, eventBus);
+				frameWorkService, tacticService, userFileService, matchService,
+				eventBus);
 		menuController.go();
 
 		showMainView();

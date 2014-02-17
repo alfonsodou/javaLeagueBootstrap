@@ -5,28 +5,20 @@
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
 
-	<ui:style>
-	.danger {
-		background-color: #fcf2f2;
-		border-color: #dFb5b4;
-	}
-	
-	.margin-fix {
-		margin-bottom: 0 !important;
-	}
-	</ui:style>
-
 	<b:Navbar ui:field="menuNavBar" position="FIXED_TOP">
 		<b:Container>
 			<b:NavbarHeader>
-				<b:NavbarBrand>javaLeague</b:NavbarBrand>
+				<b:NavbarBrand ui:field="navbarBrand">javaLeague</b:NavbarBrand>
 				<b:NavbarCollapseButton target="#navbar-collapse" />
 			</b:NavbarHeader>
 
 			<b:NavbarCollapse b:id="#navbar-collapse">
 				<b:NavbarNav>
+					<b:ListItem ui:field="frameWorkLink">
+						<ui:msg key="frameWorkLink">FrameWork</ui:msg>
+					</b:ListItem>
 					<b:ListItem ui:field="myTeamLink">
-						<ui:msg key="myTeamLink">Mi equipo</ui:msg>
+						<ui:msg key="myTeamLink">Mi táctica</ui:msg>
 					</b:ListItem>
 					<b:ListItem ui:field="myLeaguesLink">
 						<ui:msg key="myLeaguesLink">Mis ligas</ui:msg>
@@ -40,7 +32,7 @@
 							<b:ListItem>Español (es)</b:ListItem>
 							<b:ListItem>English (en)</b:ListItem>
 						</b:DropDownMenu>
-					</b:ListDropDown>		
+					</b:ListDropDown>
 
 					<b:ListDropDown>
 						<b:AnchorButton ui:field="userName" toggle="DROPDOWN"></b:AnchorButton>
@@ -53,17 +45,10 @@
 							</b:ListItem>
 						</b:DropDownMenu>
 					</b:ListDropDown>
-
-
 				</b:NavbarNav>
-
-
-
 			</b:NavbarCollapse>
+			
 		</b:Container>
 	</b:Navbar>
-
-
-
 
 </ui:UiBinder> 

@@ -2,8 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:b="urn:import:org.gwtbootstrap3.client.ui"
 	xmlns:b2="urn:import:org.gwtbootstrap3.extras.datetimepicker.client.ui"
-	xmlns:select="urn:import:org.gwtbootstrap3.extras.select.client.ui"
-	
+
 	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
@@ -22,7 +21,7 @@
 							</b:Legend>
 
 							<b:FormGroup>
-								<b:FormLabel for="leagueName">
+								<b:FormLabel for="leagueName" addStyleNames="col-lg-2">
 									<ui:msg key="leagueName">Nombre</ui:msg>
 								</b:FormLabel>
 								<g:FlowPanel addStyleNames="col-lg-10">
@@ -41,7 +40,7 @@
 								</b:FormLabel>
 
 								<g:FlowPanel addStyleNames="col-lg-10">
-									<b:Input ui:field="leagueDescription" b:id="leagueDescription"></b:Input>
+									<b:TextArea ui:field="leagueDescription" b:id="leagueDescription"></b:TextArea>
 								</g:FlowPanel>
 							</b:FormGroup>
 
@@ -59,16 +58,37 @@
 											</ui:msg>
 										</b:CheckBox>
 									</b:InputGroup>
+									<b:FormLabel for="passwordLeague" ui:field="passwordLeagueLabel">
+										<ui:msg key="passwordLeague">Contraseña</ui:msg>
+									</b:FormLabel>
+									<b:TextBox ui:field="passwordLeague" b:id="passwordLeague"></b:TextBox>
 								</g:FlowPanel>
 							</b:FormGroup>
 
+							<b:FormGroup>
+								<b:FormLabel for="startSignIn" addStyleNames="col-lg-2">
+									<ui:msg key="startSignIn">Inicio inscripciones</ui:msg>
+								</b:FormLabel>
+								<g:FlowPanel addStyleNames="col-lg-10">
+									<b2:DateTimeBox ui:field="startSignIn"></b2:DateTimeBox>
+								</g:FlowPanel>
+							</b:FormGroup>
+
+							<b:FormGroup>
+								<b:FormLabel for="endSignIn" addStyleNames="col-lg-2">
+									<ui:msg key="endSignIn">Fin inscripciones</ui:msg>
+								</b:FormLabel>
+								<g:FlowPanel addStyleNames="col-lg-10">
+									<b2:DateTimeBox ui:field="endSignIn"></b2:DateTimeBox>
+								</g:FlowPanel>
+							</b:FormGroup>
 
 							<b:FormGroup>
 								<g:FlowPanel addStyleNames="col-lg-offset-2 col-lg-10">
 									<b:Button type="PRIMARY" ui:field="createLeagueButton">
 										<ui:msg key="createLeague">Crear liga</ui:msg>
 									</b:Button>
-									<b:Button type="DANGER" dismiss="MODAL" ui:field="cancelLeagueButton">
+									<b:Button type="DANGER" ui:field="cancelLeagueButton">
 										<ui:msg key="cancelLeague">Cancelar</ui:msg>
 									</b:Button>
 

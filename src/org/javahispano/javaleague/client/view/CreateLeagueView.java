@@ -31,9 +31,6 @@ public class CreateLeagueView extends Composite implements CreateLeaguePresenter
 
 	@UiField
 	Button cancelLeagueButton;	
-	
-	@UiField
-	Form form;
 
 	private static CreateLeagueViewUiBinder uiBinder = GWT
 			.create(CreateLeagueViewUiBinder.class);
@@ -68,8 +65,4 @@ public class CreateLeagueView extends Composite implements CreateLeaguePresenter
 		leagueName.setFocus(true);
 	}
 
-	@Override
-	public Form getFormPanel() {
-		return form;
-	}
 }

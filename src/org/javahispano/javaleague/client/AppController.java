@@ -253,19 +253,10 @@ public class AppController implements ValueChangeHandler<String> {
 
 				return;
 			} else if (token.equals("createLeague")) {
-				CreateLeagueView createLeagueView = new CreateLeagueView();
-
-				final PopupPanel createLeaguePopup = new PopupPanel(true);
-				createLeaguePopup.setAnimationEnabled(true);
-				createLeaguePopup.setWidget(createLeagueView);
-				createLeaguePopup.setGlassEnabled(true);
-				createLeaguePopup.setAutoHideEnabled(true);
-				createLeaguePopup.center();
-
 				presenter = new CreateLeaguePresenter(leagueService, eventBus,
-						createLeagueView);
-
-				presenter.go(createLeaguePopup);
+						new CreateLeagueView());
+				JavaLeagueApp.get().getCenterPanel().clear();
+				presenter.go(JavaLeagueApp.get().getCenterPanel());
 
 				return;
 			} else if (token.equals("updateTactic")) {

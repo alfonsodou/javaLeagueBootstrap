@@ -2,10 +2,11 @@ package org.javahispano.javaleague.client.presenter;
 
 import org.gwtbootstrap3.client.ui.AnchorButton;
 import org.javahispano.javaleague.client.event.LogoutEvent;
+import org.javahispano.javaleague.client.event.ShowFrameWorkEvent;
 import org.javahispano.javaleague.client.event.ShowMyLeaguesEvent;
+import org.javahispano.javaleague.client.event.ShowMyTacticEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.service.LoginServiceAsync;
-import org.javahispano.javaleague.shared.AuthTypes;
 import org.javahispano.javaleague.shared.UserDTO;
 
 import com.google.gwt.core.shared.GWT;
@@ -27,13 +28,18 @@ public class MenuPrivatePresenter implements Presenter {
 
 	public interface Display {
 		HasClickHandlers getLogoutLink();
+
 		HasClickHandlers getMyTeamLink();
+
 		HasClickHandlers getMyLeaguesLink();
 		
+		HasClickHandlers getFrameWorkLink();
+		
+		HasClickHandlers getNavbarBrand();
+
 		AnchorButton getUserName();
 
 		Widget asWidget();
-
 	}
 
 	private final LoginServiceAsync loginService;
@@ -60,31 +66,38 @@ public class MenuPrivatePresenter implements Presenter {
 
 		this.display.getMyTeamLink().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				
+				doShowMyTeam();
 			}
 		});
-		
+
 		this.display.getMyLeaguesLink().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				doShowMyLeagues();
 			}
 		});
+
+		this.display.getFrameWorkLink().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				GWT.log("MenuPrivatePresenter: Firing ShowFrameWorkEvent");
+				eventBus.fireEvent(new ShowFrameWorkEvent());
+			}
+		});
+	}
+	
+	private void doShowMyTeam() {
+		GWT.log("MenuPrivatePresenter: Firing ShowMyTacticEvent");
+		eventBus.fireEvent(new ShowMyTacticEvent(currentUser.getTacticId()));
 	}
 
 	private void doShowMyLeagues() {
+		GWT.log("MenuPrivatePresenter: Firing ShowMyLeaguesEvent");
 		eventBus.fireEvent(new ShowMyLeaguesEvent(currentUser));
 	}
-	
+
 	private void doLogout() {
 		new RPCCall<Void>() {
 			@Override
 			protected void callService(AsyncCallback<Void> cb) {
-				/*if (facebookUser()) {
-					Window.Location.assign("/facebooklogout.jsp");
-				} else {
-					loginService.logout(cb);
-				}*/
-				
 				loginService.logout(cb);
 			}
 
@@ -100,11 +113,6 @@ public class MenuPrivatePresenter implements Presenter {
 			}
 		}.retry(3);
 
-	}
-
-	private boolean facebookUser() {
-		return currentUser.getUniqueId()
-				.endsWith(AuthTypes.FACEBOOK.toString());
 	}
 
 	@Override

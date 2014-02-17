@@ -5,6 +5,7 @@ package org.javahispano.javaleague.client.view;
 
 import org.gwtbootstrap3.client.ui.AnchorButton;
 import org.gwtbootstrap3.client.ui.ListItem;
+import org.gwtbootstrap3.client.ui.NavbarBrand;
 import org.javahispano.javaleague.client.presenter.MenuPrivatePresenter;
 
 import com.google.gwt.core.client.GWT;
@@ -28,6 +29,10 @@ public class MenuPrivateView extends Composite implements
 	ListItem myTeamLink;
 	@UiField
 	ListItem myLeaguesLink;
+	@UiField
+	ListItem frameWorkLink;
+	@UiField
+	NavbarBrand navbarBrand;
 	@UiField
 	AnchorButton userName;
 
@@ -65,6 +70,16 @@ public class MenuPrivateView extends Composite implements
 	@Override
 	public AnchorButton getUserName() {
 		return userName;
+	}
+
+	@Override
+	public HasClickHandlers getFrameWorkLink() {
+		return frameWorkLink;
+	}
+
+	@Override
+	public HasClickHandlers getNavbarBrand() {
+		return navbarBrand;
 	}
 
 }
