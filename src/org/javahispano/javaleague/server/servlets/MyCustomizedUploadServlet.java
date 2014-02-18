@@ -40,10 +40,10 @@ public class MyCustomizedUploadServlet extends BlobstoreUploadAction {
 	@Override
 	public String executeAction(HttpServletRequest request,
 			List<FileItem> sessionFiles) throws UploadActionException {
-		String out = ""; 
-		
+		String out = "";
+
 		super.executeAction(request, sessionFiles);
-		
+
 		for (FileItem item : sessionFiles) {
 			PersistenceManager pm = PMF.getTxnPm();
 			User currentUser = LoginHelper.getLoggedInUser(
@@ -54,19 +54,21 @@ public class MyCustomizedUploadServlet extends BlobstoreUploadAction {
 				pm.currentTransaction().begin();
 
 				if (item.isFormField()) {
-					log.warning("FormITEM: " + item.getFieldName() + " :: " + item.getString());
+					log.warning("FormITEM: " + item.getFieldName() + " :: "
+							+ item.getString());
 
 				} else {
-					
+
 					BlobstoreFileItem b = (BlobstoreFileItem) item;
 					BlobInfoFactory infoFactory = new BlobInfoFactory();
-					BlobInfo blobInfo = infoFactory.loadBlobInfo(b.getKey());				
+					BlobInfo blobInfo = infoFactory.loadBlobInfo(b.getKey());
 					Date updated = new Date();
-					
-					out += blobInfo.getFilename() + " :: " + blobInfo.getSize() + " bytes|" + updated.toString();
-					
-					//out += updated.toString();
-					
+
+					out += blobInfo.getFilename() + " :: " + blobInfo.getSize()
+							+ " bytes|" + updated.toString();
+
+					// out += updated.toString();
+
 					log.warning("OUT:" + out);
 
 					if (currentUser.getTactic() != null) { // update
@@ -74,11 +76,17 @@ public class MyCustomizedUploadServlet extends BlobstoreUploadAction {
 
 						TacticUser tactic = tacticDAO.findById(Long
 								.valueOf(tacticIdField));
-						
+
+						log.warning("TACTIC ID: " + tacticIdField
+								+ " :: Nombre: " + tactic.getTeamName());
 						tactic.setUpdated(updated);
-						
-						BlobstoreUtil.delete(tactic.getZipClasses()
-								.getKeyString());
+
+						if (tactic.getZipClasses() != null) {
+							log.warning("KeyString: "
+									+ tactic.getZipClasses().getKeyString());
+							BlobstoreUtil.delete(tactic.getZipClasses()
+									.getKeyString());
+						}
 						tactic.setZipClasses(b.getKey());
 
 						tacticDAO.save(tactic);
@@ -99,6 +107,7 @@ public class MyCustomizedUploadServlet extends BlobstoreUploadAction {
 				e.printStackTrace();
 			} finally {
 				if (pm.currentTransaction().isActive()) {
+					log.warning("Antes de rollback");
 					pm.currentTransaction().rollback();
 				}
 				pm.close();

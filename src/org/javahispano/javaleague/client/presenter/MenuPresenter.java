@@ -1,6 +1,7 @@
 package org.javahispano.javaleague.client.presenter;
 
 import org.javahispano.javaleague.client.event.ShowFrameWorkEvent;
+import org.javahispano.javaleague.client.event.ShowHomeEvent;
 import org.javahispano.javaleague.client.event.ShowLoginEvent;
 import org.javahispano.javaleague.client.event.ShowRegisterUserEvent;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
@@ -28,6 +29,8 @@ public class MenuPresenter implements Presenter {
 		HasClickHandlers getLoginLink();
 		
 		HasClickHandlers getFrameWorkLink();
+		
+		HasClickHandlers getNavbarBrand();
 
 		Widget asWidget();
 
@@ -69,6 +72,13 @@ public class MenuPresenter implements Presenter {
 				eventBus.fireEvent(new ShowFrameWorkEvent());
 			}
 		});
+		
+		this.display.getNavbarBrand().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				GWT.log("MenuPresenter: Firing ShowHomeEvent");
+				eventBus.fireEvent(new ShowHomeEvent());
+			}
+		});		
 	}
 
 	@Override

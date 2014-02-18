@@ -17,7 +17,7 @@
 					<b:Form type="HORIZONTAL">
 						<b:FieldSet>
 							<b:Legend>
-								<ui:msg key="caption">Ligas</ui:msg>
+								<ui:msg key="caption">Crear Liga</ui:msg>
 							</b:Legend>
 
 							<b:FormGroup>
@@ -25,13 +25,11 @@
 									<ui:msg key="leagueName">Nombre</ui:msg>
 								</b:FormLabel>
 								<g:FlowPanel addStyleNames="col-lg-10">
-									<!-- If you add id attribute to element,You should use b:id attribute. -->
 									<b:TextBox b:id="leagueName" ui:field="leagueName"></b:TextBox>
-									<b:HelpBlock>
-										<ui:msg key="helpLeagueName">Introduce el nombre de la liga</ui:msg>
-									</b:HelpBlock>
+									<b:Label ui:field="errorName" type="DANGER">
+										<ui:msg key="errorName">El nombre de la Liga no puede estar vacío</ui:msg>
+									</b:Label>
 								</g:FlowPanel>
-
 							</b:FormGroup>
 
 							<b:FormGroup>
@@ -46,22 +44,23 @@
 
 							<b:FormGroup>
 								<g:FlowPanel addStyleNames="col-lg-offset-2 col-lg-10">
-									<b:InputGroup>
-										<b:CheckBox ui:field="leaguePublic">
-											<ui:msg key="leaguePublic">
-												Pública
-											</ui:msg>
-										</b:CheckBox>
-										<b:CheckBox ui:field="leaguePrivate">
-											<ui:msg key="leaguePrivate">
-												Privada
-											</ui:msg>
-										</b:CheckBox>
-									</b:InputGroup>
+									<b:CheckBox ui:field="leaguePublic">
+										<ui:msg key="leaguePublic">
+											Pública
+										</ui:msg>
+									</b:CheckBox>
+									<b:CheckBox ui:field="leaguePrivate">
+										<ui:msg key="leaguePrivate">
+											Privada
+										</ui:msg>
+									</b:CheckBox>
 									<b:FormLabel for="passwordLeague" ui:field="passwordLeagueLabel">
 										<ui:msg key="passwordLeague">Contraseña</ui:msg>
 									</b:FormLabel>
 									<b:TextBox ui:field="passwordLeague" b:id="passwordLeague"></b:TextBox>
+									<b:Label ui:field="errorPassword" type="DANGER">
+										<ui:msg key="errorPassword">La contraseña no puede estar vacía</ui:msg>
+									</b:Label>
 								</g:FlowPanel>
 							</b:FormGroup>
 
@@ -80,6 +79,10 @@
 								</b:FormLabel>
 								<g:FlowPanel addStyleNames="col-lg-10">
 									<b2:DateTimeBox ui:field="endSignIn"></b2:DateTimeBox>
+									<b:Label ui:field="errorDate" type="DANGER">
+										<ui:msg key="errorDate">La fecha final no puede ser inferior a la
+											inicial</ui:msg>
+									</b:Label>
 								</g:FlowPanel>
 							</b:FormGroup>
 

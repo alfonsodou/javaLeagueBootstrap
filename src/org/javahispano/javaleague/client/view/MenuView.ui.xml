@@ -20,7 +20,7 @@
 		<b:Container>
 
 			<b:NavbarHeader>
-				<b:NavbarBrand>javaLeague</b:NavbarBrand>
+				<b:NavbarBrand ui:field="navbarBrand">javaLeague</b:NavbarBrand>
 				<b:NavbarCollapseButton target="#navbar-collapse" />
 			</b:NavbarHeader>
 

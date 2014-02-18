@@ -3,10 +3,8 @@
  */
 package org.javahispano.javaleague.client.view;
 
-import org.gwtbootstrap3.client.ui.Button;
-import org.gwtbootstrap3.client.ui.Input;
 import org.gwtbootstrap3.client.ui.ListItem;
-import org.gwtbootstrap3.client.ui.TextBox;
+import org.gwtbootstrap3.client.ui.NavbarBrand;
 import org.javahispano.javaleague.client.presenter.MenuPresenter;
 
 import com.google.gwt.core.client.GWT;
@@ -40,6 +38,8 @@ public class MenuView extends Composite implements MenuPresenter.Display {
 	ListItem loginLink;
 	@UiField
 	ListItem frameWorkLink;
+	@UiField
+	NavbarBrand navbarBrand;
 	
 	public MenuView(String firstName) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -63,6 +63,11 @@ public class MenuView extends Composite implements MenuPresenter.Display {
 	@Override
 	public HasClickHandlers getFrameWorkLink() {
 		return frameWorkLink;
+	}
+
+	@Override
+	public HasClickHandlers getNavbarBrand() {
+		return navbarBrand;
 	}
 
 

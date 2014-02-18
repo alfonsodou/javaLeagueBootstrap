@@ -3,7 +3,12 @@
  */
 package org.javahispano.javaleague.client.presenter;
 
-import org.gwtbootstrap3.client.ui.Form;
+import org.gwtbootstrap3.client.ui.CheckBox;
+import org.gwtbootstrap3.client.ui.FormLabel;
+import org.gwtbootstrap3.client.ui.Label;
+import org.gwtbootstrap3.client.ui.TextArea;
+import org.gwtbootstrap3.client.ui.TextBox;
+import org.gwtbootstrap3.extras.datetimepicker.client.ui.DateTimeBox;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
 import org.javahispano.javaleague.shared.LeagueDTO;
@@ -17,7 +22,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
-
 
 /**
  * @author adou
@@ -34,10 +38,30 @@ public class CreateLeaguePresenter implements Presenter {
 
 		HasValue<String> getLeagueName();
 
+		TextArea getLeagueDescription();
+
+		CheckBox getLeaguePublic();
+
+		CheckBox getLeaguePrivate();
+
+		TextBox getPasswordLeague();
+
+		DateTimeBox getStartSignIn();
+
+		DateTimeBox getEndSignIn();
+
+		Label getErrorName();
+
+		Label getErrorPassword();
+
+		Label getErrorDate();
+		
+		FormLabel getPasswordLeagueLabel();
+
 	}
 
 	private LeagueDTO leagueDTO;
-	
+
 	private final LeagueServiceAsync leagueService;
 	private final SimpleEventBus eventBus;
 	private final Display display;
@@ -47,28 +71,24 @@ public class CreateLeaguePresenter implements Presenter {
 		this.leagueService = leagueService;
 		this.eventBus = eventBus;
 		this.display = display;
-		
+
 		leagueDTO = new LeagueDTO();
+
+		this.display.getLeaguePublic().setActive(true);
+		this.display.getLeaguePrivate().setActive(false);
+		this.display.getPasswordLeagueLabel().setVisible(false);
+		this.display.getPasswordLeague().setVisible(false);
 		
-		bind();
+		hideErrorLabel();
 
-		/*
-		CreateLeaguePresenter.this.display.getFormPanel()
-		.addSubmitCompleteHandler(new Form.SubmitCompleteHandler() {
-
-			@Override
-			public void onSubmitComplete(
-					com.svenjacobs.gwtbootstrap3.client.ui.Form.SubmitCompleteEvent event) {
-				CreateLeaguePresenter.this.display.getFormPanel().reset();
-			}
-		});
-		*/
 	}
 
 	@Override
 	public void go(HasWidgets container) {
 		container.clear();
 		container.add(display.asWidget());
+
+		bind();
 	}
 
 	private void bind() {
@@ -78,27 +98,74 @@ public class CreateLeaguePresenter implements Presenter {
 						doSave();
 					}
 				});
+
+		this.display.getLeaguePrivate().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				display.getLeaguePublic().setActive(false);
+				display.getPasswordLeagueLabel().setVisible(true);
+				display.getPasswordLeague().setValue("");
+				display.getPasswordLeague().setVisible(true);
+			}
+		});
+		
+		this.display.getLeaguePublic().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				display.getLeaguePrivate().setActive(false);
+				display.getPasswordLeagueLabel().setVisible(false);
+				display.getPasswordLeague().setVisible(false);
+			}
+		});
+
 	}
 
 	private void doSave() {
-		leagueDTO.setLeagueName(display.getLeagueName().getValue().trim());
-		
-		new RPCCall<Void>() {
-			@Override
-			protected void callService(AsyncCallback<Void> cb) {
-				leagueService.createLeague(leagueDTO, cb);
-			}
+		boolean error = false;
 
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("Error creating league...");
-			}
+		hideErrorLabel();
 
-			@Override
-			public void onSuccess(Void result) {
-				// TODO Auto-generated method stub
-				
-			}
-		}.retry(3);
+		if (this.display.getLeagueName().getValue().isEmpty()) {
+			this.display.getErrorName().setVisible(true);
+			error = true;
+		}
+
+		if (this.display.getEndSignIn().getValue()
+				.before(this.display.getStartSignIn().getValue())) {
+			this.display.getErrorDate().setVisible(true);
+			error = true;
+		}
+
+		if (this.display.getLeaguePrivate().getValue()
+				&& (this.display.getPasswordLeague().getValue().isEmpty())) {
+			this.display.getErrorPassword().setVisible(true);
+			error = true;
+		}
+
+		if (!error) {
+			leagueDTO.setLeagueName(display.getLeagueName().getValue().trim());
+
+			new RPCCall<Void>() {
+				@Override
+				protected void callService(AsyncCallback<Void> cb) {
+					leagueService.createLeague(leagueDTO, cb);
+				}
+
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert("Error creating league...");
+				}
+
+				@Override
+				public void onSuccess(Void result) {
+					// TODO Auto-generated method stub
+
+				}
+			}.retry(3);
+		}
+	}
+
+	private void hideErrorLabel() {
+		this.display.getErrorDate().setVisible(false);
+		this.display.getErrorName().setVisible(false);
+		this.display.getErrorPassword().setVisible(false);
 	}
 }
