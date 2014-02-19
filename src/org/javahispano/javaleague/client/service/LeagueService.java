@@ -15,6 +15,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("leagueService")
 public interface LeagueService extends RemoteService {
 
-	void createLeague(LeagueDTO league);
+	LeagueDTO createLeague(LeagueDTO league);
 
 }

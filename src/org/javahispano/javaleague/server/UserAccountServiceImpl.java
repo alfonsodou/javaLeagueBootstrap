@@ -83,7 +83,7 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 		user.setName(userDTO.getName());
 		// Falta guardar la contraseña encriptada
 		user.setPassword(userDTO.getPassword());
-		user.setTactic(tacticUser.getId().toString());
+		user.setTactic(tacticUser.getId());
 
 		Properties props = new Properties();
 		Session session = Session.getDefaultInstance(props, null);
@@ -113,7 +113,7 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 
 		userDAO.save(user);
 
-		userDTO.setId(user.getId().toString());
+		userDTO.setId(user.getId());
 
 		return userDTO;
 	}

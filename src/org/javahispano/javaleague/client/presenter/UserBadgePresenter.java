@@ -4,7 +4,6 @@ import org.javahispano.javaleague.client.event.LoginEvent;
 import org.javahispano.javaleague.client.event.LoginEventHandler;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.service.LoginServiceAsync;
-import org.javahispano.javaleague.shared.AuthTypes;
 import org.javahispano.javaleague.shared.UserDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -65,11 +64,7 @@ public class UserBadgePresenter implements Presenter {
 		new RPCCall<Void>() {
 			@Override
 			protected void callService(AsyncCallback<Void> cb) {
-				if (facebookUser()) {
-					Window.Location.assign("/facebooklogout.jsp");
-				} else {
-					rpcService.logout(cb);
-				}
+				rpcService.logout(cb);
 			}
 
 			@Override
@@ -85,17 +80,10 @@ public class UserBadgePresenter implements Presenter {
 
 	}
 
-	private boolean facebookUser() {
-		return currentUser.getUniqueId()
-				.endsWith(AuthTypes.FACEBOOK.toString());
-	}
-
 	private void doLogin() {
 		if (currentUser != null) {
 			UserBadgePresenter.this.display.getUsernameLabel().setText(
 					currentUser.getName());
-			//eventBus.fireEvent(new AddTacticEvent(currentUser.getTactic()
-			//		.getId()));
 		} else
 			UserBadgePresenter.this.display.getUsernameLabel().setText(
 					"Login first");

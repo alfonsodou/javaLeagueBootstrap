@@ -29,7 +29,7 @@ public class User implements StoreCallback, Serializable, Cacheable {
 
 	private String password;
 
-	private String tacticId;
+	private Long tacticId;
 
 	private Date lastLoginOn;
 
@@ -40,11 +40,6 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	private Date dateTokenActivate;
 
 	private boolean active;
-	/**
-	 * loginId and loginProvider form a unique key. E.g.: loginId = supercobra,
-	 * loginProvider = LoginProvider.TWITTER
-	 */
-	private String uniqueId;
 
 	private String channelId;
 
@@ -53,13 +48,6 @@ public class User implements StoreCallback, Serializable, Cacheable {
 
 	public User() {
 		this.active = false;
-	}
-
-	public User(String loginId, Integer loginProvider) {
-		this();
-		this.setUniqueId(loginId + "-" + loginProvider);
-		this.setName(loginId);
-
 	}
 
 	/**
@@ -110,7 +98,7 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	/**
 	 * @return the tactic
 	 */
-	public String getTactic() {
+	public Long getTactic() {
 		return tacticId;
 	}
 
@@ -118,7 +106,7 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	 * @param tactic
 	 *            the tactic to set
 	 */
-	public void setTactic(String tacticId) {
+	public void setTactic(Long tacticId) {
 		this.tacticId = tacticId;
 	}
 
@@ -146,21 +134,6 @@ public class User implements StoreCallback, Serializable, Cacheable {
 
 	public void setLastActive(Date lastActive) {
 		this.lastActive = lastActive;
-	}
-
-	/**
-	 * @return the uniqueId
-	 */
-	public String getUniqueId() {
-		return uniqueId;
-	}
-
-	/**
-	 * @param uniqueId
-	 *            the uniqueId to set
-	 */
-	public void setUniqueId(String uniqueId) {
-		this.uniqueId = uniqueId;
 	}
 
 	/**
@@ -243,60 +216,8 @@ public class User implements StoreCallback, Serializable, Cacheable {
 			return null;
 		}
 
-		return new UserDTO(user.getId().toString(), user.getEmailAddress(),
-				user.getName(), user.getUniqueId(), user.getTactic());
-	}
-
-	public static User findOrCreateUser(User user) {
-
-		PersistenceManager pm = PMF.getTxnPm();
-		Transaction tx = null;
-		User oneResult = null, detached = null;
-
-		String uniqueId = user.getUniqueId();
-
-		// perform the query and creation under transactional control,
-		// to prevent another process from creating an acct with the same id.
-		try {
-			for (int i = 0; i < NUM_RETRIES; i++) {
-				tx = pm.currentTransaction();
-				tx.begin();
-				oneResult = userDAO.findByUniqueId(uniqueId);
-				if (oneResult != null) {
-					log.info("User uniqueId already exists: " + uniqueId);
-					detached = oneResult;
-					// detached = pm.detachCopy(oneResult);
-				} else {
-					log.info("UserAccount " + uniqueId
-							+ " does not exist, creating...");
-					TacticUser tacticUser = new TacticUser();
-					tacticUser.addSampleTacticClass();
-					tacticUserDAO.save(tacticUser);
-					user.setTactic(tacticUser.getId().toString());
-					// AppLib.addTactic(user);
-					userDAO.save(user);
-					detached = user;
-					// detached = pm.detachCopy(user);
-				}
-				try {
-					tx.commit();
-					break;
-				} catch (JDOCanRetryException e1) {
-					if (i == (NUM_RETRIES - 1)) {
-						throw e1;
-					}
-				}
-			} // end for
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (tx.isActive()) {
-				tx.rollback();
-			}
-			pm.close();
-		}
-
-		return detached;
+		return new UserDTO(user.getId(), user.getEmailAddress(),
+				user.getName(), user.getTactic());
 	}
 
 	@Override

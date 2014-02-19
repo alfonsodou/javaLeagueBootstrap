@@ -166,7 +166,7 @@ public class TacticServiceImpl extends RemoteServiceServlet implements
 						getThreadLocalRequest().getSession(), pm);
 
 				userTactic = new TacticUser(userTacticDTO);
-				currentUser.setTactic(userTactic.getId().toString());
+				currentUser.setTactic(userTactic.getId());
 				// pm.makePersistent(currentUser);
 				userDAO.save(currentUser);
 				uid = userTactic.getId().toString();

@@ -98,48 +98,5 @@ public class LoginHelper extends RemoteServiceServlet {
 		}
 	}
 
-	public User loginStarts(HttpSession session, User user) {
-		User aUser = User.findOrCreateUser(user);
-		User u = null;
-
-		// update user info under transactional control
-		PersistenceManager pm = PMF.getTxnPm();
-		Transaction tx = pm.currentTransaction();
-		try {
-			for (int i = 0; i < NUM_RETRIES; i++) {
-				tx = pm.currentTransaction();
-				tx.begin();
-				u = (User) userDAO.findById(aUser.getId());
-				// String channelId =
-				// ChannelServer.createChannel(u.getUniqueId());
-				// u.setChannelId(channelId);
-				u.setLastActive(new Date());
-				u.setLastLoginOn(new Date());
-				try {
-					userDAO.save(u);
-					tx.commit();
-					// update session if successful
-					session.setAttribute("userId", String.valueOf(u.getId()));
-					session.setAttribute("loggedin", true);
-					break;
-				} catch (JDOCanRetryException e1) {
-					if (i == (NUM_RETRIES - 1)) {
-						throw e1;
-					}
-				}
-			} // end for
-		} catch (JDOException e) {
-			e.printStackTrace();
-			return null;
-		} finally {
-			if (tx.isActive()) {
-				logger.severe("loginStart transaction rollback.");
-				tx.rollback();
-			}
-			pm.close();
-		}
-
-		return u;
-	}
 
 }

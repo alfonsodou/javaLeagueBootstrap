@@ -105,7 +105,7 @@ public class ChannelServer {
 
 		}
 
-		pushMessageById(Arrays.asList(user.getUniqueId()), msg);
+		pushMessageById(Arrays.asList(user.getId().toString()), msg);
 	}
 
 	/**

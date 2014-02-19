@@ -12,6 +12,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  *
  */
 public interface LeagueServiceAsync {
-	void createLeague(LeagueDTO league, AsyncCallback<Void> callback);
+	void createLeague(LeagueDTO league, AsyncCallback<LeagueDTO> cb);
 
 }

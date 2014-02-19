@@ -54,7 +54,7 @@ public class UploadServlet extends HttpServlet {
 			
 			pm.currentTransaction().begin();
 			if (currentUser.getTactic() != null) { // update
-				String tacticIdField = currentUser.getTactic();
+				Long tacticIdField = currentUser.getTactic();
 
 
 				TacticUser tactic = tacticDAO.findById(Long
@@ -76,7 +76,7 @@ public class UploadServlet extends HttpServlet {
 				
 				tactic = tacticDAO.save(tactic);
 				
-				currentUser.setTactic(tactic.getId().toString());
+				currentUser.setTactic(tactic.getId());
 				
 				userDAO.save(currentUser);
 			}

@@ -72,10 +72,9 @@ public class MyCustomizedUploadServlet extends BlobstoreUploadAction {
 					log.warning("OUT:" + out);
 
 					if (currentUser.getTactic() != null) { // update
-						String tacticIdField = currentUser.getTactic();
+						Long tacticIdField = currentUser.getTactic();
 
-						TacticUser tactic = tacticDAO.findById(Long
-								.valueOf(tacticIdField));
+						TacticUser tactic = tacticDAO.findById(tacticIdField);
 
 						log.warning("TACTIC ID: " + tacticIdField
 								+ " :: Nombre: " + tactic.getTeamName());
@@ -96,7 +95,7 @@ public class MyCustomizedUploadServlet extends BlobstoreUploadAction {
 
 						tactic = tacticDAO.save(tactic);
 
-						currentUser.setTactic(tactic.getId().toString());
+						currentUser.setTactic(tactic.getId());
 
 						userDAO.save(currentUser);
 					}

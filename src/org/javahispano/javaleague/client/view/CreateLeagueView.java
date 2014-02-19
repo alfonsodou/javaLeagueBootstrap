@@ -10,6 +10,7 @@ import org.gwtbootstrap3.client.ui.Label;
 import org.gwtbootstrap3.client.ui.TextArea;
 import org.gwtbootstrap3.client.ui.TextBox;
 import org.gwtbootstrap3.extras.datetimepicker.client.ui.DateTimeBox;
+import org.gwtbootstrap3.extras.summernote.client.ui.Summernote;
 import org.javahispano.javaleague.client.presenter.CreateLeaguePresenter;
 
 import com.google.gwt.core.client.GWT;
@@ -30,7 +31,7 @@ public class CreateLeagueView extends Composite implements CreateLeaguePresenter
 	@UiField
 	TextBox leagueName;
 	@UiField
-	TextArea leagueDescription;
+	Summernote leagueDescription;
 	@UiField
 	CheckBox leaguePublic;
 	@UiField
@@ -53,6 +54,8 @@ public class CreateLeagueView extends Composite implements CreateLeaguePresenter
 	Button cancelLeagueButton;	
 	@UiField
 	FormLabel passwordLeagueLabel;
+	@UiField
+	Label errorType;
 
 	private static CreateLeagueViewUiBinder uiBinder = GWT
 			.create(CreateLeagueViewUiBinder.class);
@@ -88,7 +91,7 @@ public class CreateLeagueView extends Composite implements CreateLeaguePresenter
 	}
 
 	@Override
-	public TextArea getLeagueDescription() {
+	public Summernote getLeagueDescription() {
 		return leagueDescription;
 	}
 
@@ -135,6 +138,11 @@ public class CreateLeagueView extends Composite implements CreateLeaguePresenter
 	@Override
 	public FormLabel getPasswordLeagueLabel() {
 		return passwordLeagueLabel;
+	}
+
+	@Override
+	public Label getErrorType() {
+		return errorType;
 	}
 
 }

@@ -41,7 +41,7 @@ public class AppLib {
 		TacticUser tactic = new TacticUser();
 		addSampleTacticClass(tactic);
 		tactic.addSampleTacticClass();
-		user.setTactic(tactic.getId().toString());
+		user.setTactic(tactic.getId());
 	}	
 
 	public static TacticClass addClass(String url, boolean isTacticClass,

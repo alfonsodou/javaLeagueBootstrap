@@ -12,13 +12,13 @@ import com.google.gwt.event.shared.GwtEvent;
 public class ShowMyTacticEvent extends GwtEvent<ShowMyTacticEventHandler> {
 	public static Type<ShowMyTacticEventHandler> TYPE = new Type<ShowMyTacticEventHandler>();
 
-	private final String id;
+	private final Long id;
 
-	public ShowMyTacticEvent(String id) {
+	public ShowMyTacticEvent(Long id) {
 		this.id = id;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 

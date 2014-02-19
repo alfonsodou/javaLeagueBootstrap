@@ -8,7 +8,7 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class UserDTO implements Serializable {
 
-	private String id;
+	private Long id;
 
 	private String name;
 
@@ -18,30 +18,28 @@ public class UserDTO implements Serializable {
 
 	private String channelId;
 
-	private String uniqueId;
 	/**
 	 * 
 	 */
-	private String tacticId;
+	private Long tacticId;
 
 	public UserDTO() {
 
 	}
 
-	public UserDTO(String id, String email, String name, String uniqueId, String tacticId) {
+	public UserDTO(Long id, String email, String name, Long tacticId) {
 		this();
 		this.setId(id);
 		this.setEmailAddress(email);
 		this.setName(name);
-		this.setUniqueId(uniqueId);
 		this.setTactic(tacticId);
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -69,19 +67,11 @@ public class UserDTO implements Serializable {
 		this.channelId = channelId;
 	}
 
-	public String getUniqueId() {
-		return uniqueId;
-	}
-
-	public void setUniqueId(String uniqueId) {
-		this.uniqueId = uniqueId;
-	}
-
-	public String getTactic() {
+	public Long getTactic() {
 		return tacticId;
 	}
 
-	public void setTactic(String tacticId) {
+	public void setTactic(Long tacticId) {
 		this.tacticId = tacticId;
 	}
 
@@ -103,7 +93,7 @@ public class UserDTO implements Serializable {
 	/**
 	 * @return the tacticId
 	 */
-	public String getTacticId() {
+	public Long getTacticId() {
 		return tacticId;
 	}
 
@@ -111,7 +101,7 @@ public class UserDTO implements Serializable {
 	 * @param tacticId
 	 *            the tacticId to set
 	 */
-	public void setTacticId(String tacticId) {
+	public void setTacticId(Long tacticId) {
 		this.tacticId = tacticId;
 	}
 

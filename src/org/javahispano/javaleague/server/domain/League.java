@@ -43,9 +43,11 @@ public class League implements StoreCallback, Serializable, Cacheable {
 	
 	private Date updated;
 	
-	private Date start;
+	private Date startSignIn;
 	
-	private Long activeSeason;
+	private Date endSignIn;
+	
+	private String password;
 	
 	private Integer type;
 	
@@ -55,10 +57,16 @@ public class League implements StoreCallback, Serializable, Cacheable {
 	}
 	
 	public League(LeagueDTO leagueDTO) {
-		//this.id = Long.parseLong(leagueDTO.getId());
-		this.name = leagueDTO.getLeagueName();
+		this.id = leagueDTO.getId();
+		this.name = leagueDTO.getName();
+		this.managerId = leagueDTO.getManagerId();
 		this.creation = new Date();
 		this.updated = new Date();
+		this.description = leagueDTO.getDescription();
+		this.startSignIn = leagueDTO.getStartSignIn();
+		this.endSignIn = leagueDTO.getEndSignIn();
+		this.password = leagueDTO.getPassword();
+		this.type = leagueDTO.getType();
 	}
 	
 	public Long getId() {
@@ -67,14 +75,6 @@ public class League implements StoreCallback, Serializable, Cacheable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getManager() {
-		return managerId;
-	}
-
-	public void setManager(Long manager) {
-		this.managerId = manager;
 	}
 
 	public String getDescription() {
@@ -142,20 +142,6 @@ public class League implements StoreCallback, Serializable, Cacheable {
 	}
 
 	/**
-	 * @return the activeSeason
-	 */
-	public Long getActiveSeason() {
-		return activeSeason;
-	}
-
-	/**
-	 * @param activeSeason the activeSeason to set
-	 */
-	public void setActiveSeason(Long activeSeason) {
-		this.activeSeason = activeSeason;
-	}		
-
-	/**
 	 * @return the name
 	 */
 	public String getName() {
@@ -183,19 +169,6 @@ public class League implements StoreCallback, Serializable, Cacheable {
 		this.matchs = matchs;
 	}
 	
-	/**
-	 * @return the start
-	 */
-	public Date getStart() {
-		return start;
-	}
-
-	/**
-	 * @param start the start to set
-	 */
-	public void setStart(Date start) {
-		this.start = start;
-	}
 	
 	/**
 	 * @return the type
@@ -211,14 +184,71 @@ public class League implements StoreCallback, Serializable, Cacheable {
 		this.type = type;
 	}
 	
+	/**
+	 * @return the startSignIn
+	 */
+	public Date getStartSignIn() {
+		return startSignIn;
+	}
+
+	/**
+	 * @param startSignIn the startSignIn to set
+	 */
+	public void setStartSignIn(Date startSignIn) {
+		this.startSignIn = startSignIn;
+	}
+
+	/**
+	 * @return the endSignIn
+	 */
+	public Date getEndSignIn() {
+		return endSignIn;
+	}
+
+	/**
+	 * @param endSignIn the endSignIn to set
+	 */
+	public void setEndSignIn(Date endSignIn) {
+		this.endSignIn = endSignIn;
+	}
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public boolean isPublic() {
 		return (this.type == PUBLIC);
+	}
+	
+	public LeagueDTO toDTO() {
+		LeagueDTO leagueDTO = new LeagueDTO();
+		
+		leagueDTO.setId(this.id);
+		leagueDTO.setCreation(this.creation);
+		leagueDTO.setDescription(this.description);
+		leagueDTO.setEndSignIn(this.endSignIn);
+		leagueDTO.setManagerId(this.managerId);
+		leagueDTO.setName(this.name);
+		leagueDTO.setPassword(this.password);
+		leagueDTO.setStartSignIn(this.startSignIn);
+		leagueDTO.setType(this.type);
+		leagueDTO.setUpdated(this.updated);
+		
+		return leagueDTO;
 	}
 
 	@Override
 	public void addToCache() {
-		
-		getManager();
 		
 		CacheSupport.cachePutExp(this.getClass().getName(), 
 								id, 

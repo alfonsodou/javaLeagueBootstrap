@@ -1,5 +1,7 @@
 package org.javahispano.javaleague.client;
 
+import org.javahispano.javaleague.client.event.AddLeagueEvent;
+import org.javahispano.javaleague.client.event.AddLeagueEventHandler;
 import org.javahispano.javaleague.client.event.AddTacticEvent;
 import org.javahispano.javaleague.client.event.AddTacticEventHandler;
 import org.javahispano.javaleague.client.event.CancelUpdateTacticEvent;
@@ -8,7 +10,6 @@ import org.javahispano.javaleague.client.event.CreateLeagueEvent;
 import org.javahispano.javaleague.client.event.CreateLeagueEventHandler;
 import org.javahispano.javaleague.client.event.PlayMatchEvent;
 import org.javahispano.javaleague.client.event.PlayMatchEventHandler;
-import org.javahispano.javaleague.client.event.ShowHomeEvent;
 import org.javahispano.javaleague.client.event.ShowMyLeaguesEvent;
 import org.javahispano.javaleague.client.event.ShowMyLeaguesEventHandler;
 import org.javahispano.javaleague.client.event.TacticEditEvent;
@@ -160,6 +161,16 @@ public class AppController implements ValueChangeHandler<String> {
 					}
 
 				});
+		
+		eventBus.addHandler(AddLeagueEvent.TYPE,
+				new AddLeagueEventHandler() {
+					@Override
+					public void onAddLeagueEvent(AddLeagueEvent event) {
+						GWT.log("AppController: AddLeague Event received");
+						doAddLeague();
+					}
+
+				});
 
 	}
 
@@ -195,6 +206,10 @@ public class AppController implements ValueChangeHandler<String> {
 		History.newItem("createLeague");
 	}
 
+	private void doAddLeague() {
+		History.newItem("addLeague");
+	}
+	
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
 		String token = event.getValue();
@@ -209,6 +224,13 @@ public class AppController implements ValueChangeHandler<String> {
 
 				return;
 			} else if (token.equals("showMyLeagues")) {
+
+				presenter = new MyLeaguesPresenter(userTacticService,
+						matchService, eventBus, new MyLeaguesView());
+				presenter.go(JavaLeagueApp.get().getCenterPanel());
+
+				return;
+			} else if (token.equals("addLeague")) {
 
 				presenter = new MyLeaguesPresenter(userTacticService,
 						matchService, eventBus, new MyLeaguesView());
