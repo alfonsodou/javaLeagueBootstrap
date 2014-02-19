@@ -70,11 +70,7 @@ public class FrameWorkPresenter implements Presenter {
 					
 					display.setListFrameWorks(frameWorks);
 				}
-				/*
-				 * matchDTO = result;
-				 * display.setDateMatch(matchDTO.getVisualization());
-				 * display.setMatchID(matchID); display.setDate(date);
-				 */
+
 			}
 
 			@Override

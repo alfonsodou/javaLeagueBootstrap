@@ -161,16 +161,15 @@ public class AppController implements ValueChangeHandler<String> {
 					}
 
 				});
-		
-		eventBus.addHandler(AddLeagueEvent.TYPE,
-				new AddLeagueEventHandler() {
-					@Override
-					public void onAddLeagueEvent(AddLeagueEvent event) {
-						GWT.log("AppController: AddLeague Event received");
-						doAddLeague();
-					}
 
-				});
+		eventBus.addHandler(AddLeagueEvent.TYPE, new AddLeagueEventHandler() {
+			@Override
+			public void onAddLeagueEvent(AddLeagueEvent event) {
+				GWT.log("AppController: AddLeague Event received");
+				doAddLeague();
+			}
+
+		});
 
 	}
 
@@ -209,7 +208,7 @@ public class AppController implements ValueChangeHandler<String> {
 	private void doAddLeague() {
 		History.newItem("addLeague");
 	}
-	
+
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
 		String token = event.getValue();
@@ -226,14 +225,16 @@ public class AppController implements ValueChangeHandler<String> {
 			} else if (token.equals("showMyLeagues")) {
 
 				presenter = new MyLeaguesPresenter(userTacticService,
-						matchService, eventBus, new MyLeaguesView());
+						matchService, leagueService, eventBus,
+						new MyLeaguesView());
 				presenter.go(JavaLeagueApp.get().getCenterPanel());
 
 				return;
 			} else if (token.equals("addLeague")) {
 
 				presenter = new MyLeaguesPresenter(userTacticService,
-						matchService, eventBus, new MyLeaguesView());
+						matchService, leagueService, eventBus,
+						new MyLeaguesView());
 				presenter.go(JavaLeagueApp.get().getCenterPanel());
 
 				return;

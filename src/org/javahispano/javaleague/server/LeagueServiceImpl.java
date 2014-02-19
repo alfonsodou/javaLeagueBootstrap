@@ -3,7 +3,8 @@
  */
 package org.javahispano.javaleague.server;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.jdo.PersistenceManager;
@@ -36,7 +37,7 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 	public LeagueDTO createLeague(LeagueDTO leagueDTO) {
 		PersistenceManager pm = PMF.getTxnPm();
 		League league = new League(leagueDTO);
-		
+
 		try {
 			pm.currentTransaction().begin();
 			User user = LoginHelper.getLoggedInUser(getThreadLocalRequest()
@@ -54,8 +55,39 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 			}
 			pm.close();
 		}
-		
+
 		return league.toDTO();
+	}
+
+	@Override
+	public List<LeagueDTO> getMyLeagues() {
+		PersistenceManager pm = PMF.getTxnPm();
+		List<LeagueDTO> leaguesDTO = new ArrayList<LeagueDTO>();
+		List<League> leagues;
+
+		try {
+			pm.currentTransaction().begin();
+			
+			User user = LoginHelper.getLoggedInUser(getThreadLocalRequest()
+					.getSession(), pm);
+			leagues = leagueDAO.findByUser(user.getId());
+			for(League l : leagues) {
+				leaguesDTO.add(l.toDTO());
+			}
+
+			pm.currentTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.warning(e.getMessage());
+		} finally {
+			if (pm.currentTransaction().isActive()) {
+				pm.currentTransaction().rollback();
+				logger.warning("did transaction rollback");
+			}
+			pm.close();
+		}
+		
+		return leaguesDTO;
 	}
 
 }
