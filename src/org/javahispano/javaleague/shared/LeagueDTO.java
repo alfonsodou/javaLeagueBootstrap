@@ -13,6 +13,7 @@ import java.util.Date;
 public class LeagueDTO implements Serializable {
 	private Long id;
 	private Long managerId;
+	private String nameManager;
 	private String name;
 	private String description;
 	private Date startSignIn;
@@ -174,6 +175,20 @@ public class LeagueDTO implements Serializable {
 	 */
 	public void setType(Integer type) {
 		this.type = type;
+	}
+
+	/**
+	 * @return the nameManager
+	 */
+	public String getNameManager() {
+		return nameManager;
+	}
+
+	/**
+	 * @param nameManager the nameManager to set
+	 */
+	public void setNameManager(String nameManager) {
+		this.nameManager = nameManager;
 	}
 
 	

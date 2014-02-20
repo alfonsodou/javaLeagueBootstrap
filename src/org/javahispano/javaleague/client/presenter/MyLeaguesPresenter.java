@@ -5,11 +5,14 @@ package org.javahispano.javaleague.client.presenter;
 
 import java.util.List;
 
+import org.gwtbootstrap3.client.ui.CellTable;
 import org.javahispano.javaleague.client.event.CreateLeagueEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
+import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
 import org.javahispano.javaleague.client.service.MatchServiceAsync;
 import org.javahispano.javaleague.client.service.TacticServiceAsync;
+import org.javahispano.javaleague.shared.FrameWorkDTO;
 import org.javahispano.javaleague.shared.LeagueDTO;
 
 import com.google.gwt.core.shared.GWT;
@@ -17,10 +20,12 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.SimpleEventBus;
+import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.ListDataProvider;
 
 /**
  * @author adou
@@ -33,7 +38,7 @@ public class MyLeaguesPresenter implements Presenter {
 
 		HasClickHandlers getCreateLeagueButton();
 
-		void setListMyLeagues(List<LeagueDTO> leaguesDTO);
+		CellTable<LeagueDTO> getCellTableLeagues();
 	}
 
 	private final SimpleEventBus eventBus;
@@ -44,6 +49,11 @@ public class MyLeaguesPresenter implements Presenter {
 
 	private List<LeagueDTO> leaguesDTO;
 
+	private JavaLeagueMessages javaLeagueMessages = GWT
+			.create(JavaLeagueMessages.class);
+
+	private ListDataProvider<LeagueDTO> dataGridProvider = new ListDataProvider<LeagueDTO>();
+
 	public MyLeaguesPresenter(TacticServiceAsync tacticService,
 			MatchServiceAsync matchService, LeagueServiceAsync leagueService,
 			SimpleEventBus eventBus, Display display) {
@@ -52,6 +62,8 @@ public class MyLeaguesPresenter implements Presenter {
 		this.tacticService = tacticService;
 		this.leagueService = leagueService;
 		this.matchService = matchService;
+		
+		fetchLeaguesDTO();
 
 	}
 
@@ -68,25 +80,24 @@ public class MyLeaguesPresenter implements Presenter {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Error fetching leagues: "
-						+ caught.getMessage());
+				Window.alert("Error fetching leagues: " + caught.getMessage());
 			}
 
 			@Override
 			public void onSuccess(List<LeagueDTO> result) {
 				if (result.size() > 0) {
 					leaguesDTO = result;
-					
-					display.setListMyLeagues(leaguesDTO);
+
+					doShowMyLeagues();
 				}
-				
+
 			}
 
 			@Override
 			protected void callService(AsyncCallback<List<LeagueDTO>> cb) {
 				leagueService.getMyLeagues(cb);
 			}
-			
+
 		}.retry(3);
 	}
 
@@ -98,6 +109,57 @@ public class MyLeaguesPresenter implements Presenter {
 						eventBus.fireEvent(new CreateLeagueEvent());
 					}
 				});
+
+	}
+
+	private void doShowMyLeagues() {
+		TextColumn<LeagueDTO> col1 = new TextColumn<LeagueDTO>() {
+
+			@Override
+			public String getValue(LeagueDTO object) {
+				return String.valueOf(object.getName());
+			}
+		};
+		display.getCellTableLeagues().addColumn(col1,
+				javaLeagueMessages.nameLeague());
+
+		TextColumn<LeagueDTO> col2 = new TextColumn<LeagueDTO>() {
+
+			@Override
+			public String getValue(LeagueDTO object) {
+				return String.valueOf(object.getNameManager());
+			}
+		};
+		display.getCellTableLeagues().addColumn(col2,
+				javaLeagueMessages.manager());
+
+		TextColumn<LeagueDTO> col3 = new TextColumn<LeagueDTO>() {
+
+			@Override
+			public String getValue(LeagueDTO object) {
+				return String.valueOf(object.getStartSignIn().toString());
+			}
+		};
+		display.getCellTableLeagues().addColumn(col3,
+				javaLeagueMessages.startSignIn());
+
+		TextColumn<LeagueDTO> col4 = new TextColumn<LeagueDTO>() {
+
+			@Override
+			public String getValue(LeagueDTO object) {
+				return String.valueOf(object.getEndSignIn().toString());
+			}
+		};
+		display.getCellTableLeagues().addColumn(col4,
+				javaLeagueMessages.endSignIn());
+
+		dataGridProvider.addDataDisplay(display.getCellTableLeagues());
+
+		for (LeagueDTO l : leaguesDTO) {
+			dataGridProvider.getList().add(l);
+		}
+
+		dataGridProvider.flush();
 
 	}
 

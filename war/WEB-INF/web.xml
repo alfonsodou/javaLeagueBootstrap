@@ -153,7 +153,7 @@
 			Put the number of milliseconds to sleep in each block received in the server. 
 			false or 0, means don't use slow uploads -->
 		<param-name>slowUploads</param-name>
-		<param-value>200</param-value>
+		<param-value>false</param-value>
 	</context-param>
 
 	<servlet>

@@ -42,5 +42,16 @@ public interface JavaLeagueMessages extends Messages {
 	
 	@DefaultMessage(":: Sin táctica ::")
 	String emptyUserTactic();
+	
+	@DefaultMessage("Nombre")
+	String nameLeague();
+	
+	@DefaultMessage("Manager")
+	String manager();
+	
+	@DefaultMessage("Inicio inscripción")
+	String startSignIn();
 
+	@DefaultMessage("Fin inscripción")
+	String endSignIn();
 }

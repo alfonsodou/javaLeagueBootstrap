@@ -13,6 +13,7 @@ import org.javahispano.javaleague.client.service.LeagueService;
 import org.javahispano.javaleague.server.domain.League;
 import org.javahispano.javaleague.server.domain.LeagueDAO;
 import org.javahispano.javaleague.server.domain.User;
+import org.javahispano.javaleague.server.domain.UserDAO;
 import org.javahispano.javaleague.shared.LeagueDTO;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -28,6 +29,7 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 			.getName());
 
 	private static LeagueDAO leagueDAO = new LeagueDAO();
+	private static UserDAO userDAO = new UserDAO();
 
 	public LeagueServiceImpl() {
 
@@ -64,6 +66,7 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 		PersistenceManager pm = PMF.getTxnPm();
 		List<LeagueDTO> leaguesDTO = new ArrayList<LeagueDTO>();
 		List<League> leagues;
+		LeagueDTO leagueDTO;
 
 		try {
 			pm.currentTransaction().begin();
@@ -71,8 +74,12 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 			User user = LoginHelper.getLoggedInUser(getThreadLocalRequest()
 					.getSession(), pm);
 			leagues = leagueDAO.findByUser(user.getId());
+			
 			for(League l : leagues) {
-				leaguesDTO.add(l.toDTO());
+				leagueDTO = l.toDTO();
+				user = userDAO.findById(l.getManagerId());
+				leagueDTO.setNameManager(user.getName());
+				leaguesDTO.add(leagueDTO);
 			}
 
 			pm.currentTransaction().commit();

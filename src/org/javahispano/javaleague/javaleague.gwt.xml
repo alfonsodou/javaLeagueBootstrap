@@ -11,7 +11,6 @@
 	<!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/> -->
 
 	<!-- Other module inherits -->
-	<!-- <inherits name="com.github.gwtbootstrap.Bootstrap" /> -->
 	<inherits name="org.gwtbootstrap3.GwtBootstrap3" />
 	<inherits name="org.gwtbootstrap3.extras.datetimepicker.DateTimePicker"/>
 	<inherits name="org.gwtbootstrap3.extras.summernote.Summernote"/>
@@ -32,20 +31,7 @@
 	<source path='client' />
 	<source path='shared' />
 
-	<!--pay attention in this part -->
-	<!-- <source path='resources' /> <replace-with class="org.javahispano.javaleague.client.resources.ConfiguratorJavaLeague"> 
-		<when-type-is class="com.github.gwtbootstrap.client.ui.config.Configurator" 
-		/> </replace-with> <public path="resources"> <exclude name="** /*.java" /> 
-		<exclude name="** /*.class" /> </public> -->
-
-	<!-- <inherits name="org.hibernate.validator.HibernateValidator" /> <replace-with 
-		class="org.javahispano.javaleague.client.validation.MyValidatorFactory"> 
-		<when-type-is class="javax.validation.ValidatorFactory" /> </replace-with> -->
-
 	<!-- Include GWTUpload library -->
 	<inherits name="gwtupload.GWTUpload" />
-	<!-- Load dinamically predefined styles in the library when the application 
-		starts -->
-	<stylesheet src="Upload.css" />
 
 </module>
