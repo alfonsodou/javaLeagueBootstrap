@@ -12,9 +12,9 @@ import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
 import org.javahispano.javaleague.client.service.MatchServiceAsync;
 import org.javahispano.javaleague.client.service.TacticServiceAsync;
-import org.javahispano.javaleague.shared.FrameWorkDTO;
 import org.javahispano.javaleague.shared.LeagueDTO;
 
+import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -153,6 +153,7 @@ public class MyLeaguesPresenter implements Presenter {
 		display.getCellTableLeagues().addColumn(col4,
 				javaLeagueMessages.endSignIn());
 
+		
 		dataGridProvider.addDataDisplay(display.getCellTableLeagues());
 
 		for (LeagueDTO l : leaguesDTO) {
