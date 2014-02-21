@@ -5,6 +5,7 @@ package org.javahispano.javaleague.client.view;
 
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.CellTable;
+import org.gwtbootstrap3.client.ui.DataGrid;
 import org.javahispano.javaleague.client.presenter.MyLeaguesPresenter;
 
 import com.google.gwt.core.client.GWT;
@@ -30,6 +31,8 @@ public class MyLeaguesView extends Composite implements MyLeaguesPresenter.Displ
 	Button createLeagueButton;
 	@UiField
 	CellTable cellTableLeagues;
+	@UiField
+	DataGrid dataGridLeagues;
 
 	public MyLeaguesView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -43,6 +46,11 @@ public class MyLeaguesView extends Composite implements MyLeaguesPresenter.Displ
 	@Override
 	public CellTable getCellTableLeagues() {
 		return cellTableLeagues;
+	}
+
+	@Override
+	public DataGrid getDataGridLeagues() {
+		return dataGridLeagues;
 	}
 
 }

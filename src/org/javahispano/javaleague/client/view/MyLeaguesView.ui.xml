@@ -36,6 +36,8 @@
 					<b:Column size="MD_12">
 						<b:CellTable bordered="true" condensed="true" striped="true"
 							hover="true" width="100%" ui:field="cellTableLeagues" />
+
+						<b:DataGrid ui:field="dataGridLeagues"></b:DataGrid>
 					</b:Column>
 				</b:Row>
 			</b:PanelBody>
