@@ -5,13 +5,13 @@ package org.javahispano.javaleague.client.view;
 
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.CellTable;
-import org.gwtbootstrap3.client.ui.DataGrid;
 import org.javahispano.javaleague.client.presenter.MyLeaguesPresenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -31,8 +31,6 @@ public class MyLeaguesView extends Composite implements MyLeaguesPresenter.Displ
 	Button createLeagueButton;
 	@UiField
 	CellTable cellTableLeagues;
-	@UiField
-	DataGrid dataGridLeagues;
 
 	public MyLeaguesView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -46,11 +44,6 @@ public class MyLeaguesView extends Composite implements MyLeaguesPresenter.Displ
 	@Override
 	public CellTable getCellTableLeagues() {
 		return cellTableLeagues;
-	}
-
-	@Override
-	public DataGrid getDataGridLeagues() {
-		return dataGridLeagues;
 	}
 
 }

@@ -6,7 +6,6 @@ package org.javahispano.javaleague.client.presenter;
 import java.util.List;
 
 import org.gwtbootstrap3.client.ui.CellTable;
-import org.gwtbootstrap3.client.ui.DataGrid;
 import org.javahispano.javaleague.client.event.CreateLeagueEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
@@ -15,22 +14,19 @@ import org.javahispano.javaleague.client.service.MatchServiceAsync;
 import org.javahispano.javaleague.client.service.TacticServiceAsync;
 import org.javahispano.javaleague.shared.LeagueDTO;
 
-import com.google.gwt.cell.client.AbstractEditableCell;
-import com.google.gwt.cell.client.ButtonCell;
-import com.google.gwt.cell.client.Cell;
-import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.SimpleEventBus;
-import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
+import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SingleSelectionModel;
 
 /**
  * @author adou
@@ -45,7 +41,6 @@ public class MyLeaguesPresenter implements Presenter {
 
 		CellTable<LeagueDTO> getCellTableLeagues();
 
-		DataGrid getDataGridLeagues();
 	}
 
 	private final SimpleEventBus eventBus;
@@ -119,16 +114,6 @@ public class MyLeaguesPresenter implements Presenter {
 
 	}
 
-	/**
-	 * Get a cell value from a record.
-	 * 
-	 * @param <C>
-	 *            the cell type
-	 */
-	private static interface GetValue<C> {
-		C getValue(LeagueDTO league);
-	}
-
 	private void doShowMyLeagues() {
 		TextColumn<LeagueDTO> col1 = new TextColumn<LeagueDTO>() {
 
@@ -176,55 +161,18 @@ public class MyLeaguesPresenter implements Presenter {
 			dataGridProvider.getList().add(l);
 		}
 
+	    // Add a selection model to handle user selection.
+	    final SingleSelectionModel<LeagueDTO> selectionModel = new SingleSelectionModel<LeagueDTO>();
+	    display.getCellTableLeagues().setSelectionModel(selectionModel);
+	    selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+	      public void onSelectionChange(SelectionChangeEvent event) {
+	        LeagueDTO selected = selectionModel.getSelectedObject();
+	        if (selected != null) {
+	          Window.alert("You selected: " + selected.getName());
+	        }
+	      }
+	    });	
+	    
 		dataGridProvider.flush();
-
-		// ButtonCell.
-		addColumn(new ButtonCell(), "Button", new GetValue<String>() {
-			@Override
-			public String getValue(LeagueDTO leagueDTO) {
-				return "Click " + leagueDTO.getName();
-			}
-		}, new FieldUpdater<LeagueDTO, String>() {
-			@Override
-			public void update(int index, LeagueDTO object, String value) {
-				Window.alert("You clicked " + object.getName());
-			}
-		});
-
-		dataGridProvider.addDataDisplay(display.getDataGridLeagues());
-
-		for (LeagueDTO l : leaguesDTO) {
-			dataGridProvider.getList().add(l);
-		}
-
-		dataGridProvider.flush();
-
-	}
-
-	/**
-	 * Add a column with a header.
-	 * 
-	 * @param <C>
-	 *            the cell type
-	 * @param cell
-	 *            the cell used to render the column
-	 * @param headerText
-	 *            the header string
-	 * @param getter
-	 *            the value getter for the cell
-	 */
-	private <C> Column<LeagueDTO, C> addColumn(Cell<C> cell, String headerText,
-			final GetValue<C> getter, FieldUpdater<LeagueDTO, C> fieldUpdater) {
-		Column<LeagueDTO, C> column = new Column<LeagueDTO, C>(cell) {
-			@Override
-			public C getValue(LeagueDTO object) {
-				return getter.getValue(object);
-			}
-		};
-		column.setFieldUpdater(fieldUpdater);
-
-		display.getDataGridLeagues().addColumn(column, headerText);
-
-		return column;
 	}
 }
