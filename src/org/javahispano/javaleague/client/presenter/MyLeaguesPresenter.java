@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.gwtbootstrap3.client.ui.CellTable;
 import org.javahispano.javaleague.client.event.CreateLeagueEvent;
+import org.javahispano.javaleague.client.event.ShowLeagueEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
@@ -161,18 +162,21 @@ public class MyLeaguesPresenter implements Presenter {
 			dataGridProvider.getList().add(l);
 		}
 
-	    // Add a selection model to handle user selection.
-	    final SingleSelectionModel<LeagueDTO> selectionModel = new SingleSelectionModel<LeagueDTO>();
-	    display.getCellTableLeagues().setSelectionModel(selectionModel);
-	    selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-	      public void onSelectionChange(SelectionChangeEvent event) {
-	        LeagueDTO selected = selectionModel.getSelectedObject();
-	        if (selected != null) {
-	          Window.alert("You selected: " + selected.getName());
-	        }
-	      }
-	    });	
-	    
+		// Add a selection model to handle user selection.
+		final SingleSelectionModel<LeagueDTO> selectionModel = new SingleSelectionModel<LeagueDTO>();
+		display.getCellTableLeagues().setSelectionModel(selectionModel);
+		selectionModel
+				.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+					public void onSelectionChange(SelectionChangeEvent event) {
+						LeagueDTO selected = selectionModel.getSelectedObject();
+						if (selected != null) {
+							GWT.log("MyLeaguesPresenter: Firing ShowLeagueEvent. LeagueName: "
+									+ selected.getName());
+							eventBus.fireEvent(new ShowLeagueEvent(selected));
+						}
+					}
+				});
+
 		dataGridProvider.flush();
 	}
 }

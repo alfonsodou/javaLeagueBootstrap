@@ -10,6 +10,8 @@ import org.javahispano.javaleague.client.event.CreateLeagueEvent;
 import org.javahispano.javaleague.client.event.CreateLeagueEventHandler;
 import org.javahispano.javaleague.client.event.PlayMatchEvent;
 import org.javahispano.javaleague.client.event.PlayMatchEventHandler;
+import org.javahispano.javaleague.client.event.ShowLeagueEvent;
+import org.javahispano.javaleague.client.event.ShowLeagueEventHandler;
 import org.javahispano.javaleague.client.event.ShowMyLeaguesEvent;
 import org.javahispano.javaleague.client.event.ShowMyLeaguesEventHandler;
 import org.javahispano.javaleague.client.event.TacticEditEvent;
@@ -91,6 +93,15 @@ public class AppController implements ValueChangeHandler<String> {
 						doShowMyLeagues();
 					}
 				});
+
+		eventBus.addHandler(ShowLeagueEvent.TYPE, new ShowLeagueEventHandler() {
+			@Override
+			public void onShowLeague(ShowLeagueEvent event) {
+				GWT.log("AppController: ShowLeague Event received. Id: "
+						+ event.getLeague().getId());
+				doShowLeague();
+			}
+		});
 
 		eventBus.addHandler(AddTacticEvent.TYPE, new AddTacticEventHandler() {
 			@Override
@@ -177,6 +188,10 @@ public class AppController implements ValueChangeHandler<String> {
 		History.newItem("showMyLeagues");
 	}
 
+	private void doShowLeague() {
+		History.newItem("showLeague");
+	}
+
 	private void doShowTactics(String id) {
 		currentTacticId = id;
 		History.newItem("showTactics");
@@ -230,6 +245,10 @@ public class AppController implements ValueChangeHandler<String> {
 				presenter.go(JavaLeagueApp.get().getCenterPanel());
 
 				return;
+			} else if (token.equals("showLeague")) {
+				
+				return;
+				
 			} else if (token.equals("addLeague")) {
 
 				presenter = new MyLeaguesPresenter(userTacticService,
