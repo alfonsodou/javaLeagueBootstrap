@@ -24,6 +24,7 @@ import org.javahispano.javaleague.client.presenter.CreateLeaguePresenter;
 import org.javahispano.javaleague.client.presenter.MyLeaguesPresenter;
 import org.javahispano.javaleague.client.presenter.Presenter;
 import org.javahispano.javaleague.client.presenter.RegisterUserPresenter;
+import org.javahispano.javaleague.client.presenter.ShowLeaguePresenter;
 import org.javahispano.javaleague.client.presenter.TacticEditPresenter;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
 import org.javahispano.javaleague.client.service.LoginServiceAsync;
@@ -34,7 +35,9 @@ import org.javahispano.javaleague.client.service.UserFileServiceAsync;
 import org.javahispano.javaleague.client.view.CreateLeagueView;
 import org.javahispano.javaleague.client.view.MyLeaguesView;
 import org.javahispano.javaleague.client.view.RegisterUserView;
+import org.javahispano.javaleague.client.view.ShowLeagueView;
 import org.javahispano.javaleague.client.view.TacticEditView;
+import org.javahispano.javaleague.shared.LeagueDTO;
 import org.javahispano.javaleague.shared.MatchDTO;
 import org.javahispano.javaleague.shared.UserDTO;
 
@@ -65,6 +68,7 @@ public class AppController implements ValueChangeHandler<String> {
 	private String currentTacticId;
 	private String matchID;
 	private MatchDTO matchDTO;
+	private LeagueDTO leagueDTO;
 
 	public AppController(TacticServiceAsync rpcService,
 			LoginServiceAsync loginService,
@@ -99,6 +103,7 @@ public class AppController implements ValueChangeHandler<String> {
 			public void onShowLeague(ShowLeagueEvent event) {
 				GWT.log("AppController: ShowLeague Event received. Id: "
 						+ event.getLeague().getId());
+				leagueDTO = event.getLeague();
 				doShowLeague();
 			}
 		});
@@ -246,9 +251,12 @@ public class AppController implements ValueChangeHandler<String> {
 
 				return;
 			} else if (token.equals("showLeague")) {
-				
+				presenter = new ShowLeaguePresenter(leagueService, leagueDTO,
+						eventBus, new ShowLeagueView());
+				presenter.go(JavaLeagueApp.get().getCenterPanel());
+
 				return;
-				
+
 			} else if (token.equals("addLeague")) {
 
 				presenter = new MyLeaguesPresenter(userTacticService,

@@ -97,4 +97,29 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 		return leaguesDTO;
 	}
 
+	@Override
+	public LeagueDTO getLeague(Long id) {
+		PersistenceManager pm = PMF.getTxnPm();
+		LeagueDTO leagueDTO = null;
+
+		try {
+			pm.currentTransaction().begin();
+			
+			leagueDTO = leagueDAO.findById(id).toDTO();
+			
+			pm.currentTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.warning(e.getMessage());
+		} finally {
+			if (pm.currentTransaction().isActive()) {
+				pm.currentTransaction().rollback();
+				logger.warning("did transaction rollback");
+			}
+			pm.close();
+		}
+		
+		return leagueDTO;
+	}
+
 }

@@ -18,4 +18,6 @@ public interface LeagueServiceAsync {
 	
 	void getMyLeagues(AsyncCallback<List<LeagueDTO>> cb);
 
+	void getLeague(Long id, AsyncCallback<LeagueDTO> callback);
+
 }

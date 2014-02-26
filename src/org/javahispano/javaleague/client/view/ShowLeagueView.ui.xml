@@ -1,0 +1,43 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:b="urn:import:org.gwtbootstrap3.client.ui"
+	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
+	ui:generateLocales='default'>
+
+	<b:Row>
+		<b:Panel>
+			<b:PanelHeader>
+				<b:Heading ui:field="nameLeague" size="3">
+				</b:Heading>
+			</b:PanelHeader>
+			<b:PanelBody>
+				<b:Row>
+					<b:Column size="MD_6">
+						<b:Paragraph ui:field="descriptionLeague"></b:Paragraph>
+						<b:Button ui:field="joinLeagueButton">
+							<ui:msg key="joinLeagueButton" description="Join League Button">Apuntarme</ui:msg>
+						</b:Button>
+						<b:Button ui:field="editLeagueButton">
+							<ui:msg key="editLeagueButton" description="Edit League Button">Editar Liga
+							</ui:msg>
+						</b:Button>
+						<b:Button ui:field="dropLeagueButton">
+							<ui:msg key="dropLeagueButton" description="Drop League Button">Borrar Liga
+							</ui:msg>
+						</b:Button>
+					</b:Column>
+					<b:Column size="MD_5" offset="MD_1">
+						<b:Paragraph>
+							<ui:msg key="registerUserText">Registrándote en javaLeague podrás crear tus
+								propias ligas y competir contra tus amigos !!!</ui:msg>
+						</b:Paragraph>
+						<b:Image type="CIRCLE" url="images/logo_small.png" />
+						<b:Image type="ROUNDED" url="images/logoJavaHispano.png" />
+					</b:Column>
+				</b:Row>
+			</b:PanelBody>
+		</b:Panel>
+	</b:Row>
+
+</ui:UiBinder> 

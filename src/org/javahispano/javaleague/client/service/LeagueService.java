@@ -20,5 +20,7 @@ public interface LeagueService extends RemoteService {
 	LeagueDTO createLeague(LeagueDTO league);
 
 	List<LeagueDTO> getMyLeagues();
+	
+	LeagueDTO getLeague(Long id);
 
 }
