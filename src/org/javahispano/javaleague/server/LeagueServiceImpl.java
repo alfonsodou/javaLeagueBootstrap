@@ -15,7 +15,6 @@ import org.javahispano.javaleague.server.domain.LeagueDAO;
 import org.javahispano.javaleague.server.domain.User;
 import org.javahispano.javaleague.server.domain.UserDAO;
 import org.javahispano.javaleague.shared.LeagueDTO;
-
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -70,12 +69,12 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 
 		try {
 			pm.currentTransaction().begin();
-			
+
 			User user = LoginHelper.getLoggedInUser(getThreadLocalRequest()
 					.getSession(), pm);
 			leagues = leagueDAO.findByUser(user.getId());
-			
-			for(League l : leagues) {
+
+			for (League l : leagues) {
 				leagueDTO = l.toDTO();
 				user = userDAO.findById(l.getManagerId());
 				leagueDTO.setNameManager(user.getName());
@@ -93,7 +92,7 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 			}
 			pm.close();
 		}
-		
+
 		return leaguesDTO;
 	}
 
@@ -104,9 +103,9 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 
 		try {
 			pm.currentTransaction().begin();
-			
+
 			leagueDTO = leagueDAO.findById(id).toDTO();
-			
+
 			pm.currentTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -118,8 +117,31 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 			}
 			pm.close();
 		}
-		
+
 		return leagueDTO;
+	}
+
+	@Override
+	public void dropLeague(Long id) {
+		PersistenceManager pm = PMF.getTxnPm();
+
+		try {
+			pm.currentTransaction().begin();
+
+			leagueDAO.delete(id);
+
+			pm.currentTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.warning(e.getMessage());
+		} finally {
+			if (pm.currentTransaction().isActive()) {
+				pm.currentTransaction().rollback();
+				logger.warning("did transaction rollback");
+			}
+			pm.close();
+		}
+
 	}
 
 }

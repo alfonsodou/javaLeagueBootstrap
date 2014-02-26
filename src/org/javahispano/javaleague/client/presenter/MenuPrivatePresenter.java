@@ -97,7 +97,7 @@ public class MenuPrivatePresenter implements Presenter {
 
 	private void doShowMyLeagues() {
 		GWT.log("MenuPrivatePresenter: Firing ShowMyLeaguesEvent");
-		eventBus.fireEvent(new ShowMyLeaguesEvent(currentUser));
+		eventBus.fireEvent(new ShowMyLeaguesEvent());
 	}
 
 	private void doLogout() {

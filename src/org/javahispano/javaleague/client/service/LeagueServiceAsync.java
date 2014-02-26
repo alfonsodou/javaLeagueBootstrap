@@ -20,4 +20,6 @@ public interface LeagueServiceAsync {
 
 	void getLeague(Long id, AsyncCallback<LeagueDTO> callback);
 
+	void dropLeague(Long id, AsyncCallback<Void> cb);
+
 }

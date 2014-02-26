@@ -12,7 +12,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 /**
  * @author adou
- *
+ * 
  */
 @RemoteServiceRelativePath("leagueService")
 public interface LeagueService extends RemoteService {
@@ -20,7 +20,9 @@ public interface LeagueService extends RemoteService {
 	LeagueDTO createLeague(LeagueDTO league);
 
 	List<LeagueDTO> getMyLeagues();
-	
+
 	LeagueDTO getLeague(Long id);
+
+	void dropLeague(Long id);
 
 }

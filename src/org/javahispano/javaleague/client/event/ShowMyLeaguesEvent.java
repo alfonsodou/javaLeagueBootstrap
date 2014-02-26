@@ -3,8 +3,6 @@
  */
 package org.javahispano.javaleague.client.event;
 
-import org.javahispano.javaleague.shared.UserDTO;
-
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
@@ -13,10 +11,9 @@ import com.google.gwt.event.shared.GwtEvent;
  */
 public class ShowMyLeaguesEvent extends GwtEvent<ShowMyLeaguesEventHandler> {
 	  public static Type<ShowMyLeaguesEventHandler> TYPE = new Type<ShowMyLeaguesEventHandler>();
-	  private final UserDTO user;
 	  
-	public ShowMyLeaguesEvent(UserDTO user) {
-		this.user = user;
+	public ShowMyLeaguesEvent() {
+
 	}
 
 	@Override

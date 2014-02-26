@@ -46,4 +46,8 @@ public class LeagueDAO extends DAOBase {
 		
 		return leagues;
 	}
+	
+	public void delete(Long id) {
+		ofy().delete(new Key<League>(League.class, id));
+	}
 }

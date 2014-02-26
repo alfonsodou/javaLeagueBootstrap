@@ -54,4 +54,7 @@ public interface JavaLeagueMessages extends Messages {
 
 	@DefaultMessage("Fin inscripción")
 	String endSignIn();
+	
+	@DefaultMessage("¿ Estás seguro ?")
+	String confirm();
 }
