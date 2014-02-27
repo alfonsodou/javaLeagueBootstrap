@@ -4,6 +4,7 @@
 package org.javahispano.javaleague.shared;
 
 import java.io.Serializable;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class UserDTO implements Serializable {
@@ -17,6 +18,8 @@ public class UserDTO implements Serializable {
 	private String password;
 
 	private String channelId;
+	
+	private List<Long> leagues;
 
 	/**
 	 * 
@@ -27,12 +30,13 @@ public class UserDTO implements Serializable {
 
 	}
 
-	public UserDTO(Long id, String email, String name, Long tacticId) {
+	public UserDTO(Long id, String email, String name, Long tacticId, List<Long> leagues) {
 		this();
 		this.setId(id);
 		this.setEmailAddress(email);
 		this.setName(name);
 		this.setTactic(tacticId);
+		this.setLeagues(leagues);
 	}
 
 	public Long getId() {
@@ -103,6 +107,33 @@ public class UserDTO implements Serializable {
 	 */
 	public void setTacticId(Long tacticId) {
 		this.tacticId = tacticId;
+	}
+
+	/**
+	 * @return the leagues
+	 */
+	public List<Long> getLeagues() {
+		return leagues;
+	}
+
+	/**
+	 * @param leagues the leagues to set
+	 */
+	public void setLeagues(List<Long> leagues) {
+		this.leagues = leagues;
+	}
+	
+	public boolean isJoinLeague(Long id) {
+		boolean result = false;
+		
+		for(Long leagueId : this.leagues) {
+			if (leagueId == id) {
+				result = true;
+				break;
+			}
+		}
+		
+		return result;
 	}
 
 }

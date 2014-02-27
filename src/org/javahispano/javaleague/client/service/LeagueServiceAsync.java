@@ -22,4 +22,6 @@ public interface LeagueServiceAsync {
 
 	void dropLeague(Long id, AsyncCallback<Void> cb);
 
+	void joinLeague(Long id, AsyncCallback<Void> callback);
+
 }

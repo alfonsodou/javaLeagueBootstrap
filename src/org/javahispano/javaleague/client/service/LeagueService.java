@@ -24,5 +24,7 @@ public interface LeagueService extends RemoteService {
 	LeagueDTO getLeague(Long id);
 
 	void dropLeague(Long id);
+	
+	void joinLeague(Long id);
 
 }

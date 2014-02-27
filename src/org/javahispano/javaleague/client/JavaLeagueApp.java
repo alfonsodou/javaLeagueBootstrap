@@ -211,6 +211,7 @@ public class JavaLeagueApp implements EntryPoint {
 		appViewer = new AppController(tacticService, loginService,
 				userFileService, matchService, leagueService,
 				userAccountService, eventBus);
+		appViewer.setCurrentUser(user);
 		// appViewer.go();
 
 		headerPanel.clear();

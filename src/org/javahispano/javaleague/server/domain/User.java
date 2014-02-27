@@ -1,16 +1,14 @@
 package org.javahispano.javaleague.server.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
-import javax.jdo.JDOCanRetryException;
-import javax.jdo.PersistenceManager;
-import javax.jdo.Transaction;
 import javax.jdo.listener.StoreCallback;
 import javax.persistence.Id;
 
-import org.javahispano.javaleague.server.PMF;
 import org.javahispano.javaleague.server.utils.cache.CacheSupport;
 import org.javahispano.javaleague.server.utils.cache.Cacheable;
 import org.javahispano.javaleague.shared.UserDTO;
@@ -42,12 +40,15 @@ public class User implements StoreCallback, Serializable, Cacheable {
 	private boolean active;
 
 	private String channelId;
+	
+	private List<Long> leagues;
 
 	private static UserDAO userDAO = new UserDAO();
 	private static TacticUserDAO tacticUserDAO = new TacticUserDAO();
 
 	public User() {
 		this.active = false;
+		this.leagues = new ArrayList<Long>();
 	}
 
 	/**
@@ -211,13 +212,27 @@ public class User implements StoreCallback, Serializable, Cacheable {
 		this.active = active;
 	}
 
+	/**
+	 * @return the leagues
+	 */
+	public List<Long> getLeagues() {
+		return leagues;
+	}
+
+	/**
+	 * @param leagues the leagues to set
+	 */
+	public void setLeagues(List<Long> leagues) {
+		this.leagues = leagues;
+	}
+
 	public static UserDTO toDTO(User user) {
 		if (user == null) {
 			return null;
 		}
 
 		return new UserDTO(user.getId(), user.getEmailAddress(),
-				user.getName(), user.getTactic());
+				user.getName(), user.getTactic(), user.getLeagues());
 	}
 
 	@Override

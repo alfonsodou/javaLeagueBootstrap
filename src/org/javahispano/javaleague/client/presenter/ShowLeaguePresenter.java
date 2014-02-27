@@ -3,6 +3,9 @@
  */
 package org.javahispano.javaleague.client.presenter;
 
+import java.util.Date;
+
+import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Heading;
 import org.gwtbootstrap3.client.ui.Paragraph;
 import org.gwtbootstrap3.extras.bootbox.client.Bootbox;
@@ -32,7 +35,7 @@ public class ShowLeaguePresenter implements Presenter {
 	public interface Display {
 		Widget asWidget();
 
-		HasClickHandlers getJoinLeagueButton();
+		Button getJoinLeagueButton();
 
 		HasClickHandlers getDropLeagueButton();
 
@@ -49,14 +52,17 @@ public class ShowLeaguePresenter implements Presenter {
 	private final LeagueServiceAsync leagueService;
 
 	private LeagueDTO leagueDTO;
+	private UserDTO userDTO;
 
 	private JavaLeagueMessages javaLeagueMessages = GWT
 			.create(JavaLeagueMessages.class);
 
 	public ShowLeaguePresenter(LeagueServiceAsync leagueService,
-			LeagueDTO leagueDTO, SimpleEventBus eventBus, Display display) {
+			LeagueDTO leagueDTO, UserDTO userDTO, SimpleEventBus eventBus,
+			Display display) {
 		this.leagueService = leagueService;
 		this.leagueDTO = leagueDTO;
+		this.userDTO = userDTO;
 		this.eventBus = eventBus;
 		this.display = display;
 
@@ -64,6 +70,12 @@ public class ShowLeaguePresenter implements Presenter {
 	}
 
 	private void ShowLeague() {
+		Date now = new Date();
+		if ((leagueDTO.getEndSignIn().before(now)) || (userDTO.isJoinLeague(leagueDTO.getId()))) {
+			display.getJoinLeagueButton().setEnabled(false);
+		} else {
+			display.getJoinLeagueButton().setEnabled(true);
+		} 
 		display.getDescriptionLeague().setHTML(leagueDTO.getDescription());
 		display.getNameLeague().setText(leagueDTO.getName());
 	}
@@ -90,6 +102,34 @@ public class ShowLeaguePresenter implements Presenter {
 						});
 			}
 		});
+
+		display.getJoinLeagueButton().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				doJoinLeague();
+			}
+		});
+	}
+	
+	private void doJoinLeague() {
+		new RPCCall<Void>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Error join league: " + caught.getMessage());
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+				GWT.log("ShowLeaguePresenter: firing ShowMyLeaguesEvent");
+				eventBus.fireEvent(new ShowMyLeaguesEvent());
+			}
+
+			@Override
+			protected void callService(AsyncCallback<Void> cb) {
+				leagueService.joinLeague(leagueDTO.getId(), cb);
+			}
+
+		}.retry(3);		
 	}
 
 	private void doDropLeague() {

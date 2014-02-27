@@ -44,7 +44,7 @@ public class ShowLeagueView extends Composite implements
 	}
 
 	@Override
-	public HasClickHandlers getJoinLeagueButton() {
+	public Button getJoinLeagueButton() {
 		return joinLeagueButton;
 	}
 
