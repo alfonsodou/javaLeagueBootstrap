@@ -55,7 +55,6 @@ import com.google.gwt.user.client.ui.PopupPanel;
  */
 public class AppController implements ValueChangeHandler<String> {
 	// RPC services
-
 	private final SimpleEventBus eventBus;
 	private final TacticServiceAsync userTacticService;
 	private final LoginServiceAsync loginService;

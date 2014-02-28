@@ -3,10 +3,7 @@ package org.javahispano.javaleague.server;
 import java.util.Date;
 import java.util.logging.Logger;
 
-import javax.jdo.JDOCanRetryException;
-import javax.jdo.JDOException;
 import javax.jdo.PersistenceManager;
-import javax.jdo.Transaction;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 

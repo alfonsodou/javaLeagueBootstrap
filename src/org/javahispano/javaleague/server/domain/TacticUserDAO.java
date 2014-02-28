@@ -8,8 +8,6 @@ import java.util.List;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
-import com.googlecode.objectify.Query;
-import com.googlecode.objectify.util.DAOBase;
 
 /**
  * @author adou

@@ -5,14 +5,13 @@ package org.javahispano.javaleague.server.domain;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
-import com.googlecode.objectify.Query;
-import com.googlecode.objectify.util.DAOBase;
+import com.googlecode.objectify.cmd.Query;
 
 /**
  * @author adou
  *
  */
-public class CalendarDateDAO extends DAOBase {
+public class CalendarDateDAO {
 	static {
 		ObjectifyService.register(CalendarDate.class);
 	}

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import com.google.appengine.api.users.User;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
-import com.googlecode.objectify.Query;
-import com.googlecode.objectify.util.DAOBase;
 
 
 public class PartidoStoreDAO extends DAOBase {

@@ -3,8 +3,6 @@
  */
 package org.javahispano.javaleague.client.presenter;
 
-import org.javahispano.javaleague.client.JavaLeagueApp;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;

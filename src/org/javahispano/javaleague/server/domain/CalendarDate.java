@@ -3,26 +3,24 @@
  */
 package org.javahispano.javaleague.server.domain;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.jdo.listener.StoreCallback;
 import javax.persistence.Id;
 
-import org.javahispano.javaleague.server.utils.cache.Cacheable;
+import com.googlecode.objectify.annotation.Entity;
 
 /**
  * @author adou
  *
  */
-public class CalendarDate implements StoreCallback, Serializable, Cacheable {
+@Entity
+public class CalendarDate {
 	
 	/**
 	 * 
 	 */
-	private static final int CACHE_EXPIR = 600;  // in seconds
 	private static final Logger log = Logger.getLogger(CalendarDate.class.getName());
 	
 	@Id
@@ -123,24 +121,5 @@ public class CalendarDate implements StoreCallback, Serializable, Cacheable {
 	public void setLeagueId(Long leagueId) {
 		this.leagueId = leagueId;
 	}
-
-	@Override
-	public void addToCache() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeFromCache() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void jdoPreStore() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	
 }
