@@ -3,48 +3,39 @@
  */
 package org.javahispano.javaleague.server.domain;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
 
-import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 
 /**
  * @author adou
- *
+ * 
  */
-public class UserDAO extends DAOBase {
+public class UserDAO {
 	static {
 		ObjectifyService.register(User.class);
 	}
-	
+
 	public UserDAO() {
-		
+
 	}
-	
+
 	public User save(User user) {
-		ofy().put(user);
+		ofy().save().entity(user).now();
 		return user;
 	}
-	
-	public User findById(Long id) {
-		Key<User> key = new Key<User>(User.class, id);
-		return ofy().get(key);
-	}	
 
-	public User findByUniqueId(String uniqueId) {
-		Query<User> q = ofy().query(User.class).filter("uniqueId", uniqueId);
-		
-		return q.get();
+	public User findById(Long id) {
+		return ofy().load().type(User.class).id(id).now();
 	}
-	
+
 	public User findByEmail(String emailAddress) {
-		Query<User> q = ofy().query(User.class).filter("emailAddress", emailAddress);
-		
-		return q.get();
+		return ofy().load().type(User.class)
+				.filter("emailAddress =", emailAddress).first().now();
 	}
 
 	public User findByToken(String token) {
-		Query<User> q = ofy().query(User.class).filter("tokenActivate", token);
-		
-		return q.get();
+		return ofy().load().type(User.class).filter("tokenActivate =", token)
+				.first().now();
 	}
 }

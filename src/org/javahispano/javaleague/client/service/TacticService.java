@@ -31,8 +31,5 @@ public interface TacticService extends RemoteService {
 
 	UserDTO getUserAccount();
 	
-	void deleteTacticClass(String className);
-
-	
 	
 }

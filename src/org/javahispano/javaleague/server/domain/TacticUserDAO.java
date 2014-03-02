@@ -3,17 +3,17 @@
  */
 package org.javahispano.javaleague.server.domain;
 
-import java.util.ArrayList;
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import java.util.List;
 
-import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 
 /**
  * @author adou
  *
  */
-public class TacticUserDAO extends DAOBase {
+public class TacticUserDAO {
 	static {
 		ObjectifyService.register(TacticUser.class);
 	}
@@ -23,24 +23,16 @@ public class TacticUserDAO extends DAOBase {
 	}
 	
 	public TacticUser save(TacticUser tacticUser) {
-		ofy().put(tacticUser);
+		ofy().save().entity(tacticUser).now();
 		return tacticUser;
 	}
 	
 	public TacticUser findById(Long id) {
-		Key<TacticUser> key = new Key<TacticUser>(TacticUser.class, id);
-		return ofy().get(key);
+		return ofy().load().type(TacticUser.class).id(id).now();
 	}	
 	
-	public List<TacticUser> getTactics(String id) {
-		List<TacticUser> list = new ArrayList<TacticUser>();
-		Query<TacticUser> q = ofy().query(TacticUser.class);
-	
-		for (TacticUser fetched : q) {
-			list.add(fetched);
-		}		
-		
-		return list;
+	public List<TacticUser> getTactics(Long id) {		
+		return ofy().load().type(TacticUser.class).filter("id !=", id).list();
 	}
 
 }

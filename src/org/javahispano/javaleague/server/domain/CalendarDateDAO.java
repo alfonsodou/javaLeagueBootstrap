@@ -3,9 +3,10 @@
  */
 package org.javahispano.javaleague.server.domain;
 
-import com.googlecode.objectify.Key;
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import com.googlecode.objectify.ObjectifyService;
-import com.googlecode.objectify.cmd.Query;
+
 
 /**
  * @author adou
@@ -19,20 +20,13 @@ public class CalendarDateDAO {
 	public CalendarDateDAO() {
 		
 	}
-	
+
 	public CalendarDate save(CalendarDate calendarDate) {
-		ofy().put(calendarDate);
+		ofy().save().entity(calendarDate).now();
 		return calendarDate;
 	}
 	
 	public CalendarDate findById(Long id) {
-		Key<CalendarDate> key = new Key<CalendarDate>(CalendarDate.class, id);
-		return ofy().get(key);
+		return ofy().load().type(CalendarDate.class).id(id).now();
 	}	
-
-	public CalendarDate findByUniqueId(String uniqueId) {
-		Query<CalendarDate> q = ofy().query(CalendarDate.class).filter("uniqueId", uniqueId);
-		
-		return q.get();
-	}
 }

@@ -11,12 +11,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.jdo.PersistenceManager;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.fileupload.FileItem;
 import org.javahispano.javaleague.server.LoginHelper;
-import org.javahispano.javaleague.server.PMF;
 import org.javahispano.javaleague.server.domain.TacticUser;
 import org.javahispano.javaleague.server.domain.TacticUserDAO;
 import org.javahispano.javaleague.server.domain.User;
@@ -45,14 +43,10 @@ public class MyCustomizedUploadServlet extends BlobstoreUploadAction {
 		super.executeAction(request, sessionFiles);
 
 		for (FileItem item : sessionFiles) {
-			PersistenceManager pm = PMF.getTxnPm();
-			User currentUser = LoginHelper.getLoggedInUser(
-					request.getSession(), pm);
+			User currentUser = LoginHelper
+					.getLoggedInUser(request.getSession());
 
 			try {
-				// Start the transaction
-				pm.currentTransaction().begin();
-
 				if (item.isFormField()) {
 					log.warning("FormITEM: " + item.getFieldName() + " :: "
 							+ item.getString());
@@ -67,22 +61,13 @@ public class MyCustomizedUploadServlet extends BlobstoreUploadAction {
 					out += blobInfo.getFilename() + " :: " + blobInfo.getSize()
 							+ " bytes|" + updated.toString();
 
-					// out += updated.toString();
-
-					log.warning("OUT:" + out);
-
 					if (currentUser.getTactic() != null) { // update
 						Long tacticIdField = currentUser.getTactic();
 
 						TacticUser tactic = tacticDAO.findById(tacticIdField);
-
-						log.warning("TACTIC ID: " + tacticIdField
-								+ " :: Nombre: " + tactic.getTeamName());
 						tactic.setUpdated(updated);
 
 						if (tactic.getZipClasses() != null) {
-							log.warning("KeyString: "
-									+ tactic.getZipClasses().getKeyString());
 							BlobstoreUtil.delete(tactic.getZipClasses()
 									.getKeyString());
 						}
@@ -101,15 +86,8 @@ public class MyCustomizedUploadServlet extends BlobstoreUploadAction {
 					}
 				}
 
-				pm.currentTransaction().commit();
 			} catch (Exception e) {
 				e.printStackTrace();
-			} finally {
-				if (pm.currentTransaction().isActive()) {
-					log.warning("Antes de rollback");
-					pm.currentTransaction().rollback();
-				}
-				pm.close();
 			}
 		}
 		return out;

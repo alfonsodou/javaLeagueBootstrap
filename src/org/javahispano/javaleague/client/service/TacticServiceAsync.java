@@ -30,7 +30,4 @@ public interface TacticServiceAsync {
 
 	void getUserTacticSummary(AsyncCallback<TacticDTO> callback);
 
-	void deleteTacticClass(String className, AsyncCallback<Void> callback);
-
-
 }

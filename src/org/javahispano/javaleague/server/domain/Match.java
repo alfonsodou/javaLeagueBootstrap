@@ -1,20 +1,17 @@
 package org.javahispano.javaleague.server.domain;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.logging.Logger;
 
-import javax.jdo.listener.StoreCallback;
-import javax.persistence.Id;
-
 import org.javahispano.javaleague.server.AppLib;
-import org.javahispano.javaleague.server.utils.cache.CacheSupport;
-import org.javahispano.javaleague.server.utils.cache.Cacheable;
 import org.javahispano.javaleague.shared.MatchDTO;
 
-public class Match implements StoreCallback, Serializable, Cacheable {
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
-	private static final int CACHE_EXPIR = 600; // in seconds
+@Entity
+public class Match {
+
 	private static final Logger log = Logger.getLogger(Match.class.getName());	
 
 	@Id
@@ -173,28 +170,6 @@ public class Match implements StoreCallback, Serializable, Cacheable {
 	 */
 	public void setState(int state) {
 		this.state = state;
-	}
-
-	@Override
-	public void addToCache() {
-
-		getLocal();
-		getVisiting();
-		// getSeason();
-
-		CacheSupport.cachePutExp(this.getClass().getName(), id, this,
-				CACHE_EXPIR);
-	}
-
-	@Override
-	public void removeFromCache() {
-
-		CacheSupport.cacheDelete(this.getClass().getName(), id);
-	}
-
-	@Override
-	public void jdoPreStore() {
-
 	}
 
 }

@@ -1,21 +1,17 @@
 package org.javahispano.javaleague.server.domain;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.jdo.listener.StoreCallback;
-import javax.persistence.Id;
-
-import org.javahispano.javaleague.server.utils.cache.CacheSupport;
-import org.javahispano.javaleague.server.utils.cache.Cacheable;
 import org.javahispano.javaleague.shared.UserDTO;
 
-public class User implements StoreCallback, Serializable, Cacheable {
-	private static final int CACHE_EXPIR = 600; // in seconds
-	private static final int NUM_RETRIES = 5;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+
+@Entity
+public class User {
 	private static final Logger log = Logger.getLogger(User.class.getName());
 
 	@Id
@@ -235,21 +231,5 @@ public class User implements StoreCallback, Serializable, Cacheable {
 				user.getName(), user.getTactic(), user.getLeagues());
 	}
 
-	@Override
-	public void addToCache() {
-		getTactic();
-		CacheSupport.cachePutExp(this.getClass().getName(), id, this,
-				CACHE_EXPIR);
-	}
-
-	@Override
-	public void removeFromCache() {
-		CacheSupport.cacheDelete(this.getClass().getName(), id);
-	}
-
-	@Override
-	public void jdoPreStore() {
-
-	}
 
 }

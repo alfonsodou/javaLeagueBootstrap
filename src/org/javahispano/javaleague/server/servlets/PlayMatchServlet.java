@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import javax.jdo.PersistenceManager;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.javahispano.javaleague.javacup.shared.Agent;
 import org.javahispano.javaleague.javacup.shared.MatchShared;
 import org.javahispano.javaleague.server.AppLib;
-import org.javahispano.javaleague.server.PMF;
 import org.javahispano.javaleague.server.classloader.MyDataStoreClassLoader;
 import org.javahispano.javaleague.server.domain.FrameWork;
 import org.javahispano.javaleague.server.domain.FrameWorkDAO;
@@ -43,7 +41,6 @@ public class PlayMatchServlet extends HttpServlet {
 		long matchID = Long.parseLong(req.getParameter("matchID").replace("_",
 				""));
 
-		PersistenceManager pm = PMF.getTxnPm();
 		TacticUser localTactic = null;
 		TacticUser visitingTactic = null;
 
@@ -109,7 +106,6 @@ public class PlayMatchServlet extends HttpServlet {
 			matchDAO.save(match);
 			tacticUserDAO.save(localTactic);
 			tacticUserDAO.save(visitingTactic);
-			pm.close();
 		}
 
 	}

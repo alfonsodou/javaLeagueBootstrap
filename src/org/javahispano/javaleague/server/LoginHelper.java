@@ -38,10 +38,7 @@ public class LoginHelper extends RemoteServiceServlet {
 
 	}
 
-	static public User getLoggedInUser(HttpSession session,
-			PersistenceManager pm) {
-
-		boolean localPM = false;
+	static public User getLoggedInUser(HttpSession session) {
 
 		if (session == null)
 			return null; // user not logged in
@@ -52,20 +49,13 @@ public class LoginHelper extends RemoteServiceServlet {
 
 		Long id = Long.parseLong(userId.trim());
 
-		if (pm == null) {
-			// then create local pm
-			pm = PMF.getNonTxnPm();
-			localPM = true;
-		}
-
 		try {
 			User u = userDAO.findById(id);
 			u.setLastActive(new Date());
+			userDAO.save(u);
 			return u;
-		} finally {
-			if (localPM) {
-				pm.close();
-			}
+		} catch (Exception e) {
+			return null;
 		}
 
 	}

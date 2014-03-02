@@ -9,17 +9,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.javahispano.javaleague.server.PMF;
 import org.javahispano.javaleague.server.domain.Match;
 import org.javahispano.javaleague.server.domain.MatchDAO;
-import org.javahispano.javaleague.server.domain.TacticClass;
 import org.javahispano.javaleague.server.domain.TacticUser;
 import org.javahispano.javaleague.server.domain.TacticUserDAO;
 
@@ -40,63 +37,51 @@ public class DispatchMatchServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 
-		PersistenceManager pm = PMF.getTxnPm();
 		TacticUser tactic = null;
-		TacticClass tacticClass = null;
 		Query q = null;
-		String tacticID = req.getParameter("tacticID");
+		Long tacticID = Long.parseLong(req.getParameter("tacticID").replace(
+				"_", ""));
 		try {
-			tactic = tacticUserDAO.findById(Long.parseLong(tacticID.replace("_", "")));
-			//tactic = pm.getObjectById(TacticUser.class, tacticID);
-			//if (tactic.getFriendlyMatch() == AppLib.FRIENDLY_MATCH_NO) {
-				//q = pm.newQuery(TacticUser.class,
-					//	"id != :tacticId && valid == true && friendlyMatch == 1");
-				/*
-				 * q = pm.newQuery("select id, teamName from " +
-				 * TacticUser.class.getName() +
-				 * " where id != tacticIdParam && valid == true && friendlyMatch == 1 "
-				 * + "parameters String tacticIdParam");
-				 */
+			tactic = tacticUserDAO.findById(tacticID);
 
-				List<TacticUser> results = (List<TacticUser>) tacticUserDAO.getTactics(tacticID);
-					//	.execute(tacticID);
-				// De la lista resultante hay que escoger un equipo para el
-				// partido
-				if (!results.isEmpty()) {
+			List<TacticUser> results = (List<TacticUser>) tacticUserDAO
+					.getTactics(tacticID);
 
-					Match match = new Match();
-					TacticUser visitingTactic = results.get((int) (Math.random() * results.size()));
+			// De la lista resultante hay que escoger un equipo para el
+			// partido
+			if (!results.isEmpty()) {
 
-					match.setLocal(tacticID);
-					match.setVisiting(visitingTactic.getId().toString());
-					match.setNameLocal(tactic.getTeamName());
-					match.setNameForeign(visitingTactic.getTeamName());
-					match.setVisualization(addMinutesToDate(new Date(), 5));
+				Match match = new Match();
+				TacticUser visitingTactic = results
+						.get((int) (Math.random() * results.size()));
 
-					//tactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_SCHEDULED);
-					//visitingTactic
-						//	.setFriendlyMatch(AppLib.FRIENDLY_MATCH_SCHEDULED);
+				match.setLocal(tacticID.toString());
+				match.setVisiting(visitingTactic.getId().toString());
+				match.setNameLocal(tactic.getTeamName());
+				match.setNameForeign(visitingTactic.getTeamName());
+				match.setVisualization(addMinutesToDate(new Date(), 5));
 
-					dao.save(match);
+				// tactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_SCHEDULED);
+				// visitingTactic
+				// .setFriendlyMatch(AppLib.FRIENDLY_MATCH_SCHEDULED);
 
-					Queue queue = QueueFactory.getDefaultQueue();
+				dao.save(match);
 
-					queue.add(TaskOptions.Builder.withUrl("/playMatch").param(
-							"matchID", match.getId().toString()));
-				}
-				//} else {
-					// ... no results ...
-					//tactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_OK);
-				//}
-			//} // end if AppLib.FRIENDLY_MATCH_NO
+				Queue queue = QueueFactory.getDefaultQueue();
+
+				queue.add(TaskOptions.Builder.withUrl("/playMatch").param(
+						"matchID", match.getId().toString()));
+			}
+			// } else {
+			// ... no results ...
+			// tactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_OK);
+			// }
+			// } // end if AppLib.FRIENDLY_MATCH_NO
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.warning(e.getMessage());
 
-		} finally {
-			if (q != null) q.closeAll();
-			pm.close();
-		}
+		} 
 	}
 
 	/**

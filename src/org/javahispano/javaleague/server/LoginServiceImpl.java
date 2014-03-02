@@ -21,7 +21,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 		UserDTO userDTO;
 		HttpSession session = getThreadLocalRequest().getSession();
 
-		User u = LoginHelper.getLoggedInUser(session, null);
+		User u = LoginHelper.getLoggedInUser(session);
 		if (u == null)
 			return null;
 		userDTO = User.toDTO(u);

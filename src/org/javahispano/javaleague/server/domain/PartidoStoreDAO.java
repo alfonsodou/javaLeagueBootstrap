@@ -1,37 +1,29 @@
 package org.javahispano.javaleague.server.domain;
 
-import java.util.ArrayList;
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
+import java.util.List;
 
 import com.google.appengine.api.users.User;
-import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 
+public class PartidoStoreDAO {
 
-public class PartidoStoreDAO extends DAOBase {
-   
 	static {
-        ObjectifyService.register(PartidoStore.class);
-    }
+		ObjectifyService.register(PartidoStore.class);
+	}
 
-    public PartidoStore save(PartidoStore partido) {
-        ofy().put(partido);
-        return partido;
-    }
-    
-    public PartidoStore findById(Long id) {
-        Key<PartidoStore> key = new Key<PartidoStore>(PartidoStore.class, id);
-        return ofy().get(key);
-    }
-    
-    public ArrayList<PartidoStore> findByUser(User owner) {
-    	Query<PartidoStore> q = ofy().query(PartidoStore.class).filter("owner", owner);
-    	
-    	ArrayList<PartidoStore> partidos = new ArrayList<PartidoStore>();
-    	
-    	for(PartidoStore fetched : q) {
-    		partidos.add(fetched);
-    	}
-    	
-    	return partidos;
-    }
+	public PartidoStore save(PartidoStore partido) {
+		ofy().save().entity(partido).now();
+		return partido;
+	}
+
+	public PartidoStore findById(Long id) {
+		return ofy().load().type(PartidoStore.class).id(id).now();
+	}
+
+	public List<PartidoStore> findByUser(User owner) {
+		return ofy().load().type(PartidoStore.class).filter("owner =", owner)
+				.list();
+	}
 }

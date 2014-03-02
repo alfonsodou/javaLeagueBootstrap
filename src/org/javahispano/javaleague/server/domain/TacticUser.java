@@ -2,19 +2,13 @@ package org.javahispano.javaleague.server.domain;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.util.Date;
 
-import javax.jdo.listener.StoreCallback;
-import javax.persistence.Id;
-
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.javahispano.javaleague.server.AppLib;
-import org.javahispano.javaleague.server.utils.cache.CacheSupport;
-import org.javahispano.javaleague.server.utils.cache.Cacheable;
 import org.javahispano.javaleague.shared.TacticDTO;
 
 import com.google.appengine.api.blobstore.BlobInfo;
@@ -24,20 +18,18 @@ import com.google.appengine.api.files.AppEngineFile;
 import com.google.appengine.api.files.FileService;
 import com.google.appengine.api.files.FileServiceFactory;
 import com.google.appengine.api.files.FileWriteChannel;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
 /**
  * 
  * @author adou
  * 
  */
-// @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable =
-// "true")
-public class TacticUser implements StoreCallback, Serializable, Cacheable {
 
-	/**
-	 * 
-	 */
-	private static final int CACHE_EXPIR = 600; // in seconds
+@Entity
+public class TacticUser {
+
 
 	/**
 	 * 
@@ -46,72 +38,46 @@ public class TacticUser implements StoreCallback, Serializable, Cacheable {
 	private Long id;
 
 	/**
-	 * Pointer back to userinfo object with which this tactic is associated.
-	 */
-	/*
-	 * @Persistent(mappedBy = "tactic") private UserAccount userPrefs;
-	 */
-
-	/**
 	 * Team's Name
 	 */
-	// @Persistent
 	private String teamName;
-
-	/**
-	 * Type of tactic.
-	 */
-	/*
-	 * @Persistent private TacticDetail userTacticDetail;
-	 */
 
 	/**
 	 * Is tactic validated ?.
 	 */
-	// @Persistent
 	private boolean valid;
 
 	/**
 	 * Date/Time first upload.
 	 */
-	// @Persistent
 	private Date creation;
 
 	/**
 	 * Date/Time last updated.
 	 */
-	// @Persistent
 	private Date updated;
 
-	// @Persistent
 	private int friendlyMatch;
 
-	// @Persistent
 	private int goalsFor;
 
-	// @Persistent
 	private int goalsAgainst;
 
-	// @Persistent
 	private int matchWins;
 
-	// @Persistent
 	private int matchLost;
 
-	// @Persistent
 	private int matchTied;
 
 	/**
 	 * Blob key for zip
 	 */
-	// @Persistent
 	private BlobKey zipClasses;
 
 	public TacticUser() {
 		this.creation = new Date();
 		this.updated = new Date();
 		this.valid = true;
-		// this.tacticsClass = null;
 		this.teamName = "javaLeague";
 		this.friendlyMatch = AppLib.FRIENDLY_MATCH_NO;
 		this.goalsAgainst = 0;
@@ -127,7 +93,6 @@ public class TacticUser implements StoreCallback, Serializable, Cacheable {
 		this.creation = new Date();
 		this.updated = new Date();
 		this.valid = true;
-		// this.tacticsClass = null;
 		this.friendlyMatch = AppLib.FRIENDLY_MATCH_NO;
 		this.goalsAgainst = 0;
 		this.goalsFor = 0;
@@ -354,26 +319,6 @@ public class TacticUser implements StoreCallback, Serializable, Cacheable {
 
 	public void updatedFromDTO(TacticDTO tacticDTO) {
 		this.teamName = tacticDTO.getTeamName();
-	}
-
-	@Override
-	public void jdoPreStore() {
-
-	}
-
-	@Override
-	public void addToCache() {
-		// force load of lazily-loaded fields
-		// getUserAccount();
-		// getUserTacticDetail();
-
-		CacheSupport.cachePutExp(this.getClass().getName(), id, this,
-				CACHE_EXPIR);
-	}
-
-	@Override
-	public void removeFromCache() {
-		CacheSupport.cacheDelete(this.getClass().getName(), id);
 	}
 
 	private static BlobKey SaveFile(String link, String fileName)

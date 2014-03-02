@@ -37,27 +37,18 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public LeagueDTO createLeague(LeagueDTO leagueDTO) {
-		PersistenceManager pm = PMF.getTxnPm();
 		League league = new League(leagueDTO);
 
 		try {
-			pm.currentTransaction().begin();
 			User user = LoginHelper.getLoggedInUser(getThreadLocalRequest()
-					.getSession(), pm);
+					.getSession());
 			league.setManagerId(user.getId());
 			league = leagueDAO.save(league);
 			user.getLeagues().add(league.getId());
 			user = userDAO.save(user);
-			pm.currentTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.warning(e.getMessage());
-		} finally {
-			if (pm.currentTransaction().isActive()) {
-				pm.currentTransaction().rollback();
-				logger.warning("did transaction rollback");
-			}
-			pm.close();
 		}
 
 		return league.toDTO();
@@ -65,16 +56,13 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public List<LeagueDTO> getMyLeagues() {
-		PersistenceManager pm = PMF.getTxnPm();
 		List<LeagueDTO> leaguesDTO = new ArrayList<LeagueDTO>();
 		List<League> leagues;
 		LeagueDTO leagueDTO;
 
 		try {
-			pm.currentTransaction().begin();
-
 			User user = LoginHelper.getLoggedInUser(getThreadLocalRequest()
-					.getSession(), pm);
+					.getSession());
 			leagues = leagueDAO.findByUser(user.getId());
 
 			for (League l : leagues) {
@@ -84,16 +72,9 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 				leaguesDTO.add(leagueDTO);
 			}
 
-			pm.currentTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.warning(e.getMessage());
-		} finally {
-			if (pm.currentTransaction().isActive()) {
-				pm.currentTransaction().rollback();
-				logger.warning("did transaction rollback");
-			}
-			pm.close();
 		}
 
 		return leaguesDTO;
@@ -101,24 +82,13 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public LeagueDTO getLeague(Long id) {
-		PersistenceManager pm = PMF.getTxnPm();
 		LeagueDTO leagueDTO = null;
 
 		try {
-			pm.currentTransaction().begin();
-
 			leagueDTO = leagueDAO.findById(id).toDTO();
-
-			pm.currentTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.warning(e.getMessage());
-		} finally {
-			if (pm.currentTransaction().isActive()) {
-				pm.currentTransaction().rollback();
-				logger.warning("did transaction rollback");
-			}
-			pm.close();
 		}
 
 		return leagueDTO;
@@ -126,55 +96,32 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public void dropLeague(Long id) {
-		PersistenceManager pm = PMF.getTxnPm();
-
 		try {
-			pm.currentTransaction().begin();
 			User user = LoginHelper.getLoggedInUser(getThreadLocalRequest()
-					.getSession(), pm);
+					.getSession());
 
 			leagueDAO.delete(id);
 			user.getLeagues().remove(id);
 			userDAO.save(user);
-
-			pm.currentTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.warning(e.getMessage());
-		} finally {
-			if (pm.currentTransaction().isActive()) {
-				pm.currentTransaction().rollback();
-				logger.warning("did transaction rollback");
-			}
-			pm.close();
 		}
-
 	}
 
 	@Override
 	public void joinLeague(Long id) {
-		PersistenceManager pm = PMF.getTxnPm();
-
 		try {
-			pm.currentTransaction().begin();
 			User user = LoginHelper.getLoggedInUser(getThreadLocalRequest()
-					.getSession(), pm);
+					.getSession());
 
 			user.getLeagues().add(id);
 			userDAO.save(user);
-
-			pm.currentTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.warning(e.getMessage());
-		} finally {
-			if (pm.currentTransaction().isActive()) {
-				pm.currentTransaction().rollback();
-				logger.warning("did transaction rollback");
-			}
-			pm.close();
-		}
-		
+		} 
+
 	}
 
 }

@@ -83,26 +83,25 @@ public class MatchServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public void setMatchState(MatchDTO matchDTO, int state) {
-		PersistenceManager pm = PMF.getNonTxnPm();
 		MatchDAO matchDAO = new MatchDAO();
 		try {
 			Match match = matchDAO.findById(matchDTO.getId());
 			match.setState(state);
-		} finally {
-			pm.close();
+		} catch (Exception e) {
+			logger.warning(e.getMessage());
 		}
 
 	}
 
 	@Override
 	public MatchDTO getMatchById(Long id) {
-		PersistenceManager pm = PMF.getNonTxnPm();
 		MatchDAO matchDAO = new MatchDAO();
 		Match match = null;
 		try {
 			match = matchDAO.findById(id);
-		} finally {
-			pm.close();
+		} catch (Exception e) {
+			logger.warning(e.getMessage());
+			return null;
 		}
 
 		return match.toDTO();
@@ -112,11 +111,10 @@ public class MatchServiceImpl extends RemoteServiceServlet implements
 	public TacticDTO getUserTacticSummary() {
 
 		TacticDTO userTacticSummary = new TacticDTO();
-		PersistenceManager pm = PMF.getNonTxnPm();
 
 		try {
 			User user = LoginHelper.getLoggedInUser(
-					getThreadLocalRequest().getSession(), pm);
+					getThreadLocalRequest().getSession());
 			if (user == null)
 				return null;
 
@@ -124,8 +122,9 @@ public class MatchServiceImpl extends RemoteServiceServlet implements
 				//return null;
 
 			//userTacticSummary = user.getTactic().toDTO();
-		} finally {
-			pm.close();
+		} catch (Exception e) {
+			logger.warning(e.getMessage());
+			return null;
 		}
 
 		return userTacticSummary;

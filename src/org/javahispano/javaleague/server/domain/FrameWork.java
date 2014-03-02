@@ -5,19 +5,13 @@ package org.javahispano.javaleague.server.domain;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.util.Date;
 import java.util.logging.Logger;
 
-import javax.jdo.listener.StoreCallback;
-import javax.persistence.Id;
-
 import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.javahispano.javaleague.server.utils.cache.CacheSupport;
-import org.javahispano.javaleague.server.utils.cache.Cacheable;
 import org.javahispano.javaleague.shared.FrameWorkDTO;
 
 import com.google.appengine.api.blobstore.BlobKey;
@@ -25,12 +19,15 @@ import com.google.appengine.api.files.AppEngineFile;
 import com.google.appengine.api.files.FileService;
 import com.google.appengine.api.files.FileServiceFactory;
 import com.google.appengine.api.files.FileWriteChannel;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
 /**
  * @author adou
  * 
  */
-public class FrameWork implements StoreCallback, Serializable, Cacheable {
+@Entity
+public class FrameWork {
 
 	private static final int CACHE_EXPIR = 600; // in seconds
 	private static final Logger log = Logger.getLogger(FrameWork.class
@@ -224,24 +221,6 @@ public class FrameWork implements StoreCallback, Serializable, Cacheable {
 				this.defaultFrameWork, this.urlDownload);
 
 		return frameWorkDTO;
-	}
-
-	@Override
-	public void addToCache() {
-		CacheSupport.cachePutExp(this.getClass().getName(), id, this,
-				CACHE_EXPIR);
-
-	}
-
-	@Override
-	public void removeFromCache() {
-		CacheSupport.cacheDelete(this.getClass().getName(), id);
-
-	}
-
-	@Override
-	public void jdoPreStore() {
-
 	}
 
 	private static BlobKey SaveFile(String link, String fileName)

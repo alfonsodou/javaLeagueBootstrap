@@ -7,9 +7,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.persistence.Id;
-
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
 /**
  * @author adou
@@ -37,6 +36,9 @@ public class CalendarDate {
 	private Date finish;
 
 	
+	public CalendarDate() {
+		
+	}
 	
 	/**
 	 * @return the id

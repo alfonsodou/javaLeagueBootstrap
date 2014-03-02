@@ -2,10 +2,11 @@ package org.javahispano.javaleague.server.domain;
 
 import java.util.Date;
 
-import javax.persistence.Id;
-
 import com.google.appengine.api.users.User;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
+@Entity
 public class PartidoStore {
 
 	@Id

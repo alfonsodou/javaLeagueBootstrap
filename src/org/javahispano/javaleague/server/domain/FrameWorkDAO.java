@@ -3,17 +3,17 @@
  */
 package org.javahispano.javaleague.server.domain;
 
-import java.util.ArrayList;
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import java.util.List;
 
-import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 
 /**
  * @author adou
  * 
  */
-public class FrameWorkDAO extends DAOBase {
+public class FrameWorkDAO {
 	static {
 		ObjectifyService.register(FrameWork.class);
 	}
@@ -23,32 +23,25 @@ public class FrameWorkDAO extends DAOBase {
 	}
 
 	public FrameWork save(FrameWork framework) {
-		ofy().put(framework);
+		ofy().save().entity(framework).now();
 		return framework;
 	}
 
 	public FrameWork findById(Long id) {
-		Key<FrameWork> key = new Key<FrameWork>(FrameWork.class, id);
-		return ofy().get(key);
+		return ofy().load().type(FrameWork.class).id(id).now();
 	}
 
 	public FrameWork findByDefaultFrameWork(Boolean defaultFrameWork) {
-		Query<FrameWork> q = ofy().query(FrameWork.class).filter(
-				"defaultFrameWork", defaultFrameWork);
+		FrameWork frameWork = ofy().load().type(FrameWork.class)
+				.filter("defaultFrameWork =", true).first().now();
 
-		return q.get();
+		return frameWork;
 	}
 
 	public List<FrameWork> findAllFrameWorks() {
-		List<FrameWork> frameWorks = new ArrayList<FrameWork>();
-
-		Query<FrameWork> q = ofy().query(FrameWork.class)
-				.filter("active", true).order("defaultFrameWork")
-				.order("-updated");
-
-		for (FrameWork fetched : q) {
-			frameWorks.add(fetched);
-		}
+		List<FrameWork> frameWorks = ofy().load().type(FrameWork.class)
+				.filter("active =", true).order("defaultFrameWork")
+				.order("-updated").list();
 
 		return frameWorks;
 	}
