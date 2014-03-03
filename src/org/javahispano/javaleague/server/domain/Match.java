@@ -40,6 +40,7 @@ public class Match {
 	private int state;
 
 	public Match() {
+		super();
 		this.execution = new Date();
 		this.visualization = new Date();
 		this.visitingTeam = null;

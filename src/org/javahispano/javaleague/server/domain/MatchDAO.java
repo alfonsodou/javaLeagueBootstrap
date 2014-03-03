@@ -3,24 +3,18 @@
  */
 package org.javahispano.javaleague.server.domain;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
+import static org.javahispano.javaleague.server.domain.OfyService.ofy;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.googlecode.objectify.ObjectifyService;
 
 /**
  * @author adou
  * 
  */
 public class MatchDAO {
-	static {
-		ObjectifyService.register(Match.class);
-	}
-
 	public MatchDAO() {
-
+		super();
 	}
 
 	public Match save(Match partido) {

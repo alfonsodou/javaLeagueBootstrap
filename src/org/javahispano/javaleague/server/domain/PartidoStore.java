@@ -18,7 +18,7 @@ public class PartidoStore {
 	private byte[] partido;
 	
 	public PartidoStore() {
-		
+		super();
 	}
 	
 	public PartidoStore(User owner, int local, int visitante, Date creation, byte[] p) {

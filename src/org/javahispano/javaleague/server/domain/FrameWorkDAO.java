@@ -3,7 +3,7 @@
  */
 package org.javahispano.javaleague.server.domain;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
+import static org.javahispano.javaleague.server.domain.OfyService.ofy;
 
 import java.util.List;
 
@@ -14,12 +14,8 @@ import com.googlecode.objectify.ObjectifyService;
  * 
  */
 public class FrameWorkDAO {
-	static {
-		ObjectifyService.register(FrameWork.class);
-	}
-
 	public FrameWorkDAO() {
-
+		super();
 	}
 
 	public FrameWork save(FrameWork framework) {

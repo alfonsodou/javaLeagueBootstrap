@@ -37,7 +37,7 @@ public class CalendarDate {
 
 	
 	public CalendarDate() {
-		
+		super();
 	}
 	
 	/**

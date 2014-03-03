@@ -29,8 +29,6 @@ import com.googlecode.objectify.annotation.Id;
 
 @Entity
 public class TacticUser {
-
-
 	/**
 	 * 
 	 */
@@ -75,6 +73,7 @@ public class TacticUser {
 	private BlobKey zipClasses;
 
 	public TacticUser() {
+		super();
 		this.creation = new Date();
 		this.updated = new Date();
 		this.valid = true;

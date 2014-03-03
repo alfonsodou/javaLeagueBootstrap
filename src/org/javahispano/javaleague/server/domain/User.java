@@ -9,6 +9,7 @@ import org.javahispano.javaleague.shared.UserDTO;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 @Entity
 public class User {
@@ -19,6 +20,7 @@ public class User {
 
 	private String name;
 
+	@Index 
 	private String emailAddress;
 
 	private String password;
@@ -29,6 +31,7 @@ public class User {
 
 	private Date lastActive;
 
+	@Index 
 	private String tokenActivate;
 
 	private Date dateTokenActivate;
@@ -39,10 +42,8 @@ public class User {
 	
 	private List<Long> leagues;
 
-	private static UserDAO userDAO = new UserDAO();
-	private static TacticUserDAO tacticUserDAO = new TacticUserDAO();
-
 	public User() {
+		super();
 		this.active = false;
 		this.leagues = new ArrayList<Long>();
 	}
@@ -224,6 +225,7 @@ public class User {
 
 	public static UserDTO toDTO(User user) {
 		if (user == null) {
+			log.warning("User.toDTO() :: user == null");
 			return null;
 		}
 

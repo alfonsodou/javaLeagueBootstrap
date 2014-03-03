@@ -3,21 +3,15 @@
  */
 package org.javahispano.javaleague.server.domain;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
-
-import com.googlecode.objectify.ObjectifyService;
+import static org.javahispano.javaleague.server.domain.OfyService.ofy;
 
 /**
  * @author adou
  * 
  */
 public class UserDAO {
-	static {
-		ObjectifyService.register(User.class);
-	}
-
 	public UserDAO() {
-
+		super();
 	}
 
 	public User save(User user) {

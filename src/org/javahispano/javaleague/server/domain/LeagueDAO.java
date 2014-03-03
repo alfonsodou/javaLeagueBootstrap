@@ -3,7 +3,7 @@
  */
 package org.javahispano.javaleague.server.domain;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
+import static org.javahispano.javaleague.server.domain.OfyService.ofy;
 
 import java.util.List;
 
@@ -14,12 +14,8 @@ import com.googlecode.objectify.ObjectifyService;
  * 
  */
 public class LeagueDAO {
-	static {
-		ObjectifyService.register(League.class);
-	}
-
 	public LeagueDAO() {
-
+		super();
 	}
 
 	public League save(League league) {

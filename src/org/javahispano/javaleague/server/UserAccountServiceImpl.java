@@ -33,6 +33,11 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  */
 public class UserAccountServiceImpl extends RemoteServiceServlet implements
 		UserAccountService {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private static Logger logger = Logger.getLogger(UserAccountServiceImpl.class
 			.getName());
 	

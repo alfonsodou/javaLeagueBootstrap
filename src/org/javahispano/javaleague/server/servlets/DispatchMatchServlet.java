@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.jdo.Query;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +37,6 @@ public class DispatchMatchServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		TacticUser tactic = null;
-		Query q = null;
 		Long tacticID = Long.parseLong(req.getParameter("tacticID").replace(
 				"_", ""));
 		try {

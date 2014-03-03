@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.jdo.PersistenceManager;
-
 import org.javahispano.javaleague.client.service.MatchService;
 import org.javahispano.javaleague.server.domain.Match;
 import org.javahispano.javaleague.server.domain.MatchDAO;

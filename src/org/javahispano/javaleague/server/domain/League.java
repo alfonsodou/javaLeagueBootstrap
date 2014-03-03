@@ -49,6 +49,7 @@ public class League {
 	private Integer type;
 	
 	public League() {
+		super();
 		this.creation = new Date();
 		this.updated = new Date();		
 	}

@@ -29,7 +29,6 @@ import com.googlecode.objectify.annotation.Id;
 @Entity
 public class FrameWork {
 
-	private static final int CACHE_EXPIR = 600; // in seconds
 	private static final Logger log = Logger.getLogger(FrameWork.class
 			.getName());
 
@@ -59,6 +58,7 @@ public class FrameWork {
 	private String urlDownload;
 
 	public FrameWork() {
+		super();
 		this.creation = new Date();
 		this.updated = new Date();
 		this.active = true;

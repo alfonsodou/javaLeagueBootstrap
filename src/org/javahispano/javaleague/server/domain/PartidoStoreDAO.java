@@ -1,18 +1,16 @@
 package org.javahispano.javaleague.server.domain;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
+import static org.javahispano.javaleague.server.domain.OfyService.ofy;
 
 import java.util.List;
 
 import com.google.appengine.api.users.User;
-import com.googlecode.objectify.ObjectifyService;
 
 public class PartidoStoreDAO {
-
-	static {
-		ObjectifyService.register(PartidoStore.class);
+	public PartidoStoreDAO() {
+		super();
 	}
-
+	
 	public PartidoStore save(PartidoStore partido) {
 		ofy().save().entity(partido).now();
 		return partido;
