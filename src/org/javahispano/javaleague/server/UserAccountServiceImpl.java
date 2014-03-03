@@ -6,6 +6,7 @@ package org.javahispano.javaleague.server;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -32,7 +33,9 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  */
 public class UserAccountServiceImpl extends RemoteServiceServlet implements
 		UserAccountService {
-
+	private static Logger logger = Logger.getLogger(UserAccountServiceImpl.class
+			.getName());
+	
 	private static UserDAO userDAO = new UserDAO();
 	private static TacticUserDAO tacticUserDAO = new TacticUserDAO();
 
@@ -40,6 +43,10 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 	public UserDTO login(String email, String password) {
 		User user = userDAO.findByEmail(email);
 
+		if (user == null) {
+			logger.warning("User == null");
+		}
+		
 		if ((user != null) && (user.getPassword().equals(password))) {
 			HttpSession session = getThreadLocalRequest().getSession();
 			// update session if successful

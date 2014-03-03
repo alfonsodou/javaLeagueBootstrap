@@ -33,7 +33,7 @@ public class LeagueDAO {
 
 	public List<League> findByUser(Long userId) {
 		List<League> leagues = ofy().load().type(League.class)
-				.filter("managerId =", userId).order("-updated").list();
+				.filter("managerId", userId).order("-updated").list();
 
 		return leagues;
 	}

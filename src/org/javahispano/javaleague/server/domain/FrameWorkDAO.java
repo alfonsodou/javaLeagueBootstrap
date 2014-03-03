@@ -33,14 +33,14 @@ public class FrameWorkDAO {
 
 	public FrameWork findByDefaultFrameWork(Boolean defaultFrameWork) {
 		FrameWork frameWork = ofy().load().type(FrameWork.class)
-				.filter("defaultFrameWork =", true).first().now();
+				.filter("defaultFrameWork", true).first().now();
 
 		return frameWork;
 	}
 
 	public List<FrameWork> findAllFrameWorks() {
 		List<FrameWork> frameWorks = ofy().load().type(FrameWork.class)
-				.filter("active =", true).order("defaultFrameWork")
+				.filter("active", true).order("defaultFrameWork")
 				.order("-updated").list();
 
 		return frameWorks;

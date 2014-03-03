@@ -31,11 +31,11 @@ public class UserDAO {
 
 	public User findByEmail(String emailAddress) {
 		return ofy().load().type(User.class)
-				.filter("emailAddress =", emailAddress).first().now();
+				.filter("emailAddress", emailAddress).first().now();
 	}
 
 	public User findByToken(String token) {
-		return ofy().load().type(User.class).filter("tokenActivate =", token)
+		return ofy().load().type(User.class).filter("tokenActivate", token)
 				.first().now();
 	}
 }

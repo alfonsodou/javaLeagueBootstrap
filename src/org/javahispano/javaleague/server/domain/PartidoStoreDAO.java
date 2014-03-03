@@ -23,7 +23,7 @@ public class PartidoStoreDAO {
 	}
 
 	public List<PartidoStore> findByUser(User owner) {
-		return ofy().load().type(PartidoStore.class).filter("owner =", owner)
+		return ofy().load().type(PartidoStore.class).filter("owner", owner)
 				.list();
 	}
 }
