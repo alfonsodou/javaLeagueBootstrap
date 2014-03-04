@@ -2,7 +2,7 @@ package org.javahispano.javaleague.client.presenter;
 
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.service.MatchServiceAsync;
-import org.javahispano.javaleague.shared.MatchDTO;
+import org.javahispano.javaleague.shared.domain.Match;
 
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.client.Window;
@@ -30,7 +30,7 @@ public class ShowMatchPresenter implements Presenter {
 	private String date;
 	private String dateMatch;
 
-	private MatchDTO matchDTO;
+	private Match match;
 
 	public ShowMatchPresenter(final MatchServiceAsync matchService,
 			SimpleEventBus eventBus, Display display, final String matchID,
@@ -50,7 +50,7 @@ public class ShowMatchPresenter implements Presenter {
 
 	@Override
 	public void go(final HasWidgets container) {
-		//fetchMatchSummaryDTO();
+		//fetchMatchSummary();
 		container.clear();
 		container.add(display.asWidget());
 		
@@ -59,8 +59,8 @@ public class ShowMatchPresenter implements Presenter {
 
 	}
 
-	private void fetchMatchSummaryDTO() {
-		new RPCCall<MatchDTO>() {
+	private void fetchMatchSummary() {
+		new RPCCall<Match>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -69,15 +69,15 @@ public class ShowMatchPresenter implements Presenter {
 			}
 
 			@Override
-			public void onSuccess(MatchDTO result) {
-				matchDTO = result;
-				display.setDateMatch(matchDTO.getVisualization());
+			public void onSuccess(Match result) {
+				match = result;
+				display.setDateMatch(match.getVisualization().toString());
 				display.setMatchID(matchID);
 				display.setDate(date);				
 			}
 
 			@Override
-			protected void callService(AsyncCallback<MatchDTO> cb) {
+			protected void callService(AsyncCallback<Match> cb) {
 				matchService.getMatchById(Long.parseLong(matchID), cb);
 
 			}

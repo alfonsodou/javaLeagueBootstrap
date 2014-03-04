@@ -3,11 +3,8 @@
  */
 package org.javahispano.javaleague.client.service;
 
-import java.util.ArrayList;
-
-import org.javahispano.javaleague.shared.TacticClassDTO;
-import org.javahispano.javaleague.shared.TacticDTO;
-import org.javahispano.javaleague.shared.UserDTO;
+import org.javahispano.javaleague.shared.domain.TacticUser;
+import org.javahispano.javaleague.shared.domain.User;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -17,17 +14,14 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public interface TacticServiceAsync {
 
-	void getTacticClass(AsyncCallback<ArrayList<TacticClassDTO>> callback);
+	void deleteTactic(Long id, AsyncCallback<String> callback);
 
-	void deleteTactic(String id, AsyncCallback<String> callback);
+	void getTactic(Long id, AsyncCallback<TacticUser> callback);
 
-	void getTactic(String id, AsyncCallback<TacticDTO> callback);
+	void updateTactic(TacticUser userTactic, AsyncCallback<TacticUser> callback);
 
-	void updateTactic(TacticDTO userTacticDTO,
-			AsyncCallback<TacticDTO> callback);
+	void getUserAccount(AsyncCallback<User> callback);
 
-	void getUserAccount(AsyncCallback<UserDTO> callback);
-
-	void getUserTacticSummary(AsyncCallback<TacticDTO> callback);
+	void getTacticUserLogin(AsyncCallback<TacticUser> callback);
 
 }

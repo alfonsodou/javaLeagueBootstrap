@@ -1,6 +1,6 @@
 package org.javahispano.javaleague.client.service;
 
-import org.javahispano.javaleague.shared.UserDTO;
+import org.javahispano.javaleague.shared.domain.User;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -20,9 +20,9 @@ public interface UserAccountService extends RemoteService {
 	 * @return UserAccountDTO
 	 * @see UserDTO
 	 */
-	UserDTO login(String email, String password);
+	User login(String email, String password);
 
-	UserDTO register(UserDTO userDTO, String teamName, String msgFrom, String msgSubject,
-			String msgBody);
+	User register(User user, String teamName, String msgFrom,
+			String msgSubject, String msgBody);
 
 }

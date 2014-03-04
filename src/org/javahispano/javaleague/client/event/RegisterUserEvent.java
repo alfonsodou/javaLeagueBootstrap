@@ -3,7 +3,7 @@
  */
 package org.javahispano.javaleague.client.event;
 
-import org.javahispano.javaleague.shared.UserDTO;
+import org.javahispano.javaleague.shared.domain.User;
 
 import com.google.gwt.event.shared.GwtEvent;
 
@@ -13,10 +13,10 @@ import com.google.gwt.event.shared.GwtEvent;
  */
 public class RegisterUserEvent extends GwtEvent<RegisterUserEventHandler> {
 	public static Type<RegisterUserEventHandler> TYPE = new Type<RegisterUserEventHandler>();
-	private final UserDTO userDTO;
+	private final User user;
 
-	public RegisterUserEvent(UserDTO userDTO) {
-		this.userDTO = userDTO;
+	public RegisterUserEvent(User user) {
+		this.user = user;
 	}
 
 	@Override
@@ -30,8 +30,8 @@ public class RegisterUserEvent extends GwtEvent<RegisterUserEventHandler> {
 
 	}
 	
-	public UserDTO getUserDTO() {
-		return userDTO;
+	public User getUser() {
+		return user;
 	}
 
 }

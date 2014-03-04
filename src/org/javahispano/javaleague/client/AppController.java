@@ -25,7 +25,6 @@ import org.javahispano.javaleague.client.presenter.MyLeaguesPresenter;
 import org.javahispano.javaleague.client.presenter.Presenter;
 import org.javahispano.javaleague.client.presenter.RegisterUserPresenter;
 import org.javahispano.javaleague.client.presenter.ShowLeaguePresenter;
-import org.javahispano.javaleague.client.presenter.TacticEditPresenter;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
 import org.javahispano.javaleague.client.service.LoginServiceAsync;
 import org.javahispano.javaleague.client.service.MatchServiceAsync;
@@ -36,17 +35,15 @@ import org.javahispano.javaleague.client.view.CreateLeagueView;
 import org.javahispano.javaleague.client.view.MyLeaguesView;
 import org.javahispano.javaleague.client.view.RegisterUserView;
 import org.javahispano.javaleague.client.view.ShowLeagueView;
-import org.javahispano.javaleague.client.view.TacticEditView;
-import org.javahispano.javaleague.shared.LeagueDTO;
-import org.javahispano.javaleague.shared.MatchDTO;
-import org.javahispano.javaleague.shared.UserDTO;
+import org.javahispano.javaleague.shared.domain.League;
+import org.javahispano.javaleague.shared.domain.Match;
+import org.javahispano.javaleague.shared.domain.User;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.ui.PopupPanel;
 
 /**
  * 
@@ -63,11 +60,11 @@ public class AppController implements ValueChangeHandler<String> {
 	private final LeagueServiceAsync leagueService;
 	private final UserAccountServiceAsync userAccountService;
 
-	private UserDTO currentUser;
-	private String currentTacticId;
-	private String matchID;
-	private MatchDTO matchDTO;
-	private LeagueDTO leagueDTO;
+	private User currentUser;
+	private Long currentTacticId;
+	private Long matchID;
+	private Match match;
+	private League league;
 
 	public AppController(TacticServiceAsync rpcService,
 			LoginServiceAsync loginService,
@@ -102,7 +99,7 @@ public class AppController implements ValueChangeHandler<String> {
 			public void onShowLeague(ShowLeagueEvent event) {
 				GWT.log("AppController: ShowLeague Event received. Id: "
 						+ event.getLeague().getId());
-				leagueDTO = event.getLeague();
+				league = event.getLeague();
 				doShowLeague();
 			}
 		});
@@ -196,7 +193,7 @@ public class AppController implements ValueChangeHandler<String> {
 		History.newItem("showLeague");
 	}
 
-	private void doShowTactics(String id) {
+	private void doShowTactics(Long id) {
 		currentTacticId = id;
 		History.newItem("showTactics");
 
@@ -210,12 +207,12 @@ public class AppController implements ValueChangeHandler<String> {
 		History.newItem("showHome");
 	}
 
-	private void doShowMatch(String id) {
+	private void doShowMatch(Long id) {
 		matchID = id;
 		History.newItem("showMatch");
 	}
 
-	private void doPlayMatch(String id) {
+	private void doPlayMatch(Long id) {
 		currentTacticId = id;
 		History.newItem("playMatch");
 	}
@@ -250,7 +247,7 @@ public class AppController implements ValueChangeHandler<String> {
 
 				return;
 			} else if (token.equals("showLeague")) {
-				presenter = new ShowLeaguePresenter(leagueService, leagueDTO,
+				presenter = new ShowLeaguePresenter(leagueService, league,
 						currentUser, eventBus, new ShowLeagueView());
 				presenter.go(JavaLeagueApp.get().getCenterPanel());
 
@@ -278,30 +275,7 @@ public class AppController implements ValueChangeHandler<String> {
 				presenter.go(JavaLeagueApp.get().getCenterPanel());
 
 				return;
-			} else if (token.equals("showTactics")) {
-				TacticEditView tacticEditView = new TacticEditView();
-
-				final PopupPanel editTacticPopup = new PopupPanel(true);
-				editTacticPopup.setAnimationEnabled(true);
-				editTacticPopup.setWidget(tacticEditView);
-				editTacticPopup.setGlassEnabled(true);
-				editTacticPopup.setAutoHideEnabled(true);
-				editTacticPopup.center();
-
-				presenter = new TacticEditPresenter(userTacticService,
-						userFileService, eventBus, tacticEditView,
-						currentTacticId);
-
-				presenter.go(editTacticPopup);
-				/*
-				 * presenter = new TacticEditPresenter(userTacticService,
-				 * userFileService, eventBus, new TacticEditView(),
-				 * currentTacticId);
-				 * presenter.go(JavaLeagueApp.get().getMainPanel());
-				 */
-
-				return;
-			} else if (token.equals("createLeague")) {
+			}  else if (token.equals("createLeague")) {
 				presenter = new CreateLeaguePresenter(leagueService, eventBus,
 						new CreateLeagueView());
 				JavaLeagueApp.get().getCenterPanel().clear();
@@ -339,11 +313,11 @@ public class AppController implements ValueChangeHandler<String> {
 		}
 	}
 
-	public UserDTO getCurrentUser() {
+	public User getCurrentUser() {
 		return currentUser;
 	}
 
-	public void setCurrentUser(UserDTO currentUser) {
+	public void setCurrentUser(User currentUser) {
 		this.currentUser = currentUser;
 	}
 

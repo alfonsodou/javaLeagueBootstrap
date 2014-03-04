@@ -12,7 +12,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.javahispano.javaleague.server.domain.User;
+import org.javahispano.javaleague.shared.domain.User;
 import org.javahispano.javaleague.shared.messages.Message;
 
 import com.google.appengine.api.channel.ChannelMessage;

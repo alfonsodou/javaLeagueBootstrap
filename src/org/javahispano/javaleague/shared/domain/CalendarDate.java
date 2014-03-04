@@ -1,8 +1,9 @@
 /**
  * 
  */
-package org.javahispano.javaleague.server.domain;
+package org.javahispano.javaleague.shared.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -15,8 +16,13 @@ import com.googlecode.objectify.annotation.Id;
  *
  */
 @Entity
-public class CalendarDate {
+public class CalendarDate implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * 
 	 */

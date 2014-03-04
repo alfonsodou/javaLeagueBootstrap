@@ -33,7 +33,7 @@ import org.javahispano.javaleague.client.view.LoginView;
 import org.javahispano.javaleague.client.view.RegisterUserView;
 import org.javahispano.javaleague.client.view.ShowHomeView;
 import org.javahispano.javaleague.client.view.TacticView;
-import org.javahispano.javaleague.shared.UserDTO;
+import org.javahispano.javaleague.shared.domain.User;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -53,7 +53,7 @@ public class MenuController implements ValueChangeHandler<String> {
 	private final UserFileServiceAsync userFileService;
 	private final MatchServiceAsync matchService;
 
-	private UserDTO userDTO;
+	private User user;
 
 	public MenuController(UserAccountServiceAsync userAccountService,
 			FrameWorkServiceAsync frameWorkService,
@@ -159,8 +159,8 @@ public class MenuController implements ValueChangeHandler<String> {
 		History.newItem("showLogin");
 	}
 
-	private void doLogin(UserDTO userDTO) {
-		this.userDTO = userDTO;
+	private void doLogin(User user) {
+		this.user = user;
 		History.newItem("loginUser");
 	}
 
@@ -200,7 +200,7 @@ public class MenuController implements ValueChangeHandler<String> {
 				return;
 			} else if (token.equals("loginUser")) {
 
-				JavaLeagueApp.get().goAfterLogin(userDTO);
+				JavaLeagueApp.get().goAfterLogin(user);
 
 				return;
 			} else if (token.equals("showFrameWork")) {

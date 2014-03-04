@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.javahispano.javaleague.server.LoginHelper;
-import org.javahispano.javaleague.shared.SharedConstants;
 
 /**
  * 
@@ -41,7 +40,7 @@ public final class LoginFilter implements Filter {
           // GWT requests
           HttpServletResponse resp = (HttpServletResponse) response;
           resp.setHeader("content-type", request.getContentType());
-          resp.getWriter().print(SharedConstants.LOGGED_OUT);
+          resp.getWriter().print("logged out");
         } else {
           HttpServletResponse resp = (HttpServletResponse) response;
           resp.sendRedirect("/");

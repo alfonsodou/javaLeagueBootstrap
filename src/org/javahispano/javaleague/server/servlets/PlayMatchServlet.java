@@ -14,12 +14,14 @@ import org.javahispano.javaleague.javacup.shared.Agent;
 import org.javahispano.javaleague.javacup.shared.MatchShared;
 import org.javahispano.javaleague.server.AppLib;
 import org.javahispano.javaleague.server.classloader.MyDataStoreClassLoader;
-import org.javahispano.javaleague.server.domain.FrameWork;
-import org.javahispano.javaleague.server.domain.FrameWorkDAO;
-import org.javahispano.javaleague.server.domain.Match;
-import org.javahispano.javaleague.server.domain.MatchDAO;
-import org.javahispano.javaleague.server.domain.TacticUser;
-import org.javahispano.javaleague.server.domain.TacticUserDAO;
+import org.javahispano.javaleague.shared.domain.FrameWork;
+import org.javahispano.javaleague.shared.domain.FrameWorkDAO;
+import org.javahispano.javaleague.shared.domain.Match;
+import org.javahispano.javaleague.shared.domain.MatchDAO;
+import org.javahispano.javaleague.shared.domain.TacticUser;
+import org.javahispano.javaleague.shared.domain.TacticUserDAO;
+
+import com.google.appengine.api.blobstore.BlobKey;
 
 public class PlayMatchServlet extends HttpServlet {
 	private static final Logger log = Logger.getLogger(PlayMatchServlet.class
@@ -31,13 +33,13 @@ public class PlayMatchServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
-		//Partido partido = null;
+		// Partido partido = null;
 
 		Match match = null;
 		Object lo = null;
 		Object vo = null;
 		FrameWork frameWork = null;
-		
+
 		long matchID = Long.parseLong(req.getParameter("matchID").replace("_",
 				""));
 
@@ -52,28 +54,31 @@ public class PlayMatchServlet extends HttpServlet {
 			visitingTactic = tacticUserDAO.findById(Long.parseLong(match
 					.getVisiting().replace("_", "")));
 			frameWork = frameWorkDAO.findByDefaultFrameWork(true);
-			
+
 			myDataStoreClassLoader = new MyDataStoreClassLoader(this.getClass()
 					.getClassLoader());
 
 			// Cargamos el framework
-			myDataStoreClassLoader.addClassJarFramework(frameWork.getFrameWork());
+			myDataStoreClassLoader.addClassJarFramework(new BlobKey(frameWork
+					.getFrameWork()));
 
-	        Class<? extends Agent> cz = Class.forName("org.javahispano.javacup.model.engine.AgentPartido", true, myDataStoreClassLoader).asSubclass(Agent.class);
-	        
-	        Agent a = cz.newInstance();			
-			
+			Class<? extends Agent> cz = Class.forName(
+					"org.javahispano.javacup.model.engine.AgentPartido", true,
+					myDataStoreClassLoader).asSubclass(Agent.class);
+
+			Agent a = cz.newInstance();
+
 			// Cargamos las tácticas
 			lo = loadClass(localTactic, a);
 			vo = loadClass(visitingTactic, a);
-			
-	        MatchShared matchShared = a.execute(lo, vo);
-	        
-	        match.setMatch(matchShared.getMatch());
-	        match.setLocalGoals(matchShared.getGoalsLocal());
-	        match.setVisitingTeamGoals(matchShared.getGoalsVisiting());
-	        match.setLocalPossesion(matchShared.getPosessionLocal());
-			
+
+			MatchShared matchShared = a.execute(lo, vo);
+
+			match.setMatch(matchShared.getMatch());
+			match.setLocalGoals(matchShared.getGoalsLocal());
+			match.setVisitingTeamGoals(matchShared.getGoalsVisiting());
+			match.setLocalPossesion(matchShared.getPosessionLocal());
+
 			// actualizamos estadisticas
 			localTactic.addGoalsFor(match.getLocalGoals());
 			localTactic.addGoalsAgainst(match.getVisitingTeamGoals());
@@ -117,20 +122,20 @@ public class PlayMatchServlet extends HttpServlet {
 		Class<?> result = null;
 		Map<String, byte[]> byteStream;
 
-		byteStream = myDataStoreClassLoader.addClassJar(tactic.getZipClasses());
+		byteStream = myDataStoreClassLoader.addClassJar(new BlobKey(tactic.getZipClasses()));
 
 		Iterator it = byteStream.entrySet().iterator();
 		while (it.hasNext()) {
 
-			try {			
+			try {
 				Map.Entry e = (Map.Entry) it.next();
-				
-				String name = new String((String)e.getKey());
-							
-				myDataStoreClassLoader.addClass(name, (byte[])e.getValue());
-				
+
+				String name = new String((String) e.getKey());
+
+				myDataStoreClassLoader.addClass(name, (byte[]) e.getValue());
+
 			} catch (Exception e) {
-				
+
 				log.warning(e.getMessage());
 			}
 
@@ -139,27 +144,26 @@ public class PlayMatchServlet extends HttpServlet {
 		Iterator it1 = byteStream.entrySet().iterator();
 		while (it1.hasNext()) {
 
-			try {			
+			try {
 				Map.Entry e = (Map.Entry) it1.next();
-				
-				String name = new String((String)e.getKey());		
-							
+
+				String name = new String((String) e.getKey());
+
 				cz = myDataStoreClassLoader.loadClass(name);
-				
+
 				if (a.isTactic(cz)) {
 					result = cz;
 				}
 			} catch (Exception e) {
-				
+
 				log.warning(e.getMessage());
 			}
 
 		}
-		
-		
-		if (result != null) 
+
+		if (result != null)
 			return result.newInstance();
-		
+
 		return null;
 
 	}

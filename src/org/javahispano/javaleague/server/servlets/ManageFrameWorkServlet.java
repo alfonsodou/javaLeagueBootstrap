@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.javahispano.javaleague.server.domain.FrameWork;
-import org.javahispano.javaleague.server.domain.FrameWorkDAO;
+import org.javahispano.javaleague.shared.domain.FrameWork;
+import org.javahispano.javaleague.shared.domain.FrameWorkDAO;
 
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.files.AppEngineFile;
@@ -52,7 +52,7 @@ public class ManageFrameWorkServlet extends HttpServlet {
 		}
 	}
 
-	private static BlobKey SaveFile(String link, String fileName)
+	private static String SaveFile(String link, String fileName)
 			throws Exception {
 		BlobKey result = null;
 		URL url = new URL(link);
@@ -85,12 +85,12 @@ public class ManageFrameWorkServlet extends HttpServlet {
 				os.close();
 				writeChannel.closeFinally();
 
-				return fileService.getBlobKey(file);
+				return fileService.getBlobKey(file).getKeyString();
 			}
 		} finally {
 			connection.disconnect();
 		}
-		return result;
+		return null;
 	}
 
 }

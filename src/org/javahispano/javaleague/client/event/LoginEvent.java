@@ -1,6 +1,6 @@
 package org.javahispano.javaleague.client.event;
 
-import org.javahispano.javaleague.shared.UserDTO;
+import org.javahispano.javaleague.shared.domain.User;
 
 import com.google.gwt.event.shared.GwtEvent;
 
@@ -11,13 +11,13 @@ import com.google.gwt.event.shared.GwtEvent;
  */
 public class LoginEvent extends GwtEvent<LoginEventHandler> {
   public static Type<LoginEventHandler> TYPE = new Type<LoginEventHandler>();
-  private final UserDTO user;
+  private final User user;
 
-  public LoginEvent(UserDTO user) {
+  public LoginEvent(User user) {
     this.user = user;
   }
 
-  public UserDTO getUser() {
+  public User getUser() {
     return user;
   }
 

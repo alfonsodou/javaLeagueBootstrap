@@ -14,8 +14,8 @@ import org.javahispano.javaleague.client.event.ShowMyLeaguesEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
-import org.javahispano.javaleague.shared.LeagueDTO;
-import org.javahispano.javaleague.shared.UserDTO;
+import org.javahispano.javaleague.shared.domain.League;
+import org.javahispano.javaleague.shared.domain.User;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -51,18 +51,18 @@ public class ShowLeaguePresenter implements Presenter {
 	private final Display display;
 	private final LeagueServiceAsync leagueService;
 
-	private LeagueDTO leagueDTO;
-	private UserDTO userDTO;
+	private League league;
+	private User user;
 
 	private JavaLeagueMessages javaLeagueMessages = GWT
 			.create(JavaLeagueMessages.class);
 
 	public ShowLeaguePresenter(LeagueServiceAsync leagueService,
-			LeagueDTO leagueDTO, UserDTO userDTO, SimpleEventBus eventBus,
+			League league, User user, SimpleEventBus eventBus,
 			Display display) {
 		this.leagueService = leagueService;
-		this.leagueDTO = leagueDTO;
-		this.userDTO = userDTO;
+		this.league = league;
+		this.user = user;
 		this.eventBus = eventBus;
 		this.display = display;
 
@@ -71,13 +71,13 @@ public class ShowLeaguePresenter implements Presenter {
 
 	private void ShowLeague() {
 		Date now = new Date();
-		if ((leagueDTO.getEndSignIn().before(now)) || (userDTO.isJoinLeague(leagueDTO.getId()))) {
+		if ((league.getEndSignIn().before(now)) || (user.isJoinLeague(league.getId()))) {
 			display.getJoinLeagueButton().setEnabled(false);
 		} else {
 			display.getJoinLeagueButton().setEnabled(true);
 		} 
-		display.getDescriptionLeague().setHTML(leagueDTO.getDescription());
-		display.getNameLeague().setText(leagueDTO.getName());
+		display.getDescriptionLeague().setHTML(league.getDescription());
+		display.getNameLeague().setText(league.getName());
 	}
 
 	@Override
@@ -126,7 +126,7 @@ public class ShowLeaguePresenter implements Presenter {
 
 			@Override
 			protected void callService(AsyncCallback<Void> cb) {
-				leagueService.joinLeague(leagueDTO.getId(), cb);
+				leagueService.joinLeague(league.getId(), cb);
 			}
 
 		}.retry(3);		
@@ -148,7 +148,7 @@ public class ShowLeaguePresenter implements Presenter {
 
 			@Override
 			protected void callService(AsyncCallback<Void> cb) {
-				leagueService.dropLeague(leagueDTO.getId(), cb);
+				leagueService.dropLeague(league.getId(), cb);
 			}
 
 		}.retry(3);

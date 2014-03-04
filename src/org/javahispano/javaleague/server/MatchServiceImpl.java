@@ -8,11 +8,10 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.javahispano.javaleague.client.service.MatchService;
-import org.javahispano.javaleague.server.domain.Match;
-import org.javahispano.javaleague.server.domain.MatchDAO;
-import org.javahispano.javaleague.server.domain.User;
-import org.javahispano.javaleague.shared.MatchDTO;
-import org.javahispano.javaleague.shared.TacticDTO;
+import org.javahispano.javaleague.shared.domain.Match;
+import org.javahispano.javaleague.shared.domain.MatchDAO;
+import org.javahispano.javaleague.shared.domain.TacticUser;
+import org.javahispano.javaleague.shared.domain.User;
 
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
@@ -25,66 +24,41 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  */
 public class MatchServiceImpl extends RemoteServiceServlet implements
 		MatchService {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private static Logger logger = Logger.getLogger(MatchServiceImpl.class
 			.getName());
-	private static final int NUM_RETRIES = 5;
-
+	
+	private static MatchDAO matchDAO = new MatchDAO();
+	
 	@Override
-	public void dispatchMatch() {
+	public void dispatchMatch(Long tacticId) {
 		Queue queue = QueueFactory.getDefaultQueue();
 		queue.add(TaskOptions.Builder.withUrl("/dispatchMatch").param(
-				"tacticID", getUserTacticSummary().getId()));
-	}
-
-	@Override
-	public void dispatchMatch(String tacticId) {
-		Queue queue = QueueFactory.getDefaultQueue();
-		queue.add(TaskOptions.Builder.withUrl("/dispatchMatch").param(
-				"tacticID", tacticId));
+				"tacticID", Long.toString(tacticId)));
 	}	
 	
 	@Override
-	public List<MatchDTO> getMatchList(TacticDTO tacticDTO) {
+	public List<Match> getMatchList(TacticUser tactic) {
 		List<Match> matchList = null;
-		List<MatchDTO> matchDTOList = new ArrayList<MatchDTO>();
-		MatchDAO matchDAO = new MatchDAO();
 
-		matchList = matchDAO.findByTactic(tacticDTO.getId());
+		matchList = matchDAO.findByTactic(tactic.getId());
 
-		for (Match m : matchList) {
-			matchDTOList.add(m.toDTO());
-		}
 		// Falta ordenar la lista devuelta por fecha
 
-		return matchDTOList;
+		return matchList;
 
 	}
 
-	@Override
-	public List<MatchDTO> getMatchList() {
-		TacticDTO tacticDTO = getUserTacticSummary(); 
-		List<Match> matchList = null;
-		List<MatchDTO> matchDTOList = new ArrayList<MatchDTO>();
-		MatchDAO matchDAO = new MatchDAO();
-
-		matchList = matchDAO.findByTactic(tacticDTO.getId());
-
-		for (Match m : matchList) {
-			matchDTOList.add(m.toDTO());
-		}
-		// Falta ordenar la lista devuelta por fecha
-
-		return matchDTOList;
-
-	}
-	
 
 	@Override
-	public void setMatchState(MatchDTO matchDTO, int state) {
-		MatchDAO matchDAO = new MatchDAO();
+	public void setMatchState(Match match, int state) {
 		try {
-			Match match = matchDAO.findById(matchDTO.getId());
 			match.setState(state);
+			matchDAO.save(match);
 		} catch (Exception e) {
 			logger.warning(e.getMessage());
 		}
@@ -92,8 +66,7 @@ public class MatchServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public MatchDTO getMatchById(Long id) {
-		MatchDAO matchDAO = new MatchDAO();
+	public Match getMatchById(Long id) {
 		Match match = null;
 		try {
 			match = matchDAO.findById(id);
@@ -102,30 +75,8 @@ public class MatchServiceImpl extends RemoteServiceServlet implements
 			return null;
 		}
 
-		return match.toDTO();
+		return match;
 
 	}
-	
-	public TacticDTO getUserTacticSummary() {
-
-		TacticDTO userTacticSummary = new TacticDTO();
-
-		try {
-			User user = LoginHelper.getLoggedInUser(
-					getThreadLocalRequest().getSession());
-			if (user == null)
-				return null;
-
-			//if (user.getTactic() == null)
-				//return null;
-
-			//userTacticSummary = user.getTactic().toDTO();
-		} catch (Exception e) {
-			logger.warning(e.getMessage());
-			return null;
-		}
-
-		return userTacticSummary;
-	}	
 
 }

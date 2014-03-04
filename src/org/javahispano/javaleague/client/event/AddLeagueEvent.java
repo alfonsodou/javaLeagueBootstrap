@@ -3,7 +3,7 @@
  */
 package org.javahispano.javaleague.client.event;
 
-import org.javahispano.javaleague.shared.LeagueDTO;
+import org.javahispano.javaleague.shared.domain.League;
 
 import com.google.gwt.event.shared.GwtEvent;
 
@@ -13,10 +13,10 @@ import com.google.gwt.event.shared.GwtEvent;
  */
 public class AddLeagueEvent extends GwtEvent<AddLeagueEventHandler> {
 	public static Type<AddLeagueEventHandler> TYPE = new Type<AddLeagueEventHandler>();
-	private final LeagueDTO leagueDTO;
+	private final League league;
 	
-	public AddLeagueEvent(LeagueDTO leagueDTO) {
-		this.leagueDTO = leagueDTO;
+	public AddLeagueEvent(League league) {
+		this.league = league;
 	}
 	
 	@Override
@@ -29,8 +29,8 @@ public class AddLeagueEvent extends GwtEvent<AddLeagueEventHandler> {
 		handler.onAddLeagueEvent(this);
 	}
 
-	public LeagueDTO getLeagueDTO() {
-		return leagueDTO;
+	public League getLeague() {
+		return league;
 	}
 
 

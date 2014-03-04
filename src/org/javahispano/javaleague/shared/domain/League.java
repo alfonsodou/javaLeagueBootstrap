@@ -1,56 +1,79 @@
-/**
- * 
- */
-package org.javahispano.javaleague.shared;
+package org.javahispano.javaleague.shared.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import java.util.logging.Logger;
+
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
 /**
+ * 
  * @author adou
  *
  */
-public class LeagueDTO implements Serializable {
-	private Long id;
-	private Long managerId;
-	private String nameManager;
-	private String name;
-	private String description;
-	private Date startSignIn;
-	private Date endSignIn;
-	private Date creation;
-	private Date updated;
-	private String password;
-	private Integer type;
-	
-	public static Integer PUBLIC = 1, PRIVATE = 2;
-	
-	public LeagueDTO() {
-		
-	}
-	
-	public LeagueDTO(Long id, String name, Long managerId, Date creation, Date updated) {
-		this.id = id;
-		this.name = name;
-		this.managerId = managerId;
-		this.creation = creation;
-		this.updated = updated;
-	}
+@Entity
+public class League implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @return the id
+	 * 
 	 */
+	private static final Logger log = Logger.getLogger(League.class.getName());
+	
+	public static Integer PUBLIC = 1, PRIVATE = 2;
+	  
+	@Id
+	private Long id;
+	
+	private Long managerId;
+	
+	private String name;
+	
+	private String description;
+	
+	private List<Long> users;
+	
+	private List<Long> matchs;
+	
+	private Date creation;
+	
+	private Date updated;
+	
+	private Date startSignIn;
+	
+	private Date endSignIn;
+	
+	private String password;
+	
+	private Integer type;
+	
+	public League() {
+		super();
+		this.creation = new Date();
+		this.updated = new Date();		
+	}
+		
 	public Long getId() {
 		return id;
 	}
 
-	/**
-	 * @param id the id to set
-	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 	/**
 	 * @return the managerId
 	 */
@@ -63,6 +86,20 @@ public class LeagueDTO implements Serializable {
 	 */
 	public void setManagerId(Long managerId) {
 		this.managerId = managerId;
+	}
+
+	/**
+	 * @return the users
+	 */
+	public List<Long> getUsers() {
+		return users;
+	}
+
+	/**
+	 * @param users the users to set
+	 */
+	public void setUsers(List<Long> users) {
+		this.users = users;
 	}
 
 	/**
@@ -108,19 +145,34 @@ public class LeagueDTO implements Serializable {
 	}
 
 	/**
-	 * @return the description
+	 * @return the matchs
 	 */
-	public String getDescription() {
-		return description;
+	public List<Long> getMatchs() {
+		return matchs;
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param matchs the matchs to set
 	 */
-	public void setDescription(String description) {
-		this.description = description;
+	public void setMatchs(List<Long> matchs) {
+		this.matchs = matchs;
+	}
+	
+	
+	/**
+	 * @return the type
+	 */
+	public Integer getType() {
+		return type;
 	}
 
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(Integer type) {
+		this.type = type;
+	}
+	
 	/**
 	 * @return the startSignIn
 	 */
@@ -163,34 +215,8 @@ public class LeagueDTO implements Serializable {
 		this.password = password;
 	}
 
-	/**
-	 * @return the type
-	 */
-	public Integer getType() {
-		return type;
+	public boolean isPublic() {
+		return (this.type == PUBLIC);
 	}
-
-	/**
-	 * @param type the type to set
-	 */
-	public void setType(Integer type) {
-		this.type = type;
-	}
-
-	/**
-	 * @return the nameManager
-	 */
-	public String getNameManager() {
-		return nameManager;
-	}
-
-	/**
-	 * @param nameManager the nameManager to set
-	 */
-	public void setNameManager(String nameManager) {
-		this.nameManager = nameManager;
-	}
-
-	
 	
 }

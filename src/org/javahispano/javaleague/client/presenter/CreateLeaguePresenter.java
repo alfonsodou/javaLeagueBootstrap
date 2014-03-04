@@ -12,7 +12,7 @@ import org.gwtbootstrap3.extras.summernote.client.ui.Summernote;
 import org.javahispano.javaleague.client.event.AddLeagueEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
-import org.javahispano.javaleague.shared.LeagueDTO;
+import org.javahispano.javaleague.shared.domain.League;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -64,7 +64,7 @@ public class CreateLeaguePresenter implements Presenter {
 
 	}
 
-	private LeagueDTO leagueDTO;
+	private League league;
 
 	private final LeagueServiceAsync leagueService;
 	private final SimpleEventBus eventBus;
@@ -148,22 +148,22 @@ public class CreateLeaguePresenter implements Presenter {
 		}
 
 		if (!error) {
-			leagueDTO = new LeagueDTO();
-			leagueDTO.setName(display.getLeagueName().getValue().trim());
-			leagueDTO.setDescription(display.getLeagueDescription().getCode());
-			leagueDTO.setStartSignIn(display.getStartSignIn().getValue());
-			leagueDTO.setEndSignIn(display.getEndSignIn().getValue());
-			leagueDTO.setPassword(display.getPasswordLeague().getValue());
+			league = new League();
+			league.setName(display.getLeagueName().getValue().trim());
+			league.setDescription(display.getLeagueDescription().getCode());
+			league.setStartSignIn(display.getStartSignIn().getValue());
+			league.setEndSignIn(display.getEndSignIn().getValue());
+			league.setPassword(display.getPasswordLeague().getValue());
 			if (display.getLeaguePrivate().getValue()) {
-				leagueDTO.setType(LeagueDTO.PRIVATE);
+				league.setType(League.PRIVATE);
 			} else {
-				leagueDTO.setType(LeagueDTO.PUBLIC);
+				league.setType(League.PUBLIC);
 			}
 
-			new RPCCall<LeagueDTO>() {
+			new RPCCall<League>() {
 				@Override
-				protected void callService(AsyncCallback<LeagueDTO> cb) {
-					leagueService.createLeague(leagueDTO, cb);
+				protected void callService(AsyncCallback<League> cb) {
+					leagueService.createLeague(league, cb);
 				}
 
 				@Override
@@ -172,11 +172,11 @@ public class CreateLeaguePresenter implements Presenter {
 				}
 
 				@Override
-				public void onSuccess(LeagueDTO result) {
-					leagueDTO = result;
+				public void onSuccess(League result) {
+					league = result;
 					GWT.log("LeaguePresenter: Firing AddLeagueEvent: "
-							+ leagueDTO.getId());
-					eventBus.fireEvent(new AddLeagueEvent(leagueDTO));
+							+ league.getId());
+					eventBus.fireEvent(new AddLeagueEvent(league));
 				}
 			}.retry(3);
 		}

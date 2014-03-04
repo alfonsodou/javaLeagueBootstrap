@@ -1,9 +1,9 @@
 /**
  * 
  */
-package org.javahispano.javaleague.server.domain;
+package org.javahispano.javaleague.shared.domain;
 
-import static org.javahispano.javaleague.server.domain.OfyService.ofy;
+import static org.javahispano.javaleague.shared.domain.OfyService.ofy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class MatchDAO {
 		return ofy().load().type(Match.class).id(id).now();
 	}
 
-	public List<Match> findByTactic(String id) {
+	public List<Match> findByTactic(Long id) {
 		List<Match> list = new ArrayList<Match>();
 
 		getMatchs(id, list, "localTeam");
@@ -35,7 +35,7 @@ public class MatchDAO {
 		return list;
 	}
 
-	private void getMatchs(String id, List<Match> partidos, String field) {
+	private void getMatchs(Long id, List<Match> partidos, String field) {
 		List<Match> m = ofy().load().type(Match.class).filter(field, id).list();
 
 		for (Match fetched : m) {

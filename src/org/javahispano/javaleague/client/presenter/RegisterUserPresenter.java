@@ -13,7 +13,7 @@ import org.javahispano.javaleague.client.event.ShowHomeEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.UserAccountServiceAsync;
-import org.javahispano.javaleague.shared.UserDTO;
+import org.javahispano.javaleague.shared.domain.User;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -66,7 +66,7 @@ public class RegisterUserPresenter implements Presenter {
 	}
 
 	private final Display display;
-	private final UserDTO userDTO;
+	private final User user;
 	private final SimpleEventBus eventBus;
 	private final UserAccountServiceAsync userAccountService;
 
@@ -78,7 +78,7 @@ public class RegisterUserPresenter implements Presenter {
 		this.display = display;
 		this.eventBus = eventBus;
 		this.userAccountService = userAccountService;
-		userDTO = new UserDTO();
+		user = new User();
 		this.display.getTextSendEmail().setVisible(false);
 
 		hideErrorLabel();
@@ -145,21 +145,21 @@ public class RegisterUserPresenter implements Presenter {
 		}
 
 		if (!error) {
-			userDTO.setEmailAddress(this.display.getEmail().getValue());
-			userDTO.setName(this.display.getUserName().getValue());
-			userDTO.setPassword(this.display.getPassword().getFormValue());
+			user.setEmailAddress(this.display.getEmail().getValue());
+			user.setName(this.display.getUserName().getValue());
+			user.setPassword(this.display.getPassword().getFormValue());
 			this.display.getFormRegisterUser().setVisible(false);
-			new RPCCall<UserDTO>() {
+			new RPCCall<User>() {
 				@Override
-				protected void callService(AsyncCallback<UserDTO> cb) {
-					userAccountService.register(userDTO, display.getTeamName().getText(),
+				protected void callService(AsyncCallback<User> cb) {
+					userAccountService.register(user, display.getTeamName().getText(),
 							javaLeagueMessages.adminJavaLeague(),
 							javaLeagueMessages.subjectEmailRegisterUser(),
 							javaLeagueMessages.bodyEmailRegisterUser(), cb);
 				}
 
 				@Override
-				public void onSuccess(UserDTO result) {
+				public void onSuccess(User result) {
 					if (result != null) {
 						GWT.log("RegisterUserPresenter: Firing RegisterUserEvent");
 						eventBus.fireEvent(new RegisterUserEvent(result));					

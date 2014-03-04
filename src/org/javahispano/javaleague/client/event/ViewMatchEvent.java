@@ -12,13 +12,13 @@ import com.google.gwt.event.shared.GwtEvent;
 public class ViewMatchEvent extends GwtEvent<ViewMatchEventHandler> {
 	public static Type<ViewMatchEventHandler> TYPE = new Type<ViewMatchEventHandler>();
 
-	private final String id;
+	private final Long id;
 
-	public ViewMatchEvent(String id) {
+	public ViewMatchEvent(Long id) {
 		this.id = id;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 

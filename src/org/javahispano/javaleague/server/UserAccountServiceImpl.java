@@ -18,12 +18,11 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.javahispano.javaleague.client.service.UserAccountService;
-import org.javahispano.javaleague.server.domain.TacticUser;
-import org.javahispano.javaleague.server.domain.TacticUserDAO;
-import org.javahispano.javaleague.server.domain.User;
-import org.javahispano.javaleague.server.domain.UserDAO;
 import org.javahispano.javaleague.server.utils.SessionIdentifierGenerator;
-import org.javahispano.javaleague.shared.UserDTO;
+import org.javahispano.javaleague.shared.domain.TacticUser;
+import org.javahispano.javaleague.shared.domain.TacticUserDAO;
+import org.javahispano.javaleague.shared.domain.User;
+import org.javahispano.javaleague.shared.domain.UserDAO;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -38,20 +37,21 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static Logger logger = Logger.getLogger(UserAccountServiceImpl.class
-			.getName());
-	
+	private static Logger logger = Logger
+			.getLogger(UserAccountServiceImpl.class.getName());
+
 	private static UserDAO userDAO = new UserDAO();
 	private static TacticUserDAO tacticUserDAO = new TacticUserDAO();
 
 	@Override
-	public UserDTO login(String email, String password) {
+	public User login(String email, String password) {
 		User user = userDAO.findByEmail(email);
 
 		if (user == null) {
-			logger.warning("User == null");
+			logger.warning("User == null :: email = " + email
+					+ " :: password = " + password);
 		}
-		
+
 		if ((user != null) && (user.getPassword().equals(password))) {
 			HttpSession session = getThreadLocalRequest().getSession();
 			// update session if successful
@@ -63,23 +63,19 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 
 			userDAO.save(user);
 
-			UserDTO userDTO = User.toDTO(user);
-
-			return userDTO;
+			return user;
 		}
 
 		return null;
 	}
 
 	@Override
-	public UserDTO register(UserDTO userDTO, String teamName, String msgFrom,
+	public User register(User user, String teamName, String msgFrom,
 			String msgSubject, String msgBody) {
-		User user = userDAO.findByEmail(userDTO.getEmailAddress());
-
 		// Ya está registrada esa dirección de correo
 		// Falta comprobar que se intente registrar una dirección de correo
 		// que aún no ha sido autenticada
-		if (user != null) {
+		if (userDAO.findByEmail(user.getEmailAddress()) != null) {
 			return null;
 		}
 
@@ -87,15 +83,11 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 		TacticUser tacticUser = new TacticUser();
 		tacticUser.setTeamName(teamName);
 		tacticUser = tacticUserDAO.save(tacticUser);
-		
-		user = new User();
+
 		user.setDateTokenActivate(new Date());
 		user.setTokenActivate(userTokenGenerator.nextSessionId());
-		user.setEmailAddress(userDTO.getEmailAddress());
-		user.setName(userDTO.getName());
 		// Falta guardar la contraseña encriptada
-		user.setPassword(userDTO.getPassword());
-		user.setTactic(tacticUser.getId());
+		user.setTacticId(tacticUser.getId());
 
 		Properties props = new Properties();
 		Session session = Session.getDefaultInstance(props, null);
@@ -123,10 +115,8 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 			return null;
 		}
 
-		userDAO.save(user);
+		user = userDAO.save(user);
 
-		userDTO.setId(user.getId());
-
-		return userDTO;
+		return user;
 	}
 }

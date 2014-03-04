@@ -14,10 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.javahispano.javaleague.server.domain.Match;
-import org.javahispano.javaleague.server.domain.MatchDAO;
-import org.javahispano.javaleague.server.domain.TacticUser;
-import org.javahispano.javaleague.server.domain.TacticUserDAO;
+import org.javahispano.javaleague.shared.domain.Match;
+import org.javahispano.javaleague.shared.domain.MatchDAO;
+import org.javahispano.javaleague.shared.domain.TacticUser;
+import org.javahispano.javaleague.shared.domain.TacticUserDAO;
 
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;

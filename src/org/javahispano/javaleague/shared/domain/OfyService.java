@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.javahispano.javaleague.server.domain;
+package org.javahispano.javaleague.shared.domain;
 
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;

@@ -4,7 +4,7 @@ import org.javahispano.javaleague.client.event.LoginEvent;
 import org.javahispano.javaleague.client.event.LoginEventHandler;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.service.LoginServiceAsync;
-import org.javahispano.javaleague.shared.UserDTO;
+import org.javahispano.javaleague.shared.domain.User;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -34,7 +34,7 @@ public class UserBadgePresenter implements Presenter {
 	private final SimpleEventBus eventBus;
 	private final Display display;
 
-	private UserDTO currentUser;
+	private User currentUser;
 
 	public UserBadgePresenter(LoginServiceAsync rpcService,
 			SimpleEventBus eventBus, Display display) {

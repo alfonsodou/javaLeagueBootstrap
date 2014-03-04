@@ -3,11 +3,8 @@
  */
 package org.javahispano.javaleague.client.service;
 
-import java.util.ArrayList;
-
-import org.javahispano.javaleague.shared.TacticClassDTO;
-import org.javahispano.javaleague.shared.TacticDTO;
-import org.javahispano.javaleague.shared.UserDTO;
+import org.javahispano.javaleague.shared.domain.TacticUser;
+import org.javahispano.javaleague.shared.domain.User;
 import org.javahispano.javaleague.shared.exception.NotLoggedInException;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -19,17 +16,16 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  */
 @RemoteServiceRelativePath("tacticService")
 public interface TacticService extends RemoteService {
-	ArrayList<TacticClassDTO> getTacticClass();
 
-	String deleteTactic(String id) throws NotLoggedInException;
+	String deleteTactic(Long id) throws NotLoggedInException;
 	
-	TacticDTO getTactic(String id);
+	TacticUser getTactic(Long id);
 	
-	TacticDTO updateTactic(TacticDTO userTacticDTO);
+	TacticUser updateTactic(TacticUser userTactic);
 
-	TacticDTO getUserTacticSummary();
+	User getUserAccount();
 
-	UserDTO getUserAccount();
+	TacticUser getTacticUserLogin();
 	
 	
 }

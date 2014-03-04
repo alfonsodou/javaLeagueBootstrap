@@ -8,11 +8,10 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.javahispano.javaleague.client.service.LeagueService;
-import org.javahispano.javaleague.server.domain.League;
-import org.javahispano.javaleague.server.domain.LeagueDAO;
-import org.javahispano.javaleague.server.domain.User;
-import org.javahispano.javaleague.server.domain.UserDAO;
-import org.javahispano.javaleague.shared.LeagueDTO;
+import org.javahispano.javaleague.shared.domain.League;
+import org.javahispano.javaleague.shared.domain.LeagueDAO;
+import org.javahispano.javaleague.shared.domain.User;
+import org.javahispano.javaleague.shared.domain.UserDAO;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -22,6 +21,11 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  */
 public class LeagueServiceImpl extends RemoteServiceServlet implements
 		LeagueService {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private static Logger logger = Logger.getLogger(TacticServiceImpl.class
 			.getName());
@@ -34,9 +38,7 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public LeagueDTO createLeague(LeagueDTO leagueDTO) {
-		League league = new League(leagueDTO);
-
+	public League createLeague(League league) {
 		try {
 			User user = LoginHelper.getLoggedInUser(getThreadLocalRequest()
 					.getSession());
@@ -49,47 +51,39 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 			logger.warning(e.getMessage());
 		}
 
-		return league.toDTO();
+		return league;
 	}
 
 	@Override
-	public List<LeagueDTO> getMyLeagues() {
-		List<LeagueDTO> leaguesDTO = new ArrayList<LeagueDTO>();
-		List<League> leagues;
-		LeagueDTO leagueDTO;
+	public List<League> getMyLeagues() {
+		List<League> leagues = null;
 
 		try {
 			User user = LoginHelper.getLoggedInUser(getThreadLocalRequest()
 					.getSession());
 			leagues = leagueDAO.findByUser(user.getId());
 
-			for (League l : leagues) {
-				leagueDTO = l.toDTO();
-				user = userDAO.findById(l.getManagerId());
-				leagueDTO.setNameManager(user.getName());
-				leaguesDTO.add(leagueDTO);
-			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.warning(e.getMessage());
 		}
 
-		return leaguesDTO;
+		return leagues;
 	}
 
 	@Override
-	public LeagueDTO getLeague(Long id) {
-		LeagueDTO leagueDTO = null;
+	public League getLeague(Long id) {
+		League league = null;
 
 		try {
-			leagueDTO = leagueDAO.findById(id).toDTO();
+			league = leagueDAO.findById(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.warning(e.getMessage());
 		}
 
-		return leagueDTO;
+		return league;
 	}
 
 	@Override

@@ -5,7 +5,7 @@ package org.javahispano.javaleague.client.service;
 
 import java.util.List;
 
-import org.javahispano.javaleague.shared.LeagueDTO;
+import org.javahispano.javaleague.shared.domain.League;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -14,11 +14,11 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  *
  */
 public interface LeagueServiceAsync {
-	void createLeague(LeagueDTO league, AsyncCallback<LeagueDTO> cb);
+	void createLeague(League league, AsyncCallback<League> cb);
 	
-	void getMyLeagues(AsyncCallback<List<LeagueDTO>> cb);
+	void getMyLeagues(AsyncCallback<List<League>> cb);
 
-	void getLeague(Long id, AsyncCallback<LeagueDTO> callback);
+	void getLeague(Long id, AsyncCallback<League> callback);
 
 	void dropLeague(Long id, AsyncCallback<Void> cb);
 

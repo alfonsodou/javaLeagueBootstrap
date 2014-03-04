@@ -1,6 +1,6 @@
 package org.javahispano.javaleague.client.service;
 
-import org.javahispano.javaleague.shared.UserDTO;
+import org.javahispano.javaleague.shared.domain.User;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -11,7 +11,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public interface LoginServiceAsync {
 
-  void getLoggedInUserDTO(AsyncCallback<UserDTO> callback);
+  void getLoggedInUser(AsyncCallback<User> callback);
 
   void logout(AsyncCallback<Void> callback);
 

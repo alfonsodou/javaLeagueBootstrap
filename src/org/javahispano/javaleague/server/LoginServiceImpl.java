@@ -3,10 +3,9 @@ package org.javahispano.javaleague.server;
 import javax.servlet.http.HttpSession;
 
 import org.javahispano.javaleague.client.service.LoginService;
-import org.javahispano.javaleague.server.domain.FrameWork;
-import org.javahispano.javaleague.server.domain.FrameWorkDAO;
-import org.javahispano.javaleague.server.domain.User;
-import org.javahispano.javaleague.shared.UserDTO;
+import org.javahispano.javaleague.shared.domain.FrameWork;
+import org.javahispano.javaleague.shared.domain.FrameWorkDAO;
+import org.javahispano.javaleague.shared.domain.User;
 import org.javahispano.javaleague.shared.exception.NotLoggedInException;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -17,22 +16,14 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 	public final static String CHANNEL_ID = "channel_id";
 
 	@Override
-	public UserDTO getLoggedInUserDTO() {
-		UserDTO userDTO;
+	public User getLoggedInUser() {
 		HttpSession session = getThreadLocalRequest().getSession();
 
 		User u = LoginHelper.getLoggedInUser(session);
 		if (u == null)
 			return null;
-		userDTO = User.toDTO(u);
-
-		FrameWorkDAO frameworkDAO = new FrameWorkDAO();
-		FrameWork framework = new FrameWork();
-
-		framework.addSampleFrameWork();
-		frameworkDAO.save(framework);
-
-		return userDTO;
+		
+		return u;
 	}
 
 	@Override

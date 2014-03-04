@@ -1,16 +1,21 @@
-package org.javahispano.javaleague.server.domain;
+package org.javahispano.javaleague.shared.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.logging.Logger;
 
 import org.javahispano.javaleague.server.AppLib;
-import org.javahispano.javaleague.shared.MatchDTO;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
 @Entity
-public class Match {
+public class Match implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private static final Logger log = Logger.getLogger(Match.class.getName());	
 
@@ -122,25 +127,6 @@ public class Match {
 
 	public void setVisualization(Date visualization) {
 		this.visualization = visualization;
-	}
-
-	public MatchDTO toDTO() {
-		MatchDTO matchDTO = new MatchDTO();
-		
-		matchDTO.setId(this.getId());
-		matchDTO.setLocal(this.getLocal());
-		matchDTO.setForeign(this.getVisiting());
-		matchDTO.setNameLocal(this.getNameLocal());
-		matchDTO.setNameForeign(this.getNameForeign());
-		matchDTO.setLocalGoals(this.getLocalGoals());
-		matchDTO.setForeignGoals(this.getVisitingTeamGoals());
-		matchDTO.setLocalPosession(this.getLocalPossesion());
-		matchDTO.setForeignPosession(this.getVisitingTeamGoals());
-		matchDTO.setExecution(this.getExecution().toString());
-		matchDTO.setVisualization(this.getVisualization().toString());
-		matchDTO.setState(this.getState());
-		
-		return matchDTO;
 	}
 
 	public String getNameLocal() {

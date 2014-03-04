@@ -11,14 +11,13 @@ import com.google.gwt.event.shared.GwtEvent;
  */
 public class PlayMatchEvent extends GwtEvent<PlayMatchEventHandler> {
 	public static Type<PlayMatchEventHandler> TYPE = new Type<PlayMatchEventHandler>();
-	// private final TacticDTO userTactic;
-	private final String id;
+	private final Long id;
 
-	public PlayMatchEvent(String id) {
+	public PlayMatchEvent(Long id) {
 		this.id = id;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 

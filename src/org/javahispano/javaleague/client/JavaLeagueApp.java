@@ -31,7 +31,7 @@ import org.javahispano.javaleague.client.view.MenuPrivateView;
 import org.javahispano.javaleague.client.view.MenuView;
 import org.javahispano.javaleague.client.view.ShowHomeView;
 import org.javahispano.javaleague.client.view.TacticView;
-import org.javahispano.javaleague.shared.UserDTO;
+import org.javahispano.javaleague.shared.domain.User;
 import org.javahispano.javaleague.shared.messages.ChannelTextMessage;
 import org.javahispano.javaleague.shared.messages.Message;
 
@@ -62,7 +62,7 @@ public class JavaLeagueApp implements EntryPoint {
 	private static JavaLeagueAppUiBinder ourUiBinder = GWT
 			.create(JavaLeagueAppUiBinder.class);
 
-	private UserDTO currentUser;
+	private User currentUser;
 
 	RootLayoutPanel root;
 	private static JavaLeagueApp singleton;
@@ -149,20 +149,20 @@ public class JavaLeagueApp implements EntryPoint {
 	}
 
 	public void getLoggedInUser() {
-		new RPCCall<UserDTO>() {
+		new RPCCall<User>() {
 			@Override
-			protected void callService(AsyncCallback<UserDTO> cb) {
-				loginService.getLoggedInUserDTO(cb);
+			protected void callService(AsyncCallback<User> cb) {
+				loginService.getLoggedInUser(cb);
 			}
 
 			@Override
-			public void onSuccess(UserDTO loggedInUserDTO) {
-				if (loggedInUserDTO == null) {
+			public void onSuccess(User loggedInUser) {
+				if (loggedInUser == null) {
 					showMainView();
 				} else {
 					// user is logged in
-					setCurrentUser(loggedInUserDTO);
-					goAfterLogin(loggedInUserDTO);
+					setCurrentUser(loggedInUser);
+					goAfterLogin(loggedInUser);
 					eventBus.fireEvent(new LoginEvent(currentUser));
 				}
 			}
@@ -196,15 +196,15 @@ public class JavaLeagueApp implements EntryPoint {
 
 	}
 
-	public UserDTO getCurrentUser() {
+	public User getCurrentUser() {
 		return currentUser;
 	}
 
-	public void setCurrentUser(UserDTO currentUser) {
+	public void setCurrentUser(User currentUser) {
 		this.currentUser = currentUser;
 	}
 
-	public void goAfterLogin(UserDTO user) {
+	public void goAfterLogin(User user) {
 
 		setCurrentUser(user);
 

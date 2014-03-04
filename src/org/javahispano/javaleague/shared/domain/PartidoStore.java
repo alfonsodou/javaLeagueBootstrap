@@ -1,5 +1,6 @@
-package org.javahispano.javaleague.server.domain;
+package org.javahispano.javaleague.shared.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.google.appengine.api.users.User;
@@ -7,8 +8,12 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
 @Entity
-public class PartidoStore {
+public class PartidoStore implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	private Long id;
 	private User owner;

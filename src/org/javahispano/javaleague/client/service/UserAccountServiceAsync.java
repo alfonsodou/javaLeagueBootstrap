@@ -1,6 +1,6 @@
 package org.javahispano.javaleague.client.service;
 
-import org.javahispano.javaleague.shared.UserDTO;
+import org.javahispano.javaleague.shared.domain.User;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -20,9 +20,9 @@ public interface UserAccountServiceAsync {
 	 *            AsynCallback<UserAccountDTO>
 	 * @see UserDTO
 	 */
-	void login(String email, String password, AsyncCallback<UserDTO> callback);
+	void login(String email, String password, AsyncCallback<User> callback);
 
-	void register(UserDTO userDTO, String teamName, String msgFrom, String msgSubject,
-			String msgBody, AsyncCallback<UserDTO> callback);
+	void register(User user, String teamName, String msgFrom, String msgSubject,
+			String msgBody, AsyncCallback<User> callback);
 
 }

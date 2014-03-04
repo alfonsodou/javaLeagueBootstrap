@@ -8,7 +8,7 @@ import org.javahispano.javaleague.client.event.ShowRegisterUserEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.UserAccountServiceAsync;
-import org.javahispano.javaleague.shared.UserDTO;
+import org.javahispano.javaleague.shared.domain.User;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -71,12 +71,13 @@ public class LoginPresenter implements Presenter {
 			}
 		});
 
-		this.display.getRegisterUserButton().addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				GWT.log("Click on RegisterUser Button!");
-				doShowRegisterUser();
-			}
-		});
+		this.display.getRegisterUserButton().addClickHandler(
+				new ClickHandler() {
+					public void onClick(ClickEvent event) {
+						GWT.log("Click on RegisterUser Button!");
+						doShowRegisterUser();
+					}
+				});
 
 		display.getEmailTextBox().setFocus(true);
 
@@ -98,15 +99,15 @@ public class LoginPresenter implements Presenter {
 	}
 
 	private void doLogin() {
-		new RPCCall<UserDTO>() {
+		new RPCCall<User>() {
 			@Override
-			protected void callService(AsyncCallback<UserDTO> cb) {
+			protected void callService(AsyncCallback<User> cb) {
 				userAccountService.login(display.getEmailTextBox().getValue(),
 						display.getPasswordTextBox().getFormValue(), cb);
 			}
 
 			@Override
-			public void onSuccess(UserDTO result) {
+			public void onSuccess(User result) {
 				if (result != null) {
 					GWT.log("LoginPresenter: Firing LoginEvent");
 					eventBus.fireEvent(new LoginEvent(result));

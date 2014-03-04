@@ -10,5 +10,6 @@ import com.google.gwt.i18n.client.Constants;
  *
  */
 public interface JavaLeagueConstants extends Constants {
+	public static String LOGGED_OUT = "logged out";
 
 }

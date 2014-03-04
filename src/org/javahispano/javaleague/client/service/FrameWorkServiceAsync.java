@@ -5,7 +5,7 @@ package org.javahispano.javaleague.client.service;
 
 import java.util.List;
 
-import org.javahispano.javaleague.shared.FrameWorkDTO;
+import org.javahispano.javaleague.shared.domain.FrameWork;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -15,6 +15,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public interface FrameWorkServiceAsync {
 
-	void getFrameWorks(AsyncCallback<List<FrameWorkDTO>> callback);
+	void getFrameWorks(AsyncCallback<List<FrameWork>> callback);
 
 }

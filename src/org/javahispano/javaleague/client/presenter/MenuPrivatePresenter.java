@@ -7,7 +7,7 @@ import org.javahispano.javaleague.client.event.ShowMyLeaguesEvent;
 import org.javahispano.javaleague.client.event.ShowMyTacticEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.service.LoginServiceAsync;
-import org.javahispano.javaleague.shared.UserDTO;
+import org.javahispano.javaleague.shared.domain.User;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -46,10 +46,10 @@ public class MenuPrivatePresenter implements Presenter {
 	private final SimpleEventBus eventBus;
 	private final Display display;
 
-	private UserDTO currentUser;
+	private User currentUser;
 
 	public MenuPrivatePresenter(LoginServiceAsync loginService,
-			SimpleEventBus eventBus, UserDTO currentUser, Display display) {
+			SimpleEventBus eventBus, User currentUser, Display display) {
 		this.display = display;
 		this.loginService = loginService;
 		this.eventBus = eventBus;

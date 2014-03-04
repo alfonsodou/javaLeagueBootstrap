@@ -6,10 +6,10 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.javahispano.javaleague.server.domain.User;
-import org.javahispano.javaleague.server.domain.UserDAO;
 import org.javahispano.javaleague.server.utils.ServletHelper;
 import org.javahispano.javaleague.server.utils.ServletUtils;
+import org.javahispano.javaleague.shared.domain.User;
+import org.javahispano.javaleague.shared.domain.UserDAO;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 

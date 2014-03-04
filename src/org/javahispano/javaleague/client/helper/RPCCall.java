@@ -4,7 +4,7 @@ import org.javahispano.javaleague.client.JavaLeagueApp;
 import org.javahispano.javaleague.client.event.LogoutEvent;
 import org.javahispano.javaleague.client.event.RPCInEvent;
 import org.javahispano.javaleague.client.event.RPCOutEvent;
-import org.javahispano.javaleague.shared.SharedConstants;
+import org.javahispano.javaleague.client.resources.messages.JavaLeagueConstants;
 import org.javahispano.javaleague.shared.exception.NotLoggedInException;
 
 import com.google.gwt.core.client.GWT;
@@ -35,7 +35,7 @@ public abstract class RPCCall<T> implements AsyncCallback<T> {
         try {
           throw caught;
         } catch (InvocationException invocationException) {
-          if(caught.getMessage().equals(SharedConstants.LOGGED_OUT)){
+          if(caught.getMessage().equals(JavaLeagueConstants.LOGGED_OUT)){
                 JavaLeagueApp.get().getEventBus().fireEvent(new LogoutEvent());
                 return;
           }

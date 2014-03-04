@@ -1,18 +1,22 @@
-package org.javahispano.javaleague.server.domain;
+package org.javahispano.javaleague.shared.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
-
-import org.javahispano.javaleague.shared.UserDTO;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 
 @Entity
-public class User {
+public class User implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private static final Logger log = Logger.getLogger(User.class.getName());
 
 	@Id
@@ -96,7 +100,7 @@ public class User {
 	/**
 	 * @return the tactic
 	 */
-	public Long getTactic() {
+	public Long getTacticId() {
 		return tacticId;
 	}
 
@@ -104,7 +108,7 @@ public class User {
 	 * @param tactic
 	 *            the tactic to set
 	 */
-	public void setTactic(Long tacticId) {
+	public void setTacticId(Long tacticId) {
 		this.tacticId = tacticId;
 	}
 
@@ -223,15 +227,11 @@ public class User {
 		this.leagues = leagues;
 	}
 
-	public static UserDTO toDTO(User user) {
-		if (user == null) {
-			log.warning("User.toDTO() :: user == null");
-			return null;
-		}
-
-		return new UserDTO(user.getId(), user.getEmailAddress(),
-				user.getName(), user.getTactic(), user.getLeagues());
+	public boolean isJoinLeague(Long id2) {
+		// TODO Auto-generated method stub
+		return false;
 	}
+
 
 
 }

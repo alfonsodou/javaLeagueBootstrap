@@ -8,7 +8,7 @@ import java.util.List;
 import org.gwtbootstrap3.client.ui.CellTable;
 import org.javahispano.javaleague.client.presenter.FrameWorkPresenter;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
-import org.javahispano.javaleague.shared.FrameWorkDTO;
+import org.javahispano.javaleague.shared.domain.FrameWork;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -34,8 +34,8 @@ public class FrameWorkView extends Composite implements
 	@UiField
 	CellTable cellTableFrameWorks;
 
-	private List<FrameWorkDTO> frameWorks;
-	private ListDataProvider<FrameWorkDTO> dataGridProvider = new ListDataProvider<FrameWorkDTO>();
+	private List<FrameWork> frameWorks;
+	private ListDataProvider<FrameWork> dataGridProvider = new ListDataProvider<FrameWork>();
 
 	interface FrameWorkViewUiBinder extends UiBinder<Widget, FrameWorkView> {
 	}
@@ -47,7 +47,7 @@ public class FrameWorkView extends Composite implements
 	/**
 	 * @return the frameWorks
 	 */
-	public List<FrameWorkDTO> getFrameWorks() {
+	public List<FrameWork> getFrameWorks() {
 		return frameWorks;
 	}
 
@@ -55,7 +55,7 @@ public class FrameWorkView extends Composite implements
 	 * @param frameWorks
 	 *            the frameWorks to set
 	 */
-	public void setFrameWorks(List<FrameWorkDTO> frameWorks) {
+	public void setFrameWorks(List<FrameWork> frameWorks) {
 		this.frameWorks = frameWorks;
 	}
 
@@ -75,58 +75,58 @@ public class FrameWorkView extends Composite implements
 	}
 
 	@Override
-	public void setListFrameWorks(List<FrameWorkDTO> frameWorks) {
+	public void setListFrameWorks(List<FrameWork> frameWorks) {
 		this.frameWorks = frameWorks;
 
-		TextColumn<FrameWorkDTO> col1 = new TextColumn<FrameWorkDTO>() {
+		TextColumn<FrameWork> col1 = new TextColumn<FrameWork>() {
 
 			@Override
-			public String getValue(FrameWorkDTO object) {
+			public String getValue(FrameWork object) {
 				return String.valueOf(object.getName());
 			}
 		};
 		cellTableFrameWorks.addColumn(col1, javaLeagueMessages.nameFrameWork());
 		
-		TextColumn<FrameWorkDTO> col2 = new TextColumn<FrameWorkDTO>() {
+		TextColumn<FrameWork> col2 = new TextColumn<FrameWork>() {
 
 			@Override
-			public String getValue(FrameWorkDTO object) {
+			public String getValue(FrameWork object) {
 				return String.valueOf(object.getVersion());
 			}
 		};
 		cellTableFrameWorks.addColumn(col2, javaLeagueMessages.versionFrameWork());
 
-		TextColumn<FrameWorkDTO> col3 = new TextColumn<FrameWorkDTO>() {
+		TextColumn<FrameWork> col3 = new TextColumn<FrameWork>() {
 
 			@Override
-			public String getValue(FrameWorkDTO object) {
+			public String getValue(FrameWork object) {
 				return String.valueOf(object.getSummary());
 			}
 		};
 		cellTableFrameWorks.addColumn(col3, javaLeagueMessages.summaryFrameWork());
 
-		TextColumn<FrameWorkDTO> col4 = new TextColumn<FrameWorkDTO>() {
+		TextColumn<FrameWork> col4 = new TextColumn<FrameWork>() {
 
 			@Override
-			public String getValue(FrameWorkDTO object) {
+			public String getValue(FrameWork object) {
 				return String.valueOf(object.getCreation());
 			}
 		};
 		cellTableFrameWorks.addColumn(col4, javaLeagueMessages.creationFrameWork());
 
-		TextColumn<FrameWorkDTO> col5 = new TextColumn<FrameWorkDTO>() {
+		TextColumn<FrameWork> col5 = new TextColumn<FrameWork>() {
 
 			@Override
-			public String getValue(FrameWorkDTO object) {
+			public String getValue(FrameWork object) {
 				return String.valueOf(object.getUpdated());
 			}
 		};
 		cellTableFrameWorks.addColumn(col5, javaLeagueMessages.updatedFrameWork());
 
-		TextColumn<FrameWorkDTO> col6 = new TextColumn<FrameWorkDTO>() {
+		TextColumn<FrameWork> col6 = new TextColumn<FrameWork>() {
 
 			@Override
-			public String getValue(FrameWorkDTO object) {
+			public String getValue(FrameWork object) {
 				return String.valueOf(object.getUrlDownload());
 			}
 		};
@@ -134,7 +134,7 @@ public class FrameWorkView extends Composite implements
 
 		dataGridProvider.addDataDisplay(cellTableFrameWorks);
 		
-		for(FrameWorkDTO f : frameWorks) {
+		for(FrameWork f : frameWorks) {
 			dataGridProvider.getList().add(f);
 		}
 		

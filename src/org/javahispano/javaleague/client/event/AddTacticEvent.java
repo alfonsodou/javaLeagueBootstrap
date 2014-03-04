@@ -11,9 +11,9 @@ import com.google.gwt.event.shared.GwtEvent;
  */
 public class AddTacticEvent extends GwtEvent<AddTacticEventHandler> {
 	public static Type<AddTacticEventHandler> TYPE = new Type<AddTacticEventHandler>();
-	private final String id;
+	private final Long id;
 	
-	public AddTacticEvent(String id) {
+	public AddTacticEvent(Long id) {
 		this.id = id;
 	}
 	
@@ -27,7 +27,7 @@ public class AddTacticEvent extends GwtEvent<AddTacticEventHandler> {
 		handler.onAddTacticEvent(this);
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 

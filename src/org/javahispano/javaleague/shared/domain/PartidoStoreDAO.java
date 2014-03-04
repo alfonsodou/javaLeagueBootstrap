@@ -1,6 +1,6 @@
-package org.javahispano.javaleague.server.domain;
+package org.javahispano.javaleague.shared.domain;
 
-import static org.javahispano.javaleague.server.domain.OfyService.ofy;
+import static org.javahispano.javaleague.shared.domain.OfyService.ofy;
 
 import java.util.List;
 

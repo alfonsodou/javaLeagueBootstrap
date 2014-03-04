@@ -3,7 +3,7 @@
  */
 package org.javahispano.javaleague.client.event;
 
-import org.javahispano.javaleague.shared.TacticDTO;
+import org.javahispano.javaleague.shared.domain.TacticUser;
 
 import com.google.gwt.event.shared.GwtEvent;
 
@@ -13,9 +13,9 @@ import com.google.gwt.event.shared.GwtEvent;
  */
 public class UpdateTacticEvent extends GwtEvent<UpdateTacticEventHandler> {
 	public static Type<UpdateTacticEventHandler> TYPE = new Type<UpdateTacticEventHandler>();
-	private final TacticDTO userTactic;
+	private final TacticUser userTactic;
 
-	public UpdateTacticEvent(TacticDTO result) {
+	public UpdateTacticEvent(TacticUser result) {
 		this.userTactic = result;
 	}
 

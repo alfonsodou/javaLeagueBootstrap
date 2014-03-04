@@ -1,10 +1,11 @@
 /**
  * 
  */
-package org.javahispano.javaleague.server.domain;
+package org.javahispano.javaleague.shared.domain;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.channels.Channels;
@@ -12,7 +13,6 @@ import java.util.Date;
 import java.util.logging.Logger;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.javahispano.javaleague.shared.FrameWorkDTO;
 
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.files.AppEngineFile;
@@ -27,7 +27,12 @@ import com.googlecode.objectify.annotation.Id;
  * 
  */
 @Entity
-public class FrameWork {
+public class FrameWork implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private static final Logger log = Logger.getLogger(FrameWork.class
 			.getName());
@@ -49,7 +54,7 @@ public class FrameWork {
 
 	private Date updated;
 
-	private BlobKey frameWork;
+	private String frameWork;
 
 	private Boolean active;
 
@@ -139,7 +144,7 @@ public class FrameWork {
 	/**
 	 * @return the frameWork
 	 */
-	public BlobKey getFrameWork() {
+	public String getFrameWork() {
 		return frameWork;
 	}
 
@@ -147,26 +152,8 @@ public class FrameWork {
 	 * @param frameWork
 	 *            the frameWork to set
 	 */
-	public void setFrameWork(BlobKey frameWork) {
+	public void setFrameWork(String frameWork) {
 		this.frameWork = frameWork;
-	}
-
-	public void addSampleFrameWork() {
-		try {
-
-			this.setFrameWork(SaveFile(
-					"http://javaleague.appspot.com/framework/framework.jar",
-					"framework.jar"));
-
-			/*
-			 * this.setFramework(SaveFile(
-			 * "http://localhost:8888/framework/framework.jar",
-			 * "framework.jar"));
-			 */
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	/**
@@ -212,56 +199,6 @@ public class FrameWork {
 	 */
 	public void setVersion(String version) {
 		this.version = version;
-	}
-
-	public FrameWorkDTO toDTO() {
-		FrameWorkDTO frameWorkDTO = new FrameWorkDTO(this.id, this.name,
-				this.description, this.summary, this.version, this.state,
-				this.creation.toString(), this.updated.toString(), this.active,
-				this.defaultFrameWork, this.urlDownload);
-
-		return frameWorkDTO;
-	}
-
-	private static BlobKey SaveFile(String link, String fileName)
-			throws Exception {
-		BlobKey result = null;
-		URL url = new URL(link);
-		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		try {
-			connection.setInstanceFollowRedirects(false);
-			connection.setRequestMethod("GET");
-			connection.setConnectTimeout(10000);
-
-			FileService fileService = FileServiceFactory.getFileService();
-
-			Integer code = connection.getResponseCode();
-			if (code == HttpURLConnection.HTTP_OK) {
-				String contentType = connection.getHeaderField("Content-type");
-				InputStream is = connection.getInputStream();
-
-				AppEngineFile file = fileService.createNewBlobFile(contentType,
-						fileName);
-				boolean lock = true;
-				FileWriteChannel writeChannel = fileService.openWriteChannel(
-						file, lock);
-				OutputStream os = Channels.newOutputStream(writeChannel);
-
-				byte[] buf = new byte[4096];
-				ByteArrayOutputStream bas = new ByteArrayOutputStream();
-				int n;
-				while ((n = is.read(buf)) >= 0)
-					bas.write(buf, 0, n);
-				os.write(bas.toByteArray());
-				os.close();
-				writeChannel.closeFinally();
-
-				return fileService.getBlobKey(file);
-			}
-		} finally {
-			connection.disconnect();
-		}
-		return result;
 	}
 
 }
