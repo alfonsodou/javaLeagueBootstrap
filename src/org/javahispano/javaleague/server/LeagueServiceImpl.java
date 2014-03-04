@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.javahispano.javaleague.client.service.LeagueService;
+import org.javahispano.javaleague.server.domain.LeagueDAO;
+import org.javahispano.javaleague.server.domain.UserDAO;
 import org.javahispano.javaleague.shared.domain.League;
-import org.javahispano.javaleague.shared.domain.LeagueDAO;
 import org.javahispano.javaleague.shared.domain.User;
-import org.javahispano.javaleague.shared.domain.UserDAO;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 

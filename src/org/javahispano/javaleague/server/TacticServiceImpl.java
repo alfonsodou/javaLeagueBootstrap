@@ -4,10 +4,10 @@ import java.util.Date;
 import java.util.logging.Logger;
 
 import org.javahispano.javaleague.client.service.TacticService;
+import org.javahispano.javaleague.server.domain.TacticUserDAO;
+import org.javahispano.javaleague.server.domain.UserDAO;
 import org.javahispano.javaleague.shared.domain.TacticUser;
-import org.javahispano.javaleague.shared.domain.TacticUserDAO;
 import org.javahispano.javaleague.shared.domain.User;
-import org.javahispano.javaleague.shared.domain.UserDAO;
 import org.javahispano.javaleague.shared.exception.NotLoggedInException;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;

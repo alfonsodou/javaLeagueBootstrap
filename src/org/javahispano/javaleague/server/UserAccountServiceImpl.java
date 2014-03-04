@@ -18,11 +18,11 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.javahispano.javaleague.client.service.UserAccountService;
+import org.javahispano.javaleague.server.domain.TacticUserDAO;
+import org.javahispano.javaleague.server.domain.UserDAO;
 import org.javahispano.javaleague.server.utils.SessionIdentifierGenerator;
 import org.javahispano.javaleague.shared.domain.TacticUser;
-import org.javahispano.javaleague.shared.domain.TacticUserDAO;
 import org.javahispano.javaleague.shared.domain.User;
-import org.javahispano.javaleague.shared.domain.UserDAO;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 

@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.javahispano.javaleague.client.service.FrameWorkService;
+import org.javahispano.javaleague.server.domain.FrameWorkDAO;
 import org.javahispano.javaleague.shared.domain.FrameWork;
-import org.javahispano.javaleague.shared.domain.FrameWorkDAO;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 

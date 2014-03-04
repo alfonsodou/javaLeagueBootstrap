@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.javahispano.javaleague.server.domain.MatchDAO;
 import org.javahispano.javaleague.shared.domain.Match;
-import org.javahispano.javaleague.shared.domain.MatchDAO;
 
 /**
  * @author adou

@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.javahispano.javaleague.client.service.MatchService;
+import org.javahispano.javaleague.server.domain.MatchDAO;
 import org.javahispano.javaleague.shared.domain.Match;
-import org.javahispano.javaleague.shared.domain.MatchDAO;
 import org.javahispano.javaleague.shared.domain.TacticUser;
 import org.javahispano.javaleague.shared.domain.User;
 

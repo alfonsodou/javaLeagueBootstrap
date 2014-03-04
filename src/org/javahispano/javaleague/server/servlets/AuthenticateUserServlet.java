@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.javahispano.javaleague.server.LoginHelper;
+import org.javahispano.javaleague.server.domain.UserDAO;
 import org.javahispano.javaleague.shared.domain.User;
-import org.javahispano.javaleague.shared.domain.UserDAO;
 
 /**
  * @author adou

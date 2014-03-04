@@ -1,7 +1,15 @@
 /**
  * 
  */
-package org.javahispano.javaleague.shared.domain;
+package org.javahispano.javaleague.server.domain;
+
+import org.javahispano.javaleague.shared.domain.CalendarDate;
+import org.javahispano.javaleague.shared.domain.FrameWork;
+import org.javahispano.javaleague.shared.domain.League;
+import org.javahispano.javaleague.shared.domain.Match;
+import org.javahispano.javaleague.shared.domain.PartidoStore;
+import org.javahispano.javaleague.shared.domain.TacticUser;
+import org.javahispano.javaleague.shared.domain.User;
 
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;

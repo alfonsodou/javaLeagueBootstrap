@@ -60,6 +60,10 @@ public class TacticUser implements Serializable {
 
 	private int matchTied;
 
+	private String fileName;
+
+	private Long size;
+
 	/**
 	 * Blob key for zip
 	 */
@@ -254,19 +258,20 @@ public class TacticUser implements Serializable {
 		this.id = id;
 	}
 
-	public void setFileName(String substring) {
-		// TODO Auto-generated method stub
-		
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
-	public Object getFileName() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public Object getBytes() {
-		// TODO Auto-generated method stub
-		return null;
+	public Long getBytes() {
+		return size;
+	}
+
+	public void setBytes(Long size) {
+		this.size = size;
 	}
 
 }

@@ -134,10 +134,7 @@ public class TacticPresenter implements Presenter {
 
 				display.getFileName().setText(msg.substring(0, msg.indexOf('|')));
 				display.getUpdatedTactic().setText(msg.substring(msg.indexOf('|') + 1));
-
-				tactic.setFileName(msg.substring(0, msg.indexOf('|')));
-				// falta actualizar la fecha
-				
+			
 				eventBus.fireEvent(new UpdateTacticEvent(tactic));				
 			}
 		}
