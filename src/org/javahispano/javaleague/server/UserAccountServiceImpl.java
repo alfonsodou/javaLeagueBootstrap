@@ -86,8 +86,8 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 
 		user.setDateTokenActivate(new Date());
 		user.setTokenActivate(userTokenGenerator.nextSessionId());
+		user.setTactic(tacticUser);
 		// Falta guardar la contraseña encriptada
-		user.setTacticId(tacticUser.getId());
 
 		Properties props = new Properties();
 		Session session = Session.getDefaultInstance(props, null);
@@ -100,11 +100,13 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 
 		try {
 			Message msg = new MimeMessage(session);
+			
 			msg.setFrom(new InternetAddress(AppLib.emailAdmin, msgFrom));
 			msg.addRecipient(Message.RecipientType.TO,
 					new InternetAddress(user.getEmailAddress(), user.getName()));
 			msg.setSubject(msgSubject);
-			msg.setText(msgBody);
+			msg.setContent(msgBody, "text/html; charset=utf-8");
+			msg.setSentDate(new Date());
 			Transport.send(msg);
 
 		} catch (AddressException e) {

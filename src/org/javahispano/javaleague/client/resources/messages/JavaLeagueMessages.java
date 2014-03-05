@@ -13,48 +13,48 @@ public interface JavaLeagueMessages extends Messages {
 	@DefaultMessage("Administrador javaLeague")
 	String adminJavaLeague();
 
-	@DefaultMessage("Bienvenido #0# !\nGracias por registrarte en javaLeague. Para terminar el registro es necesario que valides tu dirección de correo visitando el siguiente enlace #1#.\nSi has recibido este correo por error, por favor, ignóralo y envía un correo avisando a #2#.\n\n#3#")
+	@DefaultMessage("<p>Bienvenido <b>#0#</b> !</p><p>Gracias por registrarte en <b>javaLeague</b>. Para terminar el registro es necesario que valides tu dirección de correo visitando el siguiente <a href='#1#'>enlace</a>.</p><p>Si has recibido este correo por error, por favor, ignóralo y envía un correo avisando a <a href='mailto:#2#'>#2#.</p><p>#3#</p>")
 	String bodyEmailRegisterUser();
-	
+
 	@DefaultMessage("¡ Bienvenido a javaLeague !")
 	String subjectEmailRegisterUser();
-	
+
 	@DefaultMessage("Usuario y/o contraseña incorrectos !")
 	String errorEmailPassword();
-	
+
 	@DefaultMessage("Nombre")
 	String nameFrameWork();
-	
+
 	@DefaultMessage("Versión")
 	String versionFrameWork();
-	
+
 	@DefaultMessage("Descripción")
 	String summaryFrameWork();
-	
+
 	@DefaultMessage("Creado")
 	String creationFrameWork();
-	
+
 	@DefaultMessage("Actualizado")
 	String updatedFrameWork();
-	
+
 	@DefaultMessage("Descargar")
 	String urlDownloadFrameWork();
-	
+
 	@DefaultMessage(":: Sin táctica ::")
 	String emptyUserTactic();
-	
+
 	@DefaultMessage("Nombre")
 	String nameLeague();
-	
+
 	@DefaultMessage("Manager")
 	String manager();
-	
+
 	@DefaultMessage("Inicio inscripción")
 	String startSignIn();
 
 	@DefaultMessage("Fin inscripción")
 	String endSignIn();
-	
+
 	@DefaultMessage("¿ Estás seguro ?")
 	String confirm();
 }

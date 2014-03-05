@@ -92,7 +92,7 @@ public class MenuPrivatePresenter implements Presenter {
 	
 	private void doShowMyTeam() {
 		GWT.log("MenuPrivatePresenter: Firing ShowMyTacticEvent");
-		eventBus.fireEvent(new ShowMyTacticEvent(currentUser.getTacticId()));
+		eventBus.fireEvent(new ShowMyTacticEvent(currentUser.getTactic().getId()));
 	}
 
 	private void doShowMyLeagues() {

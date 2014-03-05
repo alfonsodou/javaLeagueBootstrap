@@ -30,6 +30,10 @@ import com.google.appengine.api.blobstore.BlobInfoFactory;
  */
 public class MyCustomizedUploadServlet extends BlobstoreUploadAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static Logger log = Logger
 			.getLogger(MyCustomizedUploadServlet.class.getName());
 	private static TacticUserDAO tacticDAO = new TacticUserDAO();
@@ -61,10 +65,8 @@ public class MyCustomizedUploadServlet extends BlobstoreUploadAction {
 					out += blobInfo.getFilename() + " :: " + blobInfo.getSize()
 							+ " bytes|" + updated.toString();
 
-					if (currentUser.getTacticId() != null) { // update
-						Long tacticIdField = currentUser.getTacticId();
-
-						TacticUser tactic = tacticDAO.findById(tacticIdField);
+					if (currentUser.getTactic() != null) { // update
+						TacticUser tactic = currentUser.getTactic();
 						tactic.setUpdated(updated);
 
 						if (tactic.getZipClasses() != null) {
@@ -83,7 +85,7 @@ public class MyCustomizedUploadServlet extends BlobstoreUploadAction {
 
 						tactic = tacticDAO.save(tactic);
 
-						currentUser.setTacticId(tactic.getId());
+						currentUser.setTactic(tactic);
 
 						userDAO.save(currentUser);
 					}

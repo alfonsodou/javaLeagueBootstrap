@@ -47,7 +47,7 @@ public class TacticServiceImpl extends RemoteServiceServlet implements
 	public TacticUser getTacticUserLogin() {
 		User currentUser = LoginHelper.getLoggedInUser(getThreadLocalRequest()
 				.getSession());
-		return tacticDAO.findById(currentUser.getTacticId());
+		return tacticDAO.findById(currentUser.getTactic().getId());
 	}
 
 	@Override

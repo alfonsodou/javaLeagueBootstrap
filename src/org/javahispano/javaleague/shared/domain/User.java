@@ -33,8 +33,6 @@ public class User implements Serializable {
 	private String emailAddress;
 
 	private String password;
-
-	private Long tacticId;
 	
 	@Load
 	private Ref<TacticUser> tactic;
@@ -104,21 +102,6 @@ public class User implements Serializable {
 	 */
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
-	}
-
-	/**
-	 * @return the tactic
-	 */
-	public Long getTacticId() {
-		return tacticId;
-	}
-
-	/**
-	 * @param tactic
-	 *            the tactic to set
-	 */
-	public void setTacticId(Long tacticId) {
-		this.tacticId = tacticId;
 	}
 
 	/**
