@@ -3,14 +3,19 @@ package org.javahispano.javaleague.shared.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.googlecode.objectify.Ref;
+import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Load;
 
 @Entity
+@Cache
 public class User implements Serializable {
 	/**
 	 * 
@@ -30,6 +35,9 @@ public class User implements Serializable {
 	private String password;
 
 	private Long tacticId;
+	
+	@Load
+	private Ref<TacticUser> tactic;
 
 	private Date lastLoginOn;
 
@@ -44,12 +52,13 @@ public class User implements Serializable {
 
 	private String channelId;
 	
-	private List<Long> leagues;
+	@Load
+	private List<Ref<League>> leagues;
 
 	public User() {
 		super();
 		this.active = false;
-		this.leagues = new ArrayList<Long>();
+		this.leagues = new ArrayList<Ref<League>>();
 	}
 
 	/**
@@ -216,15 +225,18 @@ public class User implements Serializable {
 	/**
 	 * @return the leagues
 	 */
-	public List<Long> getLeagues() {
-		return leagues;
+	public Iterator<Ref<League>> getLeagues() {
+		return leagues.iterator();
 	}
 
 	/**
 	 * @param leagues the leagues to set
 	 */
-	public void setLeagues(List<Long> leagues) {
-		this.leagues = leagues;
+	public void setLeagues(List<League> value) {
+		leagues.clear();
+		for(League l : value) {
+			leagues.add(Ref.create(l));
+		}
 	}
 
 	public boolean isJoinLeague(Long id2) {
@@ -232,6 +244,27 @@ public class User implements Serializable {
 		return false;
 	}
 
+	/**
+	 * @return the tactic
+	 */
+	public TacticUser getTactic() {
+		return tactic.get();
+	}
 
+	/**
+	 * @param tactic the tactic to set
+	 */
+	public void setTactic(TacticUser value) {
+		tactic = Ref.create(value);
+	}
+
+	
+	public void addLeague(League l) {
+		leagues.add(Ref.create(l));
+	}
+
+	public void deleteLeague(League l) {
+		leagues.remove(Ref.create(l));
+	}
 
 }

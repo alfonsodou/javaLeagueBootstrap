@@ -3,7 +3,6 @@
  */
 package org.javahispano.javaleague.server;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -44,7 +43,7 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 					.getSession());
 			league.setManagerId(user.getId());
 			league = leagueDAO.save(league);
-			user.getLeagues().add(league.getId());
+			user.addLeague(league);
 			user = userDAO.save(user);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -93,7 +92,7 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 					.getSession());
 
 			leagueDAO.delete(id);
-			user.getLeagues().remove(id);
+			user.deleteLeague(leagueDAO.findById(id));
 			userDAO.save(user);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -107,7 +106,7 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 			User user = LoginHelper.getLoggedInUser(getThreadLocalRequest()
 					.getSession());
 
-			user.getLeagues().add(id);
+			user.addLeague(leagueDAO.findById(id));
 			userDAO.save(user);
 		} catch (Exception e) {
 			e.printStackTrace();
