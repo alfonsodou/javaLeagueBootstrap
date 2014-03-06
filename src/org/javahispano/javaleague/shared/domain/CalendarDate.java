@@ -8,8 +8,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Load;
 
 /**
  * @author adou
@@ -31,11 +33,10 @@ public class CalendarDate implements Serializable {
 	@Id
 	private Long id;
 	
-	private Long seasonId;
-	
 	private Long leagueId;
 	
-	private List<Long> matchs;
+	@Load
+	private List<Ref<Match>> matchs;
 	
 	private Date start;
 	
@@ -61,31 +62,20 @@ public class CalendarDate implements Serializable {
 	}
 
 	/**
-	 * @return the seasonId
-	 */
-	public Long getSeasonId() {
-		return seasonId;
-	}
-
-	/**
-	 * @param seasonId the seasonId to set
-	 */
-	public void setSeasonId(Long seasonId) {
-		this.seasonId = seasonId;
-	}
-
-	/**
 	 * @return the matchs
 	 */
-	public List<Long> getMatchs() {
+	public List<Ref<Match>> getMatchs() {
 		return matchs;
 	}
 
 	/**
 	 * @param matchs the matchs to set
 	 */
-	public void setMatchs(List<Long> matchs) {
-		this.matchs = matchs;
+	public void setMatchs(List<Match> value) {
+		matchs.clear();
+		for(Match m : value) {
+			matchs.add(Ref.create(m));
+		}
 	}
 
 	/**

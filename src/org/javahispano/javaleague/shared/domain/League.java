@@ -44,7 +44,7 @@ public class League implements Serializable {
 	private List<Ref<User>> users;
 	
 	@Load
-	private List<Ref<Match>> matchs;
+	private List<Ref<CalendarDate>> matchs;
 	
 	private Date creation;
 	
@@ -156,17 +156,17 @@ public class League implements Serializable {
 	/**
 	 * @return the matchs
 	 */
-	public List<Ref<Match>> getMatchs() {
+	public List<Ref<CalendarDate>> getMatchs() {
 		return matchs;
 	}
 
 	/**
 	 * @param matchs the matchs to set
 	 */
-	public void setMatchs(List<Match> value) {
+	public void setMatchs(List<CalendarDate> value) {
 		matchs.clear();
-		for(Match m: value) {
-			matchs.add(Ref.create(m));
+		for(CalendarDate c: value) {
+			matchs.add(Ref.create(c));
 		}
 	}
 	
