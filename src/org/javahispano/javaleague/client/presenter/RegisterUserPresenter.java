@@ -99,6 +99,7 @@ public class RegisterUserPresenter implements Presenter {
 			}
 		});
 
+		display.getUserName().setFocus(true);
 	}
 
 	@Override

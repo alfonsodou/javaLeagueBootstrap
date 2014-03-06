@@ -28,6 +28,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
+import com.googlecode.objectify.Ref;
 
 /**
  * @author adou
@@ -50,7 +51,7 @@ public class MyLeaguesPresenter implements Presenter {
 	private final MatchServiceAsync matchService;
 	private final LeagueServiceAsync leagueService;
 
-	private List<League> leagues;
+	private List<Ref<League>> leagues;
 
 	private JavaLeagueMessages javaLeagueMessages = GWT
 			.create(JavaLeagueMessages.class);
@@ -79,7 +80,7 @@ public class MyLeaguesPresenter implements Presenter {
 	}
 
 	private void fetchLeagues() {
-		new RPCCall<List<League>>() {
+		new RPCCall<List<Ref<League>>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -87,7 +88,7 @@ public class MyLeaguesPresenter implements Presenter {
 			}
 
 			@Override
-			public void onSuccess(List<League> result) {
+			public void onSuccess(List<Ref<League>> result) {
 				if (result.size() > 0) {
 					leagues = result;
 
@@ -97,7 +98,7 @@ public class MyLeaguesPresenter implements Presenter {
 			}
 
 			@Override
-			protected void callService(AsyncCallback<List<League>> cb) {
+			protected void callService(AsyncCallback<List<Ref<League>>> cb) {
 				leagueService.getMyLeagues(cb);
 			}
 
@@ -130,8 +131,7 @@ public class MyLeaguesPresenter implements Presenter {
 
 			@Override
 			public String getValue(League object) {
-				return String.valueOf(object.getName());
-				//return String.valueOf(object.getNameManager());
+				return String.valueOf(object.getNameManager());
 			}
 		};
 		display.getCellTableLeagues().addColumn(col2,
@@ -159,8 +159,8 @@ public class MyLeaguesPresenter implements Presenter {
 
 		dataGridProvider.addDataDisplay(display.getCellTableLeagues());
 
-		for (League l : leagues) {
-			dataGridProvider.getList().add(l);
+		for(Ref<League> l : leagues) {
+			dataGridProvider.getList().add(l.get());
 		}
 
 		// Add a selection model to handle user selection.

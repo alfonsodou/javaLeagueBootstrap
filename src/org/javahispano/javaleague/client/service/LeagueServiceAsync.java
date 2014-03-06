@@ -3,11 +3,13 @@
  */
 package org.javahispano.javaleague.client.service;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.javahispano.javaleague.shared.domain.League;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.googlecode.objectify.Ref;
 
 /**
  * @author adou
@@ -16,7 +18,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public interface LeagueServiceAsync {
 	void createLeague(League league, AsyncCallback<League> cb);
 	
-	void getMyLeagues(AsyncCallback<List<League>> cb);
+	void getMyLeagues(AsyncCallback<List<Ref<League>>> cb);
 
 	void getLeague(Long id, AsyncCallback<League> callback);
 

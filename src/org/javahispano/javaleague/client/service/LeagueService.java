@@ -9,6 +9,7 @@ import org.javahispano.javaleague.shared.domain.League;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.googlecode.objectify.Ref;
 
 /**
  * @author adou
@@ -19,7 +20,7 @@ public interface LeagueService extends RemoteService {
 
 	League createLeague(League league);
 
-	List<League> getMyLeagues();
+	List<Ref<League>> getMyLeagues();
 
 	League getLeague(Long id);
 

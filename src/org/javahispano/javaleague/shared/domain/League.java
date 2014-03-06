@@ -5,8 +5,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Load;
 
 /**
  * 
@@ -34,11 +36,15 @@ public class League implements Serializable {
 	
 	private String name;
 	
+	private String nameManager;
+	
 	private String description;
 	
-	private List<Long> users;
+	@Load
+	private List<Ref<User>> users;
 	
-	private List<Long> matchs;
+	@Load
+	private List<Ref<Match>> matchs;
 	
 	private Date creation;
 	
@@ -91,15 +97,18 @@ public class League implements Serializable {
 	/**
 	 * @return the users
 	 */
-	public List<Long> getUsers() {
+	public List<Ref<User>> getUsers() {
 		return users;
 	}
 
 	/**
 	 * @param users the users to set
 	 */
-	public void setUsers(List<Long> users) {
-		this.users = users;
+	public void setUsers(List<User> value) {
+		users.clear();
+		for(User u : value) {
+			users.add(Ref.create(u));
+		}
 	}
 
 	/**
@@ -147,15 +156,18 @@ public class League implements Serializable {
 	/**
 	 * @return the matchs
 	 */
-	public List<Long> getMatchs() {
+	public List<Ref<Match>> getMatchs() {
 		return matchs;
 	}
 
 	/**
 	 * @param matchs the matchs to set
 	 */
-	public void setMatchs(List<Long> matchs) {
-		this.matchs = matchs;
+	public void setMatchs(List<Match> value) {
+		matchs.clear();
+		for(Match m: value) {
+			matchs.add(Ref.create(m));
+		}
 	}
 	
 	
@@ -215,8 +227,26 @@ public class League implements Serializable {
 		this.password = password;
 	}
 
+	/**
+	 * @return the nameManager
+	 */
+	public String getNameManager() {
+		return nameManager;
+	}
+
+	/**
+	 * @param nameManager the nameManager to set
+	 */
+	public void setNameManager(String nameManager) {
+		this.nameManager = nameManager;
+	}
+
 	public boolean isPublic() {
 		return (this.type == PUBLIC);
+	}
+	
+	public void addUser(User u) {
+		users.add(Ref.create(u));
 	}
 	
 }
