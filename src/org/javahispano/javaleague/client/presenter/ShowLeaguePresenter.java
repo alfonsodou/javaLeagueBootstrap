@@ -10,6 +10,7 @@ import org.gwtbootstrap3.client.ui.Heading;
 import org.gwtbootstrap3.client.ui.Paragraph;
 import org.gwtbootstrap3.extras.bootbox.client.Bootbox;
 import org.gwtbootstrap3.extras.bootbox.client.callback.ConfirmCallback;
+import org.javahispano.javaleague.client.event.CreateCalendarLeagueEvent;
 import org.javahispano.javaleague.client.event.ShowMyLeaguesEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
@@ -20,7 +21,6 @@ import org.javahispano.javaleague.shared.domain.User;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -37,9 +37,11 @@ public class ShowLeaguePresenter implements Presenter {
 
 		Button getJoinLeagueButton();
 
-		HasClickHandlers getDropLeagueButton();
+		Button getDropLeagueButton();
 
-		HasClickHandlers getEditLeagueButton();
+		Button getEditLeagueButton();
+
+		Button getCreateCalendarLeagueButton();
 
 		Paragraph getDescriptionLeague();
 
@@ -57,9 +59,8 @@ public class ShowLeaguePresenter implements Presenter {
 	private JavaLeagueMessages javaLeagueMessages = GWT
 			.create(JavaLeagueMessages.class);
 
-	public ShowLeaguePresenter(LeagueServiceAsync leagueService,
-			League league, User user, SimpleEventBus eventBus,
-			Display display) {
+	public ShowLeaguePresenter(LeagueServiceAsync leagueService, League league,
+			User user, SimpleEventBus eventBus, Display display) {
 		this.leagueService = leagueService;
 		this.league = league;
 		this.user = user;
@@ -71,11 +72,12 @@ public class ShowLeaguePresenter implements Presenter {
 
 	private void ShowLeague() {
 		Date now = new Date();
-		if ((league.getEndSignIn().before(now)) || (user.isJoinLeague(league.getId()))) {
+		if ((league.getEndSignIn().before(now))
+				|| (user.isJoinLeague(league.getId()))) {
 			display.getJoinLeagueButton().setEnabled(false);
 		} else {
 			display.getJoinLeagueButton().setEnabled(true);
-		} 
+		}
 		display.getDescriptionLeague().setHTML(league.getDescription());
 		display.getNameLeague().setText(league.getName());
 	}
@@ -108,8 +110,21 @@ public class ShowLeaguePresenter implements Presenter {
 				doJoinLeague();
 			}
 		});
+
+		display.getCreateCalendarLeagueButton().addClickHandler(
+				new ClickHandler() {
+					public void onClick(ClickEvent event) {
+						doCreateCalendarLeague();
+					}
+				});
 	}
-	
+
+	private void doCreateCalendarLeague() {
+		GWT.log("ShowLeaguePresenter: firing CreateCalenderLeagueEvent. LeagueId: "
+				+ league.getId());
+		eventBus.fireEvent(new CreateCalendarLeagueEvent(league));
+	}
+
 	private void doJoinLeague() {
 		new RPCCall<Void>() {
 
@@ -129,7 +144,7 @@ public class ShowLeaguePresenter implements Presenter {
 				leagueService.joinLeague(league.getId(), cb);
 			}
 
-		}.retry(3);		
+		}.retry(3);
 	}
 
 	private void doDropLeague() {

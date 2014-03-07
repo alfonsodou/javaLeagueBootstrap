@@ -26,6 +26,12 @@
 							<ui:msg key="dropLeagueButton" description="Drop League Button">Borrar Liga
 							</ui:msg>
 						</b:Button>
+						<b:Button ui:field="createCalendarLeagueButton">
+							<ui:msg key="createCalendarLeagueButton" description="Create Calendar League Button">Crear
+								Calendario Liga
+							</ui:msg>
+						</b:Button>
+
 					</b:Column>
 					<b:Column size="MD_5" offset="MD_1">
 						<b:Paragraph>

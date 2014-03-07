@@ -37,6 +37,8 @@ public class ShowLeagueView extends Composite implements
 	@UiField
 	Button editLeagueButton;
 	@UiField
+	Button createCalendarLeagueButton;
+	@UiField
 	Heading nameLeague;
 
 	public ShowLeagueView() {
@@ -49,12 +51,12 @@ public class ShowLeagueView extends Composite implements
 	}
 
 	@Override
-	public HasClickHandlers getDropLeagueButton() {
+	public Button getDropLeagueButton() {
 		return dropLeagueButton;
 	}
 
 	@Override
-	public HasClickHandlers getEditLeagueButton() {
+	public Button getEditLeagueButton() {
 		return editLeagueButton;
 	}
 
@@ -66,6 +68,11 @@ public class ShowLeagueView extends Composite implements
 	@Override
 	public Heading getNameLeague() {
 		return nameLeague;
+	}
+
+	@Override
+	public Button getCreateCalendarLeagueButton() {
+		return createCalendarLeagueButton;
 	}
 
 }

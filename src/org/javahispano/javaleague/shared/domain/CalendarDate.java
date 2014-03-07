@@ -41,6 +41,8 @@ public class CalendarDate implements Serializable {
 	private Date start;
 	
 	private Date finish;
+	
+	private Clasification clasification;
 
 	
 	public CalendarDate() {
@@ -118,6 +120,20 @@ public class CalendarDate implements Serializable {
 	 */
 	public void setLeagueId(Long leagueId) {
 		this.leagueId = leagueId;
+	}
+
+	/**
+	 * @return the clasification
+	 */
+	public Clasification getClasification() {
+		return clasification;
+	}
+
+	/**
+	 * @param clasification the clasification to set
+	 */
+	public void setClasification(Clasification clasification) {
+		this.clasification = clasification;
 	}
 	
 }
