@@ -4,6 +4,7 @@
 package org.javahispano.javaleague.shared.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -47,6 +48,8 @@ public class CalendarDate implements Serializable {
 	
 	public CalendarDate() {
 		super();
+		matchs = new ArrayList<Ref<Match>>();
+		clasification = new Clasification();
 	}
 	
 	/**
@@ -136,4 +139,7 @@ public class CalendarDate implements Serializable {
 		this.clasification = clasification;
 	}
 	
+	public void addMatch(Match m) {
+		matchs.add(Ref.create(m));
+	}
 }

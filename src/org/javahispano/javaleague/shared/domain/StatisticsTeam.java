@@ -24,6 +24,8 @@ public class StatisticsTeam {
 	
 	private int points;
 	
+	private double posession;
+	
 	public StatisticsTeam() {
 		
 	}
@@ -124,6 +126,20 @@ public class StatisticsTeam {
 	 */
 	public void setPoints(int points) {
 		this.points = points;
+	}
+
+	/**
+	 * @return the posession
+	 */
+	public double getPosession() {
+		return posession;
+	}
+
+	/**
+	 * @param posession the posession to set
+	 */
+	public void setPosession(double posession) {
+		this.posession = posession;
 	}
 	
 	

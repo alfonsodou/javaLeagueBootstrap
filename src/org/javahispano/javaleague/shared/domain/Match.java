@@ -6,8 +6,10 @@ import java.util.logging.Logger;
 
 import org.javahispano.javaleague.server.AppLib;
 
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Load;
 
 @Entity
 public class Match implements Serializable {
@@ -22,11 +24,13 @@ public class Match implements Serializable {
 	@Id
 	private Long id;
 
-	private String localTeam;
+	@Load
+	private Ref<TacticUser> localTeam;
 	
 	private String nameLocalTeam;
 
-	private String visitingTeam;
+	@Load
+	private Ref<TacticUser> visitingTeam;
 	
 	private String nameVisitingTeam;
 
@@ -65,20 +69,20 @@ public class Match implements Serializable {
 		this.id = id;
 	}
 
-	public String getLocal() {
-		return localTeam;
+	public TacticUser getLocal() {
+		return localTeam.get();
 	}
 
-	public void setLocal(String local) {
-		this.localTeam = local;
+	public void setLocal(TacticUser local) {
+		this.localTeam = Ref.create(local);
 	}
 
-	public String getVisiting() {
-		return visitingTeam;
+	public TacticUser getVisiting() {
+		return visitingTeam.get();
 	}
 
-	public void setVisiting(String visiting) {
-		this.visitingTeam = visiting;
+	public void setVisiting(TacticUser visiting) {
+		this.visitingTeam = Ref.create(visiting);
 	}
 
 	public int getLocalGoals() {

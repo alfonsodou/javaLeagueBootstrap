@@ -49,10 +49,8 @@ public class PlayMatchServlet extends HttpServlet {
 		try {
 
 			match = matchDAO.findById(matchID);
-			localTactic = tacticUserDAO.findById(Long.parseLong(match
-					.getLocal().replace("_", "")));
-			visitingTactic = tacticUserDAO.findById(Long.parseLong(match
-					.getVisiting().replace("_", "")));
+			localTactic = match.getLocal();
+			visitingTactic = match.getVisiting();
 			frameWork = frameWorkDAO.findByDefaultFrameWork(true);
 
 			myDataStoreClassLoader = new MyDataStoreClassLoader(this.getClass()

@@ -64,6 +64,8 @@ public class TacticUser implements Serializable {
 	private String fileName;
 
 	private Long size;
+	
+	private double posession;
 
 	/**
 	 * Blob key for zip
@@ -83,6 +85,7 @@ public class TacticUser implements Serializable {
 		this.matchTied = 0;
 		this.matchWins = 0;
 		this.zipClasses = null;
+		this.posession = 0;
 	}
 
 	/**
@@ -273,6 +276,20 @@ public class TacticUser implements Serializable {
 
 	public void setBytes(Long size) {
 		this.size = size;
+	}
+
+	/**
+	 * @return the posession
+	 */
+	public double getPosession() {
+		return posession;
+	}
+
+	/**
+	 * @param posession the posession to set
+	 */
+	public void setPosession(double posession) {
+		this.posession = posession;
 	}
 
 }

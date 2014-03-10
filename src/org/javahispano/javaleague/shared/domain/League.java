@@ -1,6 +1,7 @@
 package org.javahispano.javaleague.shared.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -58,10 +59,24 @@ public class League implements Serializable {
 	
 	private Integer type;
 	
+	private Integer numberRounds;
+	
+	private Integer pointsForWin;
+	
+	private Integer pointsForTied;
+	
+	private Integer pointsForLost;
+	
 	public League() {
 		super();
 		this.creation = new Date();
 		this.updated = new Date();		
+		this.users = new ArrayList<Ref<User>>();
+		this.matchs = new ArrayList<Ref<CalendarDate>>();
+		this.numberRounds = 2;
+		this.pointsForLost = 0;
+		this.pointsForTied = 1;
+		this.pointsForWin = 3;
 	}
 		
 	public Long getId() {
@@ -248,5 +263,64 @@ public class League implements Serializable {
 	public void addUser(User u) {
 		users.add(Ref.create(u));
 	}
+
+	/**
+	 * @return the numberRounds
+	 */
+	public Integer getNumberRounds() {
+		return numberRounds;
+	}
+
+	/**
+	 * @param numberRounds the numberRounds to set
+	 */
+	public void setNumberRounds(Integer numberRounds) {
+		this.numberRounds = numberRounds;
+	}
+
+	/**
+	 * @return the pointsForWin
+	 */
+	public Integer getPointsForWin() {
+		return pointsForWin;
+	}
+
+	/**
+	 * @param pointsForWin the pointsForWin to set
+	 */
+	public void setPointsForWin(Integer pointsForWin) {
+		this.pointsForWin = pointsForWin;
+	}
+
+	/**
+	 * @return the pointsForTied
+	 */
+	public Integer getPointsForTied() {
+		return pointsForTied;
+	}
+
+	/**
+	 * @param pointsForTied the pointsForTied to set
+	 */
+	public void setPointsForTied(Integer pointsForTied) {
+		this.pointsForTied = pointsForTied;
+	}
+
+	/**
+	 * @return the pointsForLost
+	 */
+	public Integer getPointsForLost() {
+		return pointsForLost;
+	}
+
+	/**
+	 * @param pointsForLost the pointsForLost to set
+	 */
+	public void setPointsForLost(Integer pointsForLost) {
+		this.pointsForLost = pointsForLost;
+	}
 	
+	public void addCalendarDate(CalendarDate c) {
+		matchs.add(Ref.create(c));
+	}
 }

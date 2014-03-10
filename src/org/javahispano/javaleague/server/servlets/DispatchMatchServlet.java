@@ -53,8 +53,8 @@ public class DispatchMatchServlet extends HttpServlet {
 				TacticUser visitingTactic = results
 						.get((int) (Math.random() * results.size()));
 
-				match.setLocal(tacticID.toString());
-				match.setVisiting(visitingTactic.getId().toString());
+				match.setLocal(tactic);
+				match.setVisiting(visitingTactic);
 				match.setNameLocal(tactic.getTeamName());
 				match.setNameForeign(visitingTactic.getTeamName());
 				match.setVisualization(addMinutesToDate(new Date(), 5));

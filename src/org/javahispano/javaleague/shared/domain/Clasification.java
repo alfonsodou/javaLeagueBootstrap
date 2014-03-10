@@ -4,6 +4,7 @@
 package org.javahispano.javaleague.shared.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.objectify.Ref;
@@ -27,7 +28,8 @@ public class Clasification implements Serializable {
 	private List<Ref<StatisticsTeam>> statisticsTeam;
 	
 	public Clasification() {
-		
+		super();
+		statisticsTeam = new ArrayList<Ref<StatisticsTeam>>();
 	}
 
 	/**

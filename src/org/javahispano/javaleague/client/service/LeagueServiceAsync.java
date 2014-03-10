@@ -26,4 +26,6 @@ public interface LeagueServiceAsync {
 
 	void joinLeague(Long id, AsyncCallback<Void> callback);
 
+	void createCalendarLeague(League league, AsyncCallback<League> callback);
+
 }
