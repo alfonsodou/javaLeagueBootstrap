@@ -208,8 +208,8 @@ public class User implements Serializable {
 	/**
 	 * @return the leagues
 	 */
-	public Iterator<Ref<League>> getLeagues() {
-		return leagues.iterator();
+	public List<Ref<League>> getLeagues() {
+		return leagues;
 	}
 
 	/**

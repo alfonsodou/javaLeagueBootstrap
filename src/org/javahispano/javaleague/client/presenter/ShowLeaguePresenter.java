@@ -120,9 +120,28 @@ public class ShowLeaguePresenter implements Presenter {
 	}
 
 	private void doCreateCalendarLeague() {
-		GWT.log("ShowLeaguePresenter: firing CreateCalenderLeagueEvent. LeagueId: "
-				+ league.getId());
-		eventBus.fireEvent(new CreateCalendarLeagueEvent(league));
+		
+		new RPCCall<League>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Error createCalendarLeague: " + caught.getMessage());
+			}
+
+			@Override
+			public void onSuccess(League result) {
+				league = result;
+				GWT.log("ShowLeaguePresenter: firing CreateCalenderLeagueEvent. LeagueId: "
+						+ league.getId());
+				eventBus.fireEvent(new CreateCalendarLeagueEvent(league));				
+			}
+
+			@Override
+			protected void callService(AsyncCallback<League> cb) {
+				leagueService.createCalendarLeague(league, cb);
+			}
+			
+		}.retry(3);
 	}
 
 	private void doJoinLeague() {

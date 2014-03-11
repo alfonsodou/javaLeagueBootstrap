@@ -74,8 +74,8 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 		try {
 			User user = LoginHelper.getLoggedInUser(getThreadLocalRequest()
 					.getSession());
-			// leagues = leagueDAO.findByUser(user.getId());
-			leagues = Lists.newArrayList(user.getLeagues());
+			//leagues = Lists.newArrayList(user.getLeagues());
+			leagues = leagueDAO.getAllLeagues();
 
 		} catch (Exception e) {
 			e.printStackTrace();
