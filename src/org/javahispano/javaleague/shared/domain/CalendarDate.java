@@ -43,13 +43,13 @@ public class CalendarDate implements Serializable {
 	
 	private Date finish;
 	
-	private Clasification clasification;
+	@Load
+	private Ref<Clasification> clasification;
 
 	
 	public CalendarDate() {
 		super();
 		matchs = new ArrayList<Ref<Match>>();
-		clasification = new Clasification();
 	}
 	
 	/**
@@ -129,14 +129,14 @@ public class CalendarDate implements Serializable {
 	 * @return the clasification
 	 */
 	public Clasification getClasification() {
-		return clasification;
+		return clasification.get();
 	}
 
 	/**
 	 * @param clasification the clasification to set
 	 */
 	public void setClasification(Clasification clasification) {
-		this.clasification = clasification;
+		this.clasification = Ref.create(clasification);
 	}
 	
 	public void addMatch(Match m) {

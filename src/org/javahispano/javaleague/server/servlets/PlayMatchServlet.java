@@ -24,6 +24,10 @@ import org.javahispano.javaleague.shared.domain.TacticUser;
 import com.google.appengine.api.blobstore.BlobKey;
 
 public class PlayMatchServlet extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(PlayMatchServlet.class
 			.getName());
 	private MyDataStoreClassLoader myDataStoreClassLoader;
@@ -40,8 +44,9 @@ public class PlayMatchServlet extends HttpServlet {
 		Object vo = null;
 		FrameWork frameWork = null;
 
-		long matchID = Long.parseLong(req.getParameter("matchID").replace("_",
+		Long matchID = Long.parseLong(req.getParameter("matchID").replace("_",
 				""));
+		log.warning("matchID: " + matchID);
 
 		TacticUser localTactic = null;
 		TacticUser visitingTactic = null;
@@ -49,9 +54,14 @@ public class PlayMatchServlet extends HttpServlet {
 		try {
 
 			match = matchDAO.findById(matchID);
+			log.warning("Match: " + match.getVisualization());
+			
 			localTactic = match.getLocal();
+			log.warning("Local: " + localTactic.getTeamName());
 			visitingTactic = match.getVisiting();
+			log.warning("Visitante: " + visitingTactic.getTeamName());
 			frameWork = frameWorkDAO.findByDefaultFrameWork(true);
+			log.warning("FrameWork: " + frameWork.getDescription());
 
 			myDataStoreClassLoader = new MyDataStoreClassLoader(this.getClass()
 					.getClassLoader());

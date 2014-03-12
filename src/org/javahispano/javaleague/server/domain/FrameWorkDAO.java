@@ -31,7 +31,7 @@ public class FrameWorkDAO {
 
 	public FrameWork findByDefaultFrameWork(Boolean defaultFrameWork) {
 		FrameWork frameWork = ofy().load().type(FrameWork.class)
-				.filter("defaultFrameWork", true).first().now();
+				.filter("defaultFrameWork", defaultFrameWork).first().now();
 
 		return frameWork;
 	}
