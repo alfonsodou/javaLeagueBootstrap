@@ -60,7 +60,8 @@ public class PlayMatchServlet extends HttpServlet {
 			log.warning("Local: " + localTactic.getTeamName());
 			visitingTactic = match.getVisiting();
 			log.warning("Visitante: " + visitingTactic.getTeamName());
-			frameWork = frameWorkDAO.findByDefaultFrameWork(true);
+			//frameWork = frameWorkDAO.findByDefaultFrameWork(true);
+			frameWork = frameWorkDAO.findById(5904645876613120L);
 			log.warning("FrameWork: " + frameWork.getDescription());
 
 			myDataStoreClassLoader = new MyDataStoreClassLoader(this.getClass()
