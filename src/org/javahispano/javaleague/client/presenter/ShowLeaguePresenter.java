@@ -7,6 +7,8 @@ import java.util.Date;
 
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Heading;
+import org.gwtbootstrap3.client.ui.ListGroup;
+import org.gwtbootstrap3.client.ui.ListGroupItem;
 import org.gwtbootstrap3.client.ui.Paragraph;
 import org.gwtbootstrap3.extras.bootbox.client.Bootbox;
 import org.gwtbootstrap3.extras.bootbox.client.callback.ConfirmCallback;
@@ -26,6 +28,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
+import com.googlecode.objectify.Ref;
 
 /**
  * @author adou
@@ -44,6 +47,12 @@ public class ShowLeaguePresenter implements Presenter {
 		Button getCreateCalendarLeagueButton();
 
 		Paragraph getDescriptionLeague();
+		
+		Paragraph getParagraphDate();
+		
+		ListGroup getHomeTeams();
+		
+		ListGroup getVisitingTeams();
 
 		Heading getNameLeague();
 
@@ -80,6 +89,12 @@ public class ShowLeaguePresenter implements Presenter {
 		}
 		display.getDescriptionLeague().setHTML(league.getDescription());
 		display.getNameLeague().setText(league.getName());
+		display.getParagraphDate().setText(league.getCreation().toString());
+		for(Ref<User> u : league.getUsers()) {
+			ListGroupItem l = new ListGroupItem();
+			l.setText(u.get().getTactic().getTeamName());
+			display.getHomeTeams().add(l);
+		}
 	}
 
 	@Override

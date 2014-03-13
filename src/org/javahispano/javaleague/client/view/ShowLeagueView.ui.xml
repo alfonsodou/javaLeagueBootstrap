@@ -31,15 +31,34 @@
 								Calendario Liga
 							</ui:msg>
 						</b:Button>
-
 					</b:Column>
 					<b:Column size="MD_5" offset="MD_1">
-						<b:Paragraph>
-							<ui:msg key="registerUserText">Registrándote en javaLeague podrás crear tus
-								propias ligas y competir contra tus amigos !!!</ui:msg>
-						</b:Paragraph>
-						<b:Image type="CIRCLE" url="images/logo_small.png" />
-						<b:Image type="ROUNDED" url="images/logoJavaHispano.png" />
+						<b:NavTabs>
+							<b:TabListItem active="true" target="#tabDate"
+								toggle="TAB" ui:field="tabListItemDate">
+								<ui:msg key="date">Jornada</ui:msg>
+							</b:TabListItem>
+							<b:TabListItem target="#tabClasification" toggle="TAB"
+								ui:field="tabListItemClasification">
+								<ui:msg key="clasification">Clasificación</ui:msg>
+							</b:TabListItem>
+						</b:NavTabs>
+						<b:TabContent>
+							<b:TabPane active="true" b:id="tabDate" ui:field="tabPaneDate">
+								<b:Paragraph ui:field="paragraphDate"></b:Paragraph>
+								<b:Row>
+									<b:Column size="MD_2">
+										<b:ListGroup ui:field="homeTeams"></b:ListGroup>
+									</b:Column>
+									<b:Column size="MD_1"></b:Column>
+									<b:Column size="MD_2">
+										<b:ListGroup ui:field="visitingTeams"></b:ListGroup>
+									</b:Column>
+								</b:Row>
+							</b:TabPane>
+							<b:TabPane b:id="tabClasification" ui:field="tabPaneClasificacion">
+							</b:TabPane>
+						</b:TabContent>
 					</b:Column>
 				</b:Row>
 			</b:PanelBody>
