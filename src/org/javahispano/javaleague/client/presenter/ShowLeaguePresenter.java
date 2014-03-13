@@ -17,7 +17,9 @@ import org.javahispano.javaleague.client.event.ShowMyLeaguesEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
+import org.javahispano.javaleague.shared.domain.CalendarDate;
 import org.javahispano.javaleague.shared.domain.League;
+import org.javahispano.javaleague.shared.domain.Match;
 import org.javahispano.javaleague.shared.domain.User;
 
 import com.google.gwt.core.shared.GWT;
@@ -53,6 +55,8 @@ public class ShowLeaguePresenter implements Presenter {
 		ListGroup getHomeTeams();
 		
 		ListGroup getVisitingTeams();
+		
+		ListGroup getResultMatch();
 
 		Heading getNameLeague();
 
@@ -89,12 +93,22 @@ public class ShowLeaguePresenter implements Presenter {
 		}
 		display.getDescriptionLeague().setHTML(league.getDescription());
 		display.getNameLeague().setText(league.getName());
-		display.getParagraphDate().setText(league.getCreation().toString());
-		for(Ref<User> u : league.getUsers()) {
-			ListGroupItem l = new ListGroupItem();
-			l.setText(u.get().getTactic().getTeamName());
-			display.getHomeTeams().add(l);
+		
+		String text;
+		text = "<p>" + league.getCreation().toString() + "</p>";
+		for(Ref<CalendarDate> cd : league.getMatchs()) {
+			for(Ref<Match> m : cd.get().getMatchs()) {
+				text += "<p>" + m.get().getNameLocal();
+				if (m.get().getState() == 0) {
+					text += m.get().getLocalGoals() + " - " + m.get().getVisitingTeamGoals();
+				} else {
+					text += " N/A ";
+				}
+				text += m.get().getNameForeign() + "</p>";
+			}
 		}
+		display.getParagraphDate().setText(text);
+
 	}
 
 	@Override

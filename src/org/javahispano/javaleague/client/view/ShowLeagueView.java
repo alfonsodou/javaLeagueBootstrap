@@ -47,6 +47,8 @@ public class ShowLeagueView extends Composite implements
 	ListGroup homeTeams;
 	@UiField
 	ListGroup visitingTeams;
+	@UiField
+	ListGroup resultMatch;
 
 	public ShowLeagueView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -95,6 +97,11 @@ public class ShowLeagueView extends Composite implements
 	@Override
 	public ListGroup getVisitingTeams() {
 		return visitingTeams;
+	}
+
+	@Override
+	public ListGroup getResultMatch() {
+		return resultMatch;
 	}
 
 }

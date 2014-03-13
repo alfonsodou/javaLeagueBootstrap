@@ -15,10 +15,12 @@ import org.javahispano.javaleague.javacup.shared.MatchShared;
 import org.javahispano.javaleague.server.AppLib;
 import org.javahispano.javaleague.server.classloader.MyDataStoreClassLoader;
 import org.javahispano.javaleague.server.domain.FrameWorkDAO;
+import org.javahispano.javaleague.server.domain.MatchByteDAO;
 import org.javahispano.javaleague.server.domain.MatchDAO;
 import org.javahispano.javaleague.server.domain.TacticUserDAO;
 import org.javahispano.javaleague.shared.domain.FrameWork;
 import org.javahispano.javaleague.shared.domain.Match;
+import org.javahispano.javaleague.shared.domain.MatchByte;
 import org.javahispano.javaleague.shared.domain.TacticUser;
 
 import com.google.appengine.api.blobstore.BlobKey;
@@ -32,6 +34,7 @@ public class PlayMatchServlet extends HttpServlet {
 			.getName());
 	private MyDataStoreClassLoader myDataStoreClassLoader;
 	private MatchDAO matchDAO = new MatchDAO();
+	private MatchByteDAO matchByteDAO = new MatchByteDAO();
 	private TacticUserDAO tacticUserDAO = new TacticUserDAO();
 	private FrameWorkDAO frameWorkDAO = new FrameWorkDAO();
 
@@ -82,8 +85,11 @@ public class PlayMatchServlet extends HttpServlet {
 			vo = loadClass(visitingTactic, a);
 
 			MatchShared matchShared = a.execute(lo, vo);
-
-			match.setMatch(matchShared.getMatch());
+			MatchByte matchByte = new MatchByte();
+			matchByte.setJvc(matchShared.getMatch());
+			matchByte = matchByteDAO.save(matchByte);
+			
+			match.setMatchByteId(matchByte.getId());
 			match.setLocalGoals(matchShared.getGoalsLocal());
 			match.setVisitingTeamGoals(matchShared.getGoalsVisiting());
 			match.setLocalPossesion(matchShared.getPosessionLocal());

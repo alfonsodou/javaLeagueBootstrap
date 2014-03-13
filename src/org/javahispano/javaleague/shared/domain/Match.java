@@ -40,7 +40,7 @@ public class Match implements Serializable {
 
 	private double localTeamPossesion;
 
-	private byte[] match;
+	private Long matchByteId;
 
 	private Date execution;
 
@@ -57,7 +57,6 @@ public class Match implements Serializable {
 		this.visitingTeamGoals = 0;
 		this.localTeamGoals = 0;
 		this.localTeamPossesion = 0;
-		this.match = null;
 		this.state = AppLib.MATCH_SCHEDULED;
 	}
 
@@ -109,14 +108,6 @@ public class Match implements Serializable {
 		this.localTeamPossesion = d;
 	}
 
-	public byte[] getMatch() {
-		return match;
-	}
-
-	public void setMatch(byte[] match) {
-		this.match = match;
-	}
-
 	public Date getExecution() {
 		return execution;
 	}
@@ -163,4 +154,19 @@ public class Match implements Serializable {
 		this.state = state;
 	}
 
+	/**
+	 * @return the matchByteId
+	 */
+	public Long getMatchByteId() {
+		return matchByteId;
+	}
+
+	/**
+	 * @param matchByteId the matchByteId to set
+	 */
+	public void setMatchByteId(Long matchByteId) {
+		this.matchByteId = matchByteId;
+	}
+
+	
 }
