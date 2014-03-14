@@ -143,7 +143,7 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 
 	}
 
-	@Override
+/*	@Override
 	public League createCalendarLeague(League league) {
 		int n = league.getUsers().size();
 		//int[][][] temp = crearLiguilla(n);
@@ -206,8 +206,72 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 		league = leagueDAO.save(league);
 
 		return league;
-	}
+	}*/
 
+	@Override
+	public League createCalendarLeague(League league) {
+		int n = league.getUsers().size();
+		int[][][] temp = crearLiguilla(n);
+		
+		int home, away, swap;
+		int partidos = n * (n - 1) / 2;
+		int fechas = partidos / (n / 2);
+		int partidosPorFecha = partidos / fechas;
+		CalendarDate calendarDate;
+		Match match;
+		Date start = new Date();
+		Queue queue = QueueFactory.getDefaultQueue();
+		
+		logger.warning("Equipos: " + n);
+		logger.warning("Total partidos: " + partidos);
+		logger.warning("Total fechas: " + fechas);
+		logger.warning("Partidos por fecha: " + partidosPorFecha);
+
+		for (int round = 0; round < fechas; round++) {
+			logger.warning("Fecha: " + round);
+			
+			calendarDate = new CalendarDate();
+			calendarDate.setStart(start);
+			calendarDate.setFinish(start);
+			calendarDate.setLeagueId(league.getId());
+
+			for (int m = 0; m < partidosPorFecha; m++) {
+				logger.warning("Fecha: " + round + " :: Partido: " + m);
+				
+				match = new Match();
+				match.setExecution(start);
+				match.setVisualization(start);
+				
+				int found[] = new int[]{temp[round][m][0], temp[round][m][1]};
+				
+				home = found[0];
+				away = found[1]; 
+			
+				match.setLocal(league.getUsers().get(home).get()
+						.getTactic());
+				match.setVisiting(league.getUsers().get(away).get()
+						.getTactic());
+				match.setNameLocal(league.getUsers().get(home).get()
+						.getTactic().getTeamName());
+				match.setNameForeign(league.getUsers().get(away).get()
+						.getTactic().getTeamName());
+				match = matchDAO.save(match);
+				calendarDate.addMatch(match);
+
+				queue.add(TaskOptions.Builder.withUrl("/playMatch").param(
+						"matchID", match.getId().toString()));
+			}
+			calendarDate = calendarDateDAO.save(calendarDate);
+			league.addCalendarDate(calendarDate);
+			start = addMinutesToDate(start, 5);
+		}
+
+		league = leagueDAO.save(league);
+
+		return league;
+	}
+	
+	
 	/**
 	 * Metodo practico para crear liguillas todos contra todos, se debe indicar
 	 * 'n' como la cantidad de equipos. Retorna un array donde: el primer indice

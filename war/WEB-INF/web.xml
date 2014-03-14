@@ -142,6 +142,16 @@
 		<url-pattern>/manageFrameWork</url-pattern>
 	</servlet-mapping>
 
+	<!-- ===================== ScheduleMatchs Servlet ===================== -->
+	<servlet>
+		<servlet-name>ScheduleMatchs</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.servlets.ScheduleMatchsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ScheduleMatchs</servlet-name>
+		<url-pattern>/cron/scheduleMatchs</url-pattern>
+	</servlet-mapping>
+
 	<!-- ===================== GWTUpload Servlet ===================== -->
 	<context-param>
 		<!-- max size of the upload request -->
@@ -183,6 +193,18 @@
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
+
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>cron</web-resource-name>
+			<url-pattern>/cron/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+	</security-constraint>
+
 
 	<servlet>
 		<servlet-name>SystemServiceServlet</servlet-name>

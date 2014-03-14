@@ -8,7 +8,6 @@ import java.util.Date;
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Heading;
 import org.gwtbootstrap3.client.ui.ListGroup;
-import org.gwtbootstrap3.client.ui.ListGroupItem;
 import org.gwtbootstrap3.client.ui.Paragraph;
 import org.gwtbootstrap3.extras.bootbox.client.Bootbox;
 import org.gwtbootstrap3.extras.bootbox.client.callback.ConfirmCallback;
@@ -94,7 +93,7 @@ public class ShowLeaguePresenter implements Presenter {
 		display.getDescriptionLeague().setHTML(league.getDescription());
 		display.getNameLeague().setText(league.getName());
 		
-		String text;
+/*		String text;
 		text = "<p>" + league.getCreation().toString() + "</p>";
 		for(Ref<CalendarDate> cd : league.getMatchs()) {
 			for(Ref<Match> m : cd.get().getMatchs()) {
@@ -107,7 +106,7 @@ public class ShowLeaguePresenter implements Presenter {
 				text += m.get().getNameForeign() + "</p>";
 			}
 		}
-		display.getParagraphDate().setText(text);
+		display.getParagraphDate().setHTML(text);*/
 
 	}
 
