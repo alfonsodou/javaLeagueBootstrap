@@ -9,6 +9,7 @@ import org.javahispano.javaleague.server.AppLib;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Load;
 
 @Entity
@@ -42,10 +43,12 @@ public class Match implements Serializable {
 
 	private Long matchByteId;
 
+	@Index
 	private Date execution;
 
 	private Date visualization;
 	
+	@Index
 	private int state;
 
 	public Match() {

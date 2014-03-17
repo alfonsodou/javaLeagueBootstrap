@@ -6,6 +6,7 @@ package org.javahispano.javaleague.server.domain;
 import static org.javahispano.javaleague.server.domain.OfyService.ofy;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.javahispano.javaleague.shared.domain.Match;
@@ -44,4 +45,11 @@ public class MatchDAO {
 			partidos.add(fetched);
 		}
 	}
+	
+	public List<Match> getMatchsDate(Date date) {
+		List<Match> m = ofy().load().type(Match.class).filter("state", 0).filter("execution <", date).list();
+		
+		return m;
+	}
+
 }

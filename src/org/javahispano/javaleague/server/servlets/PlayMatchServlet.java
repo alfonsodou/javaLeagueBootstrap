@@ -93,6 +93,7 @@ public class PlayMatchServlet extends HttpServlet {
 			match.setLocalGoals(matchShared.getGoalsLocal());
 			match.setVisitingTeamGoals(matchShared.getGoalsVisiting());
 			match.setLocalPossesion(matchShared.getPosessionLocal());
+			match.setState(1);
 
 			// actualizamos estadisticas
 			localTactic.addGoalsFor(match.getLocalGoals());

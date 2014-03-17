@@ -4,12 +4,25 @@
 package org.javahispano.javaleague.server.servlets;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.javahispano.javaleague.server.domain.MatchDAO;
+import org.javahispano.javaleague.shared.domain.Match;
+
+import com.google.appengine.api.datastore.DatastoreFailureException;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Transaction;
+import com.google.appengine.api.taskqueue.Queue;
+import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskOptions;
 
 /**
  * @author adou
@@ -23,10 +36,35 @@ public class ScheduleMatchsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger
 			.getLogger(ScheduleMatchsServlet.class.getName());
-	
-	public void doPost(HttpServletRequest req, HttpServletResponse res)
+	private static Queue queue = QueueFactory.getQueue("league");
+	private static MatchDAO matchDAO = new MatchDAO();
+	private static DatastoreService ds = DatastoreServiceFactory
+			.getDatastoreService();
+
+	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
-	
+		List<Match> matchs = matchDAO.getMatchsDate(new Date());
+		int counter;
+		Transaction txn = null;
+
+		counter = 0;
+		for (Match m : matchs) {
+			try {
+				if (counter == 0) {
+					 txn = ds.beginTransaction();
+				}
+				queue.add(TaskOptions.Builder.withUrl("/playMatch").param(
+						"matchID", m.getId().toString()));
+				counter++;
+				if (counter == 5) {
+					txn.commit();
+					counter = 0;
+				}
+			} catch (DatastoreFailureException e) {
+			}
+
+		}
+
 	}
 
 }
