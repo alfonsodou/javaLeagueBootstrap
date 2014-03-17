@@ -1,6 +1,8 @@
 package org.javahispano.javaleague.server.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -116,10 +118,15 @@ public class PlayMatchServlet extends HttpServlet {
 			visitingTactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_NO);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			log.warning(e.getClass().getCanonicalName());
 			log.warning(e.getClass().getName());
 			log.warning(e.getMessage());
+			
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			log.warning("stackTrace -> " + sw.toString());
+			
 			match.setState(AppLib.MATCH_ERROR);
 			localTactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_NO);
 			visitingTactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_NO);
