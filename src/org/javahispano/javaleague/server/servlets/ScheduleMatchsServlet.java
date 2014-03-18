@@ -44,19 +44,17 @@ public class ScheduleMatchsServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		List<Match> matchs = matchDAO.getMatchsDate(new Date());
-		Transaction txn;
 
 		for (Match m : matchs) {
 			try {
 
-				txn = ds.beginTransaction();
-
 				queue.add(TaskOptions.Builder.withUrl("/playMatch").param(
 						"matchID", m.getId().toString()));
+				
+				m.setState(2);
+				matchDAO.save(m);
 
-				txn.commit();
-
-			} catch (DatastoreFailureException e) {
+			} catch (Exception e) {
 				log.warning(e.getMessage());
 			}
 

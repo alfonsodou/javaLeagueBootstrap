@@ -1,6 +1,7 @@
 <queue-entries>
   <queue>
     <name>league</name>
-    <rate>5/s</rate>
+    <rate>20/s</rate>
+    <max-concurrent-requests>1</max-concurrent-requests>
   </queue>
 </queue-entries>

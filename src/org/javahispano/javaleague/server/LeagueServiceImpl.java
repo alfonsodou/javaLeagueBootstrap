@@ -194,7 +194,7 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 			}
 			calendarDate = calendarDateDAO.save(calendarDate);
 			league.addCalendarDate(calendarDate);
-			start = addMinutesToDate(start, 5);
+			//start = addMinutesToDate(start, 5);
 		}
 
 		league = leagueDAO.save(league);
