@@ -66,8 +66,8 @@ public class PlayMatchServlet extends HttpServlet {
 			visitingTactic = match.getVisiting();
 			log.warning("Visitante: " + visitingTactic.getTeamName());
 			//frameWork = frameWorkDAO.findByDefaultFrameWork(true);
-			frameWork = frameWorkDAO.findById(5904645876613120L);
-			log.warning("FrameWork: " + frameWork.getDescription());
+			frameWork = frameWorkDAO.findById(5108624154165248L);
+			log.warning("FrameWork: " + frameWork.getName());
 
 			myDataStoreClassLoader = new MyDataStoreClassLoader(this.getClass()
 					.getClassLoader());
@@ -154,12 +154,17 @@ public class PlayMatchServlet extends HttpServlet {
 				Map.Entry e = (Map.Entry) it.next();
 
 				String name = new String((String) e.getKey());
+				
+				log.warning("loadClass 1ª iteracion -> " + name);
 
 				myDataStoreClassLoader.addClass(name, (byte[]) e.getValue());
 
 			} catch (Exception e) {
 
 				log.warning(e.getMessage());
+				StringWriter sw = new StringWriter();
+				e.printStackTrace(new PrintWriter(sw));
+				log.warning("stackTrace -> " + sw.toString());
 			}
 
 		}
@@ -172,14 +177,20 @@ public class PlayMatchServlet extends HttpServlet {
 
 				String name = new String((String) e.getKey());
 
+				log.warning("loadClass 2ª iteracion -> " + name);
+				
 				cz = myDataStoreClassLoader.loadClass(name);
 
 				if (a.isTactic(cz)) {
 					result = cz;
+					break;
 				}
 			} catch (Exception e) {
 
 				log.warning(e.getMessage());
+				StringWriter sw = new StringWriter();
+				e.printStackTrace(new PrintWriter(sw));
+				log.warning("stackTrace -> " + sw.toString());
 			}
 
 		}

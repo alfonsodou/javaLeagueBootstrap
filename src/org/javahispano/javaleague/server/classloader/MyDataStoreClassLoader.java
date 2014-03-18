@@ -72,7 +72,7 @@ public class MyDataStoreClassLoader extends ClassLoader {
 	}
 
 	public Map<String, byte[]> addClassJar(BlobKey key) throws IOException {
-		final Map<String, byte[]> byteStreams = new HashMap<String, byte[]>();
+		final Map<String, byte[]> tempByteStreams = new HashMap<String, byte[]>();
 		InputStream in = new ByteArrayInputStream(readBlobFully(key));
 		ZipInputStream zin = new ZipInputStream(in);
 		ZipScanner.scan(zin, new ZipEntryHandler() {
@@ -81,24 +81,25 @@ public class MyDataStoreClassLoader extends ClassLoader {
 					throws IOException {
 				String name = entry.getName();
 				if (name.contains(".class")) {
-					//logger.warning("addClassJar :: class name: " + name);
 					name = name.substring(0, name.indexOf(".class"))
 							.replaceAll("/", ".");
-					if (byteStreams.containsKey(name)) {
+					logger.warning("addClassJar :: class name: " + name);
+					if (tempByteStreams.containsKey(name)) {
 						logger.warning("duplicate defintion of class/resource "
 								+ name + ". It will be ignored");
 					} else {
-						byteStreams.put(name, ZipScanner.readZipBytes(entry, in));
-//						addClass(name, ZipScanner.readZipBytes(entry, in));
+						tempByteStreams.put(name,
+								ZipScanner.readZipBytes(entry, in));
+						// addClass(name, ZipScanner.readZipBytes(entry, in));
 					}
 				}
 			}
 
 		});
-		
-		return byteStreams;
+
+		return tempByteStreams;
 	}
-	
+
 	public void addClassJarFramework(BlobKey key) throws IOException {
 		InputStream in = new ByteArrayInputStream(readBlobFully(key));
 		ZipInputStream zin = new ZipInputStream(in);
@@ -108,20 +109,23 @@ public class MyDataStoreClassLoader extends ClassLoader {
 					throws IOException {
 				String name = entry.getName();
 				if (name.contains(".class")) {
-					//logger.warning("addClassJarFramework :: class name: " + name);
 					name = name.substring(0, name.indexOf(".class"))
 							.replaceAll("/", ".");
+					logger.warning("addClassJarFramework :: class name: "
+							+ name);
 					if (byteStreams.containsKey(name)) {
 						logger.warning("duplicate defintion of class/resource "
 								+ name + ". It will be ignored");
 					} else {
-						addClass(name, ZipScanner.readZipBytes(entry, in));
+						byteStreams.put(name,
+								ZipScanner.readZipBytes(entry, in));
+						// addClass(name, ZipScanner.readZipBytes(entry, in));
 					}
 				}
 			}
 
 		});
-	}	
+	}
 
 	public void addClassBlob(String name, BlobKey key) throws IOException {
 		if (byteStreams.containsKey(name)) {
