@@ -89,6 +89,9 @@ public class PlayMatchServlet extends HttpServlet {
 			MatchShared matchShared = a.execute(lo, vo);
 			MatchByte matchByte = new MatchByte();
 			matchByte.setJvc(matchShared.getMatch());
+			matchByte.setBin(matchShared.getMatchBin());
+			matchByte.setTimeLocal(matchShared.getTimeLocal());
+			matchByte.setTimeVisita(matchShared.getTimeVisita());
 			matchByte = matchByteDAO.save(matchByte);
 			
 			match.setMatchByteId(matchByte.getId());

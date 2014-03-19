@@ -112,6 +112,16 @@
 		<url-pattern>/serve</url-pattern>
 	</servlet-mapping>
 
+	<!-- ===================== Serve Bin Match Servlet ===================== -->
+	<servlet>
+		<servlet-name>ServeBin</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.servlets.ServeBinServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ServeBin</servlet-name>
+		<url-pattern>/serveBin</url-pattern>
+	</servlet-mapping>
+
 	<!-- ===================== Daytime Servlet ===================== -->
 	<servlet>
 		<servlet-name>Daytime</servlet-name>
@@ -120,6 +130,16 @@
 	<servlet-mapping>
 		<servlet-name>Daytime</servlet-name>
 		<url-pattern>/daytime</url-pattern>
+	</servlet-mapping>
+
+	<!-- ===================== TimeTacticMatch Servlet ===================== -->
+	<servlet>
+		<servlet-name>TimeTacticMatch</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.servlets.TimeTacticMatchServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TimeTacticMatch</servlet-name>
+		<url-pattern>/timeTacticMatch</url-pattern>
 	</servlet-mapping>
 
 	<!-- ===================== AuthenticateUser Servlet ===================== -->

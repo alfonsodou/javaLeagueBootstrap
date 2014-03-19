@@ -29,11 +29,17 @@ public class MatchByte implements Serializable {
 	
 	private byte[] bin;
 	
+	private long[] timeLocal;
+	
+	private long[] timeVisita;
+	
 	public MatchByte() {
 		super();
 		
 		jvc = null;
 		bin = null;
+		timeLocal = null;
+		timeVisita = null;
 	}
 
 	/**
@@ -69,6 +75,34 @@ public class MatchByte implements Serializable {
 	 */
 	public Long getId() {
 		return id;
+	}
+
+	/**
+	 * @return the timeLocal
+	 */
+	public long[] getTimeLocal() {
+		return timeLocal;
+	}
+
+	/**
+	 * @param timeLocal the timeLocal to set
+	 */
+	public void setTimeLocal(long[] timeLocal) {
+		this.timeLocal = timeLocal;
+	}
+
+	/**
+	 * @return the timeVisita
+	 */
+	public long[] getTimeVisita() {
+		return timeVisita;
+	}
+
+	/**
+	 * @param timeVisita the timeVisita to set
+	 */
+	public void setTimeVisita(long[] timeVisita) {
+		this.timeVisita = timeVisita;
 	}
 	
 	
