@@ -8,6 +8,7 @@ import org.javahispano.javaleague.shared.domain.FrameWork;
 import org.javahispano.javaleague.shared.domain.League;
 import org.javahispano.javaleague.shared.domain.Match;
 import org.javahispano.javaleague.shared.domain.MatchByte;
+import org.javahispano.javaleague.shared.domain.MatchByteBin;
 import org.javahispano.javaleague.shared.domain.PartidoStore;
 import org.javahispano.javaleague.shared.domain.TacticUser;
 import org.javahispano.javaleague.shared.domain.User;
@@ -30,6 +31,7 @@ public class OfyService {
         factory().register(TacticUser.class);
         factory().register(User.class);
         factory().register(MatchByte.class);
+        factory().register(MatchByteBin.class);
      }
 
     public static Objectify ofy() {

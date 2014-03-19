@@ -42,6 +42,8 @@ public class Match implements Serializable {
 	private double localTeamPossesion;
 
 	private Long matchByteId;
+	
+	private Long matchByteBinId;
 
 	@Index
 	private Date execution;
@@ -169,6 +171,20 @@ public class Match implements Serializable {
 	 */
 	public void setMatchByteId(Long matchByteId) {
 		this.matchByteId = matchByteId;
+	}
+
+	/**
+	 * @return the matchByteBinId
+	 */
+	public Long getMatchByteBinId() {
+		return matchByteBinId;
+	}
+
+	/**
+	 * @param matchByteBinId the matchByteBinId to set
+	 */
+	public void setMatchByteBinId(Long matchByteBinId) {
+		this.matchByteBinId = matchByteBinId;
 	}
 
 	

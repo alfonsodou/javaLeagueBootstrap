@@ -1,5 +1,8 @@
 package org.javahispano.javaleague.client.presenter;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import org.gwtbootstrap3.client.ui.Input;
 import org.gwtbootstrap3.client.ui.TextBox;
 import org.javahispano.javaleague.client.event.LoginEvent;
@@ -102,6 +105,25 @@ public class LoginPresenter implements Presenter {
 		new RPCCall<User>() {
 			@Override
 			protected void callService(AsyncCallback<User> cb) {
+				MessageDigest crypt = null;
+
+				try {
+					crypt = java.security.MessageDigest.getInstance("MD5");
+				} catch (NoSuchAlgorithmException e) {
+					Window.alert("MD5 not supported");
+					return;
+				}
+
+				byte[] digested = crypt.digest(display.getPasswordTextBox()
+						.getFormValue().getBytes());
+				String crypt_password = new String();
+
+				// Converts bytes to string
+				for (byte b : digested)
+					crypt_password += Integer.toHexString(0xFF & b);
+
+				Window.alert("crypt_passwd: " + crypt_password);
+
 				userAccountService.login(display.getEmailTextBox().getValue(),
 						display.getPasswordTextBox().getFormValue(), cb);
 			}
@@ -123,5 +145,4 @@ public class LoginPresenter implements Presenter {
 			}
 		}.retry(3);
 	}
-
 }

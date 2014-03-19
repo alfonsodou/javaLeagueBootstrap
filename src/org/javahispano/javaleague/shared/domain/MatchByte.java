@@ -27,8 +27,6 @@ public class MatchByte implements Serializable {
 	
 	private byte[] jvc;
 	
-	private byte[] bin;
-	
 	private long[] timeLocal;
 	
 	private long[] timeVisita;
@@ -37,7 +35,6 @@ public class MatchByte implements Serializable {
 		super();
 		
 		jvc = null;
-		bin = null;
 		timeLocal = null;
 		timeVisita = null;
 	}
@@ -54,20 +51,6 @@ public class MatchByte implements Serializable {
 	 */
 	public void setJvc(byte[] jvc) {
 		this.jvc = jvc;
-	}
-
-	/**
-	 * @return the bin
-	 */
-	public byte[] getBin() {
-		return bin;
-	}
-
-	/**
-	 * @param bin the bin to set
-	 */
-	public void setBin(byte[] bin) {
-		this.bin = bin;
 	}
 
 	/**
