@@ -87,7 +87,6 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 		user.setDateTokenActivate(new Date());
 		user.setTokenActivate(userTokenGenerator.nextSessionId());
 		user.setTactic(tacticUser);
-		// Falta guardar la contraseña encriptada
 
 		Properties props = new Properties();
 		Session session = Session.getDefaultInstance(props, null);

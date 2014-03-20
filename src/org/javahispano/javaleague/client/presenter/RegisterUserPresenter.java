@@ -3,6 +3,9 @@
  */
 package org.javahispano.javaleague.client.presenter;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import org.gwtbootstrap3.client.ui.Form;
 import org.gwtbootstrap3.client.ui.Input;
 import org.gwtbootstrap3.client.ui.Label;
@@ -39,7 +42,7 @@ public class RegisterUserPresenter implements Presenter {
 		HasClickHandlers getRegisterButton();
 
 		TextBox getUserName();
-		
+
 		TextBox getTeamName();
 
 		TextBox getEmail();
@@ -55,7 +58,7 @@ public class RegisterUserPresenter implements Presenter {
 		Label getErrorPasswordSize();
 
 		Label getErrorUserName();
-		
+
 		Label getErrorTeamName();
 
 		Label getErrorRegisterEmail();
@@ -146,15 +149,32 @@ public class RegisterUserPresenter implements Presenter {
 		}
 
 		if (!error) {
+			MessageDigest crypt = null;
+
+			try {
+				crypt = java.security.MessageDigest.getInstance("MD5");
+			} catch (NoSuchAlgorithmException e) {
+				Window.alert("MD5 not supported");
+				return;
+			}
+
+			byte[] digested = crypt.digest(display.getPassword().getFormValue()
+					.getBytes());
+			String crypt_password = new String();
+
+			// Converts bytes to string
+			for (byte b : digested)
+				crypt_password += Integer.toHexString(0xFF & b);
+
 			user.setEmailAddress(this.display.getEmail().getValue());
 			user.setName(this.display.getUserName().getValue());
-			user.setPassword(this.display.getPassword().getFormValue());
+			user.setPassword(crypt_password);
 			this.display.getFormRegisterUser().setVisible(false);
 			new RPCCall<User>() {
 				@Override
 				protected void callService(AsyncCallback<User> cb) {
-					userAccountService.register(user, display.getTeamName().getText(),
-							javaLeagueMessages.adminJavaLeague(),
+					userAccountService.register(user, display.getTeamName()
+							.getText(), javaLeagueMessages.adminJavaLeague(),
 							javaLeagueMessages.subjectEmailRegisterUser(),
 							javaLeagueMessages.bodyEmailRegisterUser(), cb);
 				}
@@ -163,7 +183,7 @@ public class RegisterUserPresenter implements Presenter {
 				public void onSuccess(User result) {
 					if (result != null) {
 						GWT.log("RegisterUserPresenter: Firing RegisterUserEvent");
-						eventBus.fireEvent(new RegisterUserEvent(result));					
+						eventBus.fireEvent(new RegisterUserEvent(result));
 						display.getTextSendEmail().setVisible(true);
 
 					} else {
