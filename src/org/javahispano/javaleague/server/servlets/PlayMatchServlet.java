@@ -101,6 +101,7 @@ public class PlayMatchServlet extends HttpServlet {
 			
 			
 			match.setMatchByteId(matchByte.getId());
+			match.setMatchByteBinId(matchByteBin.getId());
 			match.setLocalGoals(matchShared.getGoalsLocal());
 			match.setVisitingTeamGoals(matchShared.getGoalsVisiting());
 			match.setLocalPossesion(matchShared.getPosessionLocal());

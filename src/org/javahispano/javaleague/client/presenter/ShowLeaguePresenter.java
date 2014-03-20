@@ -48,13 +48,13 @@ public class ShowLeaguePresenter implements Presenter {
 		Button getCreateCalendarLeagueButton();
 
 		Paragraph getDescriptionLeague();
-		
+
 		Paragraph getParagraphDate();
-		
+
 		ListGroup getHomeTeams();
-		
+
 		ListGroup getVisitingTeams();
-		
+
 		ListGroup getResultMatch();
 
 		Heading getNameLeague();
@@ -83,7 +83,7 @@ public class ShowLeaguePresenter implements Presenter {
 	}
 
 	private void ShowLeague() {
-		Date now = new Date();
+		Date now = new Date(); // La fecha hay que solicitarla al servidor !!!!
 		if ((league.getEndSignIn().before(now))
 				|| (user.isJoinLeague(league.getId()))) {
 			display.getJoinLeagueButton().setEnabled(false);
@@ -92,21 +92,26 @@ public class ShowLeaguePresenter implements Presenter {
 		}
 		display.getDescriptionLeague().setHTML(league.getDescription());
 		display.getNameLeague().setText(league.getName());
-		
-/*		String text;
+
+		String text;
 		text = "<p>" + league.getCreation().toString() + "</p>";
-		for(Ref<CalendarDate> cd : league.getMatchs()) {
-			for(Ref<Match> m : cd.get().getMatchs()) {
-				text += "<p>" + m.get().getNameLocal();
-				if (m.get().getState() == 0) {
-					text += m.get().getLocalGoals() + " - " + m.get().getVisitingTeamGoals();
-				} else {
-					text += " N/A ";
+		if (league.getMatchs() != null) {
+			for (Ref<CalendarDate> cd : league.getMatchs()) {
+				for (Ref<Match> m : cd.get().getMatchs()) {
+					
+					if (m.get().getState() == 1) {
+						text += "<p><a href='/serve?id=" + m.get().getId() + "'>" + m.get().getNameLocal();
+						text += " " + m.get().getLocalGoals() + " - "
+								+ m.get().getVisitingTeamGoals() + " ";
+						text += m.get().getNameForeign() + "</a></p>";
+					} else {
+						text += "<p>" + m.get().getNameLocal() + " N/A " + m.get().getNameForeign() + "</p>";
+					}
+					
 				}
-				text += m.get().getNameForeign() + "</p>";
 			}
 		}
-		display.getParagraphDate().setHTML(text);*/
+		display.getParagraphDate().setHTML(text);
 
 	}
 
@@ -148,12 +153,13 @@ public class ShowLeaguePresenter implements Presenter {
 	}
 
 	private void doCreateCalendarLeague() {
-		
+
 		new RPCCall<League>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Error createCalendarLeague: " + caught.getMessage());
+				Window.alert("Error createCalendarLeague: "
+						+ caught.getMessage());
 			}
 
 			@Override
@@ -161,14 +167,14 @@ public class ShowLeaguePresenter implements Presenter {
 				league = result;
 				GWT.log("ShowLeaguePresenter: firing CreateCalenderLeagueEvent. LeagueId: "
 						+ league.getId());
-				eventBus.fireEvent(new CreateCalendarLeagueEvent(league));				
+				eventBus.fireEvent(new CreateCalendarLeagueEvent(league));
 			}
 
 			@Override
 			protected void callService(AsyncCallback<League> cb) {
 				leagueService.createCalendarLeague(league, cb);
 			}
-			
+
 		}.retry(3);
 	}
 

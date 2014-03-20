@@ -32,7 +32,7 @@ public class ServeBinServlet extends HttpServlet {
 
 		long id = Long.parseLong(req.getParameter("id").replace("_", ""));
 		Match p = dao.findById(id);
-		MatchByteBin mb = matchByteBinDAO.findById(p.getMatchByteId());
+		MatchByteBin mb = matchByteBinDAO.findById(p.getMatchByteBinId());
 
 		res.getOutputStream().write(mb.getBin());
 		res.flushBuffer();
