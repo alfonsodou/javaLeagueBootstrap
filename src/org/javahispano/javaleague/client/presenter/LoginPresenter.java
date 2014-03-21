@@ -122,8 +122,6 @@ public class LoginPresenter implements Presenter {
 				for (byte b : digested)
 					crypt_password += Integer.toHexString(0xFF & b);
 
-				//Window.alert("crypt_passwd: " + crypt_password);
-
 				userAccountService.login(display.getEmailTextBox().getValue(),
 						crypt_password, cb);
 			}

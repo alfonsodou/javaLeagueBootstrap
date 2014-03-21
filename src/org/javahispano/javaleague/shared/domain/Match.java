@@ -44,6 +44,8 @@ public class Match implements Serializable {
 	private Long matchByteId;
 	
 	private Long matchByteBinId;
+	
+	private Long leagueId;
 
 	@Index
 	private Date execution;
@@ -63,6 +65,9 @@ public class Match implements Serializable {
 		this.localTeamGoals = 0;
 		this.localTeamPossesion = 0;
 		this.state = AppLib.MATCH_SCHEDULED;
+		this.matchByteBinId = 0L;
+		this.matchByteId = 0L;
+		this.leagueId = 0L;
 	}
 
 	public Long getId() {
@@ -185,6 +190,20 @@ public class Match implements Serializable {
 	 */
 	public void setMatchByteBinId(Long matchByteBinId) {
 		this.matchByteBinId = matchByteBinId;
+	}
+
+	/**
+	 * @return the leagueId
+	 */
+	public Long getLeagueId() {
+		return leagueId;
+	}
+
+	/**
+	 * @param leagueId the leagueId to set
+	 */
+	public void setLeagueId(Long leagueId) {
+		this.leagueId = leagueId;
 	}
 
 	

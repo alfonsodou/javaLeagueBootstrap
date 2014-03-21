@@ -173,6 +173,7 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 				logger.warning("Fecha: " + round + " :: Partido: " + m);
 				
 				match = new Match();
+				match.setLeagueId(league.getId());
 				match.setExecution(start);
 				match.setVisualization(start);
 				
