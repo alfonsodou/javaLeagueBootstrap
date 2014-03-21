@@ -10,6 +10,8 @@ import org.javahispano.javaleague.client.event.CreateLeagueEvent;
 import org.javahispano.javaleague.client.event.CreateLeagueEventHandler;
 import org.javahispano.javaleague.client.event.PlayMatchEvent;
 import org.javahispano.javaleague.client.event.PlayMatchEventHandler;
+import org.javahispano.javaleague.client.event.SearchLeagueEvent;
+import org.javahispano.javaleague.client.event.SearchLeagueEventHandler;
 import org.javahispano.javaleague.client.event.ShowLeagueEvent;
 import org.javahispano.javaleague.client.event.ShowLeagueEventHandler;
 import org.javahispano.javaleague.client.event.ShowMyLeaguesEvent;
@@ -24,6 +26,7 @@ import org.javahispano.javaleague.client.presenter.CreateLeaguePresenter;
 import org.javahispano.javaleague.client.presenter.MyLeaguesPresenter;
 import org.javahispano.javaleague.client.presenter.Presenter;
 import org.javahispano.javaleague.client.presenter.RegisterUserPresenter;
+import org.javahispano.javaleague.client.presenter.SearchLeaguePresenter;
 import org.javahispano.javaleague.client.presenter.ShowLeaguePresenter;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
 import org.javahispano.javaleague.client.service.LoginServiceAsync;
@@ -34,6 +37,7 @@ import org.javahispano.javaleague.client.service.UserFileServiceAsync;
 import org.javahispano.javaleague.client.view.CreateLeagueView;
 import org.javahispano.javaleague.client.view.MyLeaguesView;
 import org.javahispano.javaleague.client.view.RegisterUserView;
+import org.javahispano.javaleague.client.view.SearchLeagueView;
 import org.javahispano.javaleague.client.view.ShowLeagueView;
 import org.javahispano.javaleague.shared.domain.League;
 import org.javahispano.javaleague.shared.domain.Match;
@@ -65,6 +69,7 @@ public class AppController implements ValueChangeHandler<String> {
 	private Long matchID;
 	private Match match;
 	private League league;
+	private String textToSearch;
 
 	public AppController(TacticServiceAsync rpcService,
 			LoginServiceAsync loginService,
@@ -183,6 +188,21 @@ public class AppController implements ValueChangeHandler<String> {
 
 		});
 
+		eventBus.addHandler(SearchLeagueEvent.TYPE,
+				new SearchLeagueEventHandler() {
+					@Override
+					public void onSearchLeagueEvent(SearchLeagueEvent event) {
+						GWT.log("AppController: SearchLeague Event received");
+						doSearchLeague(event.getSearch());
+					}
+
+				});
+
+	}
+
+	private void doSearchLeague(String search) {
+		textToSearch = search;
+		History.newItem("searchLeague");
 	}
 
 	private void doShowMyLeagues() {
@@ -275,9 +295,16 @@ public class AppController implements ValueChangeHandler<String> {
 				presenter.go(JavaLeagueApp.get().getCenterPanel());
 
 				return;
-			}  else if (token.equals("createLeague")) {
+			} else if (token.equals("createLeague")) {
 				presenter = new CreateLeaguePresenter(leagueService, eventBus,
 						new CreateLeagueView());
+				JavaLeagueApp.get().getCenterPanel().clear();
+				presenter.go(JavaLeagueApp.get().getCenterPanel());
+
+				return;
+			} else if (token.equals("searchLeague")) {
+				presenter = new SearchLeaguePresenter(textToSearch,
+						leagueService, eventBus, new SearchLeagueView());
 				JavaLeagueApp.get().getCenterPanel().clear();
 				presenter.go(JavaLeagueApp.get().getCenterPanel());
 

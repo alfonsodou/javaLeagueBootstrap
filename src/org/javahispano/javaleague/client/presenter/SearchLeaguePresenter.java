@@ -5,21 +5,16 @@ package org.javahispano.javaleague.client.presenter;
 
 import java.util.List;
 
+import org.gwtbootstrap3.client.ui.Alert;
 import org.gwtbootstrap3.client.ui.CellTable;
 import org.gwtbootstrap3.client.ui.TextBox;
-import org.javahispano.javaleague.client.event.CreateLeagueEvent;
-import org.javahispano.javaleague.client.event.SearchLeagueEvent;
 import org.javahispano.javaleague.client.event.ShowLeagueEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
-import org.javahispano.javaleague.client.service.MatchServiceAsync;
-import org.javahispano.javaleague.client.service.TacticServiceAsync;
 import org.javahispano.javaleague.shared.domain.League;
 
 import com.google.gwt.core.shared.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.cellview.client.TextColumn;
@@ -32,15 +27,17 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.googlecode.objectify.Ref;
 
+
+
 /**
  * @author adou
  * 
  */
-public class MyLeaguesPresenter implements Presenter {
+public class SearchLeaguePresenter implements Presenter {
 
 	public interface Display {
 		Widget asWidget();
-
+		
 		HasClickHandlers getCreateLeagueButton();
 
 		HasClickHandlers getSearchLeagueButton();
@@ -48,41 +45,42 @@ public class MyLeaguesPresenter implements Presenter {
 		CellTable<League> getCellTableLeagues();
 
 		TextBox getSearchLeagueTextBox();
-
+		
+		Alert getEmptyAlert();
 	}
 
-	private final SimpleEventBus eventBus;
 	private final Display display;
-	private final TacticServiceAsync tacticService;
-	private final MatchServiceAsync matchService;
 	private final LeagueServiceAsync leagueService;
-
+	private final SimpleEventBus eventBus;
+	private final String textToSearch;
+	
 	private List<Ref<League>> leagues;
 
 	private JavaLeagueMessages javaLeagueMessages = GWT
 			.create(JavaLeagueMessages.class);
 
-	private ListDataProvider<League> dataGridProvider = new ListDataProvider<League>();
-
-	public MyLeaguesPresenter(TacticServiceAsync tacticService,
-			MatchServiceAsync matchService, LeagueServiceAsync leagueService,
+	private ListDataProvider<League> dataGridProvider = new ListDataProvider<League>();	
+	
+	public SearchLeaguePresenter(String textToSearch, LeagueServiceAsync leagueService,
 			SimpleEventBus eventBus, Display display) {
-		this.display = display;
-		this.eventBus = eventBus;
-		this.tacticService = tacticService;
+		this.textToSearch = textToSearch;
 		this.leagueService = leagueService;
-		this.matchService = matchService;
+		this.eventBus = eventBus;
+		this.display = display;
 
-		fetchLeagues();
+		bind();
+	}
+
+	private void bind() {
 
 	}
 
 	@Override
 	public void go(HasWidgets container) {
+		fetchLeagues();
+
 		container.clear();
 		container.add(display.asWidget());
-
-		bind();
 	}
 
 	private void fetchLeagues() {
@@ -90,48 +88,35 @@ public class MyLeaguesPresenter implements Presenter {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Error fetching leagues: " + caught.getMessage());
+				Window.alert("Error fetching leagues: "
+						+ caught.getMessage());
 			}
 
 			@Override
 			public void onSuccess(List<Ref<League>> result) {
-				if (result.size() > 0) {
+				if ((result != null) && (result.size() > 0)) {
 					leagues = result;
-
-					doShowMyLeagues();
+					
+					display.getEmptyAlert().setVisible(false);
+					
+					doShowLeagues();
+				} else {
+					display.getEmptyAlert().setVisible(true);
 				}
 
 			}
 
 			@Override
 			protected void callService(AsyncCallback<List<Ref<League>>> cb) {
-				leagueService.getMyLeagues(cb);
+				leagueService.getLeagues(textToSearch, cb);
+				
 			}
 
 		}.retry(3);
-	}
-
-	private void bind() {
-		this.display.getCreateLeagueButton().addClickHandler(
-				new ClickHandler() {
-					public void onClick(ClickEvent event) {
-						GWT.log("MyLeaguesPresenter: firing CreateLeagueEvent");
-						eventBus.fireEvent(new CreateLeagueEvent());
-					}
-				});
-
-		this.display.getSearchLeagueButton().addClickHandler(
-				new ClickHandler() {
-					public void onClick(ClickEvent event) {
-						GWT.log("MyLeaguesPresenter: firing SearchLeagueEvent");
-						eventBus.fireEvent(new SearchLeagueEvent(display
-								.getSearchLeagueTextBox().getValue()));
-					}
-				});
 
 	}
-
-	private void doShowMyLeagues() {
+	
+	private void doShowLeagues() {
 		TextColumn<League> col1 = new TextColumn<League>() {
 
 			@Override
@@ -186,7 +171,7 @@ public class MyLeaguesPresenter implements Presenter {
 					public void onSelectionChange(SelectionChangeEvent event) {
 						League selected = selectionModel.getSelectedObject();
 						if (selected != null) {
-							GWT.log("MyLeaguesPresenter: Firing ShowLeagueEvent. LeagueName: "
+							GWT.log("SearchLeaguesPresenter: Firing ShowLeagueEvent. LeagueName: "
 									+ selected.getName());
 							eventBus.fireEvent(new ShowLeagueEvent(selected));
 						}
@@ -195,4 +180,5 @@ public class MyLeaguesPresenter implements Presenter {
 
 		dataGridProvider.flush();
 	}
+	
 }

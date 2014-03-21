@@ -21,6 +21,8 @@ public interface LeagueService extends RemoteService {
 	League createLeague(League league);
 
 	List<Ref<League>> getMyLeagues();
+	
+	List<Ref<League>> getLeagues(String textToSearch);
 
 	League getLeague(Long id);
 

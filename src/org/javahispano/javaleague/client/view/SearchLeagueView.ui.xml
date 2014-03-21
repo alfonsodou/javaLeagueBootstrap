@@ -10,7 +10,7 @@
 		<b:Panel>
 			<b:PanelHeader>
 				<b:Heading size="3">
-					<ui:msg key="headerText">Mis Ligas</ui:msg>
+					<ui:msg key="headerText">Buscador de Ligas</ui:msg>
 				</b:Heading>
 			</b:PanelHeader>
 			<b:PanelBody>
@@ -56,6 +56,10 @@
 					<b:Column size="MD_12">
 						<b:CellTable bordered="true" condensed="true" striped="true"
 							hover="true" width="100%" ui:field="cellTableLeagues" />
+						<b:Alert ui:field="emptyAlert" type="DANGER">
+							<strong><ui:msg key="empty">Sin resultdos</ui:msg></strong>
+						</b:Alert>
+
 					</b:Column>
 				</b:Row>
 			</b:PanelBody>

@@ -3,10 +3,10 @@
  */
 package org.javahispano.javaleague.client.view;
 
+import org.gwtbootstrap3.client.ui.Alert;
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.CellTable;
 import org.gwtbootstrap3.client.ui.TextBox;
-import org.javahispano.javaleague.client.presenter.MyLeaguesPresenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -15,16 +15,20 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
+import org.javahispano.javaleague.client.presenter.SearchLeaguePresenter;
+import org.javahispano.javaleague.shared.domain.League;
+
 /**
  * @author adou
  *
  */
-public class MyLeaguesView extends Composite implements MyLeaguesPresenter.Display {
+public class SearchLeagueView extends Composite implements SearchLeaguePresenter.Display {
 
-	private static MyLeaguesViewUiBinder uiBinder = GWT
-			.create(MyLeaguesViewUiBinder.class);
+	private static SearchLeagueViewUiBinder uiBinder = GWT
+			.create(SearchLeagueViewUiBinder.class);
 
-	interface MyLeaguesViewUiBinder extends UiBinder<Widget, MyLeaguesView> {
+	interface SearchLeagueViewUiBinder extends
+			UiBinder<Widget, SearchLeagueView> {
 	}
 	
 	@UiField
@@ -35,8 +39,10 @@ public class MyLeaguesView extends Composite implements MyLeaguesPresenter.Displ
 	CellTable cellTableLeagues;
 	@UiField
 	TextBox searchLeagueTextBox;
+	@UiField
+	Alert emptyAlert;
 
-	public MyLeaguesView() {
+	public SearchLeagueView() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
@@ -46,18 +52,23 @@ public class MyLeaguesView extends Composite implements MyLeaguesPresenter.Displ
 	}
 
 	@Override
-	public CellTable getCellTableLeagues() {
-		return cellTableLeagues;
-	}
-
-	@Override
 	public HasClickHandlers getSearchLeagueButton() {
 		return searchLeagueButton;
 	}
 
 	@Override
+	public CellTable<League> getCellTableLeagues() {
+		return cellTableLeagues;
+	}
+
+	@Override
 	public TextBox getSearchLeagueTextBox() {
 		return searchLeagueTextBox;
+	}
+
+	@Override
+	public Alert getEmptyAlert() {
+		return emptyAlert;
 	}
 
 }

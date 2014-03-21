@@ -147,7 +147,7 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 	public League createCalendarLeague(League league) {
 		int n = league.getUsers().size();
 		int[][][] temp = crearLiguilla(n);
-		
+
 		int home, away, swap;
 		int partidos = n * (n - 1) / 2;
 		int fechas = partidos / (n / 2);
@@ -155,7 +155,7 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 		CalendarDate calendarDate;
 		Match match;
 		Date start = new Date();
-		
+
 		logger.warning("Equipos: " + n);
 		logger.warning("Total partidos: " + partidos);
 		logger.warning("Total fechas: " + fechas);
@@ -163,7 +163,7 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 
 		for (int round = 0; round < fechas; round++) {
 			logger.warning("Fecha: " + round);
-			
+
 			calendarDate = new CalendarDate();
 			calendarDate.setStart(start);
 			calendarDate.setFinish(start);
@@ -171,21 +171,19 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 
 			for (int m = 0; m < partidosPorFecha; m++) {
 				logger.warning("Fecha: " + round + " :: Partido: " + m);
-				
+
 				match = new Match();
 				match.setLeagueId(league.getId());
 				match.setExecution(start);
 				match.setVisualization(start);
-				
-				int found[] = new int[]{temp[round][m][0], temp[round][m][1]};
-				
+
+				int found[] = new int[] { temp[round][m][0], temp[round][m][1] };
+
 				home = found[0];
-				away = found[1]; 
-			
-				match.setLocal(league.getUsers().get(home).get()
-						.getTactic());
-				match.setVisiting(league.getUsers().get(away).get()
-						.getTactic());
+				away = found[1];
+
+				match.setLocal(league.getUsers().get(home).get().getTactic());
+				match.setVisiting(league.getUsers().get(away).get().getTactic());
 				match.setNameLocal(league.getUsers().get(home).get()
 						.getTactic().getTeamName());
 				match.setNameForeign(league.getUsers().get(away).get()
@@ -195,15 +193,14 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 			}
 			calendarDate = calendarDateDAO.save(calendarDate);
 			league.addCalendarDate(calendarDate);
-			//start = addMinutesToDate(start, 5);
+			// start = addMinutesToDate(start, 5);
 		}
 
 		league = leagueDAO.save(league);
 
 		return league;
 	}
-	
-	
+
 	/**
 	 * Metodo practico para crear liguillas todos contra todos, se debe indicar
 	 * 'n' como la cantidad de equipos. Retorna un array donde: el primer indice
@@ -298,6 +295,23 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 		calendarDate.setTime(date);
 		calendarDate.add(Calendar.MINUTE, minutes);
 		return calendarDate.getTime();
+	}
+
+	@Override
+	public List<Ref<League>> getLeagues(String textToSearch) {
+		List<Ref<League>> leagues = null;
+
+		try {
+			if ((textToSearch == null) || (textToSearch.isEmpty())) {
+				leagues = leagueDAO.getAllLeagues();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.warning(e.getMessage());
+		}
+
+		return leagues;
 	}
 
 }

@@ -26,7 +26,8 @@
 							<ui:msg key="dropLeagueButton" description="Drop League Button">Borrar Liga
 							</ui:msg>
 						</b:Button>
-						<b:Button ui:field="createCalendarLeagueButton">
+						<b:Button ui:field="createCalendarLeagueButton" type="PRIMARY"
+							icon="CALENDAR">
 							<ui:msg key="createCalendarLeagueButton" description="Create Calendar League Button">Crear
 								Calendario Liga
 							</ui:msg>

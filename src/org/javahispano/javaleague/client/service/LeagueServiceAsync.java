@@ -28,4 +28,7 @@ public interface LeagueServiceAsync {
 
 	void createCalendarLeague(League league, AsyncCallback<League> callback);
 
+	void getLeagues(String textToSearch,
+			AsyncCallback<List<Ref<League>>> callback);
+
 }
