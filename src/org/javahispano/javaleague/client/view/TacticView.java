@@ -7,6 +7,7 @@ import gwtupload.client.SingleUploader;
 
 import org.gwtbootstrap3.client.ui.Badge;
 import org.gwtbootstrap3.client.ui.Button;
+import org.gwtbootstrap3.client.ui.DescriptionData;
 import org.gwtbootstrap3.client.ui.Form;
 import org.gwtbootstrap3.client.ui.Label;
 import org.gwtbootstrap3.client.ui.TextBox;
@@ -31,15 +32,15 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	@UiField
 	Button updateTacticButton;
 	@UiField
-	Label winsField;
+	DescriptionData winsField;
 	@UiField
-	Label lostField;
+	DescriptionData lostField;
 	@UiField
-	Label tiedField;
+	DescriptionData tiedField;
 	@UiField
-	Label goalsForField;
+	DescriptionData goalsForField;
 	@UiField
-	Label goalsAgainstField;
+	DescriptionData goalsAgainstField;
 	@UiField
 	Button playMatchButton;
 	@UiField

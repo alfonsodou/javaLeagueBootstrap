@@ -59,34 +59,28 @@
 						</g:FormPanel>
 					</b:Column>
 					<b:Column size="MD_5" offset="MD_1">
-						<b:Label>
-							<ui:msg key="teamName" description="Team Name">Nombre del equipo</ui:msg>
-						</b:Label>
-						<b:Label ui:field="teamNameField"></b:Label>
-						<b:Label>
-							<ui:msg key="winsMatch">Ganados: </ui:msg>
-						</b:Label>
-						<b:Label ui:field="winsField"></b:Label>
-						<b:Label>
-							<ui:msg key="tiedMatch">Empatados:
-							</ui:msg>
-						</b:Label>
-						<b:Label ui:field="tiedField"></b:Label>
-						<b:Label>
-							<ui:msg key="lostMatch">Perdidos:
-							</ui:msg>
-						</b:Label>
-						<b:Label ui:field="lostField"></b:Label>
-						<b:Label>
-							<ui:msg key="goalsFor">Goles
-								a favor:
-							</ui:msg>
-						</b:Label>
-						<b:Label ui:field="goalsForField"></b:Label>
-						<b:Label>
-							<ui:msg key="goalsAgainst">Goles en contra: </ui:msg>
-						</b:Label>
-						<b:Label ui:field="goalsAgainstField"></b:Label>
+						<b:Description horizontal="true">
+							<b:DescriptionTitle>
+								<ui:msg key="winsMatch">Ganados</ui:msg>
+							</b:DescriptionTitle>
+							<b:DescriptionData ui:field="winsField"></b:DescriptionData>
+							<b:DescriptionTitle>
+								<ui:msg key="tiedMatch">Empatados</ui:msg>
+							</b:DescriptionTitle>
+							<b:DescriptionData ui:field="tiedField"></b:DescriptionData>
+							<b:DescriptionTitle>
+								<ui:msg key="lostMatch">Perdidos</ui:msg>
+							</b:DescriptionTitle>
+							<b:DescriptionData ui:field="lostField"></b:DescriptionData>
+							<b:DescriptionTitle>
+								<ui:msg key="goalsFor">Goles a favor</ui:msg>
+							</b:DescriptionTitle>
+							<b:DescriptionData ui:field="goalsForField"></b:DescriptionData>
+							<b:DescriptionTitle>
+								<ui:msg key="goalsAgainst">Goles en contra</ui:msg>
+							</b:DescriptionTitle>
+							<b:DescriptionData ui:field="goalsAgainstField"></b:DescriptionData>
+						</b:Description>
 						<b:Button ui:field="playMatchButton">
 							<ui:msg key="playMatchButton" description="Play Match Button">Jugar Partido
 								Amistoso
