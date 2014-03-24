@@ -3,6 +3,7 @@ package org.javahispano.javaleague.server.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.nio.ByteBuffer;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -17,17 +18,19 @@ import org.javahispano.javaleague.javacup.shared.MatchShared;
 import org.javahispano.javaleague.server.AppLib;
 import org.javahispano.javaleague.server.classloader.MyDataStoreClassLoader;
 import org.javahispano.javaleague.server.domain.FrameWorkDAO;
-import org.javahispano.javaleague.server.domain.MatchByteBinDAO;
-import org.javahispano.javaleague.server.domain.MatchByteDAO;
 import org.javahispano.javaleague.server.domain.MatchDAO;
 import org.javahispano.javaleague.server.domain.TacticUserDAO;
 import org.javahispano.javaleague.shared.domain.FrameWork;
 import org.javahispano.javaleague.shared.domain.Match;
-import org.javahispano.javaleague.shared.domain.MatchByte;
-import org.javahispano.javaleague.shared.domain.MatchByteBin;
 import org.javahispano.javaleague.shared.domain.TacticUser;
 
 import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.tools.cloudstorage.GcsFileOptions;
+import com.google.appengine.tools.cloudstorage.GcsFilename;
+import com.google.appengine.tools.cloudstorage.GcsOutputChannel;
+import com.google.appengine.tools.cloudstorage.GcsService;
+import com.google.appengine.tools.cloudstorage.GcsServiceFactory;
+import com.google.appengine.tools.cloudstorage.RetryParams;
 
 public class PlayMatchServlet extends HttpServlet {
 	/**
@@ -38,10 +41,13 @@ public class PlayMatchServlet extends HttpServlet {
 			.getName());
 	private MyDataStoreClassLoader myDataStoreClassLoader;
 	private MatchDAO matchDAO = new MatchDAO();
-	private MatchByteDAO matchByteDAO = new MatchByteDAO();
-	private MatchByteBinDAO matchByteBinDAO = new MatchByteBinDAO();
 	private TacticUserDAO tacticUserDAO = new TacticUserDAO();
 	private FrameWorkDAO frameWorkDAO = new FrameWorkDAO();
+
+	private final GcsService gcsService = GcsServiceFactory
+			.createGcsService(RetryParams.getDefaultInstance());
+
+	private GcsFilename filename;
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
@@ -63,12 +69,12 @@ public class PlayMatchServlet extends HttpServlet {
 
 			match = matchDAO.findById(matchID);
 			log.warning("Match: " + match.getVisualization());
-			
+
 			localTactic = match.getLocal();
 			log.warning("Local: " + localTactic.getTeamName());
 			visitingTactic = match.getVisiting();
 			log.warning("Visitante: " + visitingTactic.getTeamName());
-			//frameWork = frameWorkDAO.findByDefaultFrameWork(true);
+			// frameWork = frameWorkDAO.findByDefaultFrameWork(true);
 			frameWork = frameWorkDAO.findById(5108624154165248L);
 			log.warning("FrameWork: " + frameWork.getName());
 
@@ -90,22 +96,21 @@ public class PlayMatchServlet extends HttpServlet {
 			vo = loadClass(visitingTactic, a);
 
 			MatchShared matchShared = a.execute(lo, vo);
-			MatchByte matchByte = new MatchByte();
-			matchByte.setJvc(matchShared.getMatch());
-			matchByte.setTimeLocal(matchShared.getTimeLocal());
-			matchByte.setTimeVisita(matchShared.getTimeVisita());
-			matchByte = matchByteDAO.save(matchByte);
-			MatchByteBin matchByteBin = new MatchByteBin();
-			matchByteBin.setBin(matchShared.getMatchBin());
-			matchByteBin = matchByteBinDAO.save(matchByteBin);
-			
-			
-			match.setMatchByteId(matchByte.getId());
-			match.setMatchByteBinId(matchByteBin.getId());
+
+			filename = new GcsFilename(AppLib.bucket, match.getLeagueId()
+					.toString() + "/" + match.getId().toString() + ".jvc");
+			writeToFile(filename, matchShared.getMatch());
+
+			filename = new GcsFilename(AppLib.bucket, match.getLeagueId()
+					.toString() + "/" + match.getId().toString() + ".bin");
+			writeToFile(filename, matchShared.getMatchBin());
+
 			match.setLocalGoals(matchShared.getGoalsLocal());
 			match.setVisitingTeamGoals(matchShared.getGoalsVisiting());
 			match.setLocalPossesion(matchShared.getPosessionLocal());
 			match.setState(1);
+			match.setTimeLocal(matchShared.getTimeLocal());
+			match.setTimeVisita(matchShared.getTimeVisita());
 
 			// actualizamos estadisticas
 			localTactic.addGoalsFor(match.getLocalGoals());
@@ -128,15 +133,15 @@ public class PlayMatchServlet extends HttpServlet {
 			visitingTactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_NO);
 
 		} catch (Exception e) {
-			
+
 			log.warning(e.getClass().getCanonicalName());
 			log.warning(e.getClass().getName());
 			log.warning(e.getMessage());
-			
+
 			StringWriter sw = new StringWriter();
 			e.printStackTrace(new PrintWriter(sw));
 			log.warning("stackTrace -> " + sw.toString());
-			
+
 			match.setState(AppLib.MATCH_ERROR);
 			localTactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_NO);
 			visitingTactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_NO);
@@ -155,7 +160,8 @@ public class PlayMatchServlet extends HttpServlet {
 		Class<?> result = null;
 		Map<String, byte[]> byteStream;
 
-		byteStream = myDataStoreClassLoader.addClassJar(new BlobKey(tactic.getZipClasses()));
+		byteStream = myDataStoreClassLoader.addClassJar(new BlobKey(tactic
+				.getZipClasses()));
 
 		Iterator it = byteStream.entrySet().iterator();
 		while (it.hasNext()) {
@@ -184,7 +190,7 @@ public class PlayMatchServlet extends HttpServlet {
 				Map.Entry e = (Map.Entry) it1.next();
 
 				String name = new String((String) e.getKey());
-			
+
 				cz = myDataStoreClassLoader.loadClass(name);
 
 				if (a.isTactic(cz)) {
@@ -206,4 +212,14 @@ public class PlayMatchServlet extends HttpServlet {
 		return null;
 
 	}
+
+	private void writeToFile(GcsFilename fileName, byte[] content)
+			throws IOException {
+		@SuppressWarnings("resource")
+		GcsOutputChannel outputChannel = gcsService.createOrReplace(fileName,
+				GcsFileOptions.getDefaultInstance());
+		outputChannel.write(ByteBuffer.wrap(content));
+		outputChannel.close();
+	}
+
 }

@@ -12,10 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.javahispano.javaleague.server.domain.MatchByteDAO;
 import org.javahispano.javaleague.server.domain.MatchDAO;
 import org.javahispano.javaleague.shared.domain.Match;
-import org.javahispano.javaleague.shared.domain.MatchByte;
 
 /**
  * @author adou
@@ -23,8 +21,8 @@ import org.javahispano.javaleague.shared.domain.MatchByte;
  */
 public class TimeTacticMatchServlet extends HttpServlet {
 	/**
-	 * Falta implementar la seguridad.
-	 * Solo puede acceder a los datos el usuario propietario de la tactica
+	 * Falta implementar la seguridad. Solo puede acceder a los datos el usuario
+	 * propietario de la tactica
 	 */
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger
@@ -34,15 +32,12 @@ public class TimeTacticMatchServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		MatchDAO matchDAO = new MatchDAO();
-		MatchByteDAO matchByteDAO = new MatchByteDAO();
 		Match match = null;
-		MatchByte matchByte = null;
 		long[] time;
 		String result = "";
 		try {
 			match = matchDAO.findById(Long.parseLong(req
 					.getParameter("matchID").replace("_", "")));
-			matchByte = matchByteDAO.findById(match.getMatchByteId());
 		} catch (Exception e) {
 			log.warning(e.getMessage());
 		}
@@ -50,11 +45,11 @@ public class TimeTacticMatchServlet extends HttpServlet {
 		res.setContentType("text/plain");
 		PrintWriter out = res.getWriter();
 		if (req.getParameter("tactic").equals("local")) {
-			time = matchByte.getTimeLocal();
+			time = match.getTimeLocal();
 		} else {
-			time = matchByte.getTimeVisita();
+			time = match.getTimeVisita();
 		}
-		for(int i = 0; i < time.length; i++) {
+		for (int i = 0; i < time.length; i++) {
 			result += time[i] + ",";
 		}
 		result = result.substring(0, result.length() - 1);

@@ -41,10 +41,6 @@ public class Match implements Serializable {
 
 	private double localTeamPossesion;
 
-	private Long matchByteId;
-	
-	private Long matchByteBinId;
-	
 	private Long leagueId;
 
 	@Index
@@ -54,6 +50,10 @@ public class Match implements Serializable {
 	
 	@Index
 	private int state;
+	
+	private long[] timeLocal;
+	
+	private long[] timeVisita;
 
 	public Match() {
 		super();
@@ -65,9 +65,10 @@ public class Match implements Serializable {
 		this.localTeamGoals = 0;
 		this.localTeamPossesion = 0;
 		this.state = AppLib.MATCH_SCHEDULED;
-		this.matchByteBinId = 0L;
-		this.matchByteId = 0L;
 		this.leagueId = 0L;
+		this.timeLocal = null;
+		this.timeVisita = null;
+		
 	}
 
 	public Long getId() {
@@ -165,34 +166,6 @@ public class Match implements Serializable {
 	}
 
 	/**
-	 * @return the matchByteId
-	 */
-	public Long getMatchByteId() {
-		return matchByteId;
-	}
-
-	/**
-	 * @param matchByteId the matchByteId to set
-	 */
-	public void setMatchByteId(Long matchByteId) {
-		this.matchByteId = matchByteId;
-	}
-
-	/**
-	 * @return the matchByteBinId
-	 */
-	public Long getMatchByteBinId() {
-		return matchByteBinId;
-	}
-
-	/**
-	 * @param matchByteBinId the matchByteBinId to set
-	 */
-	public void setMatchByteBinId(Long matchByteBinId) {
-		this.matchByteBinId = matchByteBinId;
-	}
-
-	/**
 	 * @return the leagueId
 	 */
 	public Long getLeagueId() {
@@ -206,5 +179,32 @@ public class Match implements Serializable {
 		this.leagueId = leagueId;
 	}
 
+	/**
+	 * @return the timeLocal
+	 */
+	public long[] getTimeLocal() {
+		return timeLocal;
+	}
+
+	/**
+	 * @param timeLocal the timeLocal to set
+	 */
+	public void setTimeLocal(long[] timeLocal) {
+		this.timeLocal = timeLocal;
+	}
+
+	/**
+	 * @return the timeVisita
+	 */
+	public long[] getTimeVisita() {
+		return timeVisita;
+	}
+
+	/**
+	 * @param timeVisita the timeVisita to set
+	 */
+	public void setTimeVisita(long[] timeVisita) {
+		this.timeVisita = timeVisita;
+	}
 	
 }

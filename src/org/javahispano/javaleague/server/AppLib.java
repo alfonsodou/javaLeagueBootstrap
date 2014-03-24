@@ -19,6 +19,8 @@ public class AppLib {
 	public static final int FRIENDLY_MATCH_SCHEDULED = 2; // tactica con partido
 															// amistoso
 															// programado
+	
+	public static final String bucket = "javaleague.appspot.com"; // bucket for Google Cloud Storage
 
 
 

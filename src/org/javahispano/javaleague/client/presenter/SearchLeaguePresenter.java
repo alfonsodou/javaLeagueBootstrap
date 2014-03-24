@@ -67,6 +67,8 @@ public class SearchLeaguePresenter implements Presenter {
 		this.leagueService = leagueService;
 		this.eventBus = eventBus;
 		this.display = display;
+		
+		display.getEmptyAlert().setVisible(false);
 
 		bind();
 	}
