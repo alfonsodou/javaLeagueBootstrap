@@ -104,6 +104,7 @@ public class TacticPresenter implements Presenter {
 
 	public void bind() {
 
+		
 		display.getUploader().addOnFinishUploadHandler(onFinishUploaderHandler);
 
 		display.getUpdateButton().addClickHandler(new ClickHandler() {
