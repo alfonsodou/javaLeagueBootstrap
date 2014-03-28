@@ -3,13 +3,9 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:b="urn:import:org.gwtbootstrap3.client.ui"
 	xmlns:b2="urn:import:org.gwtbootstrap3.extras.datetimepicker.client.ui"
 	xmlns:summer="urn:import:org.gwtbootstrap3.extras.summernote.client.ui"
-
 	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
-
-	<ui:image field='logo' src='../resources/images/logo_small.png' />
-	<ui:image field='javahispano' src='../resources/images/logoJavaHispano.png' />
 
 	<b:Panel>
 		<b:PanelBody>

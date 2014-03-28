@@ -6,6 +6,8 @@ import org.javahispano.javaleague.client.event.AddTacticEvent;
 import org.javahispano.javaleague.client.event.AddTacticEventHandler;
 import org.javahispano.javaleague.client.event.CancelUpdateTacticEvent;
 import org.javahispano.javaleague.client.event.CancelUpdateTacticEventHandler;
+import org.javahispano.javaleague.client.event.CreateCalendarLeagueEvent;
+import org.javahispano.javaleague.client.event.CreateCalendarLeagueEventHandler;
 import org.javahispano.javaleague.client.event.CreateLeagueEvent;
 import org.javahispano.javaleague.client.event.CreateLeagueEventHandler;
 import org.javahispano.javaleague.client.event.PlayMatchEvent;
@@ -22,6 +24,7 @@ import org.javahispano.javaleague.client.event.UpdateTacticEvent;
 import org.javahispano.javaleague.client.event.UpdateTacticEventHandler;
 import org.javahispano.javaleague.client.event.ViewMatchEvent;
 import org.javahispano.javaleague.client.event.ViewMatchEventHandler;
+import org.javahispano.javaleague.client.presenter.CreateCalendarLeaguePresenter;
 import org.javahispano.javaleague.client.presenter.CreateLeaguePresenter;
 import org.javahispano.javaleague.client.presenter.MyLeaguesPresenter;
 import org.javahispano.javaleague.client.presenter.Presenter;
@@ -34,6 +37,7 @@ import org.javahispano.javaleague.client.service.MatchServiceAsync;
 import org.javahispano.javaleague.client.service.TacticServiceAsync;
 import org.javahispano.javaleague.client.service.UserAccountServiceAsync;
 import org.javahispano.javaleague.client.service.UserFileServiceAsync;
+import org.javahispano.javaleague.client.view.CreateCalendarLeagueView;
 import org.javahispano.javaleague.client.view.CreateLeagueView;
 import org.javahispano.javaleague.client.view.MyLeaguesView;
 import org.javahispano.javaleague.client.view.RegisterUserView;
@@ -198,6 +202,16 @@ public class AppController implements ValueChangeHandler<String> {
 
 				});
 
+		eventBus.addHandler(CreateCalendarLeagueEvent.TYPE,
+				new CreateCalendarLeagueEventHandler() {
+					@Override
+					public void onCreateCalendarLeague(
+							CreateCalendarLeagueEvent event) {
+						GWT.log("AppController: CreateCalendarLeague Event received");
+						doCreateCalendarLeague(event.getLeague());
+					}
+				});
+
 	}
 
 	private void doSearchLeague(String search) {
@@ -243,6 +257,11 @@ public class AppController implements ValueChangeHandler<String> {
 
 	private void doAddLeague() {
 		History.newItem("addLeague");
+	}
+
+	private void doCreateCalendarLeague(League l) {
+		league = l;
+		History.newItem("createCalendarLeague");
 	}
 
 	@Override
@@ -309,6 +328,12 @@ public class AppController implements ValueChangeHandler<String> {
 				presenter.go(JavaLeagueApp.get().getCenterPanel());
 
 				return;
+			} else if (token.equals("createCalendarLeague")) {
+				presenter = new CreateCalendarLeaguePresenter(leagueService,
+						eventBus, league, new CreateCalendarLeagueView());
+				JavaLeagueApp.get().getCenterPanel().clear();
+				presenter.go(JavaLeagueApp.get().getCenterPanel());
+
 			} else if (token.equals("updateTactic")) {
 				/*
 				 * JavaLeagueApp .get() .getTacticPresenter()

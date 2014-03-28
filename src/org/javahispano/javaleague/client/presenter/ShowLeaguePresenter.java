@@ -147,7 +147,10 @@ public class ShowLeaguePresenter implements Presenter {
 		display.getCreateCalendarLeagueButton().addClickHandler(
 				new ClickHandler() {
 					public void onClick(ClickEvent event) {
-						doCreateCalendarLeague();
+					//	doCreateCalendarLeague();
+						GWT.log("ShowLeaguePresenter: firing CreateCalenderLeagueEvent. LeagueId: "
+								+ league.getId());
+						eventBus.fireEvent(new CreateCalendarLeagueEvent(league));					
 					}
 				});
 	}
