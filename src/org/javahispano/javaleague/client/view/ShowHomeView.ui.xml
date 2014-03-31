@@ -16,7 +16,7 @@
 			<b:Heading size="2">Bienvenido a javaLeague</b:Heading>
 
 			<b:Paragraph>
-				<b:Image url="images/javacup_logo.png" />
+				<b:Image url="images/javacup_logo.png" width="100%"/>
 			</b:Paragraph>
 			<b:Row>
 				<b:Column size="MD_6">
@@ -39,7 +39,7 @@
 				<b:Column size="MD_5" offset="MD_1">
 					<b:Paragraph>
 						<iframe src='//www.youtube.com/embed/Dvbkd_OpHYg'
-							frameborder='0' allowfullscreen='true' width='100%'></iframe>
+							frameborder='0' allowfullscreen='true' width='100%' height='315'></iframe>
 					</b:Paragraph>
 
 				</b:Column>
