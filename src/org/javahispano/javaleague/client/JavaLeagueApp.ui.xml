@@ -28,7 +28,7 @@
 
 			<g:SimplePanel ui:field="footerPanel">
 
-				<b:Paragraph>
+				<b:Paragraph ui:field="footerPanelParagraph">
 					2014 -
 					<a href="http://www.javahispano.org">javaHispano</a>
 					::

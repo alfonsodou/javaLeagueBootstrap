@@ -3,6 +3,7 @@
  */
 package org.javahispano.javaleague.client;
 
+import org.gwtbootstrap3.client.ui.Paragraph;
 import org.javahispano.javaleague.client.channel.Channel;
 import org.javahispano.javaleague.client.channel.ChannelFactory;
 import org.javahispano.javaleague.client.channel.SocketListener;
@@ -99,6 +100,8 @@ public class JavaLeagueApp implements EntryPoint {
 	SimplePanel centerPanel;
 	@UiField
 	SimplePanel headerPanel;
+	@UiField
+	Paragraph footerPanelParagraph;
 
 	/**
 	 * Gets the singleton application instance.
@@ -113,6 +116,10 @@ public class JavaLeagueApp implements EntryPoint {
 
 	public SimplePanel getHeaderPanel() {
 		return headerPanel;
+	}
+
+	public Paragraph getFooterPanelParagraph() {
+		return footerPanelParagraph;
 	}
 
 	@Override
@@ -138,6 +145,11 @@ public class JavaLeagueApp implements EntryPoint {
 				frameWorkService, tacticService, userFileService, matchService,
 				eventBus);
 		menuController.go();
+
+		footerPanelParagraph
+				.setHTML("<b>2014</b> - "
+						+ "<a href='http://www.javahispano.org'>"
+						+ "<img src='images/logoJavaHispano.png' /></a>");
 
 		showMainView();
 

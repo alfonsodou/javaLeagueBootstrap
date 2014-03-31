@@ -107,8 +107,8 @@
 						<ui:msg key="registerUserText">Registrándote en javaLeague podrás crear tus
 							propias ligas y competir contra tus amigos !!!</ui:msg>
 					</b:Paragraph>
-					<b:Image type="CIRCLE" url="images/logo_small.png" />
-					<b:Image type="ROUNDED" url="images/logoJavaHispano.png" />
+					<b:Image url="images/logo_small.png" />
+					<b:Image url="images/logoJavaHispano.png" />
 				</b:Column>
 			</b:Row>
 		</b:PanelBody>

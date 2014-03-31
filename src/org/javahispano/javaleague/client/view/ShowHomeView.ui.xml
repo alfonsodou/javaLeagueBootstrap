@@ -6,37 +6,45 @@
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
 
-	<b:Row ui:field="container">
+	<b:Row>
+		<b:Alert type="DANGER" dismissable="true">
+			<strong>
+				<ui:msg key="test">Estamos en pruebas</ui:msg>
+			</strong>
+		</b:Alert>
 		<b:Jumbotron ui:field="jumbotron">
-			<b:Heading size="1">Bienvenido a javaLeague</b:Heading>
+			<b:Heading size="2">Bienvenido a javaLeague</b:Heading>
 
-			<b:Paragraph align="CENTER">
-				<b:Image type="CIRCLE" url="images/javacup_logo.png" />
-				<b:Image type="ROUNDED" url="images/logoJavaHispano.png" />
+			<b:Paragraph>
+				<b:Image url="images/javacup_logo.png" />
+			</b:Paragraph>
+			<b:Row>
+				<b:Column size="MD_6">
+					<b:Paragraph>
+						<ui:msg key="intro2">
+							Descárgate el framework para poder crear tu
+							táctica y
+							empezar a competir.
+						</ui:msg>
+					</b:Paragraph>
+					<b:Paragraph>
+						<ui:msg key="intro3">
+							javaLeague te
+							permitirá crear y participar en
+							diferentes
+							ligas.
+						</ui:msg>
+					</b:Paragraph>
+				</b:Column>
+				<b:Column size="MD_5" offset="MD_1">
+					<b:Paragraph>
+						<iframe src='//www.youtube.com/embed/Dvbkd_OpHYg'
+							frameborder='0' allowfullscreen='true' width='100%'></iframe>
+					</b:Paragraph>
 
-				<ui:msg key="intro1">Registra tu equipo y podrás participar en la
-					primera edición de la liga javaLeague!
-				</ui:msg>
-			</b:Paragraph>
-			<b:Paragraph>
-				<ui:msg key="intro2">
-					javaLeague te
-					permitirá crear y participar en
-					diferentes
-					ligas.
-				</ui:msg>
-			</b:Paragraph>
-			<b:Paragraph>
-				<ui:msg key="intro3">
-					Crea tus
-					propias ligas y reta a tus compañeros
-					de
-					trabajo/estudios, amigos,
-					etc.
-				</ui:msg>
-			</b:Paragraph>
+				</b:Column>
+			</b:Row>
 
 		</b:Jumbotron>
 	</b:Row>
-
 </ui:UiBinder> 
