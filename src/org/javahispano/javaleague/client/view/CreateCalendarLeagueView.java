@@ -26,6 +26,41 @@ public class CreateCalendarLeagueView extends Composite implements
 	
 	@UiField
 	DescriptionData leagueName;
+	@UiField
+	DescriptionData leagueType;
+	@UiField
+	DescriptionData pointsForWin;
+	@UiField
+	DescriptionData pointsForTied;
+	@UiField
+	DescriptionData pointsForLost;
+	@UiField
+	TextBox numberRounds;
+	@UiField
+	DateTimeBox startFirstRound;
+	@UiField
+	Label errorNumberRounds;
+	@UiField
+	CheckBox mondayCheckBox;
+	@UiField
+	CheckBox tuesdayCheckBox;
+	@UiField
+	CheckBox wednesdayCheckBox;
+	@UiField
+	CheckBox thursdayCheckBox;
+	@UiField
+	CheckBox fridayCheckBox;
+	@UiField
+	CheckBox saturdayCheckBox;
+	@UiField
+	CheckBox sundayCheckBox;
+	@UiField
+	Label errorDayRound;
+	@UiField
+	Button createCalendarLeagueButton;
+	@UiField
+	Button cancelCalendarLeagueButton;
+	
 
 	private static CreateCalendarLeagueViewUiBinder uiBinder = GWT
 			.create(CreateCalendarLeagueViewUiBinder.class);
@@ -45,104 +80,87 @@ public class CreateCalendarLeagueView extends Composite implements
 
 	@Override
 	public DescriptionData getLeagueType() {
-		// TODO Auto-generated method stub
-		return null;
+		return leagueType;
 	}
 
 	@Override
 	public DescriptionData getPointsForWin() {
-		// TODO Auto-generated method stub
-		return null;
+		return pointsForWin;
 	}
 
 	@Override
 	public DescriptionData getPointsForTied() {
-		// TODO Auto-generated method stub
-		return null;
+		return pointsForTied;
 	}
 
 	@Override
 	public DescriptionData getPointsForLost() {
-		// TODO Auto-generated method stub
-		return null;
+		return pointsForLost;
 	}
 
 	@Override
 	public TextBox getNumberRounds() {
-		// TODO Auto-generated method stub
-		return null;
+		return numberRounds;
 	}
 
 	@Override
 	public Label getErrorNumberRounds() {
-		// TODO Auto-generated method stub
-		return null;
+		return errorNumberRounds;
 	}
 
 	@Override
-	public DateTimeBox getDateFirstRound() {
-		// TODO Auto-generated method stub
-		return null;
+	public DateTimeBox getStartFirstRound() {
+		return startFirstRound;
 	}
 
 	@Override
 	public CheckBox getMondayCheckBox() {
-		// TODO Auto-generated method stub
-		return null;
+		return mondayCheckBox;
 	}
 
 	@Override
 	public CheckBox getTuesdayCheckBox() {
-		// TODO Auto-generated method stub
-		return null;
+		return tuesdayCheckBox;
 	}
 
 	@Override
 	public CheckBox getWednesdayCheckBox() {
-		// TODO Auto-generated method stub
-		return null;
+		return wednesdayCheckBox;
 	}
 
 	@Override
 	public CheckBox getThursdayCheckBox() {
-		// TODO Auto-generated method stub
-		return null;
+		return thursdayCheckBox;
 	}
 
 	@Override
 	public CheckBox getFridayCheckBox() {
-		// TODO Auto-generated method stub
-		return null;
+		return fridayCheckBox;
 	}
 
 	@Override
 	public CheckBox getSaturdayCheckBox() {
-		// TODO Auto-generated method stub
-		return null;
+		return saturdayCheckBox;
 	}
 
 	@Override
 	public CheckBox getSundayCheckBox() {
-		// TODO Auto-generated method stub
-		return null;
+		return sundayCheckBox;
 	}
 
 	@Override
-	public Label getErrorDaysRound() {
-		// TODO Auto-generated method stub
-		return null;
+	public Label getErrorDayRound() {
+		return errorDayRound;
 	}
 
 	@Override
 	public Button getCreateCalendarLeagueButton() {
-		// TODO Auto-generated method stub
-		return null;
+		return createCalendarLeagueButton;
 	}
 
 	@Override
 	public Button getCancelCalendarLeagueButton() {
-		// TODO Auto-generated method stub
-		return null;
+		return cancelCalendarLeagueButton;
 	}
 
 }

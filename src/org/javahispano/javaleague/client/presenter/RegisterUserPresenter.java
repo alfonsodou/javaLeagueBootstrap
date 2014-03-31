@@ -6,6 +6,7 @@ package org.javahispano.javaleague.client.presenter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Form;
 import org.gwtbootstrap3.client.ui.Input;
 import org.gwtbootstrap3.client.ui.Label;
@@ -39,7 +40,7 @@ public class RegisterUserPresenter implements Presenter {
 
 		Widget asWidget();
 
-		HasClickHandlers getRegisterButton();
+		Button getRegisterButton();
 
 		TextBox getUserName();
 
@@ -173,6 +174,7 @@ public class RegisterUserPresenter implements Presenter {
 			new RPCCall<User>() {
 				@Override
 				protected void callService(AsyncCallback<User> cb) {
+					display.getRegisterButton().setEnabled(false);
 					userAccountService.register(user, display.getTeamName()
 							.getText(), javaLeagueMessages.adminJavaLeague(),
 							javaLeagueMessages.subjectEmailRegisterUser(),

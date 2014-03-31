@@ -89,7 +89,7 @@ public class RegisterUserView extends Composite implements
 	}
 
 	@Override
-	public HasClickHandlers getRegisterButton() {
+	public Button getRegisterButton() {
 		return registerButton;
 	}
 

@@ -9,7 +9,7 @@ import org.gwtbootstrap3.client.ui.DescriptionData;
 import org.gwtbootstrap3.client.ui.Label;
 import org.gwtbootstrap3.client.ui.TextBox;
 import org.gwtbootstrap3.extras.datetimepicker.client.ui.DateTimeBox;
-import org.javahispano.javaleague.client.event.CreateCalendarLeagueEvent;
+import org.javahispano.javaleague.client.event.ShowLeagueEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
 import org.javahispano.javaleague.shared.domain.League;
@@ -44,7 +44,7 @@ public class CreateCalendarLeaguePresenter implements Presenter {
 
 		Label getErrorNumberRounds();
 
-		DateTimeBox getDateFirstRound();
+		DateTimeBox getStartFirstRound();
 
 		CheckBox getMondayCheckBox();
 
@@ -60,7 +60,7 @@ public class CreateCalendarLeaguePresenter implements Presenter {
 
 		CheckBox getSundayCheckBox();
 
-		Label getErrorDaysRound();
+		Label getErrorDayRound();
 
 		Button getCreateCalendarLeagueButton();
 
@@ -83,7 +83,7 @@ public class CreateCalendarLeaguePresenter implements Presenter {
 
 		hideErrorLabels();
 
-		this.display.getSaturdayCheckBox().setEnabled(true);
+		this.display.getSaturdayCheckBox().setValue(true);
 		this.display.getLeagueName().setText(league.getName());
 		this.display.getLeagueType().setText(league.getType().toString());
 		this.display.getNumberRounds().setText(
@@ -111,35 +111,76 @@ public class CreateCalendarLeaguePresenter implements Presenter {
 						doCreateCalendarLeague();
 					}
 				});
+
+		display.getCancelCalendarLeagueButton().addClickHandler(
+				new ClickHandler() {
+					public void onClick(ClickEvent event) {
+						GWT.log("CreateCalendarLeaguePresenter: firing ShowLeagueEvent. LeagueId:  "
+								+ league.getId());
+						eventBus.fireEvent(new ShowLeagueEvent(league));
+					}
+				});
+
 	}
 
 	private void doCreateCalendarLeague() {
+		boolean result = true;
 
-		new RPCCall<League>() {
+		hideErrorLabels();
 
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("Error createCalendarLeague: "
-						+ caught.getMessage());
+		try {
+			if (Integer.parseInt(display.getNumberRounds().getValue()) < 1) {
+				result = false;
+				display.getErrorNumberRounds().setVisible(true);
 			}
+		} catch (Exception e) {
+			result = false;
+			display.getErrorNumberRounds().setVisible(true);
+		}
 
-			@Override
-			public void onSuccess(League result) {
-				league = result;
-				GWT.log("ShowLeaguePresenter: firing CreateCalenderLeagueEvent. LeagueId: "
-						+ league.getId());
-			}
+		if (!((display.getMondayCheckBox().getValue())
+				|| (display.getTuesdayCheckBox().getValue())
+				|| (display.getWednesdayCheckBox().getValue())
+				|| (display.getThursdayCheckBox().getValue())
+				|| (display.getFridayCheckBox().getValue())
+				|| (display.getSaturdayCheckBox().getValue()) || (display
+					.getSundayCheckBox().getValue()))) {
+			result = false;
+			display.getErrorDayRound().setVisible(true);
+		}
 
-			@Override
-			protected void callService(AsyncCallback<League> cb) {
-				leagueService.createCalendarLeague(league, cb);
-			}
+		if (result) {
+			league.setNumberRounds(Integer.parseInt(display.getNumberRounds()
+					.getValue()));
 
-		}.retry(3);
+			new RPCCall<League>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert("Error createCalendarLeague: "
+							+ caught.getMessage());
+				}
+
+				@Override
+				public void onSuccess(League result) {
+					league = result;
+					GWT.log("CreataCalendarLeaguePresenter: firing ShowLeagueLeagueEvent. LeagueId: "
+							+ league.getId());
+					eventBus.fireEvent(new ShowLeagueEvent(league));
+				}
+
+				@Override
+				protected void callService(AsyncCallback<League> cb) {
+					display.getCreateCalendarLeagueButton().setEnabled(false);
+					leagueService.createCalendarLeague(league, cb);
+				}
+
+			}.retry(3);
+		}
 	}
 
 	private void hideErrorLabels() {
-		display.getErrorDaysRound().setVisible(false);
+		display.getErrorDayRound().setVisible(false);
 		display.getErrorNumberRounds().setVisible(false);
 	}
 }

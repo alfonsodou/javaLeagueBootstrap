@@ -30,13 +30,13 @@
 								</b:DescriptionTitle>
 								<b:DescriptionData ui:field="pointsForWin"></b:DescriptionData>
 								<b:DescriptionTitle>
-									<ui:msg key="pointsFotTiedMatch">Puntos por partido empatado</ui:msg>
+									<ui:msg key="pointsFotTied">Puntos por partido empatado</ui:msg>
 								</b:DescriptionTitle>
-								<b:DescriptionData ui:field="pointsForTiedMatch"></b:DescriptionData>
+								<b:DescriptionData ui:field="pointsForTied"></b:DescriptionData>
 								<b:DescriptionTitle>
-									<ui:msg key="pointsForLostMatch">Puntos por partido perdido</ui:msg>
+									<ui:msg key="pointsForLost">Puntos por partido perdido</ui:msg>
 								</b:DescriptionTitle>
-								<b:DescriptionData ui:field="pointsForLostMatch"></b:DescriptionData>
+								<b:DescriptionData ui:field="pointsForLost"></b:DescriptionData>
 							</b:Description>
 
 							<b:FormGroup>
@@ -61,7 +61,7 @@
 							</b:FormGroup>
 
 							<b:FormGroup>
-								<b:FormLabel for="daysRound" addStylesNames="col-lg-2">
+								<b:FormLabel for="daysRound" addStyleNames="col-lg-2">
 									<ui:msg key="daysRound">Selecciona los días</ui:msg>
 								</b:FormLabel>
 								<g:FlowPanel addStyleNames="col-lg-10">
@@ -77,7 +77,7 @@
 									<b:CheckBox b:id="daysRound" ui:field="thursdayCheckBox">
 										<ui:msg key="thursday">Jueves</ui:msg>
 									</b:CheckBox> 
-									<b:CheckBox b:id="daysRound" ui:field="FridayCheckBox">
+									<b:CheckBox b:id="daysRound" ui:field="fridayCheckBox">
 										<ui:msg key="friday">Viernes</ui:msg>
 									</b:CheckBox> 
 									<b:CheckBox b:id="daysRound" ui:field="saturdayCheckBox">
@@ -86,7 +86,7 @@
 									<b:CheckBox b:id="daysRound" ui:field="sundayCheckBox">
 										<ui:msg key="sunday">Domingo</ui:msg>
 									</b:CheckBox> 
-									<b:Label ui:field="errorDayRounds" type="DANGER">
+									<b:Label ui:field="errorDayRound" type="DANGER">
 										<ui:msg key="daysNumberRound">Debes seleccionar al menos un día de la
 											semana</ui:msg>
 									</b:Label>
