@@ -4,12 +4,6 @@
 	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
-	<ui:image field='logo' src='../resources/images/logo_small.png' />
-	<ui:image field='twitter' src='../resources/images/twitterlogo.gif' />
-	<ui:image field='google' src='../resources/images/googlelogo.gif' />
-	<ui:image field='facebook' src='../resources/images/facebooklogo.jpeg' />
-	<ui:image field='javahispano' src='../resources/images/logoJavaHispano.png' />
-
 
 	<b:Panel>
 		<b:PanelBody>

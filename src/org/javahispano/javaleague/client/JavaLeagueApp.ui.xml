@@ -5,9 +5,6 @@
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
 
-	<ui:image field='logo_javahispano' src='resources/images/logoJavaHispano.png' />
-	<ui:image field='duke_on_gae' src='resources/images/duke-on-gae.png' />
-
 	<ui:style>
         .buttons button {
             margin: 0.5em;

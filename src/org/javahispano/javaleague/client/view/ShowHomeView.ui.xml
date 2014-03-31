@@ -1,50 +1,42 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
-	xmlns:b="urn:import:org.gwtbootstrap3.client.ui"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:b="urn:import:org.gwtbootstrap3.client.ui"
 	xmlns:d="urn:import:org.javahispano.javaleague.client.widget"
 	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
 
-	<ui:image field='logo_javacup' src='./../resources/images/javacup.logo.png' />
-	<ui:image field='logo_duke1' src='./../resources/images/image0021.jpg' />
-	<ui:image field='eclipse' src='./../resources/images/eclipse.png' />
-	<ui:image field='netbeans' src='./../resources/images/netbeans.png' />
+	<b:Row ui:field="container">
+		<b:Jumbotron ui:field="jumbotron">
+			<b:Heading size="1">Bienvenido a javaLeague</b:Heading>
 
+			<b:Paragraph align="center">
+				<b:Image type="CIRCLE" url="images/javacup_logo.png" />
+				<b:Image type="ROUNDED" url="images/logoJavaHispano.png" />
 
-	<ui:style>
+				<ui:msg key="intro1">Registra tu equipo y podrás participar en la
+					primera edición de la liga javaLeague!
+				</ui:msg>
+			</b:Paragraph>
+			<b:Paragraph>
+				<ui:msg key="intro2">
+					javaLeague te
+					permitirá crear y participar en
+					diferentes
+					ligas.
+				</ui:msg>
+			</b:Paragraph>
+			<b:Paragraph>
+				<ui:msg key="intro3">
+					Crea tus
+					propias ligas y reta a tus compañeros
+					de
+					trabajo/estudios, amigos,
+					etc.
+				</ui:msg>
+			</b:Paragraph>
 
-	</ui:style>
-
-			<b:Row ui:field="container">
-				<b:Jumbotron ui:field="jumbotron">
-					<b:Heading size="1">Demo javaLeague</b:Heading>
-
-					<b:Paragraph>
-						<ui:msg key="intro1">Programa
-							tu propio equipo de fútbol !!!
-						</ui:msg>
-					</b:Paragraph>
-					<b:Paragraph>
-						<ui:msg key="intro2">
-							javaLeague te
-							permitirá crear y participar en
-							diferentes
-							ligas.
-						</ui:msg>
-					</b:Paragraph>
-					<b:Paragraph>
-						<ui:msg key="intro3">
-							Crea tus
-							propias ligas y reta a tus compañeros
-							de
-							trabajo/estudios, amigos,
-							etc.
-						</ui:msg>
-					</b:Paragraph>
-
-				</b:Jumbotron>
-			</b:Row>
+		</b:Jumbotron>
+	</b:Row>
 
 </ui:UiBinder> 
