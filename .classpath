@@ -11,8 +11,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/objectify-4.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/guava-16.0.1.jar"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/gwtbootstrap3-0.6-20140311.153049-10.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/gwtbootstrap3-extras-0.6-20140311.153317-8.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-gcs-client-0.3.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/joda-time-2.3.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
@@ -20,5 +18,7 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gwtbootstrap3-0.7-20140325.120501-1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gwtbootstrap3-extras-0.7-20140325.120725-1.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

@@ -10,7 +10,7 @@
 		<b:Jumbotron ui:field="jumbotron">
 			<b:Heading size="1">Bienvenido a javaLeague</b:Heading>
 
-			<b:Paragraph align="center">
+			<b:Paragraph align="CENTER">
 				<b:Image type="CIRCLE" url="images/javacup_logo.png" />
 				<b:Image type="ROUNDED" url="images/logoJavaHispano.png" />
 
