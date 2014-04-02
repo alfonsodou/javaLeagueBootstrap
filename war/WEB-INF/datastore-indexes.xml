@@ -3,5 +3,5 @@
 	<datastore-index kind="Match" ancestor="false" source="manual">
 		<property name="state" direction="asc" />
 		<property name="execution" direction="asc" />
-	</datastore-index>
+	</datastore-index>	
 </datastore-indexes>

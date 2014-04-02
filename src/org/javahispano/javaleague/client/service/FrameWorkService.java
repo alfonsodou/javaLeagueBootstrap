@@ -18,4 +18,5 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("frameWorkService")
 public interface FrameWorkService extends RemoteService {
 	List<FrameWork> getFrameWorks();
+	FrameWork getDefaultFrameWork();
 }

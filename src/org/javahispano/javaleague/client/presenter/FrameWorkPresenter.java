@@ -48,7 +48,8 @@ public class FrameWorkPresenter implements Presenter {
 
 	@Override
 	public void go(HasWidgets container) {
-		fetchFrameWorks();
+		//fetchFrameWorks();
+		fetchDefaultFrameWork();
 
 		container.clear();
 		container.add(display.asWidget());
@@ -81,4 +82,33 @@ public class FrameWorkPresenter implements Presenter {
 		}.retry(3);
 
 	}
+	
+	private void fetchDefaultFrameWork() {
+		new RPCCall<FrameWork>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Error fetching frameWork: "
+						+ caught.getMessage());
+			}
+
+			@Override
+			public void onSuccess(FrameWork result) {
+				if (result != null) {
+					frameWorks.clear();
+					frameWorks.add(result);
+					
+					display.setListFrameWorks(frameWorks);
+				}
+
+			}
+
+			@Override
+			protected void callService(AsyncCallback<FrameWork> cb) {
+				frameWorkService.getDefaultFrameWork(cb);
+			}
+
+		}.retry(3);
+
+	}	
 }

@@ -56,9 +56,9 @@ public class FrameWork implements Serializable {
 
 	private String frameWork;
 
-	private Boolean active;
+	private int active;
 
-	private Boolean defaultFrameWork;
+	private int defaultFrameWork;
 
 	private String urlDownload;
 
@@ -66,8 +66,8 @@ public class FrameWork implements Serializable {
 		super();
 		this.creation = new Date();
 		this.updated = new Date();
-		this.active = true;
-		this.defaultFrameWork = true;
+		this.active = 1;
+		this.defaultFrameWork = 1;
 	}
 
 	public Long getId() {
@@ -118,11 +118,11 @@ public class FrameWork implements Serializable {
 		this.updated = updated;
 	}
 
-	public Boolean getActive() {
+	public int getActive() {
 		return active;
 	}
 
-	public void setActive(Boolean active) {
+	public void setActive(int active) {
 		this.active = active;
 	}
 
@@ -159,7 +159,7 @@ public class FrameWork implements Serializable {
 	/**
 	 * @return the defaultFrameWork
 	 */
-	public Boolean getDefaultFrameWork() {
+	public int getDefaultFrameWork() {
 		return defaultFrameWork;
 	}
 
@@ -167,7 +167,7 @@ public class FrameWork implements Serializable {
 	 * @param defaultFrameWork
 	 *            the defaultFrameWork to set
 	 */
-	public void setDefaultFrameWork(Boolean defaultFrameWork) {
+	public void setDefaultFrameWork(int defaultFrameWork) {
 		this.defaultFrameWork = defaultFrameWork;
 	}
 

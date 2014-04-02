@@ -17,4 +17,6 @@ public interface FrameWorkServiceAsync {
 
 	void getFrameWorks(AsyncCallback<List<FrameWork>> callback);
 
+	void getDefaultFrameWork(AsyncCallback<FrameWork> callback);
+
 }

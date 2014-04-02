@@ -29,9 +29,9 @@ public class FrameWorkDAO {
 		return ofy().load().type(FrameWork.class).id(id).now();
 	}
 
-	public FrameWork findByDefaultFrameWork(Boolean defaultFrameWork) {
+	public FrameWork findDefaultFrameWork() {
 		FrameWork frameWork = ofy().load().type(FrameWork.class)
-				.filter("defaultFrameWork", defaultFrameWork).first().now();
+				.filter("defaultFrameWork", 1).first().now();
 
 		return frameWork;
 	}
