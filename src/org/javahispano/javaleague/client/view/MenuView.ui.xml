@@ -39,6 +39,11 @@
 						<ui:msg key="registerLink">Registro</ui:msg>
 					</b:ListItem>
 
+					<b:ListItem ui:field="wikiLink"
+						href="https://github.com/alfonsodou/javaLeague/wiki/_pages">
+						<ui:msg key="wikiLink">Wiki</ui:msg>
+					</b:ListItem>
+
 					<b:ListDropDown>
 						<b:AnchorButton toggle="DROPDOWN" icon="GLOBE">Español
 							(es)</b:AnchorButton>

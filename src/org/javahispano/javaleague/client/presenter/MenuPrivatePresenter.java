@@ -36,6 +36,8 @@ public class MenuPrivatePresenter implements Presenter {
 		HasClickHandlers getFrameWorkLink();
 		
 		HasClickHandlers getNavbarBrand();
+		
+		HasClickHandlers getWikiLink();
 
 		AnchorButton getUserName();
 

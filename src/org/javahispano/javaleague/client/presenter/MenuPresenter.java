@@ -31,6 +31,8 @@ public class MenuPresenter implements Presenter {
 		HasClickHandlers getFrameWorkLink();
 		
 		HasClickHandlers getNavbarBrand();
+		
+		HasClickHandlers getWikiLink();
 
 		Widget asWidget();
 

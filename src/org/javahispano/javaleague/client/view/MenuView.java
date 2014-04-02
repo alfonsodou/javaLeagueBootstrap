@@ -39,6 +39,8 @@ public class MenuView extends Composite implements MenuPresenter.Display {
 	@UiField
 	ListItem frameWorkLink;
 	@UiField
+	ListItem wikiLink;
+	@UiField
 	NavbarBrand navbarBrand;
 	
 	public MenuView(String firstName) {
@@ -68,6 +70,11 @@ public class MenuView extends Composite implements MenuPresenter.Display {
 	@Override
 	public HasClickHandlers getNavbarBrand() {
 		return navbarBrand;
+	}
+
+	@Override
+	public HasClickHandlers getWikiLink() {
+		return wikiLink;
 	}
 
 

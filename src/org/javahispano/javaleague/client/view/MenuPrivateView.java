@@ -32,6 +32,8 @@ public class MenuPrivateView extends Composite implements
 	@UiField
 	ListItem frameWorkLink;
 	@UiField
+	ListItem wikiLink;
+	@UiField
 	NavbarBrand navbarBrand;
 	@UiField
 	AnchorButton userName;
@@ -80,6 +82,11 @@ public class MenuPrivateView extends Composite implements
 	@Override
 	public HasClickHandlers getNavbarBrand() {
 		return navbarBrand;
+	}
+
+	@Override
+	public HasClickHandlers getWikiLink() {
+		return wikiLink;
 	}
 
 }
