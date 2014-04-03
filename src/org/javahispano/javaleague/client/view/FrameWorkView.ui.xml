@@ -16,10 +16,35 @@
 				<b:Row>
 					<b:Column size="MD_6">
 						<b:Paragraph ui:field="frameWorkParagraph">
-							<ui:msg key="frameWorkParagraph">Puedes descargarte el frameWoek para programar
-								tu táctica desde este enlace:
+							<ui:msg key="frameWorkParagraph">Descárgate el frameWork para programar tu
+								táctica y empezar a competir.
 							</ui:msg>
-							<b:Button type="LINK"></b:Button>
+						</b:Paragraph>
+						<b:Paragraph>
+							<ui:msg key="frameWorkParagraph1">
+								Con el FrameWork de javaCup cada participante
+								programa
+								en java el
+								comportamiento de un equipo
+								de fútbol. Luego
+								las tácticas
+								enviadas podrán competir en las
+								diferentes ligas
+								creadas en javaLeague.
+							</ui:msg>
+						</b:Paragraph>
+						<b:Paragraph>
+							<ui:msg key="frameWorkParagraph2">
+								Para desarrollar una táctica solo se debe
+								escribir una clase que
+								implemente la interfaz
+								<strong>org.javahispano.javacup.model.Tactic</strong>
+								. Esto quiere decir que
+								debemos implementar
+								cada uno de los
+								métodos definidos en dicha
+								interfaz.
+							</ui:msg>
 						</b:Paragraph>
 					</b:Column>
 					<b:Column size="MD_5" offset="MD_1">
@@ -45,9 +70,9 @@
 								</b:Description>
 							</b:PanelBody>
 							<b:PanelFooter>
-								<b:Button ui:field="downloadFrameWorkButton">
+								<b:NavbarLink ui:field="downloadFrameWorkNavbarLink">
 									<ui:msg key="downloadFrameWork">Descargar</ui:msg>
-								</b:Button>
+								</b:NavbarLink>
 							</b:PanelFooter>
 						</b:Panel>
 					</b:Column>

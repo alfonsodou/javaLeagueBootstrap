@@ -5,6 +5,7 @@ package org.javahispano.javaleague.client.view;
 
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.DescriptionData;
+import org.gwtbootstrap3.client.ui.NavbarLink;
 import org.gwtbootstrap3.client.ui.Paragraph;
 import org.javahispano.javaleague.client.presenter.FrameWorkPresenter;
 
@@ -27,8 +28,6 @@ public class FrameWorkView extends Composite implements
 	@UiField
 	Paragraph frameWorkParagraph;
 	@UiField
-	Button downloadFrameWorkButton;
-	@UiField
 	DescriptionData nameFrameWork;
 	@UiField
 	DescriptionData versionFrameWork;
@@ -36,6 +35,8 @@ public class FrameWorkView extends Composite implements
 	DescriptionData createdFrameWork;
 	@UiField
 	DescriptionData updatedFrameWork;
+	@UiField
+	NavbarLink downloadFrameWorkNavbarLink;
 
 	interface FrameWorkViewUiBinder extends UiBinder<Widget, FrameWorkView> {
 	}
@@ -47,11 +48,6 @@ public class FrameWorkView extends Composite implements
 	@Override
 	public Paragraph getFrameWorkParagraph() {
 		return frameWorkParagraph;
-	}
-
-	@Override
-	public Button getDownloadFrameWorkButton() {
-		return downloadFrameWorkButton;
 	}
 
 	@Override
@@ -72,6 +68,11 @@ public class FrameWorkView extends Composite implements
 	@Override
 	public DescriptionData getUpdatedFrameWork() {
 		return updatedFrameWork;
+	}
+
+	@Override
+	public NavbarLink getDownloadFrameWorkNavbarLink() {
+		return downloadFrameWorkNavbarLink;
 	}
 
 

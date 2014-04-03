@@ -5,6 +5,7 @@ package org.javahispano.javaleague.client.presenter;
 
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.DescriptionData;
+import org.gwtbootstrap3.client.ui.NavbarLink;
 import org.gwtbootstrap3.client.ui.Paragraph;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
@@ -28,21 +29,26 @@ public class FrameWorkPresenter implements Presenter {
 		Widget asWidget();
 
 		Paragraph getFrameWorkParagraph();
-		Button getDownloadFrameWorkButton();
+
 		DescriptionData getNameFrameWork();
+
 		DescriptionData getVersionFrameWork();
+
 		DescriptionData getCreatedFrameWork();
+
 		DescriptionData getUpdatedFrameWork();
+
+		NavbarLink getDownloadFrameWorkNavbarLink();
 	}
 
 	private final Display display;
 	private final FrameWorkServiceAsync frameWorkService;
 	private final SimpleEventBus eventBus;
-	
+
 	private FrameWork frameWork;
-	
+
 	private JavaLeagueMessages javaLeagueMessages = GWT
-			.create(JavaLeagueMessages.class);	
+			.create(JavaLeagueMessages.class);
 
 	public FrameWorkPresenter(FrameWorkServiceAsync frameWorkService,
 			SimpleEventBus eventBus, Display display) {
@@ -55,22 +61,21 @@ public class FrameWorkPresenter implements Presenter {
 	}
 
 	private void bind() {
-
+		/*
+		 * display.getDownloadFrameWorkButton().addClickHandler(new
+		 * ClickHandler() { public void onClick(ClickEvent event) {
+		 * 
+		 * } });
+		 */
 	}
 
 	@Override
 	public void go(HasWidgets container) {
 		container.clear();
 		container.add(display.asWidget());
-		
+
 		fetchDefaultFrameWork();
-		
-		display.getNameFrameWork().setText(frameWork.getName());
-		display.getVersionFrameWork().setText(frameWork.getVersion());
-		display.getCreatedFrameWork().setText(frameWork.getCreation().toString());
-		display.getUpdatedFrameWork().setText(frameWork.getUpdated().toString());
-		display.getDownloadFrameWorkButton().setHref(frameWork.getUrlDownload());
-		//display.getDownloadFrameWorkButton().setText(frameWork.getUrlDownload());
+
 	}
 
 	private void fetchDefaultFrameWork() {
@@ -78,15 +83,22 @@ public class FrameWorkPresenter implements Presenter {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Error fetching frameWork: "
-						+ caught.getMessage());
+				Window.alert("Error fetching frameWork: " + caught.getMessage());
 			}
 
 			@Override
 			public void onSuccess(FrameWork result) {
 				if (result != null) {
 					frameWork = result;
-					
+					display.getNameFrameWork().setText(frameWork.getName());
+					display.getVersionFrameWork().setText(
+							frameWork.getVersion());
+					display.getCreatedFrameWork().setText(
+							frameWork.getCreation().toString());
+					display.getUpdatedFrameWork().setText(
+							frameWork.getUpdated().toString());
+					display.getDownloadFrameWorkNavbarLink().setHref(
+							frameWork.getUrlDownload());
 				} else {
 					Window.alert("Error al obtener el frameWork!!");
 				}
@@ -100,5 +112,5 @@ public class FrameWorkPresenter implements Presenter {
 
 		}.retry(3);
 
-	}	
+	}
 }
