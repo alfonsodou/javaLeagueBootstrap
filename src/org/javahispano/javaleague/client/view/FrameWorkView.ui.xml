@@ -14,7 +14,7 @@
 			</b:PanelHeader>
 			<b:PanelBody>
 				<b:Row>
-					<b:Column size="MD6">
+					<b:Column size="MD_6">
 						<b:Paragraph ui:field="frameWorkParagraph">
 							<ui:msg key="frameWorkParagraph">Puedes descargarte el frameWoek para programar
 								tu táctica desde este enlace:
