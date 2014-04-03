@@ -48,8 +48,9 @@ public class FrameWorkServiceImpl extends RemoteServiceServlet implements
 		FrameWork frameWork;
 		try {
 			FrameWorkDAO frameWorkDAO = new FrameWorkDAO();
-			frameWork = frameWorkDAO.findDefaultFrameWork();
-			logger.log(Level.INFO, "FrameWorkServiceImpl: getDefaultFrameWork OK!");
+			//frameWork = frameWorkDAO.findDefaultFrameWork();
+			frameWork = frameWorkDAO.findById(AppLib.defaultFrameWorkID);
+			logger.warning("FrameWorkServiceImpl: getDefaultFrameWork OK!");
 		} catch (Exception e) {
 			frameWork = null;
 			logger.warning("FrameWorkServiceImpl: getDefaultFrameWork error :: "

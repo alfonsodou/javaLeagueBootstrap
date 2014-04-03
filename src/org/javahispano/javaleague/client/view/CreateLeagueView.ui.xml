@@ -36,7 +36,6 @@
 
 								<g:FlowPanel addStyleNames="col-lg-10">
 									<summer:Summernote ui:field="leagueDescription" b:id="leagueDescription"></summer:Summernote>
-									<!-- <b:TextArea ui:field="leagueDescription" b:id="leagueDescription"></b:TextArea> -->
 								</g:FlowPanel>
 							</b:FormGroup>
 

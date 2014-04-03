@@ -9,12 +9,49 @@
 		<b:Panel>
 			<b:PanelHeader>
 				<b:Heading size="3">
-					<ui:msg key="headerText">FrameWorks</ui:msg>
+					<ui:msg key="headerText">FrameWork</ui:msg>
 				</b:Heading>
 			</b:PanelHeader>
 			<b:PanelBody>
-				<b:CellTable bordered="true" condensed="true" striped="true"
-					hover="true" width="100%" ui:field="cellTableFrameWorks" />
+				<b:Row>
+					<b:Column size="MD6">
+						<b:Paragraph ui:field="frameWorkParagraph">
+							<ui:msg key="frameWorkParagraph">Puedes descargarte el frameWoek para programar
+								tu táctica desde este enlace:
+							</ui:msg>
+							<b:Button type="LINK"></b:Button>
+						</b:Paragraph>
+					</b:Column>
+					<b:Column size="MD_5" offset="MD_1">
+						<b:Panel>
+							<b:PanelBody>
+								<b:Description horizontal="true">
+									<b:DescriptionTitle>
+										<ui:msg key="nameFrameWork">Nombre</ui:msg>
+									</b:DescriptionTitle>
+									<b:DescriptionData ui:field="nameFrameWork"></b:DescriptionData>
+									<b:DescriptionTitle>
+										<ui:msg key="versionFrameWork">Versión</ui:msg>
+									</b:DescriptionTitle>
+									<b:DescriptionData ui:field="versionFrameWork"></b:DescriptionData>
+									<b:DescriptionTitle>
+										<ui:msg key="createdFrameWork">Creación</ui:msg>
+									</b:DescriptionTitle>
+									<b:DescriptionData ui:field="createdFrameWork"></b:DescriptionData>
+									<b:DescriptionTitle>
+										<ui:msg key="updatedFrameWork">Actualización</ui:msg>
+									</b:DescriptionTitle>
+									<b:DescriptionData ui:field="updatedFrameWork"></b:DescriptionData>
+								</b:Description>
+							</b:PanelBody>
+							<b:PanelFooter>
+								<b:Button ui:field="downloadFrameWorkButton">
+									<ui:msg key="downloadFrameWork">Descargar</ui:msg>
+								</b:Button>
+							</b:PanelFooter>
+						</b:Panel>
+					</b:Column>
+				</b:Row>
 			</b:PanelBody>
 
 		</b:Panel>

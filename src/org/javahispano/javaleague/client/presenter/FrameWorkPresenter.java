@@ -3,12 +3,15 @@
  */
 package org.javahispano.javaleague.client.presenter;
 
-import java.util.List;
-
+import org.gwtbootstrap3.client.ui.Button;
+import org.gwtbootstrap3.client.ui.DescriptionData;
+import org.gwtbootstrap3.client.ui.Paragraph;
 import org.javahispano.javaleague.client.helper.RPCCall;
+import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.FrameWorkServiceAsync;
 import org.javahispano.javaleague.shared.domain.FrameWork;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -24,20 +27,29 @@ public class FrameWorkPresenter implements Presenter {
 	public interface Display {
 		Widget asWidget();
 
-		void setListFrameWorks(List<FrameWork> frameWorks);
+		Paragraph getFrameWorkParagraph();
+		Button getDownloadFrameWorkButton();
+		DescriptionData getNameFrameWork();
+		DescriptionData getVersionFrameWork();
+		DescriptionData getCreatedFrameWork();
+		DescriptionData getUpdatedFrameWork();
 	}
 
 	private final Display display;
 	private final FrameWorkServiceAsync frameWorkService;
 	private final SimpleEventBus eventBus;
 	
-	private List<FrameWork> frameWorks;
+	private FrameWork frameWork;
+	
+	private JavaLeagueMessages javaLeagueMessages = GWT
+			.create(JavaLeagueMessages.class);	
 
 	public FrameWorkPresenter(FrameWorkServiceAsync frameWorkService,
 			SimpleEventBus eventBus, Display display) {
 		this.frameWorkService = frameWorkService;
 		this.eventBus = eventBus;
 		this.display = display;
+		this.frameWork = null;
 
 		bind();
 	}
@@ -48,41 +60,19 @@ public class FrameWorkPresenter implements Presenter {
 
 	@Override
 	public void go(HasWidgets container) {
-		//fetchFrameWorks();
-		fetchDefaultFrameWork();
-
 		container.clear();
 		container.add(display.asWidget());
+		
+		fetchDefaultFrameWork();
+		
+		display.getNameFrameWork().setText(frameWork.getName());
+		display.getVersionFrameWork().setText(frameWork.getVersion());
+		display.getCreatedFrameWork().setText(frameWork.getCreation().toString());
+		display.getUpdatedFrameWork().setText(frameWork.getUpdated().toString());
+		display.getDownloadFrameWorkButton().setHref(frameWork.getUrlDownload());
+		//display.getDownloadFrameWorkButton().setText(frameWork.getUrlDownload());
 	}
 
-	private void fetchFrameWorks() {
-		new RPCCall<List<FrameWork>>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("Error fetching frameWork: "
-						+ caught.getMessage());
-			}
-
-			@Override
-			public void onSuccess(List<FrameWork> result) {
-				if (result.size() > 0) {
-					frameWorks = result;
-					
-					display.setListFrameWorks(frameWorks);
-				}
-
-			}
-
-			@Override
-			protected void callService(AsyncCallback<List<FrameWork>> cb) {
-				frameWorkService.getFrameWorks(cb);
-			}
-
-		}.retry(3);
-
-	}
-	
 	private void fetchDefaultFrameWork() {
 		new RPCCall<FrameWork>() {
 
@@ -95,10 +85,10 @@ public class FrameWorkPresenter implements Presenter {
 			@Override
 			public void onSuccess(FrameWork result) {
 				if (result != null) {
-					frameWorks.clear();
-					frameWorks.add(result);
+					frameWork = result;
 					
-					display.setListFrameWorks(frameWorks);
+				} else {
+					Window.alert("Error al obtener el frameWork!!");
 				}
 
 			}
