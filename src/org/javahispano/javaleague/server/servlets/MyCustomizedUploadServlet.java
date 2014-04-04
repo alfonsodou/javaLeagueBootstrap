@@ -23,6 +23,7 @@ import org.javahispano.javaleague.shared.domain.User;
 
 import com.google.appengine.api.blobstore.BlobInfo;
 import com.google.appengine.api.blobstore.BlobInfoFactory;
+import com.google.gwt.i18n.client.DateTimeFormat;
 
 /**
  * @author adou
@@ -61,10 +62,14 @@ public class MyCustomizedUploadServlet extends BlobstoreUploadAction {
 					BlobInfoFactory infoFactory = new BlobInfoFactory();
 					BlobInfo blobInfo = infoFactory.loadBlobInfo(b.getKey());
 					Date updated = new Date();
+					DateTimeFormat fmt = DateTimeFormat
+							.getFormat("dd/MM/yyyy :: HH:mm:ss");
 
+/*					out += blobInfo.getFilename() + " :: " + blobInfo.getSize()
+							+ " bytes|" + fmt.format(updated);*/
 					out += blobInfo.getFilename() + " :: " + blobInfo.getSize()
 							+ " bytes|" + updated.toString();
-
+					
 					if (currentUser.getTactic() != null) { // update
 						TacticUser tactic = currentUser.getTactic();
 						tactic.setUpdated(updated);

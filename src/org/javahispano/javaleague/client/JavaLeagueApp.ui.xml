@@ -6,17 +6,17 @@
 	ui:generateLocales='default'>
 
 	<ui:style>
-        .buttons button {
-            margin: 0.5em;
-        }
-
-        .labels span {
-            margin-right: 5px;
-        }
-
-        .push {
-            padding-top: 70px;
-        }
+	.buttons button {
+		margin: 0.5em;
+	}
+	
+	.labels span {
+		margin-right: 5px;
+	}
+	
+	.push {
+		padding-top: 70px;
+	}
 	</ui:style>
 
 	<g:ScrollPanel>
@@ -27,14 +27,29 @@
 			</g:SimplePanel>
 
 			<g:SimplePanel ui:field="footerPanel">
+				<b:Row>
+					<b:Column size="MD_3">
+						<b:Small>
+							<ui:msg key="gpl">2014 :: framework javaCup es un proyecto
+								opensource con licencia GPL v3</ui:msg>
+						</b:Small>
+					</b:Column>
+					<b:Column size="MD_1" offset="MD_2">
+						<b:Paragraph>
+							<a href="http://www.javahispano.org">
+								<b:Image url="images/logoJavaHispano.png" />
+							</a>
+						</b:Paragraph>
+					</b:Column>
+					<b:Column size="MD_1" offset="MD_5">
+						<b:Paragraph>
+							<a href="https://github.com/alfonsodou">
+								<b:Icon type="GITHUB" size="TIMES3"></b:Icon>
+							</a>
+						</b:Paragraph>
+					</b:Column>
 
-				<b:Paragraph ui:field="footerPanelParagraph">
-					2014 -
-					<a href="http://www.javahispano.org">javaHispano</a>
-					::
-					<a href="https://github.com/svenjacobs/gwtbootstrap3">GwtBootstrap3</a>
-				</b:Paragraph>
-
+				</b:Row>
 			</g:SimplePanel>
 		</b:Container>
 	</g:ScrollPanel>

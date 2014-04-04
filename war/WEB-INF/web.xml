@@ -16,6 +16,17 @@
 		<url-pattern>/javaleague/userFileService</url-pattern>
 	</servlet-mapping>
 
+	<!-- ===================== Blobstore Service ===================== -->
+	<servlet>
+		<servlet-name>blobstoreService</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.BlobstoreServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>blobstoreService</servlet-name>
+		<url-pattern>/javaleague/blobstoreService</url-pattern>
+	</servlet-mapping>
+	
 	<!-- ===================== UserAccount Service ===================== -->
 	<servlet>
 		<servlet-name>userAccountService</servlet-name>
@@ -162,6 +173,16 @@
 		<url-pattern>/manageFrameWork</url-pattern>
 	</servlet-mapping>
 
+	<!-- ===================== UploadBlob Servlet ===================== -->
+	<servlet>
+		<servlet-name>UploadBlob</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.servlets.UploadBlobServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UploadBlob</servlet-name>
+		<url-pattern>/upload</url-pattern>
+	</servlet-mapping>
+	
 	<!-- ===================== ScheduleMatchs Servlet ===================== -->
 	<servlet>
 		<servlet-name>ScheduleMatchs</servlet-name>
@@ -173,15 +194,12 @@
 	</servlet-mapping>
 
 	<!-- ===================== GWTUpload Servlet ===================== -->
-	<context-param>
-		<!-- max size of the upload request -->
+<!-- 	<context-param>
+	
 		<param-name>maxSize</param-name>
 		<param-value>3145728</param-value>
 	</context-param>
 	<context-param>
-		<!-- Useful in development mode to slow down the uploads in fast networks. 
-			Put the number of milliseconds to sleep in each block received in the server. 
-			false or 0, means don't use slow uploads -->
 		<param-name>slowUploads</param-name>
 		<param-value>false</param-value>
 	</context-param>
@@ -198,7 +216,7 @@
 		<servlet-name>uploadServlet</servlet-name>
 		<url-pattern>/upload</url-pattern>
 	</servlet-mapping>
-
+ -->
 	<!-- ===================== ObjectifyFilter ===================== -->
 	<filter>
 		<filter-name>ObjectifyFilter</filter-name>

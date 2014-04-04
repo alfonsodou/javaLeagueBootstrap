@@ -3,7 +3,6 @@
  */
 package org.javahispano.javaleague.client;
 
-import org.gwtbootstrap3.client.ui.Paragraph;
 import org.javahispano.javaleague.client.channel.Channel;
 import org.javahispano.javaleague.client.channel.ChannelFactory;
 import org.javahispano.javaleague.client.channel.SocketListener;
@@ -14,6 +13,8 @@ import org.javahispano.javaleague.client.presenter.MenuPresenter;
 import org.javahispano.javaleague.client.presenter.MenuPrivatePresenter;
 import org.javahispano.javaleague.client.presenter.ShowHomePresenter;
 import org.javahispano.javaleague.client.presenter.TacticPresenter;
+import org.javahispano.javaleague.client.service.BlobstoreService;
+import org.javahispano.javaleague.client.service.BlobstoreServiceAsync;
 import org.javahispano.javaleague.client.service.FrameWorkService;
 import org.javahispano.javaleague.client.service.FrameWorkServiceAsync;
 import org.javahispano.javaleague.client.service.LeagueService;
@@ -91,6 +92,8 @@ public class JavaLeagueApp implements EntryPoint {
 	private LeagueServiceAsync leagueService = GWT.create(LeagueService.class);
 	private FrameWorkServiceAsync frameWorkService = GWT
 			.create(FrameWorkService.class);
+	private BlobstoreServiceAsync blobstoreService = GWT
+			.create(BlobstoreService.class);
 
 	// Controllers
 	private MenuController menuController;
@@ -100,8 +103,10 @@ public class JavaLeagueApp implements EntryPoint {
 	SimplePanel centerPanel;
 	@UiField
 	SimplePanel headerPanel;
-	@UiField
-	Paragraph footerPanelParagraph;
+
+	/*
+	 * @UiField Paragraph footerPanelParagraph;
+	 */
 
 	/**
 	 * Gets the singleton application instance.
@@ -116,10 +121,6 @@ public class JavaLeagueApp implements EntryPoint {
 
 	public SimplePanel getHeaderPanel() {
 		return headerPanel;
-	}
-
-	public Paragraph getFooterPanelParagraph() {
-		return footerPanelParagraph;
 	}
 
 	@Override
@@ -143,13 +144,14 @@ public class JavaLeagueApp implements EntryPoint {
 
 		menuController = new MenuController(userAccountService,
 				frameWorkService, tacticService, userFileService, matchService,
-				eventBus);
+				blobstoreService, eventBus);
 		menuController.go();
 
-		footerPanelParagraph
-				.setHTML("<b>2014</b> - "
-						+ "<a href='http://www.javahispano.org'>"
-						+ "<img src='images/logoJavaHispano.png' /></a>");
+		/*
+		 * footerPanelParagraph .setHTML("<b>2014</b> - " +
+		 * "<a href='http://www.javahispano.org'>" +
+		 * "<img src='images/logoJavaHispano.png' /></a>");
+		 */
 
 		showMainView();
 
@@ -222,7 +224,7 @@ public class JavaLeagueApp implements EntryPoint {
 
 		appViewer = new AppController(tacticService, loginService,
 				userFileService, matchService, leagueService,
-				userAccountService, eventBus);
+				userAccountService, blobstoreService, eventBus);
 		appViewer.setCurrentUser(user);
 		// appViewer.go();
 
@@ -233,7 +235,7 @@ public class JavaLeagueApp implements EntryPoint {
 
 		centerPanel.clear();
 		tacticPresenter = new TacticPresenter(tacticService, matchService,
-				userFileService, eventBus, new TacticView());
+				userFileService, blobstoreService, eventBus, new TacticView());
 		tacticPresenter.go(centerPanel);
 
 		listenToChannel();

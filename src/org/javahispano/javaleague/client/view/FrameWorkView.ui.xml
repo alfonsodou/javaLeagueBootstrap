@@ -46,6 +46,13 @@
 								interfaz.
 							</ui:msg>
 						</b:Paragraph>
+						<b:Lead>
+							<ui:msg key="needHelp">¿ Necesitas ayuda ?</ui:msg>
+						</b:Lead>
+						<b:Paragraph>
+							<ui:msg key="frameWorkParagraph3">Visita la Wiki donde podrás encontrar lo
+								necesario para crear una táctica e inscribirte a javaLeague!</ui:msg>
+						</b:Paragraph>
 					</b:Column>
 					<b:Column size="MD_5" offset="MD_1">
 						<b:Panel>
@@ -70,9 +77,11 @@
 								</b:Description>
 							</b:PanelBody>
 							<b:PanelFooter>
-								<b:NavbarLink ui:field="downloadFrameWorkNavbarLink">
-									<ui:msg key="downloadFrameWork">Descargar</ui:msg>
-								</b:NavbarLink>
+								<b:Paragraph alignment="CENTER">
+									<b:NavbarLink ui:field="downloadFrameWorkNavbarLink">
+										<ui:msg key="downloadFrameWork">Descargar</ui:msg>
+									</b:NavbarLink>
+								</b:Paragraph>
 							</b:PanelFooter>
 						</b:Panel>
 					</b:Column>

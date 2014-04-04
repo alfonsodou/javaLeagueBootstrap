@@ -3,7 +3,6 @@
  */
 package org.javahispano.javaleague.client.presenter;
 
-import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.DescriptionData;
 import org.gwtbootstrap3.client.ui.NavbarLink;
 import org.gwtbootstrap3.client.ui.Paragraph;
@@ -11,9 +10,11 @@ import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.FrameWorkServiceAsync;
 import org.javahispano.javaleague.shared.domain.FrameWork;
+import org.joda.time.LocalDateTime;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.SimpleEventBus;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -89,14 +90,18 @@ public class FrameWorkPresenter implements Presenter {
 			@Override
 			public void onSuccess(FrameWork result) {
 				if (result != null) {
+
+					DateTimeFormat fmt = DateTimeFormat
+							.getFormat("dd/MM/yyyy :: HH:mm:ss");
+
 					frameWork = result;
 					display.getNameFrameWork().setText(frameWork.getName());
 					display.getVersionFrameWork().setText(
 							frameWork.getVersion());
 					display.getCreatedFrameWork().setText(
-							frameWork.getCreation().toString());
+							fmt.format(frameWork.getCreation()));
 					display.getUpdatedFrameWork().setText(
-							frameWork.getUpdated().toString());
+							fmt.format(frameWork.getUpdated()));
 					display.getDownloadFrameWorkNavbarLink().setHref(
 							frameWork.getUrlDownload());
 				} else {

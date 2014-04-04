@@ -23,6 +23,7 @@ import org.javahispano.javaleague.client.presenter.Presenter;
 import org.javahispano.javaleague.client.presenter.RegisterUserPresenter;
 import org.javahispano.javaleague.client.presenter.ShowHomePresenter;
 import org.javahispano.javaleague.client.presenter.TacticPresenter;
+import org.javahispano.javaleague.client.service.BlobstoreServiceAsync;
 import org.javahispano.javaleague.client.service.FrameWorkServiceAsync;
 import org.javahispano.javaleague.client.service.MatchServiceAsync;
 import org.javahispano.javaleague.client.service.TacticServiceAsync;
@@ -52,6 +53,7 @@ public class MenuController implements ValueChangeHandler<String> {
 	private final TacticServiceAsync tacticService;
 	private final UserFileServiceAsync userFileService;
 	private final MatchServiceAsync matchService;
+	private final BlobstoreServiceAsync blobstoreService;
 
 	private User user;
 
@@ -59,13 +61,15 @@ public class MenuController implements ValueChangeHandler<String> {
 			FrameWorkServiceAsync frameWorkService,
 			TacticServiceAsync tacticService,
 			UserFileServiceAsync userFileService,
-			MatchServiceAsync matchService, SimpleEventBus eventBus) {
+			MatchServiceAsync matchService,
+			BlobstoreServiceAsync blobstoreService, SimpleEventBus eventBus) {
 		this.eventBus = eventBus;
 		this.userAccountService = userAccountService;
 		this.frameWorkService = frameWorkService;
 		this.tacticService = tacticService;
 		this.userFileService = userFileService;
 		this.matchService = matchService;
+		this.blobstoreService = blobstoreService;
 
 		bind();
 	}
@@ -193,7 +197,8 @@ public class MenuController implements ValueChangeHandler<String> {
 				return;
 			} else if (token.equals("showMyTactic")) {
 				presenter = new TacticPresenter(tacticService, matchService,
-						userFileService, eventBus, new TacticView());
+						userFileService, blobstoreService, eventBus,
+						new TacticView());
 				JavaLeagueApp.get().getCenterPanel().clear();
 				presenter.go(JavaLeagueApp.get().getCenterPanel());
 

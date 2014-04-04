@@ -37,6 +37,7 @@
 											<b:Label ui:field="errorTeamName" type="DANGER">
 												<ui:msg key="errorTeamName">El nombre no puede estar vacío</ui:msg>
 											</b:Label>
+											<g:FileUpload ui:field="fileUpload"></g:FileUpload>
 											<b:Button ui:field="updateTacticButton">
 												<ui:msg key="updateTactic">Actualizar</ui:msg>
 											</b:Button>

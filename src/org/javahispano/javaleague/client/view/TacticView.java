@@ -18,6 +18,7 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -55,6 +56,8 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	Badge fileName;
 	@UiField
 	Label updatedTactic;
+	@UiField
+	FileUpload fileUpload;
 
 	private static TacticViewUiBinder uiBinder = GWT
 			.create(TacticViewUiBinder.class);
@@ -156,6 +159,11 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	@Override
 	public Label getUpdatedTactic() {
 		return updatedTactic;
+	}
+
+	@Override
+	public FileUpload getFileUpload() {
+		return fileUpload;
 	}
 
 }

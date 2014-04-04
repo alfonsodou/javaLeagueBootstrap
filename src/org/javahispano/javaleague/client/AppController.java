@@ -31,6 +31,7 @@ import org.javahispano.javaleague.client.presenter.Presenter;
 import org.javahispano.javaleague.client.presenter.RegisterUserPresenter;
 import org.javahispano.javaleague.client.presenter.SearchLeaguePresenter;
 import org.javahispano.javaleague.client.presenter.ShowLeaguePresenter;
+import org.javahispano.javaleague.client.service.BlobstoreServiceAsync;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
 import org.javahispano.javaleague.client.service.LoginServiceAsync;
 import org.javahispano.javaleague.client.service.MatchServiceAsync;
@@ -67,6 +68,7 @@ public class AppController implements ValueChangeHandler<String> {
 	private final MatchServiceAsync matchService;
 	private final LeagueServiceAsync leagueService;
 	private final UserAccountServiceAsync userAccountService;
+	private final BlobstoreServiceAsync blobstoreService;
 
 	private User currentUser;
 	private Long currentTacticId;
@@ -79,13 +81,15 @@ public class AppController implements ValueChangeHandler<String> {
 			LoginServiceAsync loginService,
 			UserFileServiceAsync userFileService,
 			MatchServiceAsync matchService, LeagueServiceAsync leagueService,
-			UserAccountServiceAsync userAccountService, SimpleEventBus eventBus) {
+			UserAccountServiceAsync userAccountService,
+			BlobstoreServiceAsync blobstoreService, SimpleEventBus eventBus) {
 		this.userTacticService = rpcService;
 		this.loginService = loginService;
 		this.userFileService = userFileService;
 		this.matchService = matchService;
 		this.leagueService = leagueService;
 		this.userAccountService = userAccountService;
+		this.blobstoreService = blobstoreService;
 		this.eventBus = eventBus;
 
 		bind();
