@@ -10,8 +10,8 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  * @author adou
  *
  */
-@RemoteServiceRelativePath("blobstoreService")
-public interface BlobstoreService extends RemoteService {
+@RemoteServiceRelativePath("uploadBlobstoreService")
+public interface UploadBlobstoreService extends RemoteService {
 	String getUploadURL();
 	String getUploadGCSURL();
 }

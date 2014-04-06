@@ -3,8 +3,6 @@
  */
 package org.javahispano.javaleague.client.view;
 
-import gwtupload.client.SingleUploader;
-
 import org.gwtbootstrap3.client.ui.Badge;
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.DescriptionData;
@@ -12,11 +10,15 @@ import org.gwtbootstrap3.client.ui.Form;
 import org.gwtbootstrap3.client.ui.Label;
 import org.gwtbootstrap3.client.ui.TextBox;
 import org.javahispano.javaleague.client.presenter.TacticPresenter;
+import org.javahispano.javaleague.client.service.UploadBlobstoreService;
+import org.javahispano.javaleague.client.service.UploadBlobstoreServiceAsync;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FormPanel;
@@ -51,8 +53,6 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	@UiField
 	Form formTactic;
 	@UiField
-	SingleUploader uploader;
-	@UiField
 	Badge fileName;
 	@UiField
 	Label updatedTactic;
@@ -62,17 +62,22 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	private static TacticViewUiBinder uiBinder = GWT
 			.create(TacticViewUiBinder.class);
 
+	private static UploadBlobstoreServiceAsync blobstoreService = GWT
+			.create(UploadBlobstoreService.class);
+
 	interface TacticViewUiBinder extends UiBinder<Widget, TacticView> {
 	}
 
 	public TacticView() {
 		initWidget(uiBinder.createAndBindUi(this));
-		
-		teamName.setName("teamName");
 
-		formPanelTactic.setEncoding(FormPanel.ENCODING_MULTIPART);
 		formPanelTactic.setMethod(FormPanel.METHOD_POST);
+		formPanelTactic.setEncoding(FormPanel.ENCODING_MULTIPART);
+	}
 
+	@UiHandler("updateTacticButton")
+	void onUploadClick(ClickEvent event) {
+		formPanelTactic.submit();
 	}
 
 	@Override
@@ -125,9 +130,8 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 		updateTacticButton.setVisible(visible);
 	}
 
-
 	@Override
-	public Label getErrorTeamName() {	
+	public Label getErrorTeamName() {
 		return errorTeamName;
 	}
 
@@ -144,11 +148,6 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	@Override
 	public Form getFormTactic() {
 		return formTactic;
-	}
-
-	@Override
-	public SingleUploader getUploader() {
-		return uploader;
 	}
 
 	@Override

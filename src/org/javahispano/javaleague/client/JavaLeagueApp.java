@@ -13,8 +13,8 @@ import org.javahispano.javaleague.client.presenter.MenuPresenter;
 import org.javahispano.javaleague.client.presenter.MenuPrivatePresenter;
 import org.javahispano.javaleague.client.presenter.ShowHomePresenter;
 import org.javahispano.javaleague.client.presenter.TacticPresenter;
-import org.javahispano.javaleague.client.service.BlobstoreService;
-import org.javahispano.javaleague.client.service.BlobstoreServiceAsync;
+import org.javahispano.javaleague.client.service.UploadBlobstoreService;
+import org.javahispano.javaleague.client.service.UploadBlobstoreServiceAsync;
 import org.javahispano.javaleague.client.service.FrameWorkService;
 import org.javahispano.javaleague.client.service.FrameWorkServiceAsync;
 import org.javahispano.javaleague.client.service.LeagueService;
@@ -92,8 +92,8 @@ public class JavaLeagueApp implements EntryPoint {
 	private LeagueServiceAsync leagueService = GWT.create(LeagueService.class);
 	private FrameWorkServiceAsync frameWorkService = GWT
 			.create(FrameWorkService.class);
-	private BlobstoreServiceAsync blobstoreService = GWT
-			.create(BlobstoreService.class);
+	private UploadBlobstoreServiceAsync blobstoreService = GWT
+			.create(UploadBlobstoreService.class);
 
 	// Controllers
 	private MenuController menuController;

@@ -35,7 +35,4 @@
 	<source path='client' />
 	<source path='shared' />
 
-	<!-- Include GWTUpload library -->
-	<inherits name="gwtupload.GWTUpload" />
-
 </module>

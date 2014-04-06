@@ -16,15 +16,15 @@
 		<url-pattern>/javaleague/userFileService</url-pattern>
 	</servlet-mapping>
 
-	<!-- ===================== Blobstore Service ===================== -->
+	<!-- ===================== UploadBlobstore Service ===================== -->
 	<servlet>
-		<servlet-name>blobstoreService</servlet-name>
-		<servlet-class>org.javahispano.javaleague.server.BlobstoreServiceImpl</servlet-class>
+		<servlet-name>uploadBlobstoreService</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.UploadBlobstoreServiceImpl</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>blobstoreService</servlet-name>
-		<url-pattern>/javaleague/blobstoreService</url-pattern>
+		<servlet-name>uploadBlobstoreService</servlet-name>
+		<url-pattern>/javaleague/uploadBlobstoreService</url-pattern>
 	</servlet-mapping>
 	
 	<!-- ===================== UserAccount Service ===================== -->

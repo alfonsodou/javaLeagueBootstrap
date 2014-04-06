@@ -3,21 +3,16 @@
  */
 package org.javahispano.javaleague.client.presenter;
 
-import gwtupload.client.IUploadStatus.Status;
-import gwtupload.client.IUploader;
-import gwtupload.client.SingleUploader;
-
 import org.gwtbootstrap3.client.ui.Badge;
 import org.gwtbootstrap3.client.ui.Form;
 import org.gwtbootstrap3.client.ui.Label;
 import org.gwtbootstrap3.client.ui.TextBox;
 import org.javahispano.javaleague.client.event.PlayMatchEvent;
-import org.javahispano.javaleague.client.event.UpdateTacticEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
-import org.javahispano.javaleague.client.service.BlobstoreServiceAsync;
 import org.javahispano.javaleague.client.service.MatchServiceAsync;
 import org.javahispano.javaleague.client.service.TacticServiceAsync;
+import org.javahispano.javaleague.client.service.UploadBlobstoreServiceAsync;
 import org.javahispano.javaleague.client.service.UserFileServiceAsync;
 import org.javahispano.javaleague.shared.domain.TacticUser;
 
@@ -31,7 +26,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FormPanel;
-import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -70,8 +64,6 @@ public class TacticPresenter implements Presenter {
 
 		Form getFormTactic();
 
-		SingleUploader getUploader();
-
 		Badge getFileName();
 
 		Label getUpdatedTactic();
@@ -86,7 +78,7 @@ public class TacticPresenter implements Presenter {
 	private final TacticServiceAsync tacticService;
 	private final MatchServiceAsync matchService;
 	private final UserFileServiceAsync userFileService;
-	private final BlobstoreServiceAsync blobstoreService;
+	private final UploadBlobstoreServiceAsync blobstoreService;
 
 	private JavaLeagueMessages javaLeagueMessages = GWT
 			.create(JavaLeagueMessages.class);
@@ -94,7 +86,7 @@ public class TacticPresenter implements Presenter {
 	public TacticPresenter(TacticServiceAsync tacticService,
 			MatchServiceAsync matchService,
 			UserFileServiceAsync userFileService,
-			BlobstoreServiceAsync blobstoreService, SimpleEventBus eventBus,
+			UploadBlobstoreServiceAsync blobstoreService, SimpleEventBus eventBus,
 			Display display) {
 		this.display = display;
 		this.eventBus = eventBus;
@@ -104,43 +96,17 @@ public class TacticPresenter implements Presenter {
 		this.blobstoreService = blobstoreService;
 
 		hideErrorLabel();
-
-		display.getFormPanelTactic().setEncoding(FormPanel.ENCODING_MULTIPART);
-		display.getFormPanelTactic().setMethod(FormPanel.METHOD_POST);
-		display.getFileUpload().setName("fileUpload");
-
-		startNewBlobstoreSession();
-
-		display.getFormPanelTactic().addSubmitCompleteHandler(
-				new FormPanel.SubmitCompleteHandler() {
-
-					@Override
-					public void onSubmitComplete(SubmitCompleteEvent event) {
-						startNewBlobstoreSession();
-					}
-				});
+		
+		/*display.getFormPanelTactic().setEncoding(FormPanel.ENCODING_MULTIPART);
+		display.getFormPanelTactic().setMethod(FormPanel.METHOD_POST);*/
+		
 		bind();
 	}
 
-	private void startNewBlobstoreSession() {
-		blobstoreService.getUploadGCSURL(new AsyncCallback<String>() {
-			public void onFailure(Throwable error) {
-				GWT.log("TacticPresenter: Error blobstoreService.getUploadGCSURL");
-			}
-
-			public void onSuccess(String url) {
-				GWT.log("URL: " + url);
-				display.getFormPanelTactic().setAction(url);
-			}
-		});
-
-	}
 
 	public void bind() {
 
-		display.getUploader().addOnFinishUploadHandler(onFinishUploaderHandler);
-
-		display.getUpdateButton().addClickHandler(new ClickHandler() {
+/*		display.getUpdateButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				GWT.log("TacticPresenter: Firing UpdateTacticEvent");
 				eventBus.fireEvent(new UpdateTacticEvent(tactic));
@@ -149,7 +115,7 @@ public class TacticPresenter implements Presenter {
 
 				//doUpdateTactic();
 			}
-		});
+		});*/
 
 		display.getPlayMatchButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -160,23 +126,6 @@ public class TacticPresenter implements Presenter {
 			}
 		});
 	}
-
-	private IUploader.OnFinishUploaderHandler onFinishUploaderHandler = new IUploader.OnFinishUploaderHandler() {
-		public void onFinish(IUploader uploader) {
-			if (uploader.getStatus() == Status.SUCCESS) {
-				GWT.log("TacticPresenter: Firing UpdateTacticEvent");
-
-				String msg = uploader.getServerMessage().getMessage();
-
-				display.getFileName().setText(
-						msg.substring(0, msg.indexOf('|')));
-				display.getUpdatedTactic().setText(
-						msg.substring(msg.indexOf('|') + 1));
-
-				eventBus.fireEvent(new UpdateTacticEvent(tactic));
-			}
-		}
-	};
 
 	private void doUpdateTactic() {
 		boolean error = false;
