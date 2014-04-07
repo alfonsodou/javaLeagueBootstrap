@@ -27,6 +27,7 @@ import org.javahispano.javaleague.shared.domain.TacticUser;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.tools.cloudstorage.GcsFileOptions;
 import com.google.appengine.tools.cloudstorage.GcsFilename;
+import com.google.appengine.tools.cloudstorage.GcsInputChannel;
 import com.google.appengine.tools.cloudstorage.GcsOutputChannel;
 import com.google.appengine.tools.cloudstorage.GcsService;
 import com.google.appengine.tools.cloudstorage.GcsServiceFactory;
@@ -159,8 +160,13 @@ public class PlayMatchServlet extends HttpServlet {
 		Class<?> result = null;
 		Map<String, byte[]> byteStream;
 
-		byteStream = myDataStoreClassLoader.addClassJar(new BlobKey(tactic
-				.getZipClasses()));
+		/**
+		 * Para obtener el GcsFilename necesito el id del usuario !!! ¿ Añadirlo
+		 * a la táctica ?
+		 */
+		GcsFilename fileName = new GcsFilename(AppLib.bucket, "user/");
+
+		byteStream = myDataStoreClassLoader.addClassJar(readFile(fileName));
 
 		Iterator it = byteStream.entrySet().iterator();
 		while (it.hasNext()) {
@@ -219,6 +225,27 @@ public class PlayMatchServlet extends HttpServlet {
 				GcsFileOptions.getDefaultInstance());
 		outputChannel.write(ByteBuffer.wrap(content));
 		outputChannel.close();
+	}
+
+	private byte[] readFile(GcsFilename fileName) {
+		int fileSize;
+		ByteBuffer result = null;
+		try {
+			fileSize = (int) gcsService.getMetadata(fileName).getLength();
+			result = ByteBuffer.allocate(fileSize);
+			try (GcsInputChannel readChannel = gcsService.openReadChannel(
+					fileName, 0)) {
+				readChannel.read(result);
+			}
+		} catch (Exception e) {
+			log.warning(e.getMessage());
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			log.warning("stackTrace -> " + sw.toString());
+
+		}
+
+		return result.array();
 	}
 
 }

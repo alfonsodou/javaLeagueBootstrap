@@ -21,9 +21,9 @@
 							<g:Grid>
 								<g:row>
 									<g:customCell>
-										<b:Paragraph addStyleNames="col-lg-2">
+										<b:Bold addStyleNames="col-lg-2">
 											<ui:msg key="updatedTactic">Actualizada</ui:msg>
-										</b:Paragraph>
+										</b:Bold>
 									</g:customCell>
 									<g:customCell>
 										<g:FlowPanel addStyleNames="col-lg-10">
@@ -33,9 +33,9 @@
 								</g:row>
 								<g:row>
 									<g:customCell>
-										<b:Paragraph addStyleNames="col-lg-2">
+										<b:Bold addStyleNames="col-lg-2">
 											<ui:msg key="teamName">Nombre</ui:msg>
-										</b:Paragraph>
+										</b:Bold>
 									</g:customCell>
 									<g:customCell>
 										<g:FlowPanel addStyleNames="col-lg-10">
@@ -44,22 +44,28 @@
 											<b:Label ui:field="errorTeamName" type="DANGER">
 												<ui:msg key="errorTeamName">El nombre no puede estar vacío</ui:msg>
 											</b:Label>
-											<g:Button ui:field="updateTacticButton">
-												<ui:msg key="updateTactic">Actualizar</ui:msg>
-											</g:Button>
 										</g:FlowPanel>
 									</g:customCell>
 								</g:row>
 								<g:row>
 									<g:customCell>
-										<b:Paragraph addStyleNames="col-lg-2">
+										<b:Bold addStyleNames="col-lg-2">
 											<ui:msg key="jarFile">Fichero jar</ui:msg>
-										</b:Paragraph>
+										</b:Bold>
 									</g:customCell>
 									<g:customCell>
 										<g:FlowPanel addStyleNames="col-lg-10">
 											<b:Badge ui:field="fileName"></b:Badge>
 											<g:FileUpload name="fileUpload" />
+										</g:FlowPanel>
+									</g:customCell>
+								</g:row>
+								<g:row>
+									<g:customCell>
+										<g:FlowPanel addStyleNames="col-lg-10">
+											<b:Button ui:field="updateTacticButton">
+												<ui:msg key="updateTactic">Actualizar</ui:msg>
+											</b:Button>
 										</g:FlowPanel>
 									</g:customCell>
 								</g:row>

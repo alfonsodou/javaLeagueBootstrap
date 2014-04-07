@@ -67,11 +67,6 @@ public class TacticUser implements Serializable {
 	
 	private double posession;
 
-	/**
-	 * Blob key for zip
-	 */
-	private String zipClasses;
-
 	public TacticUser() {
 		super();
 		this.creation = new Date();
@@ -84,7 +79,7 @@ public class TacticUser implements Serializable {
 		this.matchLost = 0;
 		this.matchTied = 0;
 		this.matchWins = 0;
-		this.zipClasses = null;
+		this.fileName = null;
 		this.posession = 0;
 	}
 
@@ -237,21 +232,6 @@ public class TacticUser implements Serializable {
 	 */
 	public void setMatchTied(int matchTied) {
 		this.matchTied = matchTied;
-	}
-
-	/**
-	 * @return the zipClasses
-	 */
-	public String getZipClasses() {
-		return zipClasses;
-	}
-
-	/**
-	 * @param zipClasses
-	 *            the zipClasses to set
-	 */
-	public void setZipClasses(String zipClasses) {
-		this.zipClasses = zipClasses;
 	}
 
 	/**

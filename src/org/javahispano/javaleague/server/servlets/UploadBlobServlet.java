@@ -5,6 +5,7 @@ package org.javahispano.javaleague.server.servlets;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.Date;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -20,6 +21,7 @@ import org.javahispano.javaleague.server.AppLib;
 import org.javahispano.javaleague.server.LoginHelper;
 import org.javahispano.javaleague.server.domain.TacticUserDAO;
 import org.javahispano.javaleague.server.domain.UserDAO;
+import org.javahispano.javaleague.shared.domain.TacticUser;
 import org.javahispano.javaleague.shared.domain.User;
 
 import com.google.appengine.tools.cloudstorage.GcsFileOptions;
@@ -48,6 +50,7 @@ public class UploadBlobServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		User currentUser = LoginHelper.getLoggedInUser(req.getSession());
+		TacticUser tacticUser = currentUser.getTactic();
 		String status = null;
 		GcsFilename fileName = null;
 		byte[] zipBytes = null;
@@ -61,24 +64,38 @@ public class UploadBlobServlet extends HttpServlet {
 				log.warning("itemFieldName: " + item.getFieldName());
 				if (item.isFormField()) {
 					if (item.getFieldName().equals("teamName")) {
-						status = IOUtils.toString(item.openStream());
+						tacticUser.setTeamName(IOUtils.toString(item
+								.openStream()));
 					}
 				} else {
 					log.warning("itemName: " + item.getName());
 					zipBytes = IOUtils.toByteArray(item.openStream());
 					fileName = new GcsFilename(AppLib.bucket, "user/"
-							+ currentUser.getId().toString() + "/"
+							+ currentUser.getId().toString() + "/tactic/"
+							+ tacticUser.getId().toString() + "/"
 							+ item.getName());
 					log.warning("fileName: " + fileName);
 					writeToFile(fileName, zipBytes);
+
+					if (tacticUser.getFileName() != null) {
+						gcsService.delete(new GcsFilename(AppLib.bucket,
+								tacticUser.getFileName()));
+					}
+
+					tacticUser.setFileName(fileName.toString());
+					tacticUser.setBytes(gcsService.getMetadata(fileName)
+							.getLength());
 				}
 			}
-
+			tacticUser.setUpdated(new Date());
+			tacticUser = tacticDAO.save(tacticUser);
+			currentUser.setTactic(tacticUser);
+			currentUser = userDAO.save(currentUser);
 		} catch (Exception e) {
 			status = e.getMessage();
 			log.warning(status);
 		}
-		//res.getWriter().write(status);
+		// res.getWriter().write(status);
 
 	}
 
