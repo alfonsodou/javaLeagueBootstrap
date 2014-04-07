@@ -4,7 +4,6 @@
 package org.javahispano.javaleague.client.presenter;
 
 import org.gwtbootstrap3.client.ui.Badge;
-import org.gwtbootstrap3.client.ui.Form;
 import org.gwtbootstrap3.client.ui.Label;
 import org.gwtbootstrap3.client.ui.TextBox;
 import org.javahispano.javaleague.client.event.PlayMatchEvent;
@@ -24,7 +23,6 @@ import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
@@ -37,8 +35,6 @@ public class TacticPresenter implements Presenter {
 
 	public interface Display {
 		Widget asWidget();
-
-		HasClickHandlers getUpdateButton();
 
 		void setTeamName(String teamName);
 
@@ -54,21 +50,15 @@ public class TacticPresenter implements Presenter {
 
 		HasClickHandlers getPlayMatchButton();
 
-		void setVisibleUpdateButton(boolean visible);
-
 		Label getErrorTeamName();
 
 		TextBox getTeamName();
 
 		FormPanel getFormPanelTactic();
 
-		Form getFormTactic();
-
 		Badge getFileName();
 
 		Label getUpdatedTactic();
-
-		FileUpload getFileUpload();
 
 	}
 
@@ -162,7 +152,7 @@ public class TacticPresenter implements Presenter {
 						DateTimeFormat fmt = DateTimeFormat
 								.getFormat("dd/MM/yyyy :: HH:mm:ss");
 
-						display.setVisibleUpdateButton(true);
+						//display.setVisibleUpdateButton(true);
 						display.getUpdatedTactic().setText(
 								fmt.format(result.getUpdated()));
 						display.setTeamName(result.getTeamName());
@@ -187,7 +177,7 @@ public class TacticPresenter implements Presenter {
 						}
 
 					} else {
-						display.setVisibleUpdateButton(false);
+						//display.setVisibleUpdateButton(false);
 					}
 				}
 
@@ -250,7 +240,7 @@ public class TacticPresenter implements Presenter {
 					DateTimeFormat fmt = DateTimeFormat
 							.getFormat("dd/MM/yyyy :: HH:mm:ss");
 
-					display.setVisibleUpdateButton(true);
+					//display.setVisibleUpdateButton(true);
 					display.getUpdatedTactic().setText(
 							fmt.format(result.getUpdated()));
 					display.setTeamName(result.getTeamName());
@@ -270,7 +260,7 @@ public class TacticPresenter implements Presenter {
 								javaLeagueMessages.emptyUserTactic());
 					}
 				} else {
-					display.setVisibleUpdateButton(false);
+					//display.setVisibleUpdateButton(false);
 				}
 			}
 

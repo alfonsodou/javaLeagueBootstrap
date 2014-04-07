@@ -18,44 +18,60 @@
 				<b:Row>
 					<b:Column size="MD_6">
 						<g:FormPanel ui:field="formPanelTactic" action="/upload">
-							<b:Form type="HORIZONTAL" ui:field="formTactic">
-								<b:FieldSet>
-									<b:FormGroup>
-										<b:FormLabel for="updatedTactic" addStyleNames="col-lg-2">
+							<g:Grid>
+								<g:row>
+									<g:customCell>
+										<b:Paragraph addStyleNames="col-lg-2">
 											<ui:msg key="updatedTactic">Actualizada</ui:msg>
-										</b:FormLabel>
+										</b:Paragraph>
+									</g:customCell>
+									<g:customCell>
 										<g:FlowPanel addStyleNames="col-lg-10">
 											<b:Label ui:field="updatedTactic" type="INFO"></b:Label>
 										</g:FlowPanel>
-									</b:FormGroup>
-									<b:FormGroup>
-										<b:FormLabel for="teamName" addStyleNames="col-lg-2">
+									</g:customCell>
+								</g:row>
+								<g:row>
+									<g:customCell>
+										<b:Paragraph addStyleNames="col-lg-2">
 											<ui:msg key="teamName">Nombre</ui:msg>
-										</b:FormLabel>
+										</b:Paragraph>
+									</g:customCell>
+									<g:customCell>
 										<g:FlowPanel addStyleNames="col-lg-10">
 											<b:TextBox b:id="teamName" ui:field="teamName"
 												name="teamName"></b:TextBox>
 											<b:Label ui:field="errorTeamName" type="DANGER">
 												<ui:msg key="errorTeamName">El nombre no puede estar vacío</ui:msg>
 											</b:Label>
-											<g:FileUpload ui:field="fileUpload" name="fileUpload"></g:FileUpload>
-											<b:Button ui:field="updateTacticButton">
+											<g:Button ui:field="updateTacticButton">
 												<ui:msg key="updateTactic">Actualizar</ui:msg>
-											</b:Button>
+											</g:Button>
 										</g:FlowPanel>
-									</b:FormGroup>
-									<b:FormGroup>
-										<b:FormLabel for="uploader" addStyleNames="col-lg-2">
+									</g:customCell>
+								</g:row>
+								<g:row>
+									<g:customCell>
+										<b:Paragraph addStyleNames="col-lg-2">
 											<ui:msg key="jarFile">Fichero jar</ui:msg>
-										</b:FormLabel>
+										</b:Paragraph>
+									</g:customCell>
+									<g:customCell>
 										<g:FlowPanel addStyleNames="col-lg-10">
 											<b:Badge ui:field="fileName"></b:Badge>
+											<g:FileUpload name="fileUpload" />
 										</g:FlowPanel>
-									</b:FormGroup>
-
-								</b:FieldSet>
-							</b:Form>
+									</g:customCell>
+								</g:row>
+							</g:Grid>
 						</g:FormPanel>
+
+						<!-- <g:CaptionPanel captionText="Upload"> <g:HorizontalPanel> <g:FormPanel 
+							ui:field="uploadForm" action="/upload"> <g:Grid> <g:row> <g:customCell> <g:Label 
+							text="Zip file" /> </g:customCell> <g:customCell> <g:FileUpload name="uploadFormElement" 
+							/> </g:customCell> <g:customCell> <g:Button text="Upload" ui:field="uploadButton" 
+							/> </g:customCell> </g:row> </g:Grid> </g:FormPanel> </g:HorizontalPanel> 
+							</g:CaptionPanel> -->
 					</b:Column>
 					<b:Column size="MD_5" offset="MD_1">
 						<b:Description horizontal="true">

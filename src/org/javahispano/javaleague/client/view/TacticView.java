@@ -20,7 +20,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -32,8 +31,6 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 
 	@UiField
 	TextBox teamName;
-	@UiField
-	Button updateTacticButton;
 	@UiField
 	DescriptionData winsField;
 	@UiField
@@ -51,13 +48,13 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	@UiField
 	Label errorTeamName;
 	@UiField
-	Form formTactic;
-	@UiField
 	Badge fileName;
 	@UiField
 	Label updatedTactic;
-	@UiField
+/*	@UiField
 	FileUpload fileUpload;
+	@UiField
+	FormPanel uploadForm;*/
 
 	private static TacticViewUiBinder uiBinder = GWT
 			.create(TacticViewUiBinder.class);
@@ -73,21 +70,24 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 
 		formPanelTactic.setMethod(FormPanel.METHOD_POST);
 		formPanelTactic.setEncoding(FormPanel.ENCODING_MULTIPART);
+		
+/*		uploadForm.setMethod(FormPanel.METHOD_POST);
+		uploadForm.setEncoding(FormPanel.ENCODING_MULTIPART);*/
 	}
 
 	@UiHandler("updateTacticButton")
 	void onUploadClick(ClickEvent event) {
 		formPanelTactic.submit();
 	}
+	
+	/*@UiHandler("uploadButton")
+	void onUploadClick(ClickEvent event) {
+		uploadForm.submit();
+	}*/
 
 	@Override
 	public Widget asWidget() {
 		return this;
-	}
-
-	@Override
-	public HasClickHandlers getUpdateButton() {
-		return updateTacticButton;
 	}
 
 	@Override
@@ -126,11 +126,6 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	}
 
 	@Override
-	public void setVisibleUpdateButton(boolean visible) {
-		updateTacticButton.setVisible(visible);
-	}
-
-	@Override
 	public Label getErrorTeamName() {
 		return errorTeamName;
 	}
@@ -146,11 +141,6 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	}
 
 	@Override
-	public Form getFormTactic() {
-		return formTactic;
-	}
-
-	@Override
 	public Badge getFileName() {
 		return fileName;
 	}
@@ -158,11 +148,6 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	@Override
 	public Label getUpdatedTactic() {
 		return updatedTactic;
-	}
-
-	@Override
-	public FileUpload getFileUpload() {
-		return fileUpload;
 	}
 
 }
