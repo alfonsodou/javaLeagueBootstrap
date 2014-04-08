@@ -4,9 +4,11 @@
 package org.javahispano.javaleague.client.presenter;
 
 import org.gwtbootstrap3.client.ui.Badge;
+import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Label;
 import org.gwtbootstrap3.client.ui.TextBox;
 import org.javahispano.javaleague.client.event.PlayMatchEvent;
+import org.javahispano.javaleague.client.event.UpdateTacticEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.MatchServiceAsync;
@@ -24,8 +26,12 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FormPanel;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.XMLParser;
 
 /**
  * @author adou
@@ -60,6 +66,8 @@ public class TacticPresenter implements Presenter {
 
 		Label getUpdatedTactic();
 
+		Button getUpdateButton();
+
 	}
 
 	private TacticUser tactic;
@@ -76,8 +84,8 @@ public class TacticPresenter implements Presenter {
 	public TacticPresenter(TacticServiceAsync tacticService,
 			MatchServiceAsync matchService,
 			UserFileServiceAsync userFileService,
-			UploadBlobstoreServiceAsync blobstoreService, SimpleEventBus eventBus,
-			Display display) {
+			UploadBlobstoreServiceAsync blobstoreService,
+			SimpleEventBus eventBus, Display display) {
 		this.display = display;
 		this.eventBus = eventBus;
 		this.tacticService = tacticService;
@@ -86,26 +94,20 @@ public class TacticPresenter implements Presenter {
 		this.blobstoreService = blobstoreService;
 
 		hideErrorLabel();
-		
-		/*display.getFormPanelTactic().setEncoding(FormPanel.ENCODING_MULTIPART);
-		display.getFormPanelTactic().setMethod(FormPanel.METHOD_POST);*/
-		
+
 		bind();
 	}
 
-
 	public void bind() {
 
-/*		display.getUpdateButton().addClickHandler(new ClickHandler() {
+		display.getUpdateButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				GWT.log("TacticPresenter: Firing UpdateTacticEvent");
 				eventBus.fireEvent(new UpdateTacticEvent(tactic));
 
-				display.getFormPanelTactic().submit();
-
-				//doUpdateTactic();
+				doUpdateTactic();
 			}
-		});*/
+		});
 
 		display.getPlayMatchButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -115,6 +117,64 @@ public class TacticPresenter implements Presenter {
 				doPlayMatch();
 			}
 		});
+
+		display.getFormPanelTactic().addSubmitCompleteHandler(
+				new SubmitCompleteHandler() {
+					@Override
+					public void onSubmitComplete(SubmitCompleteEvent event) {
+						if (event.getResults() != null) {
+							Document document = XMLParser.parse(event
+									.getResults());
+
+							DateTimeFormat fmt = DateTimeFormat
+									.getFormat("dd/MM/yyyy :: HH:mm:ss");
+
+							// display.setVisibleUpdateButton(true);
+							// display.getUpdatedTactic().setText(
+							// fmt.format(result.getUpdated()));
+							try {
+								display.setTeamName(document.getElementById(
+										"teamName").getNodeValue());
+								display.getFileName().setText(
+										document.getElementById("fileName")
+												.getNodeValue()
+												+ " :: "
+												+ document.getElementById(
+														"bytes").getNodeValue()
+												+ " bytes");
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+
+							/*
+							 * display.setGoalsAgainst(Integer.toString(result
+							 * .getGoalsAgainst()));
+							 * display.setGoalsFor(Integer.toString(result
+							 * .getGoalsFor()));
+							 * display.setMatchLost(Integer.toString(result
+							 * .getMatchLost()));
+							 * display.setMatchTied(Integer.toString(result
+							 * .getMatchTied()));
+							 * display.setMatchWins(Integer.toString(result
+							 * .getMatchWins()));
+							 */
+
+							/*
+							 * if (result.getFileName() != null) {
+							 * display.getFileName().setText(
+							 * result.getFileName() + " :: " + result.getBytes()
+							 * + " bytes"); } else {
+							 * display.getFileName().setText(
+							 * javaLeagueMessages.emptyUserTactic()); }
+							 */
+
+						} else {
+							// display.setVisibleUpdateButton(false);
+						}
+
+					}
+
+				});
 	}
 
 	private void doUpdateTactic() {
@@ -131,58 +191,47 @@ public class TacticPresenter implements Presenter {
 
 			tactic.setTeamName(display.getTeamName().getValue());
 
-			new RPCCall<TacticUser>() {
-				@Override
-				protected void callService(AsyncCallback<TacticUser> cb) {
-					tacticService.updateTactic(tactic, cb);
-				}
+			display.getFormPanelTactic().submit();
 
-				@Override
-				public void onFailure(Throwable caught) {
-					Window.alert("Error fetching tactic summary: "
-							+ caught.getMessage());
-
-				}
-
-				@Override
-				public void onSuccess(TacticUser result) {
-					if (result != null) {
-						tactic = result;
-
-						DateTimeFormat fmt = DateTimeFormat
-								.getFormat("dd/MM/yyyy :: HH:mm:ss");
-
-						//display.setVisibleUpdateButton(true);
-						display.getUpdatedTactic().setText(
-								fmt.format(result.getUpdated()));
-						display.setTeamName(result.getTeamName());
-						display.setGoalsAgainst(Integer.toString(result
-								.getGoalsAgainst()));
-						display.setGoalsFor(Integer.toString(result
-								.getGoalsFor()));
-						display.setMatchLost(Integer.toString(result
-								.getMatchLost()));
-						display.setMatchTied(Integer.toString(result
-								.getMatchTied()));
-						display.setMatchWins(Integer.toString(result
-								.getMatchWins()));
-
-						if (result.getFileName() != null) {
-							display.getFileName().setText(
-									result.getFileName() + " :: "
-											+ result.getBytes() + " bytes");
-						} else {
-							display.getFileName().setText(
-									javaLeagueMessages.emptyUserTactic());
-						}
-
-					} else {
-						//display.setVisibleUpdateButton(false);
-					}
-				}
-
-			}.retry(3);
-
+			/*
+			 * new RPCCall<TacticUser>() {
+			 * 
+			 * @Override protected void callService(AsyncCallback<TacticUser>
+			 * cb) { tacticService.updateTactic(tactic, cb); }
+			 * 
+			 * @Override public void onFailure(Throwable caught) {
+			 * Window.alert("Error fetching tactic summary: " +
+			 * caught.getMessage());
+			 * 
+			 * }
+			 * 
+			 * @Override public void onSuccess(TacticUser result) { if (result
+			 * != null) { tactic = result;
+			 * 
+			 * DateTimeFormat fmt = DateTimeFormat
+			 * .getFormat("dd/MM/yyyy :: HH:mm:ss");
+			 * 
+			 * // display.setVisibleUpdateButton(true);
+			 * display.getUpdatedTactic().setText(
+			 * fmt.format(result.getUpdated()));
+			 * display.setTeamName(result.getTeamName());
+			 * display.setGoalsAgainst(Integer.toString(result
+			 * .getGoalsAgainst())); display.setGoalsFor(Integer.toString(result
+			 * .getGoalsFor())); display.setMatchLost(Integer.toString(result
+			 * .getMatchLost())); display.setMatchTied(Integer.toString(result
+			 * .getMatchTied())); display.setMatchWins(Integer.toString(result
+			 * .getMatchWins()));
+			 * 
+			 * if (result.getFileName() != null) {
+			 * display.getFileName().setText( result.getFileName() + " :: " +
+			 * result.getBytes() + " bytes"); } else {
+			 * display.getFileName().setText(
+			 * javaLeagueMessages.emptyUserTactic()); }
+			 * 
+			 * } else { // display.setVisibleUpdateButton(false); } }
+			 * 
+			 * }.retry(3);
+			 */
 		}
 	}
 
@@ -240,7 +289,7 @@ public class TacticPresenter implements Presenter {
 					DateTimeFormat fmt = DateTimeFormat
 							.getFormat("dd/MM/yyyy :: HH:mm:ss");
 
-					//display.setVisibleUpdateButton(true);
+					// display.setVisibleUpdateButton(true);
 					display.getUpdatedTactic().setText(
 							fmt.format(result.getUpdated()));
 					display.setTeamName(result.getTeamName());
@@ -260,7 +309,7 @@ public class TacticPresenter implements Presenter {
 								javaLeagueMessages.emptyUserTactic());
 					}
 				} else {
-					//display.setVisibleUpdateButton(false);
+					// display.setVisibleUpdateButton(false);
 				}
 			}
 

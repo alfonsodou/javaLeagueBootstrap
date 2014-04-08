@@ -3,8 +3,6 @@ package org.javahispano.javaleague.server;
 import javax.servlet.http.HttpSession;
 
 import org.javahispano.javaleague.client.service.LoginService;
-import org.javahispano.javaleague.server.domain.FrameWorkDAO;
-import org.javahispano.javaleague.shared.domain.FrameWork;
 import org.javahispano.javaleague.shared.domain.User;
 import org.javahispano.javaleague.shared.exception.NotLoggedInException;
 

@@ -3,7 +3,6 @@
  */
 package org.javahispano.javaleague.client.service;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.javahispano.javaleague.shared.domain.League;

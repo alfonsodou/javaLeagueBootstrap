@@ -16,10 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.javahispano.javaleague.server.domain.MatchDAO;
 import org.javahispano.javaleague.shared.domain.Match;
 
-import com.google.appengine.api.datastore.DatastoreFailureException;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Transaction;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;

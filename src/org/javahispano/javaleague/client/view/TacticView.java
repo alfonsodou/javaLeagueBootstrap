@@ -20,6 +20,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FormPanel;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -50,10 +51,8 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	Badge fileName;
 	@UiField
 	Label updatedTactic;
-/*	@UiField
-	FileUpload fileUpload;
 	@UiField
-	FormPanel uploadForm;*/
+	Button updateTacticButton;
 
 	private static TacticViewUiBinder uiBinder = GWT
 			.create(TacticViewUiBinder.class);
@@ -70,8 +69,6 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 		formPanelTactic.setMethod(FormPanel.METHOD_POST);
 		formPanelTactic.setEncoding(FormPanel.ENCODING_MULTIPART);
 		
-/*		uploadForm.setMethod(FormPanel.METHOD_POST);
-		uploadForm.setEncoding(FormPanel.ENCODING_MULTIPART);*/
 	}
 
 	@UiHandler("updateTacticButton")
@@ -79,11 +76,11 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 		formPanelTactic.submit();
 	}
 	
-	/*@UiHandler("uploadButton")
-	void onUploadClick(ClickEvent event) {
-		uploadForm.submit();
-	}*/
-
+	@UiHandler("formPanelTactic")
+	void onUploadFormSubmitComplete(SubmitCompleteEvent event) {
+		event.getResults();
+	}
+	
 	@Override
 	public Widget asWidget() {
 		return this;
@@ -147,6 +144,11 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	@Override
 	public Label getUpdatedTactic() {
 		return updatedTactic;
+	}
+
+	@Override
+	public Button getUpdateButton() {
+		return updateTacticButton;
 	}
 
 }

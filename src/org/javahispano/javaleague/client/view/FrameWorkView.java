@@ -3,7 +3,6 @@
  */
 package org.javahispano.javaleague.client.view;
 
-import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.DescriptionData;
 import org.gwtbootstrap3.client.ui.NavbarLink;
 import org.gwtbootstrap3.client.ui.Paragraph;

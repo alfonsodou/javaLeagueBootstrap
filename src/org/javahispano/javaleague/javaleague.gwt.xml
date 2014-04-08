@@ -18,6 +18,8 @@
 	<inherits name="org.gwtbootstrap3.extras.bootbox.Bootbox"/>
 	
 	<inherits name="com.googlecode.objectify.Objectify" />
+	
+	<inherits name="com.google.gwt.xml.XML" />
 
 	<!-- Internacionalization -->
 	<inherits name='com.google.gwt.i18n.I18N' />

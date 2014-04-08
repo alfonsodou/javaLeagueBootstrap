@@ -9,8 +9,6 @@ import java.util.List;
 
 import org.javahispano.javaleague.shared.domain.FrameWork;
 
-import com.googlecode.objectify.ObjectifyService;
-
 /**
  * @author adou
  * 

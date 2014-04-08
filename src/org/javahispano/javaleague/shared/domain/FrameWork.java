@@ -3,22 +3,10 @@
  */
 package org.javahispano.javaleague.shared.domain;
 
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.channels.Channels;
 import java.util.Date;
 import java.util.logging.Logger;
 
-import org.apache.commons.io.output.ByteArrayOutputStream;
-
-import com.google.appengine.api.blobstore.BlobKey;
-import com.google.appengine.api.files.AppEngineFile;
-import com.google.appengine.api.files.FileService;
-import com.google.appengine.api.files.FileServiceFactory;
-import com.google.appengine.api.files.FileWriteChannel;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 

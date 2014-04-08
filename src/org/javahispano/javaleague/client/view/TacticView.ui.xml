@@ -71,13 +71,6 @@
 								</g:row>
 							</g:Grid>
 						</g:FormPanel>
-
-						<!-- <g:CaptionPanel captionText="Upload"> <g:HorizontalPanel> <g:FormPanel 
-							ui:field="uploadForm" action="/upload"> <g:Grid> <g:row> <g:customCell> <g:Label 
-							text="Zip file" /> </g:customCell> <g:customCell> <g:FileUpload name="uploadFormElement" 
-							/> </g:customCell> <g:customCell> <g:Button text="Upload" ui:field="uploadButton" 
-							/> </g:customCell> </g:row> </g:Grid> </g:FormPanel> </g:HorizontalPanel> 
-							</g:CaptionPanel> -->
 					</b:Column>
 					<b:Column size="MD_5" offset="MD_1">
 						<b:Description horizontal="true">

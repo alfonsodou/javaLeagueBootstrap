@@ -10,7 +10,6 @@ import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.FrameWorkServiceAsync;
 import org.javahispano.javaleague.shared.domain.FrameWork;
-import org.joda.time.LocalDateTime;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.SimpleEventBus;
