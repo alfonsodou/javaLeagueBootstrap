@@ -122,7 +122,9 @@ public class TacticPresenter implements Presenter {
 				new SubmitCompleteHandler() {
 					@Override
 					public void onSubmitComplete(SubmitCompleteEvent event) {
+						Window.alert(event.toString());
 						if (event.getResults() != null) {
+							Window.alert(event.getResults());
 							Document document = XMLParser.parse(event
 									.getResults());
 

@@ -106,6 +106,7 @@ public class UploadBlobServlet extends HttpServlet {
 			sb.append("<updated>" + tacticUser.getUpdated().toString()
 					+ "</updated>\n");
 			sb.append("</tactic>");
+			log.warning(sb.toString());
 			out.println(sb.toString());
 			out.flush();
 
