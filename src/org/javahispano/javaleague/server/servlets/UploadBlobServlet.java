@@ -31,9 +31,6 @@ import com.google.appengine.tools.cloudstorage.GcsOutputChannel;
 import com.google.appengine.tools.cloudstorage.GcsService;
 import com.google.appengine.tools.cloudstorage.GcsServiceFactory;
 import com.google.appengine.tools.cloudstorage.RetryParams;
-import com.google.gwt.xml.client.Document;
-import com.google.gwt.xml.client.Element;
-import com.google.gwt.xml.client.XMLParser;
 
 /**
  * @author adou
@@ -70,21 +67,27 @@ public class UploadBlobServlet extends HttpServlet {
 								.openStream()));
 					}
 				} else {
-					zipBytes = IOUtils.toByteArray(item.openStream());
-					fileName = new GcsFilename(AppLib.bucket, "tactic/"
-							+ tacticUser.getId().toString() + "/"
-							+ item.getName());
-					writeToFile(fileName, zipBytes);
+					if (!item.getName().isEmpty()) {
+						zipBytes = IOUtils.toByteArray(item.openStream());
+						if (zipBytes != null) {
+							fileName = new GcsFilename(AppLib.bucket, "tactic/"
+									+ tacticUser.getId().toString() + "/"
+									+ item.getName());
+							writeToFile(fileName, zipBytes);
 
-					if (tacticUser.getFileName() != null) {
-						gcsService.delete(new GcsFilename(AppLib.bucket,
-								"tactic/" + tacticUser.getId().toString() + "/"
-										+ tacticUser.getFileName()));
+							if (tacticUser.getFileName() != null) {
+								gcsService.delete(new GcsFilename(
+										AppLib.bucket, "tactic/"
+												+ tacticUser.getId().toString()
+												+ "/"
+												+ tacticUser.getFileName()));
+							}
+
+							tacticUser.setFileName(item.getName());
+							tacticUser.setBytes(gcsService
+									.getMetadata(fileName).getLength());
+						}
 					}
-
-					tacticUser.setFileName(item.getName());
-					tacticUser.setBytes(gcsService.getMetadata(fileName)
-							.getLength());
 				}
 			}
 			tacticUser.setUpdated(new Date());
@@ -92,27 +95,26 @@ public class UploadBlobServlet extends HttpServlet {
 			currentUser.setTactic(tacticUser);
 			currentUser = userDAO.save(currentUser);
 
-			res.setContentType("application/xml;charset=UTF-8");
-			res.setHeader("Cache-Control", "no-cache");
-
 			PrintWriter out = res.getWriter();
 			StringBuffer sb = new StringBuffer();
 			sb.append("<?xml version='1.0' encoding='ISO-8859-1'?>\n");
+			sb.append("<root>");
 			sb.append("<tactic>");
-			sb.append("<teamName>" + tacticUser.getTeamName() + "</teamName>\n");
-			sb.append("<fileName>" + tacticUser.getFileName() + "</fileName>\n");
+			sb.append("<teamname>" + tacticUser.getTeamName() + "</teamname>\n");
+			sb.append("<filename>" + tacticUser.getFileName() + "</filename>\n");
 			sb.append("<bytes>" + tacticUser.getBytes().toString()
 					+ "</bytes>\n");
 			sb.append("<updated>" + tacticUser.getUpdated().toString()
 					+ "</updated>\n");
 			sb.append("</tactic>");
-			log.warning(sb.toString());
+			sb.append("</root>");
+			log.warning("XML: " + sb.toString());
 			out.println(sb.toString());
 			out.flush();
 
 		} catch (Exception e) {
 			status = e.getMessage();
-			log.warning(status);
+			log.warning("ERROR: " + status);
 		}
 
 	}

@@ -6,7 +6,6 @@ package org.javahispano.javaleague.client.presenter;
 import org.gwtbootstrap3.client.ui.Badge;
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Label;
-import org.gwtbootstrap3.client.ui.TextBox;
 import org.javahispano.javaleague.client.event.PlayMatchEvent;
 import org.javahispano.javaleague.client.event.UpdateTacticEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
@@ -29,8 +28,10 @@ import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
 import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.XMLParser;
 
 /**
@@ -122,11 +123,25 @@ public class TacticPresenter implements Presenter {
 				new SubmitCompleteHandler() {
 					@Override
 					public void onSubmitComplete(SubmitCompleteEvent event) {
-						Window.alert(event.toString());
-						if (event.getResults() != null) {
+
+						if (!event.getResults().isEmpty()) {
 							Window.alert(event.getResults());
 							Document document = XMLParser.parse(event
 									.getResults());
+							Element tacticElement = document
+									.getDocumentElement();
+							XMLParser.removeWhitespace(tacticElement);
+
+							display.setTeamName(getElementTextValue(
+									tacticElement, "teamname"));
+
+							display.getFileName().setText(
+									getElementTextValue(tacticElement,
+											"filename")
+											+ " :: "
+											+ getElementTextValue(
+													tacticElement, "bytes")
+											+ " bytes");
 
 							DateTimeFormat fmt = DateTimeFormat
 									.getFormat("dd/MM/yyyy :: HH:mm:ss");
@@ -134,19 +149,6 @@ public class TacticPresenter implements Presenter {
 							// display.setVisibleUpdateButton(true);
 							// display.getUpdatedTactic().setText(
 							// fmt.format(result.getUpdated()));
-							try {
-								display.setTeamName(document.getElementById(
-										"teamName").getNodeValue());
-								display.getFileName().setText(
-										document.getElementById("fileName")
-												.getNodeValue()
-												+ " :: "
-												+ document.getElementById(
-														"bytes").getNodeValue()
-												+ " bytes");
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
 
 							/*
 							 * display.setGoalsAgainst(Integer.toString(result
@@ -195,45 +197,6 @@ public class TacticPresenter implements Presenter {
 
 			display.getFormPanelTactic().submit();
 
-			/*
-			 * new RPCCall<TacticUser>() {
-			 * 
-			 * @Override protected void callService(AsyncCallback<TacticUser>
-			 * cb) { tacticService.updateTactic(tactic, cb); }
-			 * 
-			 * @Override public void onFailure(Throwable caught) {
-			 * Window.alert("Error fetching tactic summary: " +
-			 * caught.getMessage());
-			 * 
-			 * }
-			 * 
-			 * @Override public void onSuccess(TacticUser result) { if (result
-			 * != null) { tactic = result;
-			 * 
-			 * DateTimeFormat fmt = DateTimeFormat
-			 * .getFormat("dd/MM/yyyy :: HH:mm:ss");
-			 * 
-			 * // display.setVisibleUpdateButton(true);
-			 * display.getUpdatedTactic().setText(
-			 * fmt.format(result.getUpdated()));
-			 * display.setTeamName(result.getTeamName());
-			 * display.setGoalsAgainst(Integer.toString(result
-			 * .getGoalsAgainst())); display.setGoalsFor(Integer.toString(result
-			 * .getGoalsFor())); display.setMatchLost(Integer.toString(result
-			 * .getMatchLost())); display.setMatchTied(Integer.toString(result
-			 * .getMatchTied())); display.setMatchWins(Integer.toString(result
-			 * .getMatchWins()));
-			 * 
-			 * if (result.getFileName() != null) {
-			 * display.getFileName().setText( result.getFileName() + " :: " +
-			 * result.getBytes() + " bytes"); } else {
-			 * display.getFileName().setText(
-			 * javaLeagueMessages.emptyUserTactic()); }
-			 * 
-			 * } else { // display.setVisibleUpdateButton(false); } }
-			 * 
-			 * }.retry(3);
-			 */
 		}
 	}
 
@@ -322,4 +285,12 @@ public class TacticPresenter implements Presenter {
 	private void hideErrorLabel() {
 		display.getErrorTeamName().setVisible(false);
 	}
+
+	private String getElementTextValue(Element parent, String elementTag) {
+		// If the xml is not coming from a known good source, this method would
+		// have to include safety checks.
+		return parent.getElementsByTagName(elementTag).item(0).getFirstChild()
+				.getNodeValue();
+	}
+
 }

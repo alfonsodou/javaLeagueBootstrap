@@ -7,7 +7,6 @@ import org.gwtbootstrap3.client.ui.Badge;
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.DescriptionData;
 import org.gwtbootstrap3.client.ui.Label;
-import org.gwtbootstrap3.client.ui.TextBox;
 import org.javahispano.javaleague.client.presenter.TacticPresenter;
 import org.javahispano.javaleague.client.service.UploadBlobstoreService;
 import org.javahispano.javaleague.client.service.UploadBlobstoreServiceAsync;
@@ -21,6 +20,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 /**

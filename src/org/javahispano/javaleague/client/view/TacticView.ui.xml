@@ -39,8 +39,8 @@
 									</g:customCell>
 									<g:customCell>
 										<g:FlowPanel addStyleNames="col-lg-10">
-											<b:TextBox b:id="teamName" ui:field="teamName"
-												name="teamName"></b:TextBox>
+											<g:TextBox ui:field="teamName"
+												name="teamName"></g:TextBox>
 											<b:Label ui:field="errorTeamName" type="DANGER">
 												<ui:msg key="errorTeamName">El nombre no puede estar vacío</ui:msg>
 											</b:Label>
