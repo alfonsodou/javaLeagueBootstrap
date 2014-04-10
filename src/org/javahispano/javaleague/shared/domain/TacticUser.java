@@ -3,7 +3,7 @@ package org.javahispano.javaleague.shared.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.javahispano.javaleague.server.AppLib;
+import org.javahispano.javaleague.shared.AppLib;
 
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;

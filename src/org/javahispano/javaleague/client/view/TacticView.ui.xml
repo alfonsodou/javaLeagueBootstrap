@@ -39,8 +39,7 @@
 									</g:customCell>
 									<g:customCell>
 										<g:FlowPanel addStyleNames="col-lg-10">
-											<g:TextBox ui:field="teamName"
-												name="teamName"></g:TextBox>
+											<g:TextBox ui:field="teamName" name="teamName"></g:TextBox>
 											<b:Label ui:field="errorTeamName" type="DANGER">
 												<ui:msg key="errorTeamName">El nombre no puede estar vacío</ui:msg>
 											</b:Label>
@@ -57,6 +56,14 @@
 										<g:FlowPanel addStyleNames="col-lg-10">
 											<b:Badge ui:field="fileName"></b:Badge>
 											<g:FileUpload name="fileUpload" />
+											<b:Label ui:field="errorPackagePath" type="DANGER">
+												<ui:msg key="errorPackagePath">Error en el nombre de los package de la
+													táctica</ui:msg>
+											</b:Label>
+											<b:Label ui:field="errorInterfaceTactic" type="DANGER">
+												<ui:msg key="errorInterfaceTactic">No existe ninguna clase que implemente el
+													interfaz Tactic</ui:msg>
+											</b:Label>
 										</g:FlowPanel>
 									</g:customCell>
 								</g:row>
@@ -71,6 +78,8 @@
 								</g:row>
 							</g:Grid>
 						</g:FormPanel>
+						<b:Paragraph alignment="CENTER" emphasis="WARNING"
+							ui:field="messagePackagePath"></b:Paragraph>
 					</b:Column>
 					<b:Column size="MD_5" offset="MD_1">
 						<b:Description horizontal="true">

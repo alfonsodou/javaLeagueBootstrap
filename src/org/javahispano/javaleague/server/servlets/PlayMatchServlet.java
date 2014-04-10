@@ -15,11 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.javahispano.javaleague.javacup.shared.Agent;
 import org.javahispano.javaleague.javacup.shared.MatchShared;
-import org.javahispano.javaleague.server.AppLib;
 import org.javahispano.javaleague.server.classloader.MyDataStoreClassLoader;
 import org.javahispano.javaleague.server.domain.FrameWorkDAO;
 import org.javahispano.javaleague.server.domain.MatchDAO;
 import org.javahispano.javaleague.server.domain.TacticUserDAO;
+import org.javahispano.javaleague.shared.AppLib;
 import org.javahispano.javaleague.shared.domain.FrameWork;
 import org.javahispano.javaleague.shared.domain.Match;
 import org.javahispano.javaleague.shared.domain.TacticUser;
@@ -75,7 +75,7 @@ public class PlayMatchServlet extends HttpServlet {
 			log.warning("Local: " + localTactic.getTeamName());
 			visitingTactic = match.getVisiting();
 			log.warning("Visitante: " + visitingTactic.getTeamName());
-			frameWork = frameWorkDAO.findById(AppLib.defaultFrameWorkID);
+			frameWork = frameWorkDAO.findById(AppLib.DEFAULT_FRAMEWORK_ID);
 			log.warning("FrameWork: " + frameWork.getName());
 
 			myDataStoreClassLoader = new MyDataStoreClassLoader(this.getClass()
@@ -97,11 +97,11 @@ public class PlayMatchServlet extends HttpServlet {
 
 			MatchShared matchShared = a.execute(lo, vo);
 
-			filename = new GcsFilename(AppLib.bucket, match.getLeagueId()
+			filename = new GcsFilename(AppLib.BUCKET_GCS, match.getLeagueId()
 					.toString() + "/" + match.getId().toString() + ".jvc");
 			writeToFile(filename, matchShared.getMatch());
 
-			filename = new GcsFilename(AppLib.bucket, match.getLeagueId()
+			filename = new GcsFilename(AppLib.BUCKET_GCS, match.getLeagueId()
 					.toString() + "/" + match.getId().toString() + ".bin");
 			writeToFile(filename, matchShared.getMatchBin());
 
@@ -164,7 +164,7 @@ public class PlayMatchServlet extends HttpServlet {
 		 * Para obtener el GcsFilename necesito el id del usuario !!! ¿ Añadirlo
 		 * a la táctica ?
 		 */
-		GcsFilename fileName = new GcsFilename(AppLib.bucket, "user/");
+		GcsFilename fileName = new GcsFilename(AppLib.BUCKET_GCS, "user/");
 
 		byteStream = myDataStoreClassLoader.addClassJar(readFile(fileName));
 

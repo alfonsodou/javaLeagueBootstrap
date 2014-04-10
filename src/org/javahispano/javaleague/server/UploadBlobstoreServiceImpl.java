@@ -6,6 +6,7 @@ package org.javahispano.javaleague.server;
 import java.util.logging.Logger;
 
 import org.javahispano.javaleague.client.service.UploadBlobstoreService;
+import org.javahispano.javaleague.shared.AppLib;
 
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
@@ -41,7 +42,7 @@ public class UploadBlobstoreServiceImpl extends RemoteServiceServlet implements
 				.getBlobstoreService();
 		String url = blobstoreService.createUploadUrl("/upload",
 				UploadOptions.Builder
-						.withGoogleStorageBucketName(AppLib.bucket));
+						.withGoogleStorageBucketName(AppLib.BUCKET_GCS));
 		log.warning("URL: " + url);
 		return url;
 	}

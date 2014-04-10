@@ -7,9 +7,8 @@ import org.gwtbootstrap3.client.ui.Badge;
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.DescriptionData;
 import org.gwtbootstrap3.client.ui.Label;
+import org.gwtbootstrap3.client.ui.Paragraph;
 import org.javahispano.javaleague.client.presenter.TacticPresenter;
-import org.javahispano.javaleague.client.service.UploadBlobstoreService;
-import org.javahispano.javaleague.client.service.UploadBlobstoreServiceAsync;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -53,12 +52,15 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	Label updatedTactic;
 	@UiField
 	Button updateTacticButton;
+	@UiField
+	Label errorPackagePath;
+	@UiField
+	Label errorInterfaceTactic;
+	@UiField
+	Paragraph messagePackagePath;
 
 	private static TacticViewUiBinder uiBinder = GWT
 			.create(TacticViewUiBinder.class);
-
-	private static UploadBlobstoreServiceAsync blobstoreService = GWT
-			.create(UploadBlobstoreService.class);
 
 	interface TacticViewUiBinder extends UiBinder<Widget, TacticView> {
 	}
@@ -68,19 +70,19 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 
 		formPanelTactic.setMethod(FormPanel.METHOD_POST);
 		formPanelTactic.setEncoding(FormPanel.ENCODING_MULTIPART);
-		
+
 	}
 
 	@UiHandler("updateTacticButton")
 	void onUploadClick(ClickEvent event) {
 		formPanelTactic.submit();
 	}
-	
+
 	@UiHandler("formPanelTactic")
 	void onUploadFormSubmitComplete(SubmitCompleteEvent event) {
 		event.getResults();
 	}
-	
+
 	@Override
 	public Widget asWidget() {
 		return this;
@@ -149,6 +151,21 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	@Override
 	public Button getUpdateButton() {
 		return updateTacticButton;
+	}
+
+	@Override
+	public Label getErrorPackagePath() {
+		return errorPackagePath;
+	}
+
+	@Override
+	public Label getErrorInterfaceTactic() {
+		return errorInterfaceTactic;
+	}
+
+	@Override
+	public Paragraph getMessagePackagePath() {
+		return messagePackagePath;
 	}
 
 }

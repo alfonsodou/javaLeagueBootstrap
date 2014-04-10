@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.javahispano.javaleague.server.AppLib;
+import org.javahispano.javaleague.shared.AppLib;
 
 import com.google.appengine.api.blobstore.BlobInfo;
 import com.google.appengine.api.blobstore.BlobInfoFactory;
@@ -34,7 +34,7 @@ public class BlobstoreUtil {
 		return BlobstoreServiceFactory.getBlobstoreService().createUploadUrl(
 				"/upload",
 				UploadOptions.Builder
-						.withGoogleStorageBucketName(AppLib.bucket));
+						.withGoogleStorageBucketName(AppLib.BUCKET_GCS));
 	}
 
 	public static String getFilename(BlobKey blobKey) {

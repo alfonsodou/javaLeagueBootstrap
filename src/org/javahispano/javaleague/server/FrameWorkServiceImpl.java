@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import org.javahispano.javaleague.client.service.FrameWorkService;
 import org.javahispano.javaleague.server.domain.FrameWorkDAO;
+import org.javahispano.javaleague.shared.AppLib;
 import org.javahispano.javaleague.shared.domain.FrameWork;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -49,7 +50,7 @@ public class FrameWorkServiceImpl extends RemoteServiceServlet implements
 		try {
 			FrameWorkDAO frameWorkDAO = new FrameWorkDAO();
 			//frameWork = frameWorkDAO.findDefaultFrameWork();
-			frameWork = frameWorkDAO.findById(AppLib.defaultFrameWorkID);
+			frameWork = frameWorkDAO.findById(AppLib.DEFAULT_FRAMEWORK_ID);
 			logger.warning("FrameWorkServiceImpl: getDefaultFrameWork OK!");
 		} catch (Exception e) {
 			frameWork = null;

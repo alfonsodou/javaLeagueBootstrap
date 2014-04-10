@@ -29,7 +29,6 @@ public class LoginHelper extends RemoteServiceServlet {
 	static public String getApplicationURL(HttpServletRequest request) {
 
 		if (ServletHelper.isDevelopment(request)) {
-			AppLib.isDevelopment = true;
 			return "http://127.0.0.1:8888/index.html?gwt.codesvr=127.0.0.1:9997";
 		} else {
 			return ServletUtils.getBaseUrl(request);

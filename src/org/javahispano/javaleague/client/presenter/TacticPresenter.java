@@ -6,6 +6,7 @@ package org.javahispano.javaleague.client.presenter;
 import org.gwtbootstrap3.client.ui.Badge;
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Label;
+import org.gwtbootstrap3.client.ui.Paragraph;
 import org.javahispano.javaleague.client.event.PlayMatchEvent;
 import org.javahispano.javaleague.client.event.UpdateTacticEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
@@ -14,6 +15,7 @@ import org.javahispano.javaleague.client.service.MatchServiceAsync;
 import org.javahispano.javaleague.client.service.TacticServiceAsync;
 import org.javahispano.javaleague.client.service.UploadBlobstoreServiceAsync;
 import org.javahispano.javaleague.client.service.UserFileServiceAsync;
+import org.javahispano.javaleague.shared.AppLib;
 import org.javahispano.javaleague.shared.domain.TacticUser;
 
 import com.google.gwt.core.client.GWT;
@@ -68,6 +70,12 @@ public class TacticPresenter implements Presenter {
 		Label getUpdatedTactic();
 
 		Button getUpdateButton();
+
+		Label getErrorPackagePath();
+
+		Label getErrorInterfaceTactic();
+
+		Paragraph getMessagePackagePath();
 
 	}
 
@@ -133,35 +141,46 @@ public class TacticPresenter implements Presenter {
 									.getDocumentElement();
 							XMLParser.removeWhitespace(tacticElement);
 
-							display.setTeamName(getElementTextValue(
-									tacticElement, "teamname"));
+							int validate = Integer
+									.parseInt(getElementTextValue(
+											tacticElement, "error"));
 
-							display.getUpdatedTactic().setText(
-									getElementTextValue(tacticElement,
-											"updated"));
-
-							if (!getElementTextValue(tacticElement, "filename")
-									.isEmpty()) {
-								display.getFileName().setText(
-										getElementTextValue(tacticElement,
-												"filename")
-												+ " :: "
-												+ getElementTextValue(
-														tacticElement, "bytes")
-												+ " bytes");
-							} else {
-								display.getFileName().setText(
-										javaLeagueMessages.emptyUserTactic());
+							switch (validate) {
+							case 0:
+								showTactic(tacticElement);
+								break;
+							case 1:
+								display.getErrorPackagePath().setVisible(true);
+								break;
+							case 2:
+								display.getErrorInterfaceTactic().setVisible(
+										true);
+								break;
 							}
 						} else {
 							display.getFileName().setText(
 									javaLeagueMessages.emptyUserTactic());
-
 						}
-
 					}
-
 				});
+	}
+
+	private void showTactic(Element tacticElement) {
+		display.setTeamName(getElementTextValue(tacticElement, "teamname"));
+
+		display.getUpdatedTactic().setText(
+				getElementTextValue(tacticElement, "dateupdated") + " :: "
+						+ getElementTextValue(tacticElement, "timeupdated"));
+
+		if (!getElementTextValue(tacticElement, "filename").isEmpty()) {
+			display.getFileName().setText(
+					getElementTextValue(tacticElement, "filename") + " :: "
+							+ getElementTextValue(tacticElement, "bytes")
+							+ " bytes");
+		} else {
+			display.getFileName().setText(javaLeagueMessages.emptyUserTactic());
+		}
+
 	}
 
 	private void doUpdateTactic() {
@@ -235,7 +254,7 @@ public class TacticPresenter implements Presenter {
 							.getFormat("dd/MM/yyyy :: HH:mm:ss");
 
 					display.getUpdateButton().setEnabled(true);
-					;
+
 					display.getUpdatedTactic().setText(
 							fmt.format(result.getUpdated()));
 					display.setTeamName(result.getTeamName());
@@ -254,9 +273,12 @@ public class TacticPresenter implements Presenter {
 						display.getFileName().setText(
 								javaLeagueMessages.emptyUserTactic());
 					}
+
+					display.getMessagePackagePath().setText(
+							javaLeagueMessages.packagePath(AppLib.PATH_PACKAGE
+									+ tactic.getId().toString()));
 				} else {
 					display.getUpdateButton().setEnabled(false);
-					;
 				}
 			}
 
@@ -266,6 +288,8 @@ public class TacticPresenter implements Presenter {
 
 	private void hideErrorLabel() {
 		display.getErrorTeamName().setVisible(false);
+		display.getErrorInterfaceTactic().setVisible(false);
+		display.getErrorPackagePath().setVisible(false);
 	}
 
 	private String getElementTextValue(Element parent, String elementTag) {

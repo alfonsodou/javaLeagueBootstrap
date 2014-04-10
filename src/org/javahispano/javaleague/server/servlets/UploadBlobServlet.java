@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -23,15 +24,14 @@ import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
 import org.javahispano.javaleague.javacup.shared.Agent;
-import org.javahispano.javaleague.server.AppLib;
 import org.javahispano.javaleague.server.LoginHelper;
 import org.javahispano.javaleague.server.classloader.MyDataStoreClassLoader;
 import org.javahispano.javaleague.server.domain.TacticUserDAO;
 import org.javahispano.javaleague.server.domain.UserDAO;
+import org.javahispano.javaleague.shared.AppLib;
 import org.javahispano.javaleague.shared.domain.TacticUser;
 import org.javahispano.javaleague.shared.domain.User;
 
-import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.tools.cloudstorage.GcsFileOptions;
 import com.google.appengine.tools.cloudstorage.GcsFilename;
 import com.google.appengine.tools.cloudstorage.GcsOutputChannel;
@@ -66,11 +66,20 @@ public class UploadBlobServlet extends HttpServlet {
 		byte[] zipBytes = null;
 		DateFormat date = DateFormat.getDateInstance(DateFormat.SHORT,
 				req.getLocale());
-		DateFormat time = DateFormat.getTimeInstance(DateFormat.SHORT,
+		DateFormat time = DateFormat.getTimeInstance(DateFormat.MEDIUM,
 				req.getLocale());
+		/*
+		 * Es necesario almacenar TimeZone del usuario
+		 * en la sesión o en User ¿?
+		 * De momento se ajusta la hora al TimeZone del servidor
+		 */
+		time.setTimeZone(TimeZone.getDefault());
+		
 		int error = 0;
-		;
 
+		log.warning("locale: " + req.getLocale().getDisplayName());
+		log.warning("timeformat: " + time.toString());
+		
 		try {
 			ServletFileUpload upload = new ServletFileUpload();
 			FileItemIterator iter = upload.getItemIterator(req);
@@ -88,7 +97,7 @@ public class UploadBlobServlet extends HttpServlet {
 							error = validateTactic(zipBytes, tacticUser.getId()
 									.toString());
 							if (error == 0) {
-								fileName = new GcsFilename(AppLib.bucket,
+								fileName = new GcsFilename(AppLib.BUCKET_GCS,
 										"tactic/"
 												+ tacticUser.getId().toString()
 												+ "/" + item.getName());
@@ -97,7 +106,7 @@ public class UploadBlobServlet extends HttpServlet {
 								if (tacticUser.getFileName() != null) {
 									gcsService
 											.delete(new GcsFilename(
-													AppLib.bucket,
+													AppLib.BUCKET_GCS,
 													"tactic/"
 															+ tacticUser
 																	.getId()
@@ -116,10 +125,13 @@ public class UploadBlobServlet extends HttpServlet {
 					}
 				}
 			}
-			tacticUser.setUpdated(new Date());
-			tacticUser = tacticDAO.save(tacticUser);
-			currentUser.setTactic(tacticUser);
-			currentUser = userDAO.save(currentUser);
+
+			if (error == 0) {
+				tacticUser.setUpdated(new Date());
+				tacticUser = tacticDAO.save(tacticUser);
+				currentUser.setTactic(tacticUser);
+				currentUser = userDAO.save(currentUser);
+			}
 
 			PrintWriter out = res.getWriter();
 			StringBuffer sb = new StringBuffer();
@@ -130,9 +142,11 @@ public class UploadBlobServlet extends HttpServlet {
 			sb.append("<filename>" + tacticUser.getFileName() + "</filename>\n");
 			sb.append("<bytes>" + tacticUser.getBytes().toString()
 					+ "</bytes>\n");
-			sb.append("<updated>" + date.format(tacticUser.getUpdated())
-					+ " :: " + time.format(tacticUser.getUpdated())
-					+ "</updated>\n");
+			sb.append("<dateupdated>" + date.format(tacticUser.getUpdated())
+					+ "</dateupdated>\n");
+			sb.append("<timeupdated>" + time.format(tacticUser.getUpdated())
+					+ "</timeupdated>\n");
+
 			sb.append("<error>" + Integer.toString(error) + "</error>");
 			sb.append("</tactic>");
 			sb.append("</root>");
@@ -167,8 +181,7 @@ public class UploadBlobServlet extends HttpServlet {
 
 			Agent a = cz.newInstance();
 
-			result = loadClass(tactic, a, AppLib.PATH_PACKAGE
-					+ tacticId);
+			result = loadClass(tactic, a, AppLib.PATH_PACKAGE + tacticId);
 
 		} catch (Exception e) {
 			result = 1;
@@ -182,7 +195,6 @@ public class UploadBlobServlet extends HttpServlet {
 			throws IOException, ClassNotFoundException, InstantiationException,
 			IllegalAccessException {
 		Class<?> cz = null;
-		Class<?> result = null;
 		Map<String, byte[]> byteStream;
 		boolean errorPackageName, existInterfaceTactic;
 		int errorValidate = 0;
@@ -227,7 +239,6 @@ public class UploadBlobServlet extends HttpServlet {
 				cz = myDataStoreClassLoader.loadClass(name);
 
 				if (a.isTactic(cz)) {
-					result = cz;
 					existInterfaceTactic = true;
 				}
 			} catch (Exception e) {

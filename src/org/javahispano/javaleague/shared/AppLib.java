@@ -1,13 +1,9 @@
-package org.javahispano.javaleague.server;
+package org.javahispano.javaleague.shared;
 
 
 public class AppLib {
 	public static String baseURL = "http://javaleague.appspot.com";
 	public static String emailAdmin = "javaleague@gmail.com";
-	public static boolean isDevelopment = false;
-	public static final String INFONOTFOUND = "<h1>Error #AF31-G</h1><p>Login service credentials missing in appengine-web.xml."
-			+ " Please update this file as indicated with OAuth key information and restart the application.</p>"
-			+ "<p>If you just want to try the app at once, choose Google authentication.</p>";
 	public static final int MATCH_OK = 1; // partido finalizado correctamente
 	public static final int MATCH_ERROR = -1; // partido ejecutado con error
 	public static final int MATCH_SCHEDULED = 0; // partido pendiente de
@@ -20,9 +16,9 @@ public class AppLib {
 															// amistoso
 															// programado
 	
-	public static final String bucket = "javaleague.appspot.com"; // bucket for Google Cloud Storage
+	public static final String BUCKET_GCS = "javaleague.appspot.com"; // bucket for Google Cloud Storage
 	
-	public static final long defaultFrameWorkID = 5846033531666432L;
+	public static final long DEFAULT_FRAMEWORK_ID = 5846033531666432L;
 	public static final String PATH_PACKAGE = "org.javahispano.javaleague.";
 
 

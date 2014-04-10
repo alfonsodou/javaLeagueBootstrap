@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.logging.Logger;
 
-import org.javahispano.javaleague.server.AppLib;
+import org.javahispano.javaleague.shared.AppLib;
 
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;

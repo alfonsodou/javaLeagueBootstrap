@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.javahispano.javaleague.server.AppLib;
 import org.javahispano.javaleague.server.domain.MatchDAO;
+import org.javahispano.javaleague.shared.AppLib;
 import org.javahispano.javaleague.shared.domain.Match;
 
 import com.google.appengine.tools.cloudstorage.GcsFilename;
@@ -39,7 +39,7 @@ public class ServeBinServlet extends HttpServlet {
 
 		long id = Long.parseLong(req.getParameter("id").replace("_", ""));
 		Match p = dao.findById(id);
-		GcsFilename filename = new GcsFilename(AppLib.bucket, p.getLeagueId()
+		GcsFilename filename = new GcsFilename(AppLib.BUCKET_GCS, p.getLeagueId()
 				.toString() + "/" + p.getId().toString() + ".bin");
 		res.getOutputStream().write(readFromFile(filename));
 		res.flushBuffer();
