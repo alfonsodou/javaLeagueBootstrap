@@ -96,6 +96,8 @@ public class TacticPresenter implements Presenter {
 
 		hideErrorLabel();
 
+		this.display.getUpdateButton().setEnabled(false);
+
 		bind();
 	}
 
@@ -125,7 +127,6 @@ public class TacticPresenter implements Presenter {
 					public void onSubmitComplete(SubmitCompleteEvent event) {
 
 						if (!event.getResults().isEmpty()) {
-							Window.alert(event.getResults());
 							Document document = XMLParser.parse(event
 									.getResults());
 							Element tacticElement = document
@@ -135,45 +136,27 @@ public class TacticPresenter implements Presenter {
 							display.setTeamName(getElementTextValue(
 									tacticElement, "teamname"));
 
-							display.getFileName().setText(
+							display.getUpdatedTactic().setText(
 									getElementTextValue(tacticElement,
-											"filename")
-											+ " :: "
-											+ getElementTextValue(
-													tacticElement, "bytes")
-											+ " bytes");
+											"updated"));
 
-							DateTimeFormat fmt = DateTimeFormat
-									.getFormat("dd/MM/yyyy :: HH:mm:ss");
-
-							// display.setVisibleUpdateButton(true);
-							// display.getUpdatedTactic().setText(
-							// fmt.format(result.getUpdated()));
-
-							/*
-							 * display.setGoalsAgainst(Integer.toString(result
-							 * .getGoalsAgainst()));
-							 * display.setGoalsFor(Integer.toString(result
-							 * .getGoalsFor()));
-							 * display.setMatchLost(Integer.toString(result
-							 * .getMatchLost()));
-							 * display.setMatchTied(Integer.toString(result
-							 * .getMatchTied()));
-							 * display.setMatchWins(Integer.toString(result
-							 * .getMatchWins()));
-							 */
-
-							/*
-							 * if (result.getFileName() != null) {
-							 * display.getFileName().setText(
-							 * result.getFileName() + " :: " + result.getBytes()
-							 * + " bytes"); } else {
-							 * display.getFileName().setText(
-							 * javaLeagueMessages.emptyUserTactic()); }
-							 */
-
+							if (!getElementTextValue(tacticElement, "filename")
+									.isEmpty()) {
+								display.getFileName().setText(
+										getElementTextValue(tacticElement,
+												"filename")
+												+ " :: "
+												+ getElementTextValue(
+														tacticElement, "bytes")
+												+ " bytes");
+							} else {
+								display.getFileName().setText(
+										javaLeagueMessages.emptyUserTactic());
+							}
 						} else {
-							// display.setVisibleUpdateButton(false);
+							display.getFileName().setText(
+									javaLeagueMessages.emptyUserTactic());
+
 						}
 
 					}
@@ -192,11 +175,8 @@ public class TacticPresenter implements Presenter {
 		}
 
 		if (!error) {
-
 			tactic.setTeamName(display.getTeamName().getValue());
-
 			display.getFormPanelTactic().submit();
-
 		}
 	}
 
@@ -254,7 +234,8 @@ public class TacticPresenter implements Presenter {
 					DateTimeFormat fmt = DateTimeFormat
 							.getFormat("dd/MM/yyyy :: HH:mm:ss");
 
-					// display.setVisibleUpdateButton(true);
+					display.getUpdateButton().setEnabled(true);
+					;
 					display.getUpdatedTactic().setText(
 							fmt.format(result.getUpdated()));
 					display.setTeamName(result.getTeamName());
@@ -274,7 +255,8 @@ public class TacticPresenter implements Presenter {
 								javaLeagueMessages.emptyUserTactic());
 					}
 				} else {
-					// display.setVisibleUpdateButton(false);
+					display.getUpdateButton().setEnabled(false);
+					;
 				}
 			}
 

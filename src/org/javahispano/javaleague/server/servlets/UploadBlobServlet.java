@@ -5,8 +5,12 @@ package org.javahispano.javaleague.server.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.ByteBuffer;
+import java.text.DateFormat;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -18,13 +22,16 @@ import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
+import org.javahispano.javaleague.javacup.shared.Agent;
 import org.javahispano.javaleague.server.AppLib;
 import org.javahispano.javaleague.server.LoginHelper;
+import org.javahispano.javaleague.server.classloader.MyDataStoreClassLoader;
 import org.javahispano.javaleague.server.domain.TacticUserDAO;
 import org.javahispano.javaleague.server.domain.UserDAO;
 import org.javahispano.javaleague.shared.domain.TacticUser;
 import org.javahispano.javaleague.shared.domain.User;
 
+import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.tools.cloudstorage.GcsFileOptions;
 import com.google.appengine.tools.cloudstorage.GcsFilename;
 import com.google.appengine.tools.cloudstorage.GcsOutputChannel;
@@ -48,6 +55,8 @@ public class UploadBlobServlet extends HttpServlet {
 	private static TacticUserDAO tacticDAO = new TacticUserDAO();
 	private static UserDAO userDAO = new UserDAO();
 
+	private MyDataStoreClassLoader myDataStoreClassLoader;
+
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		User currentUser = LoginHelper.getLoggedInUser(req.getSession());
@@ -55,6 +64,12 @@ public class UploadBlobServlet extends HttpServlet {
 		String status = null;
 		GcsFilename fileName = null;
 		byte[] zipBytes = null;
+		DateFormat date = DateFormat.getDateInstance(DateFormat.SHORT,
+				req.getLocale());
+		DateFormat time = DateFormat.getTimeInstance(DateFormat.SHORT,
+				req.getLocale());
+		int error = 0;
+		;
 
 		try {
 			ServletFileUpload upload = new ServletFileUpload();
@@ -70,22 +85,33 @@ public class UploadBlobServlet extends HttpServlet {
 					if (!item.getName().isEmpty()) {
 						zipBytes = IOUtils.toByteArray(item.openStream());
 						if (zipBytes != null) {
-							fileName = new GcsFilename(AppLib.bucket, "tactic/"
-									+ tacticUser.getId().toString() + "/"
-									+ item.getName());
-							writeToFile(fileName, zipBytes);
-
-							if (tacticUser.getFileName() != null) {
-								gcsService.delete(new GcsFilename(
-										AppLib.bucket, "tactic/"
+							error = validateTactic(zipBytes, tacticUser.getId()
+									.toString());
+							if (error == 0) {
+								fileName = new GcsFilename(AppLib.bucket,
+										"tactic/"
 												+ tacticUser.getId().toString()
-												+ "/"
-												+ tacticUser.getFileName()));
-							}
+												+ "/" + item.getName());
+								writeToFile(fileName, zipBytes);
 
-							tacticUser.setFileName(item.getName());
-							tacticUser.setBytes(gcsService
-									.getMetadata(fileName).getLength());
+								if (tacticUser.getFileName() != null) {
+									gcsService
+											.delete(new GcsFilename(
+													AppLib.bucket,
+													"tactic/"
+															+ tacticUser
+																	.getId()
+																	.toString()
+															+ "/"
+															+ tacticUser
+																	.getFileName()));
+								}
+
+								tacticUser.setFileName(item.getName());
+								tacticUser.setBytes(gcsService.getMetadata(
+										fileName).getLength());
+
+							}
 						}
 					}
 				}
@@ -104,8 +130,10 @@ public class UploadBlobServlet extends HttpServlet {
 			sb.append("<filename>" + tacticUser.getFileName() + "</filename>\n");
 			sb.append("<bytes>" + tacticUser.getBytes().toString()
 					+ "</bytes>\n");
-			sb.append("<updated>" + tacticUser.getUpdated().toString()
+			sb.append("<updated>" + date.format(tacticUser.getUpdated())
+					+ " :: " + time.format(tacticUser.getUpdated())
 					+ "</updated>\n");
+			sb.append("<error>" + Integer.toString(error) + "</error>");
 			sb.append("</tactic>");
 			sb.append("</root>");
 			log.warning("XML: " + sb.toString());
@@ -121,10 +149,106 @@ public class UploadBlobServlet extends HttpServlet {
 
 	private void writeToFile(GcsFilename fileName, byte[] content)
 			throws IOException {
-		@SuppressWarnings("resource")
 		GcsOutputChannel outputChannel = gcsService.createOrReplace(fileName,
 				GcsFileOptions.getDefaultInstance());
 		outputChannel.write(ByteBuffer.wrap(content));
 		outputChannel.close();
 	}
+
+	private int validateTactic(byte[] tactic, String tacticId) {
+		int result = 0;
+
+		try {
+			myDataStoreClassLoader = new MyDataStoreClassLoader(this.getClass()
+					.getClassLoader());
+			Class<? extends Agent> cz = Class.forName(
+					"org.javahispano.javacup.model.engine.AgentPartido", true,
+					myDataStoreClassLoader).asSubclass(Agent.class);
+
+			Agent a = cz.newInstance();
+
+			result = loadClass(tactic, a, AppLib.PATH_PACKAGE
+					+ tacticId);
+
+		} catch (Exception e) {
+			result = 1;
+			log.warning(e.getMessage());
+		}
+
+		return result;
+	}
+
+	private int loadClass(byte[] tactic, Agent a, String packagePath)
+			throws IOException, ClassNotFoundException, InstantiationException,
+			IllegalAccessException {
+		Class<?> cz = null;
+		Class<?> result = null;
+		Map<String, byte[]> byteStream;
+		boolean errorPackageName, existInterfaceTactic;
+		int errorValidate = 0;
+
+		byteStream = myDataStoreClassLoader.addClassJar(tactic);
+
+		Iterator it = byteStream.entrySet().iterator();
+		errorPackageName = false;
+		while (it.hasNext() && !errorPackageName) {
+
+			try {
+				Map.Entry e = (Map.Entry) it.next();
+
+				String name = new String((String) e.getKey());
+
+				if (!name.contains(packagePath)) {
+					errorPackageName = true;
+				} else {
+					myDataStoreClassLoader
+							.addClass(name, (byte[]) e.getValue());
+				}
+
+			} catch (Exception e) {
+
+				log.warning(e.getMessage());
+				StringWriter sw = new StringWriter();
+				e.printStackTrace(new PrintWriter(sw));
+				log.warning("stackTrace -> " + sw.toString());
+			}
+
+		}
+
+		Iterator it1 = byteStream.entrySet().iterator();
+		existInterfaceTactic = false;
+		while (!errorPackageName && it1.hasNext() && !existInterfaceTactic) {
+
+			try {
+				Map.Entry e = (Map.Entry) it1.next();
+
+				String name = new String((String) e.getKey());
+
+				cz = myDataStoreClassLoader.loadClass(name);
+
+				if (a.isTactic(cz)) {
+					result = cz;
+					existInterfaceTactic = true;
+				}
+			} catch (Exception e) {
+
+				log.warning(e.getMessage());
+				StringWriter sw = new StringWriter();
+				e.printStackTrace(new PrintWriter(sw));
+				log.warning("stackTrace -> " + sw.toString());
+			}
+
+		}
+
+		if (errorPackageName == true) {
+			errorValidate = 1;
+		}
+		if (existInterfaceTactic == false) {
+			errorValidate = 2;
+		}
+
+		return errorValidate;
+
+	}
+
 }

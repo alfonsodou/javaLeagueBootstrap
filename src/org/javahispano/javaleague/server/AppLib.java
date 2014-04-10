@@ -23,6 +23,7 @@ public class AppLib {
 	public static final String bucket = "javaleague.appspot.com"; // bucket for Google Cloud Storage
 	
 	public static final long defaultFrameWorkID = 5846033531666432L;
+	public static final String PATH_PACKAGE = "org.javahispano.javaleague.";
 
 
 

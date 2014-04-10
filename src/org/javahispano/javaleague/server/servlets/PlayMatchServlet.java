@@ -220,7 +220,6 @@ public class PlayMatchServlet extends HttpServlet {
 
 	private void writeToFile(GcsFilename fileName, byte[] content)
 			throws IOException {
-		@SuppressWarnings("resource")
 		GcsOutputChannel outputChannel = gcsService.createOrReplace(fileName,
 				GcsFileOptions.getDefaultInstance());
 		outputChannel.write(ByteBuffer.wrap(content));
