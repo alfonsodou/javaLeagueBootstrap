@@ -25,6 +25,7 @@ import org.javahispano.javaleague.shared.AppLib;
 import org.javahispano.javaleague.shared.domain.TacticUser;
 import org.javahispano.javaleague.shared.domain.User;
 
+import com.google.gwt.i18n.client.TimeZone;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -58,6 +59,7 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 			// update session if successful
 			session.setAttribute("userId", String.valueOf(user.getId()));
 			session.setAttribute("loggedin", true);
+			//session.setAttribute("timeZone", timeZone);
 
 			user.setLastActive(new Date());
 			user.setLastLoginOn(new Date());
@@ -100,7 +102,7 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 
 		try {
 			Message msg = new MimeMessage(session);
-			
+
 			msg.setFrom(new InternetAddress(AppLib.emailAdmin, msgFrom));
 			msg.addRecipient(Message.RecipientType.TO,
 					new InternetAddress(user.getEmailAddress(), user.getName()));

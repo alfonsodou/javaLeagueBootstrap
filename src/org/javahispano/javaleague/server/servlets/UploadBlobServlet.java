@@ -23,6 +23,8 @@ import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
+import org.javahispano.javaleague.client.JavaLeagueApp;
+import org.javahispano.javaleague.client.event.ShowFrameWorkEvent;
 import org.javahispano.javaleague.javacup.shared.Agent;
 import org.javahispano.javaleague.server.LoginHelper;
 import org.javahispano.javaleague.server.classloader.MyDataStoreClassLoader;
@@ -68,18 +70,18 @@ public class UploadBlobServlet extends HttpServlet {
 				req.getLocale());
 		DateFormat time = DateFormat.getTimeInstance(DateFormat.MEDIUM,
 				req.getLocale());
+		
 		/*
-		 * Es necesario almacenar TimeZone del usuario
-		 * en la sesión o en User ¿?
+		 * Es necesario almacenar TimeZone del usuario en la sesión o en User ¿?
 		 * De momento se ajusta la hora al TimeZone del servidor
 		 */
-		time.setTimeZone(TimeZone.getDefault());
-		
+		time.setTimeZone((TimeZone) req.getSession().getAttribute("timeZone"));
+
 		int error = 0;
 
 		log.warning("locale: " + req.getLocale().getDisplayName());
 		log.warning("timeformat: " + time.toString());
-		
+
 		try {
 			ServletFileUpload upload = new ServletFileUpload();
 			FileItemIterator iter = upload.getItemIterator(req);
@@ -131,6 +133,8 @@ public class UploadBlobServlet extends HttpServlet {
 				tacticUser = tacticDAO.save(tacticUser);
 				currentUser.setTactic(tacticUser);
 				currentUser = userDAO.save(currentUser);
+				
+				JavaLeagueApp.get().getEventBus().fireEvent(new ShowFrameWorkEvent());
 			}
 
 			PrintWriter out = res.getWriter();

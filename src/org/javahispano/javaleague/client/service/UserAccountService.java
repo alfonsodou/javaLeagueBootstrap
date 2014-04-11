@@ -1,5 +1,7 @@
 package org.javahispano.javaleague.client.service;
 
+
+
 import org.javahispano.javaleague.shared.domain.User;
 
 import com.google.gwt.user.client.rpc.RemoteService;
