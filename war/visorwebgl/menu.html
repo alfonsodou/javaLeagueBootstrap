@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>Menu</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="pixi.js"></script>
+        <script src="base.js"></script>
+        <script src="menu.js"></script>
+        <style>
+            body{
+                margin:0;
+                padding:0;
+                overflow-x:hidden;
+                overflow-y:hidden;
+                background:black;
+            }
+            #gameCanvas{
+                background:black;
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="gameCanvas"></canvas>
+        <script>
+
+            fps = 24;
+            appScene = new scene(0x40ff60, anim);
+
+            graph = new PIXI.Graphics();
+            appScene.addChild(graph);
+
+            function anim() {
+                graph.clear();
+                for (var i = 0; i < 1000; i++) {
+                    graph.beginFill(0xff0000, .05);
+                    graph.drawRect(Math.random() * _w, Math.random() * _h, Math.random() * 50, Math.random() * 50);
+                }
+            }
+
+            menu = new Menu("   MENU   ", appScene, function() {
+                menu.setSelected(!menu.isSelected());
+                selected = menu.isSelected();
+                menuTiempo.setVisible(selected);
+                menuZoom.setVisible(selected);
+                menuVel.setVisible(selected);
+                menuFPS.setVisible(selected);
+                menu.redraw();
+            });
+
+            menuTiempo = new Menu(" >> ", appScene, function() {
+                this.setSelected(!this.isSelected());
+                this.redraw();
+            });
+            menuTiempo.addHorizontal(new Menu(" > ", appScene, function() {
+                this.setSelected(!this.isSelected());
+                this.redraw();
+            }));
+            menuTiempo.addHorizontal(new Menu(" (>) ", appScene, function() {
+                this.setSelected(!this.isSelected());
+                this.redraw();
+            }));
+            menuTiempo.addHorizontal(new Menu(" < ", appScene, function() {
+                this.setSelected(!this.isSelected());
+                this.redraw();
+            }));
+            menuTiempo.addHorizontal(new Menu(" << ", appScene, function() {
+                this.setSelected(!this.isSelected());
+                this.redraw();
+            }));
+            menu.addVertical(menuTiempo);
+
+            menuZoom = new Menu("  +  ", appScene, function() {
+                this.setSelected(!this.isSelected());
+                this.redraw();
+            });
+            menuZoom.addHorizontal(new Menu("ZOOM 100%", appScene));
+            menuZoom.addHorizontal(new Menu("  -  ", appScene, function() {
+                this.setSelected(!this.isSelected());
+                this.redraw();
+            }));
+            menu.addVertical(menuZoom);
+
+            menuVel = new Menu("  +  ", appScene, function() {
+                this.setSelected(!this.isSelected());
+                this.redraw();
+            });
+            menuVel.addHorizontal(new Menu(" VEL 24  ", appScene));
+            menuVel.addHorizontal(new Menu("  -  ", appScene, function() {
+                this.setSelected(!this.isSelected());
+                this.redraw();
+            }));
+            menu.addVertical(menuVel);
+
+            menuFPS = new Menu("  +  ", appScene, function() {
+                this.setSelected(!this.isSelected());
+                this.redraw();
+            });
+            menuFPS.addHorizontal(new Menu(" FPS 24  ", appScene));
+            menuFPS.addHorizontal(new Menu("  -  ", appScene, function() {
+                this.setSelected(!this.isSelected());
+                this.redraw();
+            }));
+            menu.addVertical(menuFPS);
+
+            menuTiempo.setVisible(false);
+            menuZoom.setVisible(false);
+            menuVel.setVisible(false);
+            menuFPS.setVisible(false);
+
+            menu.redraw();
+            setGame('gameCanvas', appScene, fps);
+
+            function resize() {
+                menu.x = _w - menu.w;
+                menu.redraw();
+            }
+
+        </script>
+    </body>
+</html>

@@ -28,12 +28,15 @@ import org.javahispano.javaleague.client.event.ShowFrameWorkEvent;
 import org.javahispano.javaleague.javacup.shared.Agent;
 import org.javahispano.javaleague.server.LoginHelper;
 import org.javahispano.javaleague.server.classloader.MyDataStoreClassLoader;
+import org.javahispano.javaleague.server.domain.FrameWorkDAO;
 import org.javahispano.javaleague.server.domain.TacticUserDAO;
 import org.javahispano.javaleague.server.domain.UserDAO;
 import org.javahispano.javaleague.shared.AppLib;
+import org.javahispano.javaleague.shared.domain.FrameWork;
 import org.javahispano.javaleague.shared.domain.TacticUser;
 import org.javahispano.javaleague.shared.domain.User;
 
+import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.tools.cloudstorage.GcsFileOptions;
 import com.google.appengine.tools.cloudstorage.GcsFilename;
 import com.google.appengine.tools.cloudstorage.GcsOutputChannel;
@@ -56,6 +59,7 @@ public class UploadBlobServlet extends HttpServlet {
 			.getName());
 	private static TacticUserDAO tacticDAO = new TacticUserDAO();
 	private static UserDAO userDAO = new UserDAO();
+	private static FrameWorkDAO frameWorkDAO = new FrameWorkDAO();
 
 	private MyDataStoreClassLoader myDataStoreClassLoader;
 
@@ -70,12 +74,13 @@ public class UploadBlobServlet extends HttpServlet {
 				req.getLocale());
 		DateFormat time = DateFormat.getTimeInstance(DateFormat.MEDIUM,
 				req.getLocale());
-		
+
 		/*
 		 * Es necesario almacenar TimeZone del usuario en la sesión o en User ¿?
 		 * De momento se ajusta la hora al TimeZone del servidor
 		 */
-		time.setTimeZone((TimeZone) req.getSession().getAttribute("timeZone"));
+		// time.setTimeZone((TimeZone)
+		// req.getSession().getAttribute("timeZone"));
 
 		int error = 0;
 
@@ -133,8 +138,9 @@ public class UploadBlobServlet extends HttpServlet {
 				tacticUser = tacticDAO.save(tacticUser);
 				currentUser.setTactic(tacticUser);
 				currentUser = userDAO.save(currentUser);
-				
-				JavaLeagueApp.get().getEventBus().fireEvent(new ShowFrameWorkEvent());
+
+				JavaLeagueApp.get().getEventBus()
+						.fireEvent(new ShowFrameWorkEvent());
 			}
 
 			PrintWriter out = res.getWriter();
@@ -161,6 +167,9 @@ public class UploadBlobServlet extends HttpServlet {
 		} catch (Exception e) {
 			status = e.getMessage();
 			log.warning("ERROR: " + status);
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			log.warning("stackTrace -> " + sw.toString());
 		}
 
 	}
@@ -175,10 +184,17 @@ public class UploadBlobServlet extends HttpServlet {
 
 	private int validateTactic(byte[] tactic, String tacticId) {
 		int result = 0;
+		FrameWork frameWork = null;
 
 		try {
 			myDataStoreClassLoader = new MyDataStoreClassLoader(this.getClass()
 					.getClassLoader());
+
+			frameWork = frameWorkDAO.findById(AppLib.DEFAULT_FRAMEWORK_ID);
+			// Cargamos el framework
+			myDataStoreClassLoader.addClassJarFramework(new BlobKey(frameWork
+					.getFrameWork()));
+
 			Class<? extends Agent> cz = Class.forName(
 					"org.javahispano.javacup.model.engine.AgentPartido", true,
 					myDataStoreClassLoader).asSubclass(Agent.class);
@@ -189,7 +205,10 @@ public class UploadBlobServlet extends HttpServlet {
 
 		} catch (Exception e) {
 			result = 1;
-			log.warning(e.getMessage());
+			log.warning("ERROR validateTactic: " + e.getMessage());
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			log.warning("stackTrace -> " + sw.toString());
 		}
 
 		return result;
@@ -257,9 +276,10 @@ public class UploadBlobServlet extends HttpServlet {
 
 		if (errorPackageName == true) {
 			errorValidate = 1;
-		}
-		if (existInterfaceTactic == false) {
-			errorValidate = 2;
+		} else {
+			if (existInterfaceTactic == false) {
+				errorValidate = 2;
+			}
 		}
 
 		return errorValidate;

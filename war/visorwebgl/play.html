@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es" manifest="cache.manifest">
+    <head>
+        <meta charset="utf-8">
+        <title>JAVACUP - VISOR WEBGL</title>
+        <script src="jbinary.js"></script>
+        <script src="jdataview.js"></script>
+        <script src="javacup.js"></script>
+        <script src="pixi.js"></script>
+        <script src="buzz.js"></script>
+        <script src="base.js"></script>
+        <script src="menu.js"></script>
+        <script src="anim.js"></script>
+        <style>
+            body{
+                margin:0;
+                padding: 0;
+                background: black;
+            }
+            #gameCanvas{
+                width: 100%;
+                height: 100%;
+            }
+            #container{
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                margin:0;
+                padding: 0;
+            }
+        </style>
+        <script type="text/javascript">
+
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-28392837-2']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
+
+        </script>
+    </head>
+    <body>
+        <div id="container">
+            <canvas id="gameCanvas"></canvas>
+        </div>
+        <script src="game.js"></script>
+    </body>
+</html>

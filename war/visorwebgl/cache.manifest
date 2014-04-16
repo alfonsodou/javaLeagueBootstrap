@@ -1,0 +1,95 @@
+CACHE MANIFEST
+# rev 7
+img/logo.png
+img/clay.png
+img/barra.png
+img/grass0.png
+img/pubvert.png
+img/pubhor.png
+img/shadow.png
+img/ballShadow.png
+img/ball0.png
+img/ball1.png
+img/ball2.png
+img/ball3.png
+img/ball4.png
+img/ball5.png
+img/arco_superior.png
+img/arco_inferior.png
+img/player.png
+img/stadium1.png
+img/msg0.png
+img/msg1.png
+img/msg2.png
+img/msg3.png
+img/saque.png
+img/marcador.png
+audio/ambient-00.ogg
+audio/ambient-01.ogg
+audio/ambient-02.ogg
+audio/ambient-03.ogg
+audio/ambient-04.ogg
+audio/gol.ogg
+audio/ovacion1.ogg
+audio/ovacion2.ogg
+audio/poste1.ogg
+audio/poste2.ogg
+audio/rebote.ogg
+audio/remate1.ogg
+audio/remate2.ogg
+audio/silbato.ogg
+audio/ambient-00.mp3
+audio/ambient-01.mp3
+audio/ambient-02.mp3
+audio/ambient-03.mp3
+audio/ambient-04.mp3
+audio/gol.mp3
+audio/ovacion1.mp3
+audio/ovacion2.mp3
+audio/poste1.mp3
+audio/poste2.mp3
+audio/rebote.mp3
+audio/remate1.mp3
+audio/remate2.mp3
+audio/silbato.mp3
+audio/ambient-00.aac
+audio/ambient-01.aac
+audio/ambient-02.aac
+audio/ambient-03.aac
+audio/ambient-04.aac
+audio/gol.aac
+audio/ovacion1.aac
+audio/ovacion2.aac
+audio/poste1.aac
+audio/poste2.aac
+audio/rebote.aac
+audio/remate1.aac
+audio/remate2.aac
+audio/silbato.aac
+audio/ambient-00.wav
+audio/ambient-01.wav
+audio/ambient-02.wav
+audio/ambient-03.wav
+audio/ambient-04.wav
+audio/gol.wav
+audio/ovacion1.wav
+audio/ovacion2.wav
+audio/poste1.wav
+audio/poste2.wav
+audio/rebote.wav
+audio/remate1.wav
+audio/remate2.wav
+audio/silbato.wav
+/favicon.ico
+NETWORK:
+ buzz.js
+ jbinary.js
+ jdataview.js
+ pixi.js
+ javacup.js
+ base.js
+ game.js
+ menu.js
+ anim.js
+ play.html
+ /imageTransform

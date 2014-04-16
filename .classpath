@@ -18,5 +18,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gwtbootstrap3-0.7-20140325.120501-1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gwtbootstrap3-extras-0.7-20140325.120725-1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/pngj-2.0.0.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
