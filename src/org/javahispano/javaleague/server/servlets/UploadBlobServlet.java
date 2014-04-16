@@ -11,7 +11,6 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.TimeZone;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -23,8 +22,6 @@ import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
-import org.javahispano.javaleague.client.JavaLeagueApp;
-import org.javahispano.javaleague.client.event.ShowFrameWorkEvent;
 import org.javahispano.javaleague.javacup.shared.Agent;
 import org.javahispano.javaleague.server.LoginHelper;
 import org.javahispano.javaleague.server.classloader.MyDataStoreClassLoader;
@@ -139,8 +136,8 @@ public class UploadBlobServlet extends HttpServlet {
 				currentUser.setTactic(tacticUser);
 				currentUser = userDAO.save(currentUser);
 
-				JavaLeagueApp.get().getEventBus()
-						.fireEvent(new ShowFrameWorkEvent());
+				/*JavaLeagueApp.get().getEventBus()
+						.fireEvent(new ShowFrameWorkEvent());*/
 			}
 
 			PrintWriter out = res.getWriter();
