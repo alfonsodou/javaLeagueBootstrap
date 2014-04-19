@@ -33,7 +33,6 @@ public class ImageServlet extends HttpServlet {
 
 	protected void processRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String file = request.getParameter("file");
 		String path = request.getParameter("path");
 
 

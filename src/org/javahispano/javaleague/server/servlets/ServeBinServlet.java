@@ -41,8 +41,14 @@ public class ServeBinServlet extends HttpServlet {
 		Match p = dao.findById(id);
 		GcsFilename filename = new GcsFilename(AppLib.BUCKET_GCS, p
 				.getLeagueId().toString() + "/" + p.getId().toString() + ".bin");
+
+		res.setHeader("ETag", p.getId().toString());// Establece header ETag
+		res.setHeader("Content-disposition", "inline; filename="
+				+ p.getId().toString() + ".bin");
+
 		res.getOutputStream().write(readFromFile(filename));
-		res.flushBuffer();
+		//res.flushBuffer();
+		res.getOutputStream().close();
 	}
 
 	private byte[] readFromFile(GcsFilename fileName) throws IOException {
