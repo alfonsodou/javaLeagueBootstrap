@@ -1,34 +1,41 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:b="urn:import:org.gwtbootstrap3.client.ui"
+	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
 
 
-	<g:HTMLPanel>
-		<div>
-			<applet code="org.lwjgl.util.applet.AppletLoader" archive="lwjgl_util_applet.jar, lzma.jar"
-				codebase="./display" width="800" height="600">
+	<b:Row>
+		<b:Panel>
+			<b:PanelHeader>
+				<b:Heading ui:field="matchHeading" size="3">
+				</b:Heading>
+			</b:PanelHeader>
+			<b:PanelBody>
+				<applet code="org.lwjgl.util.applet.AppletLoader" archive="lwjgl_util_applet.jar, lzma.jar"
+					codebase="./display" width="800" height="600">
 
-				<param name='al_version' value='1.0'></param>
-				<param name='al_title' value='applet'></param>
-				<param name='al_main' value='org.javahispano.javacup.applet.JavacupApplet'></param>
-				<param name='al_jars'
-					value='slick.jar, javacup2013.jar, slf4j-simple-1.6.4.jar, jogg-0.0.7.jar, jorbis-0.0.15.jar, slf4j-api-1.6.4.jar, lwjgl_applet.jar, lwjgl.jar, jinput.jar, lwjgl_util.jar'></param>
-				<param name='al_windows' value='windows_natives.jar'></param>
-				<param name='al_mac' value='macosx_natives.jar'></param>
-				<param name='al_linux' value='linux_natives.jar'></param>
-				<param name='al_solaris' value='solaris_natives.jar'></param>
-				<param name='al_logo' value='voleaquini-5258-640x640x80.jpg'></param>
-				<param name='al_progressbar' value='javacup_logo.png'></param>
-				<param name='separate_jvm' value='true'></param>
-				<param name='java_arguments'
-					value='-Dsun.java2d.noddraw=true -Dsun.awt.noerasebackground=true -Dsun.java2d.d3d=false -Dsun.java2d.opengl=false -Dsun.java2d.pmoffscreen=false'></param>
-				<param name='URL' value='http://javaleague.appspot.com/serve?id='></param>
-				<param name='ID' ui:field='matchID' value=''></param>
-				<param name='DATE' ui:field='date' value=''></param>
-				<param name='DATEMATCH' ui:field='dateMatch' value=''></param>
-			</applet>
-		</div>
-	</g:HTMLPanel>
+					<param name='al_version' value='1.0'></param>
+					<param name='al_title' value='applet javaCup'></param>
+					<param name='al_main' value='org.javahispano.javacup.applet.JavacupApplet'></param>
+					<param name='al_jars'
+						value='slick.jar, framework_applet.jar, slf4j-simple-1.6.4.jar, jogg-0.0.7.jar, jorbis-0.0.15.jar, slf4j-api-1.6.4.jar, lwjgl_applet.jar, lwjgl.jar, jinput.jar, lwjgl_util.jar'></param>
+					<param name='al_windows' value='windows_natives.jar'></param>
+					<param name='al_mac' value='macosx_natives.jar'></param>
+					<param name='al_linux' value='linux_natives.jar'></param>
+					<param name='al_solaris' value='solaris_natives.jar'></param>
+					<param name='al_logo' value='voleaquini-5258-640x640x80.jpg'></param>
+					<param name='al_progressbar' value='javacup_logo.png'></param>
+					<param name='separate_jvm' value='true'></param>
+					<param name='java_arguments'
+						value='-Dsun.java2d.noddraw=true -Dsun.awt.noerasebackground=true -Dsun.java2d.d3d=false -Dsun.java2d.opengl=false -Dsun.java2d.pmoffscreen=false'></param>
+					<param name='URL' value='http://javaleague.appspot.com/serve?id='></param>
+					<param name='ID' ui:field='matchID' value=''></param>
+					<param name='DATE' ui:field='date' value=''></param>
+					<param name='DATEMATCH' ui:field='dateMatch' value=''></param>
+				</applet>
+			</b:PanelBody>
+		</b:Panel>
+	</b:Row>
 </ui:UiBinder> 

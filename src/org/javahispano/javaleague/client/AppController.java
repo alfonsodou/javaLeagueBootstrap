@@ -1,5 +1,7 @@
 package org.javahispano.javaleague.client;
 
+import java.util.Date;
+
 import org.javahispano.javaleague.client.event.AddLeagueEvent;
 import org.javahispano.javaleague.client.event.AddLeagueEventHandler;
 import org.javahispano.javaleague.client.event.AddTacticEvent;
@@ -31,6 +33,7 @@ import org.javahispano.javaleague.client.presenter.Presenter;
 import org.javahispano.javaleague.client.presenter.RegisterUserPresenter;
 import org.javahispano.javaleague.client.presenter.SearchLeaguePresenter;
 import org.javahispano.javaleague.client.presenter.ShowLeaguePresenter;
+import org.javahispano.javaleague.client.presenter.ShowMatchPresenter;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
 import org.javahispano.javaleague.client.service.LoginServiceAsync;
 import org.javahispano.javaleague.client.service.MatchServiceAsync;
@@ -44,6 +47,7 @@ import org.javahispano.javaleague.client.view.MyLeaguesView;
 import org.javahispano.javaleague.client.view.RegisterUserView;
 import org.javahispano.javaleague.client.view.SearchLeagueView;
 import org.javahispano.javaleague.client.view.ShowLeagueView;
+import org.javahispano.javaleague.client.view.ShowMatchView;
 import org.javahispano.javaleague.shared.domain.League;
 import org.javahispano.javaleague.shared.domain.Match;
 import org.javahispano.javaleague.shared.domain.User;
@@ -82,7 +86,8 @@ public class AppController implements ValueChangeHandler<String> {
 			UserFileServiceAsync userFileService,
 			MatchServiceAsync matchService, LeagueServiceAsync leagueService,
 			UserAccountServiceAsync userAccountService,
-			UploadBlobstoreServiceAsync blobstoreService, SimpleEventBus eventBus) {
+			UploadBlobstoreServiceAsync blobstoreService,
+			SimpleEventBus eventBus) {
 		this.userTacticService = rpcService;
 		this.loginService = loginService;
 		this.userFileService = userFileService;
@@ -347,12 +352,11 @@ public class AppController implements ValueChangeHandler<String> {
 				 * presenter.go(JavaLeagueApp.get().getMainPanel());
 				 */
 			} else if (token.equals("showMatch")) {
-				/*
-				 * presenter = new ShowMatchPresenter(matchService, eventBus,
-				 * new ShowMatchView(), matchID, Long.toString(new
-				 * Date().getTime() / 1000));
-				 * presenter.go(JavaLeagueApp.get().getMainPanel());
-				 */
+
+				presenter = new ShowMatchPresenter(matchService, eventBus,
+						new ShowMatchView(), Long.toString(matchID), Long.toString(new Date()
+								.getTime() / 1000));
+				presenter.go(JavaLeagueApp.get().getCenterPanel());
 
 			} else if (token.equals("playMatch")) {
 

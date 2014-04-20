@@ -3,6 +3,7 @@
  */
 package org.javahispano.javaleague.client.view;
 
+import org.gwtbootstrap3.client.ui.Heading;
 import org.javahispano.javaleague.client.presenter.ShowMatchPresenter;
 
 import com.google.gwt.core.client.GWT;
@@ -25,6 +26,8 @@ public class ShowMatchView extends Composite implements
 	ParamElement date;
 	@UiField
 	ParamElement dateMatch;
+	@UiField
+	Heading matchHeading;
 
 	private static ShowMatchViewUiBinder uiBinder = GWT
 			.create(ShowMatchViewUiBinder.class);
@@ -32,24 +35,8 @@ public class ShowMatchView extends Composite implements
 	interface ShowMatchViewUiBinder extends UiBinder<Widget, ShowMatchView> {
 	}
 
-	/**
-	 * Because this class has a default constructor, it can be used as a binder
-	 * template. In other words, it can be used in other *.ui.xml files as
-	 * follows: <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	 * xmlns:g="urn:import:**user's package**">
-	 * <g:**UserClassName**>Hello!</g:**UserClassName> </ui:UiBinder> Note that
-	 * depending on the widget that is used, it may be necessary to implement
-	 * HasHTML instead of HasText.
-	 */
 	public ShowMatchView() {
 		initWidget(uiBinder.createAndBindUi(this));
-	}
-
-	public ShowMatchView(String firstName) {
-		initWidget(uiBinder.createAndBindUi(this));
-
-		// Can access @UiField after calling createAndBindUi
-
 	}
 
 	@Override
@@ -70,5 +57,10 @@ public class ShowMatchView extends Composite implements
 	@Override
 	public void setDateMatch(String dateMatch) {
 		this.dateMatch.setValue(dateMatch);
+	}
+
+	@Override
+	public Heading getMatchHeading() {
+		return matchHeading;
 	}
 }

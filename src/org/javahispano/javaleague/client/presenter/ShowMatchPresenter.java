@@ -1,5 +1,6 @@
 package org.javahispano.javaleague.client.presenter;
 
+import org.gwtbootstrap3.client.ui.Heading;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.service.MatchServiceAsync;
 import org.javahispano.javaleague.shared.domain.Match;
@@ -20,6 +21,8 @@ public class ShowMatchPresenter implements Presenter {
 		void setDate(String date);
 
 		void setDateMatch(String dateMatch);
+
+		Heading getMatchHeading();
 
 	}
 
@@ -50,12 +53,16 @@ public class ShowMatchPresenter implements Presenter {
 
 	@Override
 	public void go(final HasWidgets container) {
-		//fetchMatchSummary();
 		container.clear();
 		container.add(display.asWidget());
-		
+
+		fetchMatchSummary();
+
 		display.setMatchID(matchID);
-		display.setDate(date);	
+		display.setDate(date);
+
+		display.getMatchHeading().setText(
+				match.getNameLocal() + " vs " + match.getNameForeign());
 
 	}
 
@@ -73,7 +80,7 @@ public class ShowMatchPresenter implements Presenter {
 				match = result;
 				display.setDateMatch(match.getVisualization().toString());
 				display.setMatchID(matchID);
-				display.setDate(date);				
+				display.setDate(date);
 			}
 
 			@Override
@@ -83,7 +90,7 @@ public class ShowMatchPresenter implements Presenter {
 			}
 
 		}.retry(3);
-		
+
 	}
-	
+
 }
