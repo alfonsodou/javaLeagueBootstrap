@@ -55,15 +55,8 @@ public class ShowMatchPresenter implements Presenter {
 	public void go(final HasWidgets container) {
 		container.clear();
 		container.add(display.asWidget());
-
+		
 		fetchMatchSummary();
-
-		display.setMatchID(matchID);
-		display.setDate(date);
-
-		display.getMatchHeading().setText(
-				match.getNameLocal() + " vs " + match.getNameForeign());
-
 	}
 
 	private void fetchMatchSummary() {
@@ -81,6 +74,8 @@ public class ShowMatchPresenter implements Presenter {
 				display.setDateMatch(match.getVisualization().toString());
 				display.setMatchID(matchID);
 				display.setDate(date);
+				display.getMatchHeading().setText(
+						match.getNameLocal() + " vs " + match.getNameForeign());
 			}
 
 			@Override

@@ -49,13 +49,19 @@
 								<b:Paragraph ui:field="paragraphDate"></b:Paragraph>
 								<b:Row>
 									<b:Column size="MD_2">
-										<b:ListGroup ui:field="homeTeams"></b:ListGroup>
+										<b:Paragraph alignment="CENTER">
+											<b:LinkedGroup ui:field="homeTeams"></b:LinkedGroup>
+										</b:Paragraph>
 									</b:Column>
 									<b:Column size="MD_1">
-										<b:ListGroup ui:field="resultMatch"></b:ListGroup>
+										<b:Paragraph alignment="CENTER">
+											<b:LinkedGroup ui:field="resultMatch"></b:LinkedGroup>
+										</b:Paragraph>
 									</b:Column>
 									<b:Column size="MD_2">
-										<b:ListGroup ui:field="visitingTeams"></b:ListGroup>
+										<b:Paragraph alignment="CENTER">
+											<b:LinkedGroup ui:field="visitingTeams"></b:LinkedGroup>
+										</b:Paragraph>
 									</b:Column>
 								</b:Row>
 							</b:TabPane>

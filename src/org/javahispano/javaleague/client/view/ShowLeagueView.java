@@ -5,6 +5,7 @@ package org.javahispano.javaleague.client.view;
 
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Heading;
+import org.gwtbootstrap3.client.ui.LinkedGroup;
 import org.gwtbootstrap3.client.ui.ListGroup;
 import org.gwtbootstrap3.client.ui.Paragraph;
 import org.javahispano.javaleague.client.presenter.ShowLeaguePresenter;
@@ -43,11 +44,11 @@ public class ShowLeagueView extends Composite implements
 	@UiField
 	Paragraph paragraphDate;
 	@UiField
-	ListGroup homeTeams;
+	LinkedGroup homeTeams;
 	@UiField
-	ListGroup visitingTeams;
+	LinkedGroup visitingTeams;
 	@UiField
-	ListGroup resultMatch;
+	LinkedGroup resultMatch;
 
 	public ShowLeagueView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -89,17 +90,17 @@ public class ShowLeagueView extends Composite implements
 	}
 
 	@Override
-	public ListGroup getHomeTeams() {
+	public LinkedGroup getHomeTeams() {
 		return homeTeams;
 	}
 
 	@Override
-	public ListGroup getVisitingTeams() {
+	public LinkedGroup getVisitingTeams() {
 		return visitingTeams;
 	}
 
 	@Override
-	public ListGroup getResultMatch() {
+	public LinkedGroup getResultMatch() {
 		return resultMatch;
 	}
 
