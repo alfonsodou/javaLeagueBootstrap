@@ -47,9 +47,9 @@
 							value='-Dsun.java2d.noddraw=true -Dsun.awt.noerasebackground=true -Dsun.java2d.d3d=false -Dsun.java2d.opengl=false -Dsun.java2d.pmoffscreen=false'></param>
 
 						<param name='URL' value='http://javaleague.appspot.com/serve?id='></param>
-						<param name='ID' ui:field='matchID' value=''></param>
-						<param name='DATE' ui:field='date' value=''></param>
-						<param name='DATEMATCH' ui:field='dateMatch' value=''></param>
+						<param name='ID' ui:field='matchID'></param>
+						<param name='DATE' ui:field='date'></param>
+						<param name='DATEMATCH' ui:field='dateMatch'></param>
 					</applet>
 				</b:Paragraph>
 			</b:PanelBody>
