@@ -7,13 +7,19 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Date;
 
+import org.gwtbootstrap3.client.ui.Anchor;
 import org.gwtbootstrap3.client.ui.Button;
+import org.gwtbootstrap3.client.ui.Column;
 import org.gwtbootstrap3.client.ui.Heading;
 import org.gwtbootstrap3.client.ui.LinkedGroup;
 import org.gwtbootstrap3.client.ui.LinkedGroupItem;
 import org.gwtbootstrap3.client.ui.LinkedGroupItemHeading;
 import org.gwtbootstrap3.client.ui.LinkedGroupItemText;
 import org.gwtbootstrap3.client.ui.Paragraph;
+import org.gwtbootstrap3.client.ui.Row;
+import org.gwtbootstrap3.client.ui.TabPane;
+import org.gwtbootstrap3.client.ui.constants.Alignment;
+import org.gwtbootstrap3.client.ui.constants.ColumnSize;
 import org.gwtbootstrap3.extras.bootbox.client.Bootbox;
 import org.gwtbootstrap3.extras.bootbox.client.callback.ConfirmCallback;
 import org.javahispano.javaleague.client.event.CreateCalendarLeagueEvent;
@@ -65,6 +71,8 @@ public class ShowLeaguePresenter implements Presenter {
 
 		Heading getNameLeague();
 
+		TabPane getTabPaneDate();
+
 	}
 
 	private final SimpleEventBus eventBus;
@@ -100,90 +108,75 @@ public class ShowLeaguePresenter implements Presenter {
 		display.getDescriptionLeague().setHTML(league.getDescription());
 		display.getNameLeague().setText(league.getName());
 
-		String text;
-		text = "<p>" + league.getCreation().toString() + "</p>";
 		if (league.getMatchs() != null) {
 			for (Ref<CalendarDate> cd : league.getMatchs()) {
 				for (Ref<Match> m : cd.get().getMatchs()) {
 
-					if (m.get().getState() == 1) {
-						text += "<p><a href='/serve?id=" + m.get().getId()
-								+ "'>" + m.get().getNameLocal();
-						text += " " + m.get().getLocalGoals() + " - "
-								+ m.get().getVisitingTeamGoals() + " ";
-						text += m.get().getNameForeign() + "</a></p>";
-					} else {
-						text += "<p>" + m.get().getNameLocal() + " N/A "
-								+ m.get().getNameForeign() + "</p>";
-					}
+					Row row = new Row();
 
-					display.getHomeTeams().add(
-							addTeam(m.get().getLocal().getId(), m.get()
-									.getNameLocal(), m.get().getNameLocal())); // Falta
-																				// el
-																				// nombre
-																				// del
-																				// entrenador
-					display.getResultMatch().add(
-							addResult(m.get().getLocalGoals(), m.get()
-									.getVisitingTeamGoals(), m.get()
-									.getLocalPossesion(), m.get().getState(), m
-									.get().getId()));
-					display.getVisitingTeams()
-							.add(addTeam(m.get().getVisiting().getId(), m.get()
-									.getNameForeign(), m.get().getNameForeign())); // Falta
-																					// el
-																					// nombre
-																					// del
-																					// entrenador
+					row.add(addTeam(m.get().getLocal().getId(), m.get()
+							.getNameLocal(), m.get().getNameLocal()));
+					row.add(addResult(m.get().getLocalGoals(), m.get()
+							.getVisitingTeamGoals(), m.get()
+							.getLocalPossesion(), m.get().getState(), m.get()
+							.getId()));
+					row.add(addTeam(m.get().getVisiting().getId(), m.get()
+							.getNameForeign(), m.get().getNameForeign()));
 
+					display.getTabPaneDate().add(row);
 				}
 			}
 		}
-		// display.getParagraphDate().setHTML(text);
 
 	}
 
-	private LinkedGroupItem addResult(int localGoals, int visitingTeamGoals,
+	private Column addResult(int localGoals, int visitingTeamGoals,
 			double localPossesion, int state, Long id) {
-		LinkedGroupItem item = new LinkedGroupItem();
-		LinkedGroupItemHeading itemHeading = new LinkedGroupItemHeading(1);
-		LinkedGroupItemText itemText = new LinkedGroupItemText();
+		Column column = new Column();
+		column.setSize(ColumnSize.MD_3);
+		Paragraph result = new Paragraph();
+		result.setAlignment(Alignment.CENTER);
+		Paragraph possesion = new Paragraph();
+		possesion.setAlignment(Alignment.CENTER);
 
 		matchId = id;
 		if (state == 1) {
-			itemHeading.setText(localGoals + " - " + visitingTeamGoals);
-			itemText.setText(round(localPossesion * 100d, 2) + " - "
+			Anchor anchor = new Anchor();
+			anchor.setText(localGoals + " - " + visitingTeamGoals);
+			anchor.addClickHandler(new ClickHandler() {
+				public void onClick(ClickEvent event) {
+					GWT.log("ShowLeaguePresenter: firing ViewMatchEvent. MatchId: "
+							+ matchId);
+					eventBus.fireEvent(new ViewMatchEvent(matchId));
+				}
+			});
+			result.add(anchor);
+			possesion.setText(round(localPossesion * 100d, 2) + " - "
 					+ round((1d - localPossesion) * 100d, 2));
 		} else {
-			itemHeading.setText("N / A");
+			result.setText("N / A");
 		}
-		item.add(itemHeading);
-		item.add(itemText);
+		column.add(result);
+		column.add(possesion);
 
-		item.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				GWT.log("ShowLeaguePresenter: firing ViewMatchEvent. MatchId: "
-						+ matchId);
-				eventBus.fireEvent(new ViewMatchEvent(matchId));
-			}
-		});
-
-		return item;
+		return column;
 	}
 
-	private LinkedGroupItem addTeam(Long id, String name, String nameManager) {
-		LinkedGroupItem item = new LinkedGroupItem();
-		LinkedGroupItemHeading itemHeading = new LinkedGroupItemHeading(1);
-		LinkedGroupItemText itemText = new LinkedGroupItemText();
+	private Column addTeam(Long id, String name, String nameManager) {
+		Column column = new Column();
+		column.setSize(ColumnSize.MD_4);
+		Paragraph teamName = new Paragraph();
+		teamName.setAlignment(Alignment.CENTER);
+		Paragraph managerName = new Paragraph();
+		managerName.setAlignment(Alignment.CENTER);
 
-		itemHeading.setText(name);
-		itemText.setText(nameManager);
+		teamName.setText(name);
+		managerName.setText(nameManager);
 
-		item.add(itemHeading);
-		item.add(itemText);
+		column.add(teamName);
+		column.add(managerName);
 
-		return item;
+		return column;
 	}
 
 	private static double round(double value, int places) {

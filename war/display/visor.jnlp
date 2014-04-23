@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Visor Partidos JavaLeague JNLP file -->
+<jnlp spec="6.0+" codebase="http://javaleague.appspot.com/display/"
+      href="visor.jnlp">
+  <information>
+    <title>Visor Partidos javaLeague</title>
+    <vendor>javaHispano.org</vendor>
+    <homepage href="http://javaleague.appspot.com/"/>
+    <description>Visor Partidos</description>
+    <description kind="short">Visualización de los partidos ejecutados en javaLeague</description>
+    <icon kind="splash" href="voleaquini-5258-640x640x80.jpg"/>
+  </information>
+  <security>
+    <all-permissions/>
+  </security>
+  <update check="always" policy="always"/>
+  <application-desc main-class="org.javahispano.javacup.applet.JavacupApplet"  width="800" height="600"/>
+  <resources>
+    <java version="1.7+" initial-heap-size="40m" max-heap-size="800m"
+          java-vm-args=""/>
+    <jar href="framework_applet.jar" />
+    <jar href="lwjgl.jar"/>
+    <jar href="lwjgl_util.jar"/>
+    <jar href="slick.jar"/>
+    <jar href="slf4j-simple-1.6.4.jar"/>
+    <jar href="jogg-0.0.7.jar"/>
+    <jar href="jorbis-0.0.15.jar"/>
+    <jar href="slf4j-api-1.6.4.jar"/>    
+    <jar href="jinput.jar"/>    
+  </resources>
+
+  <!-- LWJGL Linux 64-bit native libraries -->
+  <resources os="Linux" arch="amd64">
+    <nativelib href="linux64_natives.jar"/>
+  </resources>
+  <resources os="Linux" arch="x86_64">
+    <nativelib href="linux64_natives.jar"/>
+  </resources>
+
+  <!-- LWJGL Linux 32-bit native libraries -->
+  <resources os="Linux" arch="x86">
+    <nativelib href="linux32_natives.jar"/>
+  </resources>
+  <resources os="Linux" arch="i386">
+    <nativelib href="linux32_natives.jar"/>
+  </resources>
+
+  <!-- LWJGL Windows 64-bit native libraries -->
+  <resources os="Windows" arch="amd64">
+    <nativelib href="windows64_natives.jar"/>
+  </resources>
+  <resources os="Windows" arch="x86_64">
+    <nativelib href="windows64_natives.jar"/>
+  </resources>
+
+  <!-- LWJGL Windows 32-bit native libraries -->
+  <resources os="Windows" arch="x86">
+    <nativelib href="windows32_natives.jar"/>
+  </resources>
+  <resources os="Windows" arch="i386">
+    <nativelib href="windows32_natives.jar"/>
+  </resources>
+
+  <!-- LWJGL MAC OS/X native libraries -->
+  <resources os="Mac">
+    <nativelib href="macosx_natives.jar"/>
+  </resources>
+</jnlp>

@@ -6,8 +6,8 @@ package org.javahispano.javaleague.client.view;
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Heading;
 import org.gwtbootstrap3.client.ui.LinkedGroup;
-import org.gwtbootstrap3.client.ui.ListGroup;
 import org.gwtbootstrap3.client.ui.Paragraph;
+import org.gwtbootstrap3.client.ui.TabPane;
 import org.javahispano.javaleague.client.presenter.ShowLeaguePresenter;
 
 import com.google.gwt.core.client.GWT;
@@ -49,6 +49,8 @@ public class ShowLeagueView extends Composite implements
 	LinkedGroup visitingTeams;
 	@UiField
 	LinkedGroup resultMatch;
+	@UiField
+	TabPane tabPaneDate;
 
 	public ShowLeagueView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -102,6 +104,11 @@ public class ShowLeagueView extends Composite implements
 	@Override
 	public LinkedGroup getResultMatch() {
 		return resultMatch;
+	}
+
+	@Override
+	public TabPane getTabPaneDate() {
+		return tabPaneDate;
 	}
 
 }
