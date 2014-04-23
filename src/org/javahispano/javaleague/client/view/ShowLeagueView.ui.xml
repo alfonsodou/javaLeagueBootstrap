@@ -46,28 +46,13 @@
 						</b:NavTabs>
 						<b:TabContent>
 							<b:TabPane active="true" b:id="tabDate" ui:field="tabPaneDate">
-								<b:Paragraph ui:field="paragraphDate"></b:Paragraph>
-								<b:Row>
-									<b:Column size="MD_2">
-										<b:Paragraph alignment="CENTER">
-											<b:LinkedGroup ui:field="homeTeams"></b:LinkedGroup>
-										</b:Paragraph>
-									</b:Column>
-									<b:Column size="MD_1">
-										<b:Paragraph alignment="CENTER">
-											<b:LinkedGroup ui:field="resultMatch"></b:LinkedGroup>
-										</b:Paragraph>
-									</b:Column>
-									<b:Column size="MD_2">
-										<b:Paragraph alignment="CENTER">
-											<b:LinkedGroup ui:field="visitingTeams"></b:LinkedGroup>
-										</b:Paragraph>
-									</b:Column>
-								</b:Row>
+								<b:Paragraph ui:field="paragraphRoundDate"></b:Paragraph>
 							</b:TabPane>
-							<b:TabPane b:id="tabClasification" ui:field="tabPaneClasificacion">
+							<b:TabPane b:id="tabClasification" ui:field="tabPaneClasification">
+								<b:Paragraph ui:field="paragraphRoundClasification"></b:Paragraph>
 							</b:TabPane>
 						</b:TabContent>
+						<b:Pagination ui:field="paginationRounds"></b:Pagination>
 					</b:Column>
 				</b:Row>
 			</b:PanelBody>

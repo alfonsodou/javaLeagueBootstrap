@@ -11,12 +11,10 @@ import org.gwtbootstrap3.client.ui.Anchor;
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Column;
 import org.gwtbootstrap3.client.ui.Heading;
-import org.gwtbootstrap3.client.ui.LinkedGroup;
-import org.gwtbootstrap3.client.ui.LinkedGroupItem;
-import org.gwtbootstrap3.client.ui.LinkedGroupItemHeading;
-import org.gwtbootstrap3.client.ui.LinkedGroupItemText;
+import org.gwtbootstrap3.client.ui.Pagination;
 import org.gwtbootstrap3.client.ui.Paragraph;
 import org.gwtbootstrap3.client.ui.Row;
+import org.gwtbootstrap3.client.ui.Small;
 import org.gwtbootstrap3.client.ui.TabPane;
 import org.gwtbootstrap3.client.ui.constants.Alignment;
 import org.gwtbootstrap3.client.ui.constants.ColumnSize;
@@ -61,17 +59,17 @@ public class ShowLeaguePresenter implements Presenter {
 
 		Paragraph getDescriptionLeague();
 
-		Paragraph getParagraphDate();
+		Paragraph getParagraphRoundDate();
 
-		LinkedGroup getHomeTeams();
-
-		LinkedGroup getVisitingTeams();
-
-		LinkedGroup getResultMatch();
+		Paragraph getParagraphRoundClasification();
 
 		Heading getNameLeague();
 
 		TabPane getTabPaneDate();
+		
+		TabPane getTabPaneClasification();
+		
+		Pagination getPaginationRounds();
 
 	}
 
@@ -134,10 +132,10 @@ public class ShowLeaguePresenter implements Presenter {
 			double localPossesion, int state, Long id) {
 		Column column = new Column();
 		column.setSize(ColumnSize.MD_3);
+		Paragraph p = new Paragraph();
+		p.setAlignment(Alignment.CENTER);
 		Paragraph result = new Paragraph();
-		result.setAlignment(Alignment.CENTER);
-		Paragraph possesion = new Paragraph();
-		possesion.setAlignment(Alignment.CENTER);
+		Small possesion = new Small();
 
 		matchId = id;
 		if (state == 1) {
@@ -156,8 +154,11 @@ public class ShowLeaguePresenter implements Presenter {
 		} else {
 			result.setText("N / A");
 		}
-		column.add(result);
-		column.add(possesion);
+		
+		p.add(result);
+		p.add(possesion);
+
+		column.add(p);
 
 		return column;
 	}
@@ -165,16 +166,18 @@ public class ShowLeaguePresenter implements Presenter {
 	private Column addTeam(Long id, String name, String nameManager) {
 		Column column = new Column();
 		column.setSize(ColumnSize.MD_4);
+		Paragraph p = new Paragraph();
+		p.setAlignment(Alignment.CENTER);
 		Paragraph teamName = new Paragraph();
-		teamName.setAlignment(Alignment.CENTER);
-		Paragraph managerName = new Paragraph();
-		managerName.setAlignment(Alignment.CENTER);
+		Small managerName = new Small();
 
 		teamName.setText(name);
 		managerName.setText(nameManager);
 
-		column.add(teamName);
-		column.add(managerName);
+		p.add(teamName);
+		p.add(managerName);
+		
+		column.add(p);
 
 		return column;
 	}

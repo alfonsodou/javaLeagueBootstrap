@@ -5,7 +5,7 @@ package org.javahispano.javaleague.client.view;
 
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Heading;
-import org.gwtbootstrap3.client.ui.LinkedGroup;
+import org.gwtbootstrap3.client.ui.Pagination;
 import org.gwtbootstrap3.client.ui.Paragraph;
 import org.gwtbootstrap3.client.ui.TabPane;
 import org.javahispano.javaleague.client.presenter.ShowLeaguePresenter;
@@ -42,15 +42,15 @@ public class ShowLeagueView extends Composite implements
 	@UiField
 	Heading nameLeague;
 	@UiField
-	Paragraph paragraphDate;
+	Paragraph paragraphRoundDate;
 	@UiField
-	LinkedGroup homeTeams;
-	@UiField
-	LinkedGroup visitingTeams;
-	@UiField
-	LinkedGroup resultMatch;
+	Paragraph paragraphRoundClasification;
 	@UiField
 	TabPane tabPaneDate;
+	@UiField
+	TabPane tabPaneClasification;
+	@UiField
+	Pagination paginationRounds;
 
 	public ShowLeagueView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -87,28 +87,28 @@ public class ShowLeagueView extends Composite implements
 	}
 
 	@Override
-	public Paragraph getParagraphDate() {
-		return paragraphDate;
-	}
-
-	@Override
-	public LinkedGroup getHomeTeams() {
-		return homeTeams;
-	}
-
-	@Override
-	public LinkedGroup getVisitingTeams() {
-		return visitingTeams;
-	}
-
-	@Override
-	public LinkedGroup getResultMatch() {
-		return resultMatch;
-	}
-
-	@Override
 	public TabPane getTabPaneDate() {
 		return tabPaneDate;
+	}
+
+	@Override
+	public Paragraph getParagraphRoundDate() {
+		return paragraphRoundDate;
+	}
+
+	@Override
+	public Paragraph getParagraphRoundClasification() {
+		return paragraphRoundClasification;
+	}
+
+	@Override
+	public TabPane getTabPaneClasification() {
+		return tabPaneClasification;
+	}
+
+	@Override
+	public Pagination getPaginationRounds() {
+		return paginationRounds;
 	}
 
 }
