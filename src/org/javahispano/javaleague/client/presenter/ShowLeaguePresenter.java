@@ -127,7 +127,7 @@ public class ShowLeaguePresenter implements Presenter {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				if (round < league.getNumberRounds()) {
+				if (round < league.getMatchs().size() - 1) {
 					round++;
 					doDisplayRound(round);
 				}
@@ -145,7 +145,8 @@ public class ShowLeaguePresenter implements Presenter {
 		display.getTabPaneDate().clear();
 		display.getParagraphRoundDate().setText(
 				javaLeagueMessages.round() + " " + Integer.toString(index)
-						+ " / " + Integer.toString(league.getNumberRounds()));
+						+ " / "
+						+ Integer.toString(league.getMatchs().size() - 1));
 		Ref<CalendarDate> cd = league.getMatchs().get(index);
 
 		for (Ref<Match> m : cd.get().getMatchs()) {
