@@ -34,10 +34,11 @@
 						</b:Button>
 					</b:Column>
 					<b:Column size="MD_5" offset="MD_1">
+						<b:Paragraph ui:field="paragraphRoundDate"></b:Paragraph>
 						<b:NavTabs>
 							<b:TabListItem active="true" target="#tabDate"
 								toggle="TAB" ui:field="tabListItemDate">
-								<ui:msg key="date">Jornada</ui:msg>
+								<ui:msg key="date">Partidos</ui:msg>
 							</b:TabListItem>
 							<b:TabListItem target="#tabClasification" toggle="TAB"
 								ui:field="tabListItemClasification">
@@ -46,7 +47,7 @@
 						</b:NavTabs>
 						<b:TabContent>
 							<b:TabPane active="true" b:id="tabDate" ui:field="tabPaneDate">
-								<b:Paragraph ui:field="paragraphRoundDate"></b:Paragraph>
+
 							</b:TabPane>
 							<b:TabPane b:id="tabClasification" ui:field="tabPaneClasification">
 								<b:Paragraph ui:field="paragraphRoundClasification"></b:Paragraph>

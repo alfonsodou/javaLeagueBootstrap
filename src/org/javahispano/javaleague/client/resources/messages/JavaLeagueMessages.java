@@ -60,4 +60,7 @@ public interface JavaLeagueMessages extends Messages {
 	
 	@DefaultMessage("Todas las clases de tú táctica deben estar incluidas en el package {0}")
 	String packagePath(String path);
+	
+	@DefaultMessage("Jornada")
+	String round();
 }

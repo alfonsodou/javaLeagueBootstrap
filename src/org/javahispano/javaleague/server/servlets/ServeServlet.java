@@ -42,6 +42,11 @@ public class ServeServlet extends HttpServlet {
 
 		GcsFilename filename = new GcsFilename(AppLib.BUCKET_GCS, p.getLeagueId()
 				.toString() + "/" + p.getId().toString() + ".jvc");
+		
+		res.setHeader("ETag", p.getId().toString());// Establece header ETag
+		res.setHeader("Content-disposition", "attachment; filename="
+				+ p.getId().toString() + ".jvc");
+		
 		res.getOutputStream().write(readFromFile(filename));
 		res.flushBuffer();
 	}

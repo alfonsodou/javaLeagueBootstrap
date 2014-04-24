@@ -47,7 +47,7 @@ public class ServeBinServlet extends HttpServlet {
 				+ p.getId().toString() + ".bin");
 
 		res.getOutputStream().write(readFromFile(filename));
-		//res.flushBuffer();
+		// res.flushBuffer();
 		res.getOutputStream().close();
 	}
 

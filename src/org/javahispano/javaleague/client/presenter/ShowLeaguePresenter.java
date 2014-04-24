@@ -11,6 +11,7 @@ import org.gwtbootstrap3.client.ui.Anchor;
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Column;
 import org.gwtbootstrap3.client.ui.Heading;
+import org.gwtbootstrap3.client.ui.ListItem;
 import org.gwtbootstrap3.client.ui.Pagination;
 import org.gwtbootstrap3.client.ui.Paragraph;
 import org.gwtbootstrap3.client.ui.Row;
@@ -22,7 +23,7 @@ import org.gwtbootstrap3.extras.bootbox.client.Bootbox;
 import org.gwtbootstrap3.extras.bootbox.client.callback.ConfirmCallback;
 import org.javahispano.javaleague.client.event.CreateCalendarLeagueEvent;
 import org.javahispano.javaleague.client.event.ShowMyLeaguesEvent;
-import org.javahispano.javaleague.client.event.ViewMatchEvent;
+import org.javahispano.javaleague.client.helper.MyClickHandlerMatch;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
@@ -66,9 +67,9 @@ public class ShowLeaguePresenter implements Presenter {
 		Heading getNameLeague();
 
 		TabPane getTabPaneDate();
-		
+
 		TabPane getTabPaneClasification();
-		
+
 		Pagination getPaginationRounds();
 
 	}
@@ -80,6 +81,7 @@ public class ShowLeaguePresenter implements Presenter {
 	private League league;
 	private User user;
 	private Long matchId;
+	private int round;
 
 	private JavaLeagueMessages javaLeagueMessages = GWT
 			.create(JavaLeagueMessages.class);
@@ -91,12 +93,14 @@ public class ShowLeaguePresenter implements Presenter {
 		this.user = user;
 		this.eventBus = eventBus;
 		this.display = display;
+		this.round = 1;
 
 		ShowLeague();
 	}
 
 	private void ShowLeague() {
 		Date now = new Date(); // La fecha hay que solicitarla al servidor !!!!
+
 		if ((league.getEndSignIn().before(now))
 				|| (user.isJoinLeague(league.getId()))) {
 			display.getJoinLeagueButton().setEnabled(false);
@@ -106,26 +110,58 @@ public class ShowLeaguePresenter implements Presenter {
 		display.getDescriptionLeague().setHTML(league.getDescription());
 		display.getNameLeague().setText(league.getName());
 
-		if (league.getMatchs() != null) {
-			for (Ref<CalendarDate> cd : league.getMatchs()) {
-				for (Ref<Match> m : cd.get().getMatchs()) {
+		ListItem previousLink = display.getPaginationRounds().addPreviousLink();
+		previousLink.addClickHandler(new ClickHandler() {
 
-					Row row = new Row();
-
-					row.add(addTeam(m.get().getLocal().getId(), m.get()
-							.getNameLocal(), m.get().getNameLocal()));
-					row.add(addResult(m.get().getLocalGoals(), m.get()
-							.getVisitingTeamGoals(), m.get()
-							.getLocalPossesion(), m.get().getState(), m.get()
-							.getId()));
-					row.add(addTeam(m.get().getVisiting().getId(), m.get()
-							.getNameForeign(), m.get().getNameForeign()));
-
-					display.getTabPaneDate().add(row);
+			@Override
+			public void onClick(ClickEvent event) {
+				if (round > 1) {
+					round--;
+					doDisplayRound(round);
 				}
 			}
+
+		});
+		ListItem nextLink = display.getPaginationRounds().addNextLink();
+		nextLink.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				if (round < league.getNumberRounds()) {
+					round++;
+					doDisplayRound(round);
+				}
+			}
+
+		});
+
+		if (league.getMatchs() != null) {
+			doDisplayRound(round);
 		}
 
+	}
+
+	private void doDisplayRound(int index) {
+		display.getTabPaneDate().clear();
+		display.getParagraphRoundDate().setText(
+				javaLeagueMessages.round() + " " + Integer.toString(index)
+						+ " / " + Integer.toString(league.getNumberRounds()));
+		Ref<CalendarDate> cd = league.getMatchs().get(index);
+
+		for (Ref<Match> m : cd.get().getMatchs()) {
+
+			Row row = new Row();
+
+			row.add(addTeam(m.get().getLocal().getId(), m.get().getNameLocal(),
+					m.get().getNameLocal()));
+			row.add(addResult(m.get().getLocalGoals(), m.get()
+					.getVisitingTeamGoals(), m.get().getLocalPossesion(), m
+					.get().getState(), m.get().getId()));
+			row.add(addTeam(m.get().getVisiting().getId(), m.get()
+					.getNameForeign(), m.get().getNameForeign()));
+
+			display.getTabPaneDate().add(row);
+		}
 	}
 
 	private Column addResult(int localGoals, int visitingTeamGoals,
@@ -141,20 +177,16 @@ public class ShowLeaguePresenter implements Presenter {
 		if (state == 1) {
 			Anchor anchor = new Anchor();
 			anchor.setText(localGoals + " - " + visitingTeamGoals);
-			anchor.addClickHandler(new ClickHandler() {
-				public void onClick(ClickEvent event) {
-					GWT.log("ShowLeaguePresenter: firing ViewMatchEvent. MatchId: "
-							+ matchId);
-					eventBus.fireEvent(new ViewMatchEvent(matchId));
-				}
-			});
+			MyClickHandlerMatch myClickHandler = new MyClickHandlerMatch(id,
+					eventBus);
+			anchor.addClickHandler(myClickHandler);
 			result.add(anchor);
 			possesion.setText(round(localPossesion * 100d, 2) + " - "
 					+ round((1d - localPossesion) * 100d, 2));
 		} else {
 			result.setText("N / A");
 		}
-		
+
 		p.add(result);
 		p.add(possesion);
 
@@ -176,7 +208,7 @@ public class ShowLeaguePresenter implements Presenter {
 
 		p.add(teamName);
 		p.add(managerName);
-		
+
 		column.add(p);
 
 		return column;
