@@ -28,6 +28,7 @@ import org.javahispano.javaleague.client.helper.MyClickHandlerMatch;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
+import org.javahispano.javaleague.shared.AppLib;
 import org.javahispano.javaleague.shared.domain.CalendarDate;
 import org.javahispano.javaleague.shared.domain.League;
 import org.javahispano.javaleague.shared.domain.Match;
@@ -136,7 +137,7 @@ public class ShowLeaguePresenter implements Presenter {
 
 		});
 
-		if (league.getMatchs() != null) {
+		if (league.getMatchs().size() > 0) {
 			doDisplayRound(round);
 		}
 
@@ -223,7 +224,7 @@ public class ShowLeaguePresenter implements Presenter {
 		p.setAlignment(Alignment.CENTER);
 		Anchor anchor = new Anchor();
 		anchor.setIcon(IconType.DOWNLOAD);
-		anchor.setHref("http://javaleague.appspot.com/serve?id=" + Long.toString(id));
+		anchor.setHref(AppLib.baseURL + "/serve?id=" + Long.toString(id));
 		p.add(anchor);
 		column.add(p);
 		
@@ -277,32 +278,6 @@ public class ShowLeaguePresenter implements Presenter {
 						eventBus.fireEvent(new CreateCalendarLeagueEvent(league));
 					}
 				});
-	}
-
-	private void doCreateCalendarLeague() {
-
-		new RPCCall<League>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("Error createCalendarLeague: "
-						+ caught.getMessage());
-			}
-
-			@Override
-			public void onSuccess(League result) {
-				league = result;
-				GWT.log("ShowLeaguePresenter: firing CreateCalenderLeagueEvent. LeagueId: "
-						+ league.getId());
-				eventBus.fireEvent(new CreateCalendarLeagueEvent(league));
-			}
-
-			@Override
-			protected void callService(AsyncCallback<League> cb) {
-				leagueService.createCalendarLeague(league, cb);
-			}
-
-		}.retry(3);
 	}
 
 	private void doJoinLeague() {

@@ -3,6 +3,7 @@
  */
 package org.javahispano.javaleague.client.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.javahispano.javaleague.shared.domain.League;
@@ -25,7 +26,8 @@ public interface LeagueServiceAsync {
 
 	void joinLeague(Long id, AsyncCallback<Void> callback);
 
-	void createCalendarLeague(League league, AsyncCallback<League> callback);
+	void createCalendarLeague(League league, Date init, List<Integer> days,
+			AsyncCallback<League> callback);
 
 	void getLeagues(String textToSearch,
 			AsyncCallback<List<Ref<League>>> callback);
