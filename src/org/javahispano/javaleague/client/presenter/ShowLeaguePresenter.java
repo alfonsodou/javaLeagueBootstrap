@@ -19,6 +19,7 @@ import org.gwtbootstrap3.client.ui.Small;
 import org.gwtbootstrap3.client.ui.TabPane;
 import org.gwtbootstrap3.client.ui.constants.Alignment;
 import org.gwtbootstrap3.client.ui.constants.ColumnSize;
+import org.gwtbootstrap3.client.ui.constants.IconType;
 import org.gwtbootstrap3.extras.bootbox.client.Bootbox;
 import org.gwtbootstrap3.extras.bootbox.client.callback.ConfirmCallback;
 import org.javahispano.javaleague.client.event.CreateCalendarLeagueEvent;
@@ -127,7 +128,7 @@ public class ShowLeaguePresenter implements Presenter {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				if (round < league.getNumberRounds()) {
+				if (round < league.getMatchs().size() - 1) {
 					round++;
 					doDisplayRound(round);
 				}
@@ -145,7 +146,7 @@ public class ShowLeaguePresenter implements Presenter {
 		display.getTabPaneDate().clear();
 		display.getParagraphRoundDate().setText(
 				javaLeagueMessages.round() + " " + Integer.toString(index)
-						+ " / " + Integer.toString(league.getNumberRounds()));
+						+ " / " + Integer.toString(league.getMatchs().size() - 1));
 		Ref<CalendarDate> cd = league.getMatchs().get(index);
 
 		for (Ref<Match> m : cd.get().getMatchs()) {
@@ -159,7 +160,8 @@ public class ShowLeaguePresenter implements Presenter {
 					.get().getState(), m.get().getId()));
 			row.add(addTeam(m.get().getVisiting().getId(), m.get()
 					.getNameForeign(), m.get().getNameForeign()));
-
+			row.add(addLinks(m.get().getId()));
+			
 			display.getTabPaneDate().add(row);
 		}
 	}
@@ -211,6 +213,20 @@ public class ShowLeaguePresenter implements Presenter {
 
 		column.add(p);
 
+		return column;
+	}
+	
+	private Column addLinks(Long id) {
+		Column column = new Column();
+		column.setSize(ColumnSize.MD_1);
+		Paragraph p = new Paragraph();
+		p.setAlignment(Alignment.CENTER);
+		Anchor anchor = new Anchor();
+		anchor.setIcon(IconType.DOWNLOAD);
+		anchor.setHref("http://javaleague.appspot.com/serve?id=" + Long.toString(id));
+		p.add(anchor);
+		column.add(p);
+		
 		return column;
 	}
 
