@@ -129,7 +129,7 @@ public class ShowLeaguePresenter implements Presenter {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				if (round < league.getMatchs().size() - 1) {
+				if (round < league.getMatchs().size()) {
 					round++;
 					doDisplayRound(round);
 				}
@@ -144,16 +144,12 @@ public class ShowLeaguePresenter implements Presenter {
 	}
 
 	private void doDisplayRound(int index) {
+		Ref<CalendarDate> cd = league.getMatchs().get(index);
 		display.getTabPaneDate().clear();
 		display.getParagraphRoundDate().setText(
 				javaLeagueMessages.round() + " " + Integer.toString(index)
-<<<<<<< HEAD
-						+ " / "
-						+ Integer.toString(league.getMatchs().size() - 1));
-=======
-						+ " / " + Integer.toString(league.getMatchs().size() - 1));
->>>>>>> caccb593b19e94c314856475dfbaf2b16e88bc9e
-		Ref<CalendarDate> cd = league.getMatchs().get(index);
+						+ " / " + Integer.toString(league.getMatchs().size())
+						+ " :: " + cd.get().getStart().toString());
 
 		for (Ref<Match> m : cd.get().getMatchs()) {
 
@@ -167,7 +163,7 @@ public class ShowLeaguePresenter implements Presenter {
 			row.add(addTeam(m.get().getVisiting().getId(), m.get()
 					.getNameForeign(), m.get().getNameForeign()));
 			row.add(addLinks(m.get().getId()));
-			
+
 			display.getTabPaneDate().add(row);
 		}
 	}
@@ -221,7 +217,7 @@ public class ShowLeaguePresenter implements Presenter {
 
 		return column;
 	}
-	
+
 	private Column addLinks(Long id) {
 		Column column = new Column();
 		column.setSize(ColumnSize.MD_1);
@@ -232,7 +228,7 @@ public class ShowLeaguePresenter implements Presenter {
 		anchor.setHref(AppLib.baseURL + "/serve?id=" + Long.toString(id));
 		p.add(anchor);
 		column.add(p);
-		
+
 		return column;
 	}
 
