@@ -19,6 +19,7 @@ import org.gwtbootstrap3.client.ui.Small;
 import org.gwtbootstrap3.client.ui.TabPane;
 import org.gwtbootstrap3.client.ui.constants.Alignment;
 import org.gwtbootstrap3.client.ui.constants.ColumnSize;
+import org.gwtbootstrap3.client.ui.constants.IconType;
 import org.gwtbootstrap3.extras.bootbox.client.Bootbox;
 import org.gwtbootstrap3.extras.bootbox.client.callback.ConfirmCallback;
 import org.javahispano.javaleague.client.event.CreateCalendarLeagueEvent;
@@ -27,6 +28,7 @@ import org.javahispano.javaleague.client.helper.MyClickHandlerMatch;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
+import org.javahispano.javaleague.shared.AppLib;
 import org.javahispano.javaleague.shared.domain.CalendarDate;
 import org.javahispano.javaleague.shared.domain.League;
 import org.javahispano.javaleague.shared.domain.Match;
@@ -135,7 +137,7 @@ public class ShowLeaguePresenter implements Presenter {
 
 		});
 
-		if (league.getMatchs() != null) {
+		if (league.getMatchs().size() > 0) {
 			doDisplayRound(round);
 		}
 
@@ -145,8 +147,12 @@ public class ShowLeaguePresenter implements Presenter {
 		display.getTabPaneDate().clear();
 		display.getParagraphRoundDate().setText(
 				javaLeagueMessages.round() + " " + Integer.toString(index)
+<<<<<<< HEAD
 						+ " / "
 						+ Integer.toString(league.getMatchs().size() - 1));
+=======
+						+ " / " + Integer.toString(league.getMatchs().size() - 1));
+>>>>>>> caccb593b19e94c314856475dfbaf2b16e88bc9e
 		Ref<CalendarDate> cd = league.getMatchs().get(index);
 
 		for (Ref<Match> m : cd.get().getMatchs()) {
@@ -160,7 +166,8 @@ public class ShowLeaguePresenter implements Presenter {
 					.get().getState(), m.get().getId()));
 			row.add(addTeam(m.get().getVisiting().getId(), m.get()
 					.getNameForeign(), m.get().getNameForeign()));
-
+			row.add(addLinks(m.get().getId()));
+			
 			display.getTabPaneDate().add(row);
 		}
 	}
@@ -214,6 +221,20 @@ public class ShowLeaguePresenter implements Presenter {
 
 		return column;
 	}
+	
+	private Column addLinks(Long id) {
+		Column column = new Column();
+		column.setSize(ColumnSize.MD_1);
+		Paragraph p = new Paragraph();
+		p.setAlignment(Alignment.CENTER);
+		Anchor anchor = new Anchor();
+		anchor.setIcon(IconType.DOWNLOAD);
+		anchor.setHref(AppLib.baseURL + "/serve?id=" + Long.toString(id));
+		p.add(anchor);
+		column.add(p);
+		
+		return column;
+	}
 
 	private static double round(double value, int places) {
 		if (places < 0)
@@ -262,32 +283,6 @@ public class ShowLeaguePresenter implements Presenter {
 						eventBus.fireEvent(new CreateCalendarLeagueEvent(league));
 					}
 				});
-	}
-
-	private void doCreateCalendarLeague() {
-
-		new RPCCall<League>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("Error createCalendarLeague: "
-						+ caught.getMessage());
-			}
-
-			@Override
-			public void onSuccess(League result) {
-				league = result;
-				GWT.log("ShowLeaguePresenter: firing CreateCalenderLeagueEvent. LeagueId: "
-						+ league.getId());
-				eventBus.fireEvent(new CreateCalendarLeagueEvent(league));
-			}
-
-			@Override
-			protected void callService(AsyncCallback<League> cb) {
-				leagueService.createCalendarLeague(league, cb);
-			}
-
-		}.retry(3);
 	}
 
 	private void doJoinLeague() {

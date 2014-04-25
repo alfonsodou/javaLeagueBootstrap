@@ -140,56 +140,80 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public League createCalendarLeague(League league) {
+	public League createCalendarLeague(League league, Date init, List<Integer> days) {
 		int n = league.getUsers().size();
 		int[][][] temp = crearLiguilla(n);
 
-		int home, away, swap;
+		int home, away;
+		boolean swap;
 		int partidos = n * (n - 1) / 2;
 		int fechas = partidos / (n / 2);
 		int partidosPorFecha = partidos / fechas;
 		CalendarDate calendarDate;
 		Match match;
-		Date start = new Date();
+		Date start = init;
+		int indexDay = 0;
 
 		logger.warning("Equipos: " + n);
 		logger.warning("Total partidos: " + partidos);
 		logger.warning("Total fechas: " + fechas);
 		logger.warning("Partidos por fecha: " + partidosPorFecha);
 
-		for (int round = 0; round < fechas; round++) {
-			logger.warning("Fecha: " + round);
-
-			calendarDate = new CalendarDate();
-			calendarDate.setStart(start);
-			calendarDate.setFinish(start);
-			calendarDate.setLeagueId(league.getId());
-
-			for (int m = 0; m < partidosPorFecha; m++) {
-				logger.warning("Fecha: " + round + " :: Partido: " + m);
-
-				match = new Match();
-				match.setLeagueId(league.getId());
-				match.setExecution(start);
-				match.setVisualization(start);
-
-				int found[] = new int[] { temp[round][m][0], temp[round][m][1] };
-
-				home = found[0];
-				away = found[1];
-
-				match.setLocal(league.getUsers().get(home).get().getTactic());
-				match.setVisiting(league.getUsers().get(away).get().getTactic());
-				match.setNameLocal(league.getUsers().get(home).get()
-						.getTactic().getTeamName());
-				match.setNameForeign(league.getUsers().get(away).get()
-						.getTactic().getTeamName());
-				match = matchDAO.save(match);
-				calendarDate.addMatch(match);
+		for (int f = 0; f < league.getNumberRounds(); f++) {
+			if (f % 2 == 0) { // es par
+				swap = true;
+			} else {
+				swap = false;
 			}
-			calendarDate = calendarDateDAO.save(calendarDate);
-			league.addCalendarDate(calendarDate);
-			// start = addMinutesToDate(start, 5);
+			
+			for (int round = 0; round < fechas; round++) {
+				logger.warning("Fecha: " + round);
+
+				calendarDate = new CalendarDate();
+				calendarDate.setStart(start);
+				calendarDate.setFinish(start);
+				calendarDate.setLeagueId(league.getId());
+				
+				start = getNextDate(start, days.get(indexDay));
+				if (indexDay == days.size() - 1) {
+					indexDay = 0;
+				} else {
+					indexDay++;
+				}
+
+				for (int m = 0; m < partidosPorFecha; m++) {
+					logger.warning("Fecha: " + round + " :: Partido: " + m);
+
+					match = new Match();
+					match.setLeagueId(league.getId());
+					match.setExecution(addMinutesToDate(start, -120));
+					match.setVisualization(start);
+
+					int found[] = new int[] { temp[round][m][0],
+							temp[round][m][1] };
+
+					if (swap) {
+						home = found[1];
+						away = found[0];
+					} else {
+						home = found[0];
+						away = found[1];
+					}
+
+					match.setLocal(league.getUsers().get(home).get()
+							.getTactic());
+					match.setVisiting(league.getUsers().get(away).get()
+							.getTactic());
+					match.setNameLocal(league.getUsers().get(home).get()
+							.getTactic().getTeamName());
+					match.setNameForeign(league.getUsers().get(away).get()
+							.getTactic().getTeamName());
+					match = matchDAO.save(match);
+					calendarDate.addMatch(match);
+				}
+				calendarDate = calendarDateDAO.save(calendarDate);
+				league.addCalendarDate(calendarDate);
+			}
 		}
 
 		league = leagueDAO.save(league);
@@ -286,10 +310,21 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 	 * @param minutes
 	 * @return
 	 */
-	public static Date addMinutesToDate(Date date, int minutes) {
+	private static Date addMinutesToDate(Date date, int minutes) {
 		Calendar calendarDate = Calendar.getInstance();
 		calendarDate.setTime(date);
 		calendarDate.add(Calendar.MINUTE, minutes);
+		return calendarDate.getTime();
+	}
+	
+	private static Date getNextDate(Date date, int day) {
+		Calendar calendarDate = Calendar.getInstance();
+		calendarDate.setTime(date);
+		
+		while(calendarDate.get(Calendar.DAY_OF_WEEK) != day) {
+			calendarDate.add(Calendar.MINUTE, 1440);			
+		}
+		
 		return calendarDate.getTime();
 	}
 

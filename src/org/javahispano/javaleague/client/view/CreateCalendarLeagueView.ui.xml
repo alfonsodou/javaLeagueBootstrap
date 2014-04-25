@@ -26,15 +26,15 @@
 								</b:DescriptionTitle>
 								<b:DescriptionData ui:field="leagueType"></b:DescriptionData>
 								<b:DescriptionTitle>
-									<ui:msg key="pointsForWin">Puntos por partido ganado</ui:msg>
+									<ui:msg key="pointsForWin">Puntos por ganar</ui:msg>
 								</b:DescriptionTitle>
 								<b:DescriptionData ui:field="pointsForWin"></b:DescriptionData>
 								<b:DescriptionTitle>
-									<ui:msg key="pointsFotTied">Puntos por partido empatado</ui:msg>
+									<ui:msg key="pointsFotTied">Puntos por empatar</ui:msg>
 								</b:DescriptionTitle>
 								<b:DescriptionData ui:field="pointsForTied"></b:DescriptionData>
 								<b:DescriptionTitle>
-									<ui:msg key="pointsForLost">Puntos por partido perdido</ui:msg>
+									<ui:msg key="pointsForLost">Puntos por perder</ui:msg>
 								</b:DescriptionTitle>
 								<b:DescriptionData ui:field="pointsForLost"></b:DescriptionData>
 							</b:Description>

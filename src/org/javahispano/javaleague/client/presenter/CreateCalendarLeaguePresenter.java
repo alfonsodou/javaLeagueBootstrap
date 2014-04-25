@@ -3,6 +3,10 @@
  */
 package org.javahispano.javaleague.client.presenter;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.CheckBox;
 import org.gwtbootstrap3.client.ui.DescriptionData;
@@ -73,6 +77,7 @@ public class CreateCalendarLeaguePresenter implements Presenter {
 	private final LeagueServiceAsync leagueService;
 	private final SimpleEventBus eventBus;
 	private League league;
+	List<Integer> days = new ArrayList<Integer>();	
 
 	public CreateCalendarLeaguePresenter(LeagueServiceAsync leagueService,
 			SimpleEventBus eventBus, League league, Display display) {
@@ -152,6 +157,27 @@ public class CreateCalendarLeaguePresenter implements Presenter {
 		if (result) {
 			league.setNumberRounds(Integer.parseInt(display.getNumberRounds()
 					.getValue()));
+			if (display.getMondayCheckBox().getValue()) {
+				days.add(Calendar.MONDAY);
+			}
+			if (display.getTuesdayCheckBox().getValue()) {
+				days.add(Calendar.TUESDAY);
+			}
+			if (display.getWednesdayCheckBox().getValue()) {
+				days.add(Calendar.WEDNESDAY);
+			}
+			if (display.getThursdayCheckBox().getValue()) {
+				days.add(Calendar.THURSDAY);
+			}
+			if (display.getFridayCheckBox().getValue()) {
+				days.add(Calendar.FRIDAY);
+			}
+			if (display.getSaturdayCheckBox().getValue()) {
+				days.add(Calendar.SATURDAY);
+			}
+			if (display.getSundayCheckBox().getValue()) {
+				days.add(Calendar.SUNDAY);
+			}
 
 			new RPCCall<League>() {
 
@@ -172,7 +198,8 @@ public class CreateCalendarLeaguePresenter implements Presenter {
 				@Override
 				protected void callService(AsyncCallback<League> cb) {
 					display.getCreateCalendarLeagueButton().setEnabled(false);
-					leagueService.createCalendarLeague(league, cb);
+					leagueService.createCalendarLeague(league, display
+							.getStartFirstRound().getValue(), days, cb);
 				}
 
 			}.retry(3);
