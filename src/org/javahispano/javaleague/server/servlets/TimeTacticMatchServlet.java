@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.javahispano.javaleague.server.LoginHelper;
 import org.javahispano.javaleague.server.domain.MatchDAO;
 import org.javahispano.javaleague.shared.domain.Match;
+import org.javahispano.javaleague.shared.domain.User;
 
 /**
  * @author adou
@@ -30,7 +32,7 @@ public class TimeTacticMatchServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
-
+		User currentUser = LoginHelper.getLoggedInUser(req.getSession());
 		MatchDAO matchDAO = new MatchDAO();
 		Match match = null;
 		long[] time;
@@ -43,17 +45,27 @@ public class TimeTacticMatchServlet extends HttpServlet {
 		}
 
 		res.setContentType("text/plain");
+		res.setHeader("ETag", match.getId().toString());// Establece header ETag
+
 		PrintWriter out = res.getWriter();
 		if (req.getParameter("tactic").equals("local")) {
 			time = match.getTimeLocal();
+			res.setHeader("Content-disposition", "attachment; filename="
+					+ match.getId().toString() + "_" + match.getNameLocal()
+					+ ".csv");
 		} else {
 			time = match.getTimeVisita();
+			res.setHeader("Content-disposition", "attachment; filename="
+					+ match.getId().toString() + "_" + match.getNameForeign()
+					+ ".csv");
 		}
+		
 		for (int i = 0; i < time.length; i++) {
 			result += time[i] + ",";
 		}
 		result = result.substring(0, result.length() - 1);
 		out.println(result);
+		res.flushBuffer();
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res)

@@ -164,7 +164,9 @@ public class PlayMatchServlet extends HttpServlet {
 		 * Para obtener el GcsFilename necesito el id del usuario !!! ¿ Añadirlo
 		 * a la táctica ?
 		 */
-		GcsFilename fileName = new GcsFilename(AppLib.BUCKET_GCS, "user/");
+		GcsFilename fileName = new GcsFilename(AppLib.BUCKET_GCS, "user/"
+				+ tactic.getUserId().toString() + "/"
+				+ tactic.getId().toString() + "/" + tactic.getFileName());
 
 		byteStream = myDataStoreClassLoader.addClassJar(readFile(fileName));
 

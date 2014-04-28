@@ -24,6 +24,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FormPanel;
@@ -251,8 +252,7 @@ public class TacticPresenter implements Presenter {
 					tactic = result;
 
 					DateTimeFormat fmt = DateTimeFormat
-							.getFormat("dd/MM/yyyy :: HH:mm:ss");
-
+							.getFormat(PredefinedFormat.DATE_TIME_MEDIUM);
 					display.getUpdateButton().setEnabled(true);
 
 					display.getUpdatedTactic().setText(

@@ -102,7 +102,9 @@ public class UploadBlobServlet extends HttpServlet {
 									.toString());
 							if (error == 0) {
 								fileName = new GcsFilename(AppLib.BUCKET_GCS,
-										"tactic/"
+										"user/"
+												+ tacticUser.getUserId()
+														.toString() + "/"
 												+ tacticUser.getId().toString()
 												+ "/" + item.getName());
 								writeToFile(fileName, zipBytes);
@@ -111,7 +113,11 @@ public class UploadBlobServlet extends HttpServlet {
 									gcsService
 											.delete(new GcsFilename(
 													AppLib.BUCKET_GCS,
-													"tactic/"
+													"user/"
+															+ tacticUser
+																	.getUserId()
+																	.toString()
+															+ "/"
 															+ tacticUser
 																	.getId()
 																	.toString()
@@ -136,8 +142,10 @@ public class UploadBlobServlet extends HttpServlet {
 				currentUser.setTactic(tacticUser);
 				currentUser = userDAO.save(currentUser);
 
-				/*JavaLeagueApp.get().getEventBus()
-						.fireEvent(new ShowFrameWorkEvent());*/
+				/*
+				 * JavaLeagueApp.get().getEventBus() .fireEvent(new
+				 * ShowFrameWorkEvent());
+				 */
 			}
 
 			PrintWriter out = res.getWriter();

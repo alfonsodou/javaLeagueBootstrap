@@ -38,6 +38,8 @@ import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.SimpleEventBus;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -95,7 +97,7 @@ public class ShowLeaguePresenter implements Presenter {
 		this.user = user;
 		this.eventBus = eventBus;
 		this.display = display;
-		this.round = 1;
+		this.round = 0;
 
 		ShowLeague();
 	}
@@ -117,7 +119,7 @@ public class ShowLeaguePresenter implements Presenter {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				if (round > 1) {
+				if (round > 0) {
 					round--;
 					doDisplayRound(round);
 				}
@@ -129,7 +131,7 @@ public class ShowLeaguePresenter implements Presenter {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				if (round < league.getMatchs().size()) {
+				if (round < league.getMatchs().size() - 1) {
 					round++;
 					doDisplayRound(round);
 				}
@@ -144,12 +146,14 @@ public class ShowLeaguePresenter implements Presenter {
 	}
 
 	private void doDisplayRound(int index) {
+		DateTimeFormat date = DateTimeFormat.getFormat(PredefinedFormat.DATE_TIME_MEDIUM);
+
 		Ref<CalendarDate> cd = league.getMatchs().get(index);
 		display.getTabPaneDate().clear();
 		display.getParagraphRoundDate().setText(
-				javaLeagueMessages.round() + " " + Integer.toString(index)
+				javaLeagueMessages.round() + " " + Integer.toString(index + 1)
 						+ " / " + Integer.toString(league.getMatchs().size())
-						+ " :: " + cd.get().getStart().toString());
+						+ " :: " + date.format(cd.get().getStart()));
 
 		for (Ref<Match> m : cd.get().getMatchs()) {
 
@@ -162,7 +166,8 @@ public class ShowLeaguePresenter implements Presenter {
 					.get().getState(), m.get().getId()));
 			row.add(addTeam(m.get().getVisiting().getId(), m.get()
 					.getNameForeign(), m.get().getNameForeign()));
-			row.add(addLinks(m.get().getId()));
+			row.add(addLinks(m.get().getId(), m.get().getLocal().getUserId(), m
+					.get().getVisiting().getUserId()));
 
 			display.getTabPaneDate().add(row);
 		}
@@ -218,15 +223,33 @@ public class ShowLeaguePresenter implements Presenter {
 		return column;
 	}
 
-	private Column addLinks(Long id) {
+	private Column addLinks(Long id, Long localId, Long visitingId) {
 		Column column = new Column();
 		column.setSize(ColumnSize.MD_1);
 		Paragraph p = new Paragraph();
 		p.setAlignment(Alignment.CENTER);
-		Anchor anchor = new Anchor();
-		anchor.setIcon(IconType.DOWNLOAD);
-		anchor.setHref(AppLib.baseURL + "/serve?id=" + Long.toString(id));
-		p.add(anchor);
+		Anchor match = new Anchor();
+		match.setIcon(IconType.DOWNLOAD);
+		match.setHref(AppLib.baseURL + "/serve?id=" + Long.toString(id));
+		p.add(match);
+
+		if (user.getId() == localId) {
+			Anchor csv = new Anchor();
+			csv.setIcon(IconType.CALENDAR);
+			csv.setHref(AppLib.baseURL + "/timeTacticMatch?id="
+					+ Long.toString(id) + "&tactic=local");
+
+			p.add(csv);
+
+		} else if (user.getId() == visitingId) {
+			Anchor csv = new Anchor();
+			csv.setIcon(IconType.CALENDAR);
+			csv.setHref(AppLib.baseURL + "/timeTacticMatch?id="
+					+ Long.toString(id) + "&tactic=vis");
+
+			p.add(csv);
+		}
+
 		column.add(p);
 
 		return column;

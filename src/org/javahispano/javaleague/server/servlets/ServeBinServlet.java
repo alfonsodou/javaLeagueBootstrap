@@ -47,8 +47,7 @@ public class ServeBinServlet extends HttpServlet {
 				+ p.getId().toString() + ".bin");
 
 		res.getOutputStream().write(readFromFile(filename));
-		// res.flushBuffer();
-		res.getOutputStream().close();
+		res.flushBuffer();
 	}
 
 	private byte[] readFromFile(GcsFilename fileName) throws IOException {

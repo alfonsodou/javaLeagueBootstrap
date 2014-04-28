@@ -59,6 +59,9 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 			// update session if successful
 			session.setAttribute("userId", String.valueOf(user.getId()));
 			session.setAttribute("loggedin", true);
+			/*
+			 * Guardar timezone del usuario en sesión
+			 */
 			//session.setAttribute("timeZone", timeZone);
 
 			user.setLastActive(new Date());
@@ -81,15 +84,6 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 		if (userDAO.findByEmail(user.getEmailAddress()) != null) {
 			return null;
 		}
-
-		SessionIdentifierGenerator userTokenGenerator = new SessionIdentifierGenerator();
-		TacticUser tacticUser = new TacticUser();
-		tacticUser.setTeamName(teamName);
-		tacticUser = tacticUserDAO.save(tacticUser);
-
-		user.setDateTokenActivate(new Date());
-		user.setTokenActivate(userTokenGenerator.nextSessionId());
-		user.setTactic(tacticUser);
 
 		Properties props = new Properties();
 		Session session = Session.getDefaultInstance(props, null);
@@ -118,6 +112,18 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 		} catch (UnsupportedEncodingException e) {
 			return null;
 		}
+		
+		SessionIdentifierGenerator userTokenGenerator = new SessionIdentifierGenerator();
+		user.setDateTokenActivate(new Date());
+		user.setTokenActivate(userTokenGenerator.nextSessionId());
+		user = userDAO.save(user);
+		
+		TacticUser tacticUser = new TacticUser();
+		tacticUser.setTeamName(teamName);
+		tacticUser.setUserId(user.getId());
+		tacticUser = tacticUserDAO.save(tacticUser);
+
+		user.setTactic(tacticUser);
 
 		user = userDAO.save(user);
 
