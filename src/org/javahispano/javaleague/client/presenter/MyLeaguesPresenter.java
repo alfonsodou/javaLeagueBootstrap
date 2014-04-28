@@ -22,6 +22,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.SimpleEventBus;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -132,6 +134,7 @@ public class MyLeaguesPresenter implements Presenter {
 	}
 
 	private void doShowMyLeagues() {
+
 		TextColumn<League> col1 = new TextColumn<League>() {
 
 			@Override
@@ -156,7 +159,9 @@ public class MyLeaguesPresenter implements Presenter {
 
 			@Override
 			public String getValue(League object) {
-				return String.valueOf(object.getStartSignIn().toString());
+				DateTimeFormat date = DateTimeFormat
+						.getFormat(PredefinedFormat.DATE_TIME_MEDIUM);
+				return String.valueOf(date.format(object.getStartSignIn()));
 			}
 		};
 		display.getCellTableLeagues().addColumn(col3,
@@ -166,7 +171,9 @@ public class MyLeaguesPresenter implements Presenter {
 
 			@Override
 			public String getValue(League object) {
-				return String.valueOf(object.getEndSignIn().toString());
+				DateTimeFormat date = DateTimeFormat
+						.getFormat(PredefinedFormat.DATE_TIME_MEDIUM);
+				return String.valueOf(date.format(object.getEndSignIn()));
 			}
 		};
 		display.getCellTableLeagues().addColumn(col4,

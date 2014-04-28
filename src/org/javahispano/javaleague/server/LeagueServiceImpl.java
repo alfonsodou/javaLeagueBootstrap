@@ -140,7 +140,8 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public League createCalendarLeague(League league, Date init, List<Integer> days) {
+	public League createCalendarLeague(League league, Date init,
+			List<Integer> days) {
 		int n = league.getUsers().size();
 		int[][][] temp = crearLiguilla(n);
 
@@ -165,7 +166,7 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 			} else {
 				swap = false;
 			}
-			
+
 			for (int round = 0; round < fechas; round++) {
 				logger.warning("Fecha: " + round);
 
@@ -173,7 +174,7 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 				calendarDate.setStart(start);
 				calendarDate.setFinish(start);
 				calendarDate.setLeagueId(league.getId());
-				
+
 				start = getNextDate(start, days.get(indexDay));
 				if (indexDay == days.size() - 1) {
 					indexDay = 0;
@@ -208,6 +209,10 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 							.getTactic().getTeamName());
 					match.setNameForeign(league.getUsers().get(away).get()
 							.getTactic().getTeamName());
+					match.setNameLocalManager(league.getUsers().get(home).get()
+							.getName());
+					match.setNameVisitingManager(league.getUsers().get(away).get()
+							.getName());
 					match = matchDAO.save(match);
 					calendarDate.addMatch(match);
 				}
@@ -316,15 +321,15 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 		calendarDate.add(Calendar.MINUTE, minutes);
 		return calendarDate.getTime();
 	}
-	
+
 	private static Date getNextDate(Date date, int day) {
 		Calendar calendarDate = Calendar.getInstance();
 		calendarDate.setTime(date);
-		
-		while(calendarDate.get(Calendar.DAY_OF_WEEK) != day) {
-			calendarDate.add(Calendar.MINUTE, 1440);			
+
+		while (calendarDate.get(Calendar.DAY_OF_WEEK) != day) {
+			calendarDate.add(Calendar.MINUTE, 1440);
 		}
-		
+
 		return calendarDate.getTime();
 	}
 

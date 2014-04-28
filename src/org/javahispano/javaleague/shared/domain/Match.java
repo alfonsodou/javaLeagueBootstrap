@@ -20,20 +20,24 @@ public class Match implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger log = Logger.getLogger(Match.class.getName());	
+	private static final Logger log = Logger.getLogger(Match.class.getName());
 
 	@Id
 	private Long id;
 
 	@Load
 	private Ref<TacticUser> localTeam;
-	
+
 	private String nameLocalTeam;
+
+	private String nameLocalManager;
 
 	@Load
 	private Ref<TacticUser> visitingTeam;
-	
+
 	private String nameVisitingTeam;
+
+	private String nameVisitingManager;
 
 	private int localTeamGoals;
 
@@ -47,12 +51,12 @@ public class Match implements Serializable {
 	private Date execution;
 
 	private Date visualization;
-	
+
 	@Index
 	private int state;
-	
+
 	private long[] timeLocal;
-	
+
 	private long[] timeVisita;
 
 	public Match() {
@@ -68,7 +72,7 @@ public class Match implements Serializable {
 		this.leagueId = 0L;
 		this.timeLocal = null;
 		this.timeVisita = null;
-		
+
 	}
 
 	public Long getId() {
@@ -159,7 +163,8 @@ public class Match implements Serializable {
 	}
 
 	/**
-	 * @param state the state to set
+	 * @param state
+	 *            the state to set
 	 */
 	public void setState(int state) {
 		this.state = state;
@@ -173,7 +178,8 @@ public class Match implements Serializable {
 	}
 
 	/**
-	 * @param leagueId the leagueId to set
+	 * @param leagueId
+	 *            the leagueId to set
 	 */
 	public void setLeagueId(Long leagueId) {
 		this.leagueId = leagueId;
@@ -187,7 +193,8 @@ public class Match implements Serializable {
 	}
 
 	/**
-	 * @param timeLocal the timeLocal to set
+	 * @param timeLocal
+	 *            the timeLocal to set
 	 */
 	public void setTimeLocal(long[] timeLocal) {
 		this.timeLocal = timeLocal;
@@ -201,10 +208,41 @@ public class Match implements Serializable {
 	}
 
 	/**
-	 * @param timeVisita the timeVisita to set
+	 * @param timeVisita
+	 *            the timeVisita to set
 	 */
 	public void setTimeVisita(long[] timeVisita) {
 		this.timeVisita = timeVisita;
 	}
-	
+
+	/**
+	 * @return the nameLocalManager
+	 */
+	public String getNameLocalManager() {
+		return nameLocalManager;
+	}
+
+	/**
+	 * @param nameLocalManager
+	 *            the nameLocalManager to set
+	 */
+	public void setNameLocalManager(String nameLocalManager) {
+		this.nameLocalManager = nameLocalManager;
+	}
+
+	/**
+	 * @return the nameVisitingManager
+	 */
+	public String getNameVisitingManager() {
+		return nameVisitingManager;
+	}
+
+	/**
+	 * @param nameVisitingManager
+	 *            the nameVisitingManager to set
+	 */
+	public void setNameVisitingManager(String nameVisitingManager) {
+		this.nameVisitingManager = nameVisitingManager;
+	}
+
 }

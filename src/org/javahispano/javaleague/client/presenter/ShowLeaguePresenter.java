@@ -111,6 +111,13 @@ public class ShowLeaguePresenter implements Presenter {
 		} else {
 			display.getJoinLeagueButton().setEnabled(true);
 		}
+		if (league.getManagerId() == user.getId()) {
+			display.getDropLeagueButton().setVisible(true);
+			display.getEditLeagueButton().setVisible(true);
+		} else {
+			display.getDropLeagueButton().setVisible(false);
+			display.getEditLeagueButton().setVisible(false);
+		}
 		display.getDescriptionLeague().setHTML(league.getDescription());
 		display.getNameLeague().setText(league.getName());
 
@@ -146,7 +153,8 @@ public class ShowLeaguePresenter implements Presenter {
 	}
 
 	private void doDisplayRound(int index) {
-		DateTimeFormat date = DateTimeFormat.getFormat(PredefinedFormat.DATE_TIME_MEDIUM);
+		DateTimeFormat date = DateTimeFormat
+				.getFormat(PredefinedFormat.DATE_TIME_MEDIUM);
 
 		Ref<CalendarDate> cd = league.getMatchs().get(index);
 		display.getTabPaneDate().clear();
@@ -160,12 +168,12 @@ public class ShowLeaguePresenter implements Presenter {
 			Row row = new Row();
 
 			row.add(addTeam(m.get().getLocal().getId(), m.get().getNameLocal(),
-					m.get().getNameLocal()));
+					m.get().getNameLocalManager()));
 			row.add(addResult(m.get().getLocalGoals(), m.get()
 					.getVisitingTeamGoals(), m.get().getLocalPossesion(), m
 					.get().getState(), m.get().getId()));
 			row.add(addTeam(m.get().getVisiting().getId(), m.get()
-					.getNameForeign(), m.get().getNameForeign()));
+					.getNameForeign(), m.get().getNameVisitingManager()));
 			row.add(addLinks(m.get().getId(), m.get().getLocal().getUserId(), m
 					.get().getVisiting().getUserId()));
 
