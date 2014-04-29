@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.javahispano.javaleague.shared.domain.League;
+import org.javahispano.javaleague.shared.domain.LeagueSummary;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.googlecode.objectify.Ref;
@@ -31,5 +32,7 @@ public interface LeagueServiceAsync {
 
 	void getLeagues(String textToSearch,
 			AsyncCallback<List<Ref<League>>> callback);
+
+	void getLeaguesSummary(AsyncCallback<List<Ref<LeagueSummary>>> callback);
 
 }

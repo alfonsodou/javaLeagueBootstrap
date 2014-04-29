@@ -5,6 +5,7 @@ package org.javahispano.javaleague.server.domain;
 
 import static org.javahispano.javaleague.server.domain.OfyService.ofy;
 
+import java.util.Date;
 import java.util.List;
 
 import org.javahispano.javaleague.shared.domain.FrameWork;
@@ -19,6 +20,7 @@ public class FrameWorkDAO {
 	}
 
 	public FrameWork save(FrameWork framework) {
+		framework.setUpdated(new Date());
 		ofy().save().entity(framework).now();
 		return framework;
 	}

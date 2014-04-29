@@ -5,6 +5,8 @@ package org.javahispano.javaleague.server.domain;
 
 import static org.javahispano.javaleague.server.domain.OfyService.ofy;
 
+import java.util.Date;
+
 import org.javahispano.javaleague.shared.domain.User;
 
 /**
@@ -17,6 +19,7 @@ public class UserDAO {
 	}
 
 	public User save(User user) {
+		user.setLastActive(new Date());
 		ofy().save().entity(user).now();
 		return user;
 	}

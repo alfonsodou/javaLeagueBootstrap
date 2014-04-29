@@ -21,6 +21,7 @@ public class MatchDAO {
 	}
 
 	public Match save(Match partido) {
+		partido.setUpdated(new Date());
 		ofy().save().entity(partido).now();
 		return partido;
 	}

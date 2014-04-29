@@ -11,10 +11,12 @@ import java.util.logging.Logger;
 import org.javahispano.javaleague.client.service.LeagueService;
 import org.javahispano.javaleague.server.domain.CalendarDateDAO;
 import org.javahispano.javaleague.server.domain.LeagueDAO;
+import org.javahispano.javaleague.server.domain.LeagueSummaryDAO;
 import org.javahispano.javaleague.server.domain.MatchDAO;
 import org.javahispano.javaleague.server.domain.UserDAO;
 import org.javahispano.javaleague.shared.domain.CalendarDate;
 import org.javahispano.javaleague.shared.domain.League;
+import org.javahispano.javaleague.shared.domain.LeagueSummary;
 import org.javahispano.javaleague.shared.domain.Match;
 import org.javahispano.javaleague.shared.domain.User;
 
@@ -40,6 +42,7 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 	private static UserDAO userDAO = new UserDAO();
 	private static CalendarDateDAO calendarDateDAO = new CalendarDateDAO();
 	private static MatchDAO matchDAO = new MatchDAO();
+	private static LeagueSummaryDAO leagueSummaryDAO = new LeagueSummaryDAO();
 
 	public LeagueServiceImpl() {
 
@@ -55,6 +58,14 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 			league = leagueDAO.save(league);
 			user.addLeague(league);
 			user = userDAO.save(user);
+			LeagueSummary leagueSummary = new LeagueSummary();
+			leagueSummary.setLeagueId(league.getId());
+			leagueSummary.setCreation(league.getCreation());
+			leagueSummary.setEndSignIn(league.getEndSignIn());
+			leagueSummary.setName(league.getName());
+			leagueSummary.setNameManager(league.getNameManager());
+			leagueSummary.setStartSignIn(league.getStartSignIn());
+			leagueSummary = leagueSummaryDAO.save(leagueSummary);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.warning(e.getMessage());
@@ -211,8 +222,8 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 							.getTactic().getTeamName());
 					match.setNameLocalManager(league.getUsers().get(home).get()
 							.getName());
-					match.setNameVisitingManager(league.getUsers().get(away).get()
-							.getName());
+					match.setNameVisitingManager(league.getUsers().get(away)
+							.get().getName());
 					match = matchDAO.save(match);
 					calendarDate.addMatch(match);
 				}
@@ -325,7 +336,7 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 	private static Date getNextDate(Date date, int day) {
 		Calendar calendarDate = Calendar.getInstance();
 		calendarDate.setTime(date);
-
+		calendarDate.add(Calendar.MINUTE, 1440);
 		while (calendarDate.get(Calendar.DAY_OF_WEEK) != day) {
 			calendarDate.add(Calendar.MINUTE, 1440);
 		}
@@ -348,6 +359,21 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 		}
 
 		return leagues;
+	}
+
+	@Override
+	public List<Ref<LeagueSummary>> getLeaguesSummary() {
+		List<Ref<LeagueSummary>> leaguesSummary = null;
+
+		try {
+			leaguesSummary = leagueSummaryDAO.getAllLeaguesSummary();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.warning(e.getMessage());
+		}
+
+		return leaguesSummary;
 	}
 
 }

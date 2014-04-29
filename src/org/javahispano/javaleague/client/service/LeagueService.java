@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.javahispano.javaleague.shared.domain.League;
+import org.javahispano.javaleague.shared.domain.LeagueSummary;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -24,6 +25,8 @@ public interface LeagueService extends RemoteService {
 	List<Ref<League>> getMyLeagues();
 
 	List<Ref<League>> getLeagues(String textToSearch);
+	
+	List<Ref<LeagueSummary>> getLeaguesSummary();
 
 	League getLeague(Long id);
 

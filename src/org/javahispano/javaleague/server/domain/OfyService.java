@@ -6,6 +6,7 @@ package org.javahispano.javaleague.server.domain;
 import org.javahispano.javaleague.shared.domain.CalendarDate;
 import org.javahispano.javaleague.shared.domain.FrameWork;
 import org.javahispano.javaleague.shared.domain.League;
+import org.javahispano.javaleague.shared.domain.LeagueSummary;
 import org.javahispano.javaleague.shared.domain.Match;
 import org.javahispano.javaleague.shared.domain.TacticUser;
 import org.javahispano.javaleague.shared.domain.User;
@@ -26,6 +27,7 @@ public class OfyService {
 		factory().register(Match.class);
 		factory().register(TacticUser.class);
 		factory().register(User.class);
+		factory().register(LeagueSummary.class);
 	}
 
 	public static Objectify ofy() {

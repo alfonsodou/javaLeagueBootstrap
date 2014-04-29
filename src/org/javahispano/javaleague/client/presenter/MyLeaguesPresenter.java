@@ -16,6 +16,7 @@ import org.javahispano.javaleague.client.service.LeagueServiceAsync;
 import org.javahispano.javaleague.client.service.MatchServiceAsync;
 import org.javahispano.javaleague.client.service.TacticServiceAsync;
 import org.javahispano.javaleague.shared.domain.League;
+import org.javahispano.javaleague.shared.domain.LeagueSummary;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -47,7 +48,7 @@ public class MyLeaguesPresenter implements Presenter {
 
 		HasClickHandlers getSearchLeagueButton();
 
-		CellTable<League> getCellTableLeagues();
+		CellTable<LeagueSummary> getCellTableLeagues();
 
 		TextBox getSearchLeagueTextBox();
 
@@ -59,12 +60,12 @@ public class MyLeaguesPresenter implements Presenter {
 	private final MatchServiceAsync matchService;
 	private final LeagueServiceAsync leagueService;
 
-	private List<Ref<League>> leagues;
+	private List<Ref<LeagueSummary>> leaguesSummary;
 
 	private JavaLeagueMessages javaLeagueMessages = GWT
 			.create(JavaLeagueMessages.class);
 
-	private ListDataProvider<League> dataGridProvider = new ListDataProvider<League>();
+	private ListDataProvider<LeagueSummary> dataGridProvider = new ListDataProvider<LeagueSummary>();
 
 	public MyLeaguesPresenter(TacticServiceAsync tacticService,
 			MatchServiceAsync matchService, LeagueServiceAsync leagueService,
@@ -88,7 +89,7 @@ public class MyLeaguesPresenter implements Presenter {
 	}
 
 	private void fetchLeagues() {
-		new RPCCall<List<Ref<League>>>() {
+		new RPCCall<List<Ref<LeagueSummary>>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -96,9 +97,9 @@ public class MyLeaguesPresenter implements Presenter {
 			}
 
 			@Override
-			public void onSuccess(List<Ref<League>> result) {
+			public void onSuccess(List<Ref<LeagueSummary>> result) {
 				if (result.size() > 0) {
-					leagues = result;
+					leaguesSummary = result;
 
 					doShowMyLeagues();
 				}
@@ -106,8 +107,8 @@ public class MyLeaguesPresenter implements Presenter {
 			}
 
 			@Override
-			protected void callService(AsyncCallback<List<Ref<League>>> cb) {
-				leagueService.getMyLeagues(cb);
+			protected void callService(AsyncCallback<List<Ref<LeagueSummary>>> cb) {
+				leagueService.getLeaguesSummary(cb);
 			}
 
 		}.retry(3);
@@ -135,30 +136,30 @@ public class MyLeaguesPresenter implements Presenter {
 
 	private void doShowMyLeagues() {
 
-		TextColumn<League> col1 = new TextColumn<League>() {
+		TextColumn<LeagueSummary> col1 = new TextColumn<LeagueSummary>() {
 
 			@Override
-			public String getValue(League object) {
+			public String getValue(LeagueSummary object) {
 				return String.valueOf(object.getName());
 			}
 		};
 		display.getCellTableLeagues().addColumn(col1,
 				javaLeagueMessages.nameLeague());
 
-		TextColumn<League> col2 = new TextColumn<League>() {
+		TextColumn<LeagueSummary> col2 = new TextColumn<LeagueSummary>() {
 
 			@Override
-			public String getValue(League object) {
+			public String getValue(LeagueSummary object) {
 				return String.valueOf(object.getNameManager());
 			}
 		};
 		display.getCellTableLeagues().addColumn(col2,
 				javaLeagueMessages.manager());
 
-		TextColumn<League> col3 = new TextColumn<League>() {
+		TextColumn<LeagueSummary> col3 = new TextColumn<LeagueSummary>() {
 
 			@Override
-			public String getValue(League object) {
+			public String getValue(LeagueSummary object) {
 				DateTimeFormat date = DateTimeFormat
 						.getFormat(PredefinedFormat.DATE_TIME_MEDIUM);
 				return String.valueOf(date.format(object.getStartSignIn()));
@@ -167,10 +168,10 @@ public class MyLeaguesPresenter implements Presenter {
 		display.getCellTableLeagues().addColumn(col3,
 				javaLeagueMessages.startSignIn());
 
-		TextColumn<League> col4 = new TextColumn<League>() {
+		TextColumn<LeagueSummary> col4 = new TextColumn<LeagueSummary>() {
 
 			@Override
-			public String getValue(League object) {
+			public String getValue(LeagueSummary object) {
 				DateTimeFormat date = DateTimeFormat
 						.getFormat(PredefinedFormat.DATE_TIME_MEDIUM);
 				return String.valueOf(date.format(object.getEndSignIn()));
@@ -181,21 +182,22 @@ public class MyLeaguesPresenter implements Presenter {
 
 		dataGridProvider.addDataDisplay(display.getCellTableLeagues());
 
-		for (Ref<League> l : leagues) {
+		for (Ref<LeagueSummary> l : leaguesSummary) {
 			dataGridProvider.getList().add(l.get());
 		}
 
 		// Add a selection model to handle user selection.
-		final SingleSelectionModel<League> selectionModel = new SingleSelectionModel<League>();
+		final SingleSelectionModel<LeagueSummary> selectionModel = new SingleSelectionModel<LeagueSummary>();
 		display.getCellTableLeagues().setSelectionModel(selectionModel);
 		selectionModel
 				.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 					public void onSelectionChange(SelectionChangeEvent event) {
-						League selected = selectionModel.getSelectedObject();
+						LeagueSummary selected = selectionModel.getSelectedObject();
 						if (selected != null) {
 							GWT.log("MyLeaguesPresenter: Firing ShowLeagueEvent. LeagueName: "
 									+ selected.getName());
-							eventBus.fireEvent(new ShowLeagueEvent(selected));
+							eventBus.fireEvent(new ShowLeagueEvent(null));
+							//eventBus.fireEvent(new ShowLeagueEvent(selected));
 						}
 					}
 				});

@@ -45,6 +45,8 @@ public class CalendarDate implements Serializable {
 	
 	@Load
 	private Ref<Clasification> clasification;
+	
+	private Date updated;
 
 	
 	public CalendarDate() {
@@ -142,4 +144,20 @@ public class CalendarDate implements Serializable {
 	public void addMatch(Match m) {
 		matchs.add(Ref.create(m));
 	}
+
+	/**
+	 * @return the updated
+	 */
+	public Date getUpdated() {
+		return updated;
+	}
+
+	/**
+	 * @param updated the updated to set
+	 */
+	public void setUpdated(Date updated) {
+		this.updated = updated;
+	}
+	
+	
 }

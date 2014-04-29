@@ -5,6 +5,7 @@ package org.javahispano.javaleague.server.domain;
 
 import static org.javahispano.javaleague.server.domain.OfyService.ofy;
 
+import java.util.Date;
 import java.util.List;
 
 import org.javahispano.javaleague.shared.domain.TacticUser;
@@ -19,6 +20,7 @@ public class TacticUserDAO {
 	}
 	
 	public TacticUser save(TacticUser tacticUser) {
+		tacticUser.setUpdated(new Date());
 		ofy().save().entity(tacticUser).now();
 		return tacticUser;
 	}

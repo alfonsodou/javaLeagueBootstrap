@@ -6,6 +6,7 @@ package org.javahispano.javaleague.server.domain;
 import static org.javahispano.javaleague.server.domain.OfyService.ofy;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.javahispano.javaleague.shared.domain.League;
@@ -22,6 +23,7 @@ public class LeagueDAO {
 	}
 
 	public League save(League league) {
+		league.setUpdated(new Date());
 		ofy().save().entity(league).now();
 		return league;
 	}

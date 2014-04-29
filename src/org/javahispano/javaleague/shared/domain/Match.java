@@ -52,6 +52,8 @@ public class Match implements Serializable {
 
 	private Date visualization;
 
+	private Date updated;
+	
 	@Index
 	private int state;
 
@@ -245,4 +247,19 @@ public class Match implements Serializable {
 		this.nameVisitingManager = nameVisitingManager;
 	}
 
+	/**
+	 * @return the updated
+	 */
+	public Date getUpdated() {
+		return updated;
+	}
+
+	/**
+	 * @param updated the updated to set
+	 */
+	public void setUpdated(Date updated) {
+		this.updated = updated;
+	}
+
+	
 }
