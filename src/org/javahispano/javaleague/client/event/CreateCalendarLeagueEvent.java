@@ -3,8 +3,6 @@
  */
 package org.javahispano.javaleague.client.event;
 
-import org.javahispano.javaleague.shared.domain.League;
-
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
@@ -13,14 +11,14 @@ import com.google.gwt.event.shared.GwtEvent;
  */
 public class CreateCalendarLeagueEvent extends GwtEvent<CreateCalendarLeagueEventHandler> {
 	public static Type<CreateCalendarLeagueEventHandler> TYPE = new Type<CreateCalendarLeagueEventHandler>();
-	private League league;
+	private Long leagueId;
 
 	public CreateCalendarLeagueEvent() {
 		
 	}
 	
-	public CreateCalendarLeagueEvent(League league) {
-		this.league = league;
+	public CreateCalendarLeagueEvent(Long leagueId) {
+		this.leagueId = leagueId;
 	}
 	
 	@Override
@@ -37,15 +35,15 @@ public class CreateCalendarLeagueEvent extends GwtEvent<CreateCalendarLeagueEven
 	/**
 	 * @return the league
 	 */
-	public League getLeague() {
-		return league;
+	public Long getLeagueId() {
+		return leagueId;
 	}
 
 	/**
 	 * @param league the league to set
 	 */
-	public void setLeague(League league) {
-		this.league = league;
+	public void setLeagueId(Long leagueId) {
+		this.leagueId = leagueId;
 	}
 
 	

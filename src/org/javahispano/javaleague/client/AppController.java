@@ -78,7 +78,7 @@ public class AppController implements ValueChangeHandler<String> {
 	private Long currentTacticId;
 	private Long matchID;
 	private Match match;
-	private League league;
+	private Long leagueId;
 	private String textToSearch;
 
 	public AppController(TacticServiceAsync rpcService,
@@ -116,8 +116,8 @@ public class AppController implements ValueChangeHandler<String> {
 			@Override
 			public void onShowLeague(ShowLeagueEvent event) {
 				GWT.log("AppController: ShowLeague Event received. Id: "
-						+ event.getLeague().getId());
-				league = event.getLeague();
+						+ event.getLeagueId());
+				leagueId = event.getLeagueId();
 				doShowLeague();
 			}
 		});
@@ -217,7 +217,7 @@ public class AppController implements ValueChangeHandler<String> {
 					public void onCreateCalendarLeague(
 							CreateCalendarLeagueEvent event) {
 						GWT.log("AppController: CreateCalendarLeague Event received");
-						doCreateCalendarLeague(event.getLeague());
+						doCreateCalendarLeague(event.getLeagueId());
 					}
 				});
 
@@ -268,8 +268,8 @@ public class AppController implements ValueChangeHandler<String> {
 		History.newItem("addLeague");
 	}
 
-	private void doCreateCalendarLeague(League l) {
-		league = l;
+	private void doCreateCalendarLeague(Long id) {
+		leagueId = id;
 		History.newItem("createCalendarLeague");
 	}
 
@@ -295,7 +295,7 @@ public class AppController implements ValueChangeHandler<String> {
 
 				return;
 			} else if (token.equals("showLeague")) {
-				presenter = new ShowLeaguePresenter(leagueService, league,
+				presenter = new ShowLeaguePresenter(leagueService, leagueId,
 						currentUser, eventBus, new ShowLeagueView());
 				presenter.go(JavaLeagueApp.get().getCenterPanel());
 
@@ -339,7 +339,7 @@ public class AppController implements ValueChangeHandler<String> {
 				return;
 			} else if (token.equals("createCalendarLeague")) {
 				presenter = new CreateCalendarLeaguePresenter(leagueService,
-						eventBus, league, new CreateCalendarLeagueView());
+						eventBus, leagueId, new CreateCalendarLeagueView());
 				JavaLeagueApp.get().getCenterPanel().clear();
 				presenter.go(JavaLeagueApp.get().getCenterPanel());
 

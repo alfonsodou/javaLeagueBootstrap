@@ -196,8 +196,7 @@ public class MyLeaguesPresenter implements Presenter {
 						if (selected != null) {
 							GWT.log("MyLeaguesPresenter: Firing ShowLeagueEvent. LeagueName: "
 									+ selected.getName());
-							eventBus.fireEvent(new ShowLeagueEvent(null));
-							//eventBus.fireEvent(new ShowLeagueEvent(selected));
+							eventBus.fireEvent(new ShowLeagueEvent(selected.getLeagueId()));
 						}
 					}
 				});

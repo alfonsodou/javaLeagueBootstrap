@@ -77,17 +77,30 @@ public class CreateCalendarLeaguePresenter implements Presenter {
 	private final LeagueServiceAsync leagueService;
 	private final SimpleEventBus eventBus;
 	private League league;
+	private Long leagueId;
 	List<Integer> days = new ArrayList<Integer>();	
 
 	public CreateCalendarLeaguePresenter(LeagueServiceAsync leagueService,
-			SimpleEventBus eventBus, League league, Display display) {
+			SimpleEventBus eventBus, Long leagueId, Display display) {
 		this.leagueService = leagueService;
 		this.eventBus = eventBus;
-		this.league = league;
+		this.leagueId = leagueId;
 		this.display = display;
 
 		hideErrorLabels();
+	
+		fetchLeague();
+	}
 
+	@Override
+	public void go(HasWidgets container) {
+		container.clear();
+		container.add(display.asWidget());
+
+		bind();
+	}
+	
+	private void ShowLeague() {
 		this.display.getSaturdayCheckBox().setValue(true);
 		this.display.getLeagueName().setText(league.getName());
 		this.display.getLeagueType().setText(league.getType().toString());
@@ -99,14 +112,6 @@ public class CreateCalendarLeaguePresenter implements Presenter {
 				league.getPointsForTied().toString());
 		this.display.getPointsForLost().setText(
 				league.getPointsForLost().toString());
-	}
-
-	@Override
-	public void go(HasWidgets container) {
-		container.clear();
-		container.add(display.asWidget());
-
-		bind();
 	}
 
 	private void bind() {
@@ -122,7 +127,7 @@ public class CreateCalendarLeaguePresenter implements Presenter {
 					public void onClick(ClickEvent event) {
 						GWT.log("CreateCalendarLeaguePresenter: firing ShowLeagueEvent. LeagueId:  "
 								+ league.getId());
-						eventBus.fireEvent(new ShowLeagueEvent(league));
+						eventBus.fireEvent(new ShowLeagueEvent(league.getId()));
 					}
 				});
 
@@ -192,7 +197,7 @@ public class CreateCalendarLeaguePresenter implements Presenter {
 					league = result;
 					GWT.log("CreataCalendarLeaguePresenter: firing ShowLeagueLeagueEvent. LeagueId: "
 							+ league.getId());
-					eventBus.fireEvent(new ShowLeagueEvent(league));
+					eventBus.fireEvent(new ShowLeagueEvent(league.getId()));
 				}
 
 				@Override
@@ -204,6 +209,30 @@ public class CreateCalendarLeaguePresenter implements Presenter {
 
 			}.retry(3);
 		}
+	}
+	
+	private void fetchLeague() {
+		new RPCCall<League>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Error fetching leagueID: " + leagueId + " :: "
+						+ caught.getMessage());
+
+			}
+
+			@Override
+			public void onSuccess(League result) {
+				league = result;
+				ShowLeague();
+			}
+
+			@Override
+			protected void callService(AsyncCallback<League> cb) {
+				leagueService.getLeague(leagueId, cb);
+			}
+
+		}.retry(3);
 	}
 
 	private void hideErrorLabels() {

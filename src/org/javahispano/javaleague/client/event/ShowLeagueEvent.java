@@ -13,10 +13,10 @@ import com.google.gwt.event.shared.GwtEvent;
  */
 public class ShowLeagueEvent extends GwtEvent<ShowLeagueEventHandler> {
 	  public static Type<ShowLeagueEventHandler> TYPE = new Type<ShowLeagueEventHandler>();
-	  private final League league;
+	  private final Long leagueId;
 	  
-	public ShowLeagueEvent(League league) {
-		this.league = league;
+	public ShowLeagueEvent(Long leagueId) {
+		this.leagueId = leagueId;
 	}
 
 	@Override
@@ -31,8 +31,8 @@ public class ShowLeagueEvent extends GwtEvent<ShowLeagueEventHandler> {
 		
 	}
 	
-	public League getLeague() {
-		return league;
+	public Long getLeagueId() {
+		return leagueId;
 	}
 
 }

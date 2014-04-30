@@ -175,7 +175,7 @@ public class SearchLeaguePresenter implements Presenter {
 						if (selected != null) {
 							GWT.log("SearchLeaguesPresenter: Firing ShowLeagueEvent. LeagueName: "
 									+ selected.getName());
-							eventBus.fireEvent(new ShowLeagueEvent(selected));
+							eventBus.fireEvent(new ShowLeagueEvent(selected.getId()));
 						}
 					}
 				});

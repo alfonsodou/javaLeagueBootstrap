@@ -82,6 +82,7 @@ public class ShowLeaguePresenter implements Presenter {
 	private final Display display;
 	private final LeagueServiceAsync leagueService;
 
+	private Long leagueId;
 	private League league;
 	private User user;
 	private Long matchId;
@@ -90,16 +91,16 @@ public class ShowLeaguePresenter implements Presenter {
 	private JavaLeagueMessages javaLeagueMessages = GWT
 			.create(JavaLeagueMessages.class);
 
-	public ShowLeaguePresenter(LeagueServiceAsync leagueService, League league,
+	public ShowLeaguePresenter(LeagueServiceAsync leagueService, Long leagueId,
 			User user, SimpleEventBus eventBus, Display display) {
 		this.leagueService = leagueService;
-		this.league = league;
+		this.leagueId = leagueId;
 		this.user = user;
 		this.eventBus = eventBus;
 		this.display = display;
 		this.round = 0;
 
-		ShowLeague();
+		fetchLeague();
 	}
 
 	private void ShowLeague() {
@@ -307,9 +308,37 @@ public class ShowLeaguePresenter implements Presenter {
 						// doCreateCalendarLeague();
 						GWT.log("ShowLeaguePresenter: firing CreateCalenderLeagueEvent. LeagueId: "
 								+ league.getId());
-						eventBus.fireEvent(new CreateCalendarLeagueEvent(league));
+						eventBus.fireEvent(new CreateCalendarLeagueEvent(league.getId()));
 					}
 				});
+	}
+
+	private void fetchLeague() {
+		new RPCCall<League>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Error fetching leagueID: " + leagueId + " :: "
+						+ caught.getMessage());
+			}
+
+			@Override
+			public void onSuccess(League result) {
+				if (result != null) {
+					Window.alert("LeagueId: " + result.getId());
+				} else {
+					Window.alert("result is null!!!");
+				}
+				league = result;
+				ShowLeague();
+			}
+
+			@Override
+			protected void callService(AsyncCallback<League> cb) {
+				leagueService.getLeague(leagueId, cb);
+			}
+
+		}.retry(3);
 	}
 
 	private void doJoinLeague() {
