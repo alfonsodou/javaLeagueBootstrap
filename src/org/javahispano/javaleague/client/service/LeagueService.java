@@ -27,6 +27,8 @@ public interface LeagueService extends RemoteService {
 	List<Ref<League>> getLeagues(String textToSearch);
 	
 	List<Ref<LeagueSummary>> getLeaguesSummary();
+	
+	List<Ref<LeagueSummary>> getManagerLeaguesSummary();
 
 	League getLeague(Long id);
 
@@ -35,5 +37,7 @@ public interface LeagueService extends RemoteService {
 	void joinLeague(Long id);
 
 	League createCalendarLeague(League league, Date init, List<Integer> days);
+	
+	Date getDateNow();
 
 }

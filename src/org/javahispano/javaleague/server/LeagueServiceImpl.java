@@ -64,6 +64,7 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 			leagueSummary.setEndSignIn(league.getEndSignIn());
 			leagueSummary.setName(league.getName());
 			leagueSummary.setNameManager(league.getNameManager());
+			leagueSummary.setManagerId(league.getManagerId());
 			leagueSummary.setStartSignIn(league.getStartSignIn());
 			leagueSummary = leagueSummaryDAO.save(leagueSummary);
 		} catch (Exception e) {
@@ -367,6 +368,30 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 
 		try {
 			leaguesSummary = leagueSummaryDAO.getAllLeaguesSummary();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.warning(e.getMessage());
+		}
+
+		return leaguesSummary;
+	}
+
+	@Override
+	public Date getDateNow() {
+		return new Date();
+	}
+
+	@Override
+	public List<Ref<LeagueSummary>> getManagerLeaguesSummary() {
+		User user = LoginHelper.getLoggedInUser(getThreadLocalRequest()
+				.getSession());
+		List<Ref<LeagueSummary>> leaguesSummary = null;
+
+		logger.warning("getManagerLeaguesSummary. UserId: " + user.getId());
+		
+		try {
+			leaguesSummary = leagueSummaryDAO.getManagerLeaguesSummary(user.getId());
 
 		} catch (Exception e) {
 			e.printStackTrace();

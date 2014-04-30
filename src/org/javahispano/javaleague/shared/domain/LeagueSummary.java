@@ -31,6 +31,9 @@ public class LeagueSummary implements Serializable {
 	@Index
 	private Long  leagueId;
 	
+	@Index
+	private Long managerId;
+	
 	private String name;
 	
 	private String nameManager;
@@ -153,6 +156,20 @@ public class LeagueSummary implements Serializable {
 	 */
 	public void setLeagueId(Long leagueId) {
 		this.leagueId = leagueId;
+	}
+
+	/**
+	 * @return the managerId
+	 */
+	public Long getManagerId() {
+		return managerId;
+	}
+
+	/**
+	 * @param managerId the managerId to set
+	 */
+	public void setManagerId(Long managerId) {
+		this.managerId = managerId;
 	}
 	
 	

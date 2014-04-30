@@ -108,7 +108,7 @@ public class MyLeaguesPresenter implements Presenter {
 
 			@Override
 			protected void callService(AsyncCallback<List<Ref<LeagueSummary>>> cb) {
-				leagueService.getLeaguesSummary(cb);
+				leagueService.getManagerLeaguesSummary(cb);
 			}
 
 		}.retry(3);

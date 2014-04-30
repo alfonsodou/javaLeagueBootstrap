@@ -87,6 +87,7 @@ public class ShowLeaguePresenter implements Presenter {
 	private User user;
 	private Long matchId;
 	private int round;
+	private Date now;
 
 	private JavaLeagueMessages javaLeagueMessages = GWT
 			.create(JavaLeagueMessages.class);
@@ -100,24 +101,30 @@ public class ShowLeaguePresenter implements Presenter {
 		this.display = display;
 		this.round = 0;
 
+		fetchDate();
 		fetchLeague();
 	}
 
 	private void ShowLeague() {
-		Date now = new Date(); // La fecha hay que solicitarla al servidor !!!!
-
 		if ((league.getEndSignIn().before(now))
 				|| (user.isJoinLeague(league.getId()))) {
 			display.getJoinLeagueButton().setEnabled(false);
 		} else {
 			display.getJoinLeagueButton().setEnabled(true);
 		}
-		if (league.getManagerId() == user.getId()) {
+		if (league.getManagerId().equals(user.getId())) {
 			display.getDropLeagueButton().setVisible(true);
 			display.getEditLeagueButton().setVisible(true);
+			display.getCreateCalendarLeagueButton().setVisible(true);
 		} else {
 			display.getDropLeagueButton().setVisible(false);
 			display.getEditLeagueButton().setVisible(false);
+			display.getCreateCalendarLeagueButton().setVisible(false);
+		}
+		if (league.getUsers().size() == 0) {
+			display.getCreateCalendarLeagueButton().setEnabled(false);
+		} else {
+			display.getCreateCalendarLeagueButton().setEnabled(true);
 		}
 		display.getDescriptionLeague().setHTML(league.getDescription());
 		display.getNameLeague().setText(league.getName());
@@ -324,11 +331,6 @@ public class ShowLeaguePresenter implements Presenter {
 
 			@Override
 			public void onSuccess(League result) {
-				if (result != null) {
-					Window.alert("LeagueId: " + result.getId());
-				} else {
-					Window.alert("result is null!!!");
-				}
 				league = result;
 				ShowLeague();
 			}
@@ -341,6 +343,28 @@ public class ShowLeaguePresenter implements Presenter {
 		}.retry(3);
 	}
 
+	private void fetchDate() {
+		new RPCCall<Date>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Error fetching dateNow. LeagueId: " + leagueId + " :: "
+						+ caught.getMessage());
+			}
+
+			@Override
+			public void onSuccess(Date result) {
+				now = result;
+			}
+
+			@Override
+			protected void callService(AsyncCallback<Date> cb) {
+				leagueService.getDateNow(cb);
+			}
+
+		}.retry(3);
+	}	
+	
 	private void doJoinLeague() {
 		new RPCCall<Void>() {
 

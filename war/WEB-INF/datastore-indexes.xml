@@ -3,5 +3,10 @@
 	<datastore-index kind="Match" ancestor="false" source="manual">
 		<property name="state" direction="asc" />
 		<property name="execution" direction="asc" />
-	</datastore-index>	
+	</datastore-index>
+	<datastore-index kind="LeagueSummary" ancestor="false"
+		source="manual">
+		<property name="managerId" direction="asc" />
+		<property name="updated" direction="desc" />
+	</datastore-index>
 </datastore-indexes>

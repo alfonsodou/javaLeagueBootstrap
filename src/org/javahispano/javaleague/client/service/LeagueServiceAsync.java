@@ -35,4 +35,9 @@ public interface LeagueServiceAsync {
 
 	void getLeaguesSummary(AsyncCallback<List<Ref<LeagueSummary>>> callback);
 
+	void getDateNow(AsyncCallback<Date> callback);
+
+	void getManagerLeaguesSummary(
+			AsyncCallback<List<Ref<LeagueSummary>>> callback);
+
 }
