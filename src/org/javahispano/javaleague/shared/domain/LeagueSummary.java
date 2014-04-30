@@ -40,6 +40,7 @@ public class LeagueSummary implements Serializable {
 	
 	private Date creation;
 	
+	@Index
 	private Date updated;
 	
 	private Date startSignIn;

@@ -62,7 +62,7 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 			/*
 			 * Guardar timezone del usuario en sesión
 			 */
-			//session.setAttribute("timeZone", timeZone);
+			// session.setAttribute("timeZone", timeZone);
 
 			user.setLastActive(new Date());
 			user.setLastLoginOn(new Date());
@@ -84,6 +84,11 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 		if (userDAO.findByEmail(user.getEmailAddress()) != null) {
 			return null;
 		}
+
+		SessionIdentifierGenerator userTokenGenerator = new SessionIdentifierGenerator();
+		user.setDateTokenActivate(new Date());
+		user.setTokenActivate(userTokenGenerator.nextSessionId());
+		user = userDAO.save(user);
 
 		Properties props = new Properties();
 		Session session = Session.getDefaultInstance(props, null);
@@ -112,12 +117,7 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 		} catch (UnsupportedEncodingException e) {
 			return null;
 		}
-		
-		SessionIdentifierGenerator userTokenGenerator = new SessionIdentifierGenerator();
-		user.setDateTokenActivate(new Date());
-		user.setTokenActivate(userTokenGenerator.nextSessionId());
-		user = userDAO.save(user);
-		
+
 		TacticUser tacticUser = new TacticUser();
 		tacticUser.setTeamName(teamName);
 		tacticUser.setUserId(user.getId());
