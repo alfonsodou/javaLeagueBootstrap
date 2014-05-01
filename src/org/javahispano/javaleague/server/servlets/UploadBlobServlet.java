@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.ByteBuffer;
-import java.text.DateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
@@ -67,22 +66,7 @@ public class UploadBlobServlet extends HttpServlet {
 		String status = null;
 		GcsFilename fileName = null;
 		byte[] zipBytes = null;
-		DateFormat date = DateFormat.getDateInstance(DateFormat.SHORT,
-				req.getLocale());
-		DateFormat time = DateFormat.getTimeInstance(DateFormat.MEDIUM,
-				req.getLocale());
-
-		/*
-		 * Es necesario almacenar TimeZone del usuario en la sesión o en User ¿?
-		 * De momento se ajusta la hora al TimeZone del servidor
-		 */
-		// time.setTimeZone((TimeZone)
-		// req.getSession().getAttribute("timeZone"));
-
 		int error = 0;
-
-		log.warning("locale: " + req.getLocale().getDisplayName());
-		log.warning("timeformat: " + time.toString());
 
 		try {
 			ServletFileUpload upload = new ServletFileUpload();
@@ -141,11 +125,6 @@ public class UploadBlobServlet extends HttpServlet {
 				tacticUser = tacticDAO.save(tacticUser);
 				currentUser.setTactic(tacticUser);
 				currentUser = userDAO.save(currentUser);
-
-				/*
-				 * JavaLeagueApp.get().getEventBus() .fireEvent(new
-				 * ShowFrameWorkEvent());
-				 */
 			}
 
 			PrintWriter out = res.getWriter();
@@ -154,14 +133,10 @@ public class UploadBlobServlet extends HttpServlet {
 			sb.append("<root>");
 			sb.append("<tactic>");
 			sb.append("<teamname>" + tacticUser.getTeamName() + "</teamname>\n");
+
 			sb.append("<filename>" + tacticUser.getFileName() + "</filename>\n");
 			sb.append("<bytes>" + tacticUser.getBytes().toString()
 					+ "</bytes>\n");
-			sb.append("<dateupdated>" + date.format(tacticUser.getUpdated())
-					+ "</dateupdated>\n");
-			sb.append("<timeupdated>" + time.format(tacticUser.getUpdated())
-					+ "</timeupdated>\n");
-
 			sb.append("<error>" + Integer.toString(error) + "</error>");
 			sb.append("</tactic>");
 			sb.append("</root>");

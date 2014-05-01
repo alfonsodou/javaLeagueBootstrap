@@ -121,7 +121,7 @@ public class ShowLeaguePresenter implements Presenter {
 			display.getEditLeagueButton().setVisible(false);
 			display.getCreateCalendarLeagueButton().setVisible(false);
 		}
-		if (league.getUsers().size() == 0) {
+		if (league.getUsers().size() < 1) {
 			display.getCreateCalendarLeagueButton().setEnabled(false);
 		} else {
 			display.getCreateCalendarLeagueButton().setEnabled(true);

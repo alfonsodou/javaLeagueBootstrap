@@ -83,6 +83,8 @@ public class TacticUser implements Serializable {
 		this.matchWins = 0;
 		this.fileName = null;
 		this.posession = 0;
+		this.size = 0l;
+		this.fileName = AppLib.NO_FILE;
 	}
 
 	/**

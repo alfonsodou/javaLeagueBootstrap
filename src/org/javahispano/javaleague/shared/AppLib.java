@@ -21,6 +21,7 @@ public class AppLib {
 	public static final long DEFAULT_FRAMEWORK_ID = 5846033531666432L;
 	public static final String PATH_PACKAGE = "org.javahispano.javaleague.";
 
+	public static final String NO_FILE = "NO_FILE";
 
 
 }

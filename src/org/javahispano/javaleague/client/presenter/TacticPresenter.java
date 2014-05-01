@@ -3,6 +3,8 @@
  */
 package org.javahispano.javaleague.client.presenter;
 
+import java.util.Date;
+
 import org.gwtbootstrap3.client.ui.Badge;
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Label;
@@ -167,13 +169,15 @@ public class TacticPresenter implements Presenter {
 	}
 
 	private void showTactic(Element tacticElement) {
+		DateTimeFormat fmt = DateTimeFormat
+				.getFormat(PredefinedFormat.DATE_TIME_MEDIUM);
+		Date now = new Date();
+		
 		display.setTeamName(getElementTextValue(tacticElement, "teamname"));
 
-		display.getUpdatedTactic().setText(
-				getElementTextValue(tacticElement, "dateupdated") + " :: "
-						+ getElementTextValue(tacticElement, "timeupdated"));
+		display.getUpdatedTactic().setText(fmt.format(now));
 
-		if (!getElementTextValue(tacticElement, "filename").isEmpty()) {
+		if (!getElementTextValue(tacticElement, "filename").equals(AppLib.NO_FILE)) {
 			display.getFileName().setText(
 					getElementTextValue(tacticElement, "filename") + " :: "
 							+ getElementTextValue(tacticElement, "bytes")
@@ -265,7 +269,7 @@ public class TacticPresenter implements Presenter {
 					display.setMatchTied(Integer.toString(result.getMatchTied()));
 					display.setMatchWins(Integer.toString(result.getMatchWins()));
 
-					if (result.getFileName() != null) {
+					if (!result.getFileName().equals(AppLib.NO_FILE)) {
 						display.getFileName().setText(
 								result.getFileName() + " :: "
 										+ result.getBytes() + " bytes");
