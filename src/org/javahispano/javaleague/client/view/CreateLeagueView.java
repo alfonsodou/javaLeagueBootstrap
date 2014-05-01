@@ -20,12 +20,12 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Widget;
 
-
 /**
  * @author adou
- *
+ * 
  */
-public class CreateLeagueView extends Composite implements CreateLeaguePresenter.Display {
+public class CreateLeagueView extends Composite implements
+		CreateLeaguePresenter.Display {
 
 	@UiField
 	TextBox leagueName;
@@ -50,11 +50,23 @@ public class CreateLeagueView extends Composite implements CreateLeaguePresenter
 	@UiField
 	Button createLeagueButton;
 	@UiField
-	Button cancelLeagueButton;	
+	Button cancelLeagueButton;
 	@UiField
 	FormLabel passwordLeagueLabel;
 	@UiField
 	Label errorType;
+	@UiField
+	TextBox pointsForWin;
+	@UiField
+	TextBox pointsForTied;
+	@UiField
+	TextBox pointsForLost;
+	@UiField
+	Label errorPointsForWin;
+	@UiField
+	Label errorPointsForTied;
+	@UiField
+	Label errorPointsForLost;
 
 	private static CreateLeagueViewUiBinder uiBinder = GWT
 			.create(CreateLeagueViewUiBinder.class);
@@ -65,7 +77,7 @@ public class CreateLeagueView extends Composite implements CreateLeaguePresenter
 
 	public CreateLeagueView() {
 		initWidget(uiBinder.createAndBindUi(this));
-		
+
 	}
 
 	@Override
@@ -142,6 +154,36 @@ public class CreateLeagueView extends Composite implements CreateLeaguePresenter
 	@Override
 	public Label getErrorType() {
 		return errorType;
+	}
+
+	@Override
+	public TextBox getPointsForWin() {
+		return pointsForWin;
+	}
+
+	@Override
+	public TextBox getPointsForTied() {
+		return pointsForTied;
+	}
+
+	@Override
+	public TextBox getPointsForLost() {
+		return pointsForLost;
+	}
+
+	@Override
+	public Label getErrorPointsForWin() {
+		return errorPointsForWin;
+	}
+
+	@Override
+	public Label getErrorPointsForTied() {
+		return errorPointsForTied;
+	}
+
+	@Override
+	public Label getErrorPointsForLost() {
+		return errorPointsForLost;
 	}
 
 }

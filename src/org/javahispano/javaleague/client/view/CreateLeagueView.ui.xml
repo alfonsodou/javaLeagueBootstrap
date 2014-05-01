@@ -35,7 +35,8 @@
 								</b:FormLabel>
 
 								<g:FlowPanel addStyleNames="col-lg-10">
-									<summer:Summernote ui:field="leagueDescription" b:id="leagueDescription"></summer:Summernote>
+									<summer:Summernote ui:field="leagueDescription"
+										b:id="leagueDescription"></summer:Summernote>
 								</g:FlowPanel>
 							</b:FormGroup>
 
@@ -60,6 +61,45 @@
 									</b:Label>
 									<b:Label ui:field="errorType" type="DANGER">
 										<ui:msg key="errorType">Debes seleccionar un tipo</ui:msg>
+									</b:Label>
+								</g:FlowPanel>
+							</b:FormGroup>
+
+							<b:FormGroup>
+								<b:FormLabel for="pointsForWin" addStyleNames="col-lg-2">
+									<ui:msg key="pointsForWin">Puntos por ganar</ui:msg>
+								</b:FormLabel>
+								<g:FlowPanel addStyleNames="col-lg-10">
+									<b:TextBox b:id="pointsForWin" ui:field="pointsForWin"></b:TextBox>
+									<b:Label ui:field="errorPointsForWin" type="DANGER">
+										<ui:msg key="errorPointsForWin">Debe ser un número entero y mayor o igual
+											que cero</ui:msg>
+									</b:Label>
+								</g:FlowPanel>
+							</b:FormGroup>
+
+							<b:FormGroup>
+								<b:FormLabel for="pointsForTied" addStyleNames="col-lg-2">
+									<ui:msg key="pointsForTied">Puntos por empatar</ui:msg>
+								</b:FormLabel>
+								<g:FlowPanel addStyleNames="col-lg-10">
+									<b:TextBox b:id="pointsForTied" ui:field="pointsForTied"></b:TextBox>
+									<b:Label ui:field="errorPointsForTied" type="DANGER">
+										<ui:msg key="errorPointsForTied">Debe ser un número entero y mayor o igual
+											que cero</ui:msg>
+									</b:Label>
+								</g:FlowPanel>
+							</b:FormGroup>
+
+							<b:FormGroup>
+								<b:FormLabel for="pointsForLost" addStyleNames="col-lg-2">
+									<ui:msg key="pointsForLost">Puntos por perder</ui:msg>
+								</b:FormLabel>
+								<g:FlowPanel addStyleNames="col-lg-10">
+									<b:TextBox b:id="pointsForLost" ui:field="pointsForLost"></b:TextBox>
+									<b:Label ui:field="errorPointsForLost" type="DANGER">
+										<ui:msg key="errorPointsForLost">Debe ser un número entero y mayor o igual
+											que cero</ui:msg>
 									</b:Label>
 								</g:FlowPanel>
 							</b:FormGroup>

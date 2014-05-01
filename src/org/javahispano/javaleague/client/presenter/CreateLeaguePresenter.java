@@ -62,6 +62,18 @@ public class CreateLeaguePresenter implements Presenter {
 
 		Label getErrorType();
 
+		TextBox getPointsForWin();
+
+		TextBox getPointsForTied();
+
+		TextBox getPointsForLost();
+
+		Label getErrorPointsForWin();
+
+		Label getErrorPointsForTied();
+
+		Label getErrorPointsForLost();
+
 	}
 
 	private League league;
@@ -147,6 +159,36 @@ public class CreateLeaguePresenter implements Presenter {
 			error = true;
 		}
 
+		try {
+			if (Integer.parseInt(this.display.getPointsForWin().getValue()) < 0) {
+				this.display.getErrorPointsForWin().setVisible(true);
+				error = true;
+			}
+		} catch (NumberFormatException e) {
+			this.display.getErrorPointsForWin().setVisible(true);
+			error = true;
+		}
+
+		try {
+			if (Integer.parseInt(this.display.getPointsForTied().getValue()) < 0) {
+				this.display.getErrorPointsForTied().setVisible(true);
+				error = true;
+			}
+		} catch (NumberFormatException e) {
+			this.display.getErrorPointsForTied().setVisible(true);
+			error = true;
+		}
+
+		try {
+			if (Integer.parseInt(this.display.getPointsForLost().getValue()) < 0) {
+				this.display.getErrorPointsForLost().setVisible(true);
+				error = true;
+			}
+		} catch (NumberFormatException e) {
+			this.display.getErrorPointsForLost().setVisible(true);
+			error = true;
+		}
+
 		if (!error) {
 			league = new League();
 			league.setName(display.getLeagueName().getValue().trim());
@@ -154,6 +196,12 @@ public class CreateLeaguePresenter implements Presenter {
 			league.setStartSignIn(display.getStartSignIn().getValue());
 			league.setEndSignIn(display.getEndSignIn().getValue());
 			league.setPassword(display.getPasswordLeague().getValue());
+			league.setPointsForWin(Integer.parseInt(display.getPointsForWin()
+					.getValue()));
+			league.setPointsForTied(Integer.parseInt(display.getPointsForTied()
+					.getValue()));
+			league.setPointsForLost(Integer.parseInt(display.getPointsForLost()
+					.getValue()));
 			if (display.getLeaguePrivate().getValue()) {
 				league.setType(League.PRIVATE);
 			} else {
@@ -187,5 +235,8 @@ public class CreateLeaguePresenter implements Presenter {
 		this.display.getErrorName().setVisible(false);
 		this.display.getErrorPassword().setVisible(false);
 		this.display.getErrorType().setVisible(false);
+		this.display.getErrorPointsForWin().setVisible(false);
+		this.display.getErrorPointsForTied().setVisible(false);
+		this.display.getErrorPointsForLost().setVisible(false);
 	}
 }
