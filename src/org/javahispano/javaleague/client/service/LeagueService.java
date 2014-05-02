@@ -39,5 +39,7 @@ public interface LeagueService extends RemoteService {
 	League createCalendarLeague(League league, Date init, List<Integer> days);
 	
 	Date getDateNow();
+	
+	League editLeague(League league);
 
 }

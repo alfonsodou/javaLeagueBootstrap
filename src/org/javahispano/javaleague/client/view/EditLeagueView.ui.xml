@@ -128,8 +128,8 @@
 
 							<b:FormGroup>
 								<g:FlowPanel addStyleNames="col-lg-offset-2 col-lg-10">
-									<b:Button type="PRIMARY" ui:field="createLeagueButton">
-										<ui:msg key="createLeague">Crear liga</ui:msg>
+									<b:Button type="PRIMARY" ui:field="editLeagueButton">
+										<ui:msg key="editLeague">Actualizar liga</ui:msg>
 									</b:Button>
 									<b:Button type="DANGER" ui:field="cancelLeagueButton">
 										<ui:msg key="cancelLeague">Cancelar</ui:msg>

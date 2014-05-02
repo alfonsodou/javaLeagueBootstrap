@@ -3,8 +3,6 @@
  */
 package org.javahispano.javaleague.client.event;
 
-import org.javahispano.javaleague.shared.domain.League;
-
 import com.google.gwt.event.shared.GwtEvent;
 
 /**

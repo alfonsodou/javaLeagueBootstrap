@@ -40,4 +40,6 @@ public interface LeagueServiceAsync {
 	void getManagerLeaguesSummary(
 			AsyncCallback<List<Ref<LeagueSummary>>> callback);
 
+	void editLeague(League league, AsyncCallback<League> callback);
+
 }

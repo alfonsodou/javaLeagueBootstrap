@@ -23,6 +23,7 @@ import org.gwtbootstrap3.client.ui.constants.IconType;
 import org.gwtbootstrap3.extras.bootbox.client.Bootbox;
 import org.gwtbootstrap3.extras.bootbox.client.callback.ConfirmCallback;
 import org.javahispano.javaleague.client.event.CreateCalendarLeagueEvent;
+import org.javahispano.javaleague.client.event.EditLeagueEvent;
 import org.javahispano.javaleague.client.event.ShowMyLeaguesEvent;
 import org.javahispano.javaleague.client.helper.MyClickHandlerMatch;
 import org.javahispano.javaleague.client.helper.RPCCall;
@@ -106,8 +107,9 @@ public class ShowLeaguePresenter implements Presenter {
 	}
 
 	private void ShowLeague() {
-		if ((league.getEndSignIn().before(now))
-				|| (user.isJoinLeague(league.getId()))) {
+		if (league.getEndSignIn().before(now)
+				|| user.isJoinLeague(league.getId())
+				|| user.getTactic().getFileName().equals(AppLib.NO_FILE)) {
 			display.getJoinLeagueButton().setEnabled(false);
 		} else {
 			display.getJoinLeagueButton().setEnabled(true);
@@ -312,12 +314,20 @@ public class ShowLeaguePresenter implements Presenter {
 		display.getCreateCalendarLeagueButton().addClickHandler(
 				new ClickHandler() {
 					public void onClick(ClickEvent event) {
-						// doCreateCalendarLeague();
 						GWT.log("ShowLeaguePresenter: firing CreateCalenderLeagueEvent. LeagueId: "
 								+ league.getId());
-						eventBus.fireEvent(new CreateCalendarLeagueEvent(league.getId()));
+						eventBus.fireEvent(new CreateCalendarLeagueEvent(league
+								.getId()));
 					}
 				});
+
+		display.getEditLeagueButton().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				GWT.log("ShowLeaguePresenter: firing EditLeagueEvent. LeagueId: "
+						+ league.getId());
+				eventBus.fireEvent(new EditLeagueEvent(league.getId()));
+			}
+		});
 	}
 
 	private void fetchLeague() {
@@ -348,8 +358,8 @@ public class ShowLeaguePresenter implements Presenter {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Error fetching dateNow. LeagueId: " + leagueId + " :: "
-						+ caught.getMessage());
+				Window.alert("Error fetching dateNow. LeagueId: " + leagueId
+						+ " :: " + caught.getMessage());
 			}
 
 			@Override
@@ -363,8 +373,8 @@ public class ShowLeaguePresenter implements Presenter {
 			}
 
 		}.retry(3);
-	}	
-	
+	}
+
 	private void doJoinLeague() {
 		new RPCCall<Void>() {
 

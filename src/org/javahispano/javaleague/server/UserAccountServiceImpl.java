@@ -25,7 +25,6 @@ import org.javahispano.javaleague.shared.AppLib;
 import org.javahispano.javaleague.shared.domain.TacticUser;
 import org.javahispano.javaleague.shared.domain.User;
 
-import com.google.gwt.i18n.client.TimeZone;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**

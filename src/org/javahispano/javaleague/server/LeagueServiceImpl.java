@@ -401,4 +401,16 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 		return leaguesSummary;
 	}
 
+	@Override
+	public League editLeague(League league) {
+		try {
+			league = leagueDAO.save(league);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.warning(e.getMessage());
+		}
+		
+		return league;
+	}
+
 }

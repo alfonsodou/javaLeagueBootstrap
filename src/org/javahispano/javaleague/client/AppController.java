@@ -12,6 +12,8 @@ import org.javahispano.javaleague.client.event.CreateCalendarLeagueEvent;
 import org.javahispano.javaleague.client.event.CreateCalendarLeagueEventHandler;
 import org.javahispano.javaleague.client.event.CreateLeagueEvent;
 import org.javahispano.javaleague.client.event.CreateLeagueEventHandler;
+import org.javahispano.javaleague.client.event.EditLeagueEvent;
+import org.javahispano.javaleague.client.event.EditLeagueEventHandler;
 import org.javahispano.javaleague.client.event.PlayMatchEvent;
 import org.javahispano.javaleague.client.event.PlayMatchEventHandler;
 import org.javahispano.javaleague.client.event.SearchLeagueEvent;
@@ -28,6 +30,7 @@ import org.javahispano.javaleague.client.event.ViewMatchEvent;
 import org.javahispano.javaleague.client.event.ViewMatchEventHandler;
 import org.javahispano.javaleague.client.presenter.CreateCalendarLeaguePresenter;
 import org.javahispano.javaleague.client.presenter.CreateLeaguePresenter;
+import org.javahispano.javaleague.client.presenter.EditLeaguePresenter;
 import org.javahispano.javaleague.client.presenter.MyLeaguesPresenter;
 import org.javahispano.javaleague.client.presenter.Presenter;
 import org.javahispano.javaleague.client.presenter.RegisterUserPresenter;
@@ -43,12 +46,12 @@ import org.javahispano.javaleague.client.service.UserAccountServiceAsync;
 import org.javahispano.javaleague.client.service.UserFileServiceAsync;
 import org.javahispano.javaleague.client.view.CreateCalendarLeagueView;
 import org.javahispano.javaleague.client.view.CreateLeagueView;
+import org.javahispano.javaleague.client.view.EditLeagueView;
 import org.javahispano.javaleague.client.view.MyLeaguesView;
 import org.javahispano.javaleague.client.view.RegisterUserView;
 import org.javahispano.javaleague.client.view.SearchLeagueView;
 import org.javahispano.javaleague.client.view.ShowLeagueView;
 import org.javahispano.javaleague.client.view.ShowMatchView;
-import org.javahispano.javaleague.shared.domain.League;
 import org.javahispano.javaleague.shared.domain.Match;
 import org.javahispano.javaleague.shared.domain.User;
 
@@ -221,6 +224,15 @@ public class AppController implements ValueChangeHandler<String> {
 					}
 				});
 
+		eventBus.addHandler(EditLeagueEvent.TYPE, new EditLeagueEventHandler() {
+			@Override
+			public void onEditLeague(EditLeagueEvent event) {
+				GWT.log("AppController: EditLeague Event received");
+				doEditLeague(event.getLeagueId());
+			}
+
+		});
+
 	}
 
 	private void doSearchLeague(String search) {
@@ -271,6 +283,11 @@ public class AppController implements ValueChangeHandler<String> {
 	private void doCreateCalendarLeague(Long id) {
 		leagueId = id;
 		History.newItem("createCalendarLeague");
+	}
+
+	private void doEditLeague(Long id) {
+		leagueId = id;
+		History.newItem("editLeague");
 	}
 
 	@Override
@@ -343,6 +360,11 @@ public class AppController implements ValueChangeHandler<String> {
 				JavaLeagueApp.get().getCenterPanel().clear();
 				presenter.go(JavaLeagueApp.get().getCenterPanel());
 
+			} else if (token.equals("editLeague")) {
+				presenter = new EditLeaguePresenter(leagueService, eventBus,
+						leagueId, new EditLeagueView());
+				JavaLeagueApp.get().getCenterPanel().clear();
+				presenter.go(JavaLeagueApp.get().getCenterPanel());
 			} else if (token.equals("updateTactic")) {
 				/*
 				 * JavaLeagueApp .get() .getTacticPresenter()
@@ -354,8 +376,8 @@ public class AppController implements ValueChangeHandler<String> {
 			} else if (token.equals("showMatch")) {
 
 				presenter = new ShowMatchPresenter(matchService, eventBus,
-						new ShowMatchView(), Long.toString(matchID), Long.toString(new Date()
-								.getTime() / 1000));
+						new ShowMatchView(), Long.toString(matchID),
+						Long.toString(new Date().getTime() / 1000));
 				presenter.go(JavaLeagueApp.get().getCenterPanel());
 
 			} else if (token.equals("playMatch")) {

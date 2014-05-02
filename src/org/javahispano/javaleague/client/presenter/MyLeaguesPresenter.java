@@ -15,7 +15,6 @@ import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
 import org.javahispano.javaleague.client.service.MatchServiceAsync;
 import org.javahispano.javaleague.client.service.TacticServiceAsync;
-import org.javahispano.javaleague.shared.domain.League;
 import org.javahispano.javaleague.shared.domain.LeagueSummary;
 
 import com.google.gwt.core.shared.GWT;
