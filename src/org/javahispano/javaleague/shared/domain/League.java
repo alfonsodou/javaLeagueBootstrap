@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.javahispano.javaleague.shared.AppLib;
+
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -73,10 +75,10 @@ public class League implements Serializable {
 		this.updated = new Date();		
 		this.users = new ArrayList<Ref<User>>();
 		this.matchs = new ArrayList<Ref<CalendarDate>>();
-		this.numberRounds = 2;
-		this.pointsForLost = 0;
-		this.pointsForTied = 1;
-		this.pointsForWin = 3;
+		this.numberRounds = AppLib.DEFAULT_NUMBER_ROUNDS;
+		this.pointsForLost = AppLib.POINTS_FOR_LOST;
+		this.pointsForTied = AppLib.POINTS_FOR_TIED;
+		this.pointsForWin = AppLib.POINTS_FOR_WIN;
 	}
 		
 	public Long getId() {

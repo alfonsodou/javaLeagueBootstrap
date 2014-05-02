@@ -10,8 +10,10 @@ import org.gwtbootstrap3.client.ui.TextBox;
 import org.gwtbootstrap3.extras.datetimepicker.client.ui.DateTimeBox;
 import org.gwtbootstrap3.extras.summernote.client.ui.Summernote;
 import org.javahispano.javaleague.client.event.AddLeagueEvent;
+import org.javahispano.javaleague.client.event.ShowMyLeaguesEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
+import org.javahispano.javaleague.shared.AppLib;
 import org.javahispano.javaleague.shared.domain.League;
 
 import com.google.gwt.core.client.GWT;
@@ -93,6 +95,13 @@ public class CreateLeaguePresenter implements Presenter {
 		this.display.getPasswordLeagueLabel().setVisible(false);
 		this.display.getPasswordLeague().setVisible(false);
 
+		this.display.getPointsForLost().setText(
+				Integer.toString(AppLib.POINTS_FOR_LOST));
+		this.display.getPointsForTied().setText(
+				Integer.toString(AppLib.POINTS_FOR_TIED));
+		this.display.getPointsForWin().setText(
+				Integer.toString(AppLib.POINTS_FOR_WIN));
+
 		hideErrorLabel();
 
 	}
@@ -112,6 +121,13 @@ public class CreateLeaguePresenter implements Presenter {
 						doSave();
 					}
 				});
+
+		this.display.getCancelButton().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				GWT.log("ShowLeaguePresenter: firing ShowMyLeaguesEvent");
+				eventBus.fireEvent(new ShowMyLeaguesEvent());
+			}
+		});
 
 		this.display.getLeaguePrivate().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {

@@ -23,5 +23,10 @@ public class AppLib {
 
 	public static final String NO_FILE = "NO_FILE";
 
+	public static int POINTS_FOR_WIN = 3;
+	public static int POINTS_FOR_TIED = 1;
+	public static int POINTS_FOR_LOST = 0;
+	
+	public static int DEFAULT_NUMBER_ROUNDS = 2;
 
 }
