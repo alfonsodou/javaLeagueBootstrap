@@ -14,7 +14,7 @@
 					<b:Form type="HORIZONTAL">
 						<b:FieldSet>
 							<b:Legend>
-								<ui:msg key="caption">Crear Liga</ui:msg>
+								<ui:msg key="caption">Editar Liga</ui:msg>
 							</b:Legend>
 
 							<b:FormGroup>
