@@ -27,4 +27,5 @@ public interface UserAccountService extends RemoteService {
 	User register(User user, String teamName, String msgFrom,
 			String msgSubject, String msgBody);
 
+	User getUser(Long id);
 }

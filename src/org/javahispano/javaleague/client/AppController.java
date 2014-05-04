@@ -313,8 +313,8 @@ public class AppController implements ValueChangeHandler<String> {
 				return;
 			} else if (token.equals("showLeague")) {
 				presenter = new ShowLeaguePresenter(leagueService,
-						userTacticService, leagueId, currentUser, eventBus,
-						new ShowLeagueView());
+						userTacticService, userAccountService, leagueId,
+						currentUser, eventBus, new ShowLeagueView());
 				presenter.go(JavaLeagueApp.get().getCenterPanel());
 
 				return;

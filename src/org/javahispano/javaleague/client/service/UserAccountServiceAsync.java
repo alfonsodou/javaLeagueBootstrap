@@ -28,4 +28,6 @@ public interface UserAccountServiceAsync {
 	void register(User user, String teamName, String msgFrom, String msgSubject,
 			String msgBody, AsyncCallback<User> callback);
 
+	void getUser(Long id, AsyncCallback<User> callback);
+
 }

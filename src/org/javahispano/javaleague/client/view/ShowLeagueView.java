@@ -51,6 +51,8 @@ public class ShowLeagueView extends Composite implements
 	TabPane tabPaneClasification;
 	@UiField
 	Pagination paginationRounds;
+	@UiField
+	TabPane tabPaneInformation;
 
 	public ShowLeagueView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -109,6 +111,11 @@ public class ShowLeagueView extends Composite implements
 	@Override
 	public Pagination getPaginationRounds() {
 		return paginationRounds;
+	}
+
+	@Override
+	public TabPane getTabPaneInformation() {
+		return tabPaneInformation;
 	}
 
 }

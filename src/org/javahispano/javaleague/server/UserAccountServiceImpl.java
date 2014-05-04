@@ -128,4 +128,9 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 
 		return user;
 	}
+
+	@Override
+	public User getUser(Long id) {
+		return userDAO.findById(id);
+	}
 }

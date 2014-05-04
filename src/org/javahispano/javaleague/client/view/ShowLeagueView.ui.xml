@@ -36,6 +36,10 @@
 					<b:Column size="MD_5" offset="MD_1">
 						<b:Paragraph ui:field="paragraphRoundDate"></b:Paragraph>
 						<b:NavTabs>
+							<b:TabListItem target="#tabInformation" toggle="TAB"
+								ui:field="tabListItemInformation">
+								<ui:msg key="information">Descripción</ui:msg>
+							</b:TabListItem>
 							<b:TabListItem active="true" target="#tabDate"
 								toggle="TAB" ui:field="tabListItemDate">
 								<ui:msg key="date">Partidos</ui:msg>
@@ -46,8 +50,8 @@
 							</b:TabListItem>
 						</b:NavTabs>
 						<b:TabContent>
+							<b:TabPane b:id="tabInformation" ui:field="tabPaneInformation"></b:TabPane>
 							<b:TabPane active="true" b:id="tabDate" ui:field="tabPaneDate">
-
 							</b:TabPane>
 							<b:TabPane b:id="tabClasification" ui:field="tabPaneClasification">
 								<b:Paragraph ui:field="paragraphRoundClasification"></b:Paragraph>

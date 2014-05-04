@@ -30,6 +30,7 @@ import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
 import org.javahispano.javaleague.client.service.TacticServiceAsync;
+import org.javahispano.javaleague.client.service.UserAccountServiceAsync;
 import org.javahispano.javaleague.shared.AppLib;
 import org.javahispano.javaleague.shared.domain.CalendarDate;
 import org.javahispano.javaleague.shared.domain.League;
@@ -76,6 +77,8 @@ public class ShowLeaguePresenter implements Presenter {
 		TabPane getTabPaneDate();
 
 		TabPane getTabPaneClasification();
+		
+		TabPane getTabPaneInformation();
 
 		Pagination getPaginationRounds();
 
@@ -85,6 +88,7 @@ public class ShowLeaguePresenter implements Presenter {
 	private final Display display;
 	private final LeagueServiceAsync leagueService;
 	private final TacticServiceAsync tacticService;
+	private final UserAccountServiceAsync userAccountService;
 
 	private Long leagueId;
 	private League league;
@@ -98,10 +102,12 @@ public class ShowLeaguePresenter implements Presenter {
 			.create(JavaLeagueMessages.class);
 
 	public ShowLeaguePresenter(LeagueServiceAsync leagueService,
-			TacticServiceAsync tacticService, Long leagueId, User user,
-			SimpleEventBus eventBus, Display display) {
+			TacticServiceAsync tacticService,
+			UserAccountServiceAsync userAccountService, Long leagueId,
+			User user, SimpleEventBus eventBus, Display display) {
 		this.leagueService = leagueService;
 		this.tacticService = tacticService;
+		this.userAccountService = userAccountService;
 		this.leagueId = leagueId;
 		this.user = user;
 		this.eventBus = eventBus;
@@ -109,18 +115,24 @@ public class ShowLeaguePresenter implements Presenter {
 		this.round = 0;
 
 		fetchDate();
-		fetchTactic();
-		fetchLeague();
+		// fetchTactic();
+		// fetchUser();
+		// fetchLeague();
 	}
 
 	private void ShowLeague() {
-		if (league.getEndSignIn().before(now)
-				|| user.isJoinLeague(league.getId())
-				|| tacticUser.getFileName().equals(AppLib.NO_FILE)) {
+		display.getJoinLeagueButton().setEnabled(true);
+
+		if (league.getEndSignIn().before(now)) {
 			display.getJoinLeagueButton().setEnabled(false);
-		} else {
-			display.getJoinLeagueButton().setEnabled(true);
 		}
+		if (user.isJoinLeague(league.getId())) {
+			display.getJoinLeagueButton().setEnabled(false);
+		}
+		if (user.getTactic().getFileName().equals(AppLib.NO_FILE)) {
+			display.getJoinLeagueButton().setEnabled(false);
+		}		
+
 		if (league.getManagerId().equals(user.getId())) {
 			display.getDropLeagueButton().setVisible(true);
 			display.getEditLeagueButton().setVisible(true);
@@ -337,6 +349,29 @@ public class ShowLeaguePresenter implements Presenter {
 		});
 	}
 
+	private void fetchUser() {
+		new RPCCall<User>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Error fetching user ID: " + user.getId() + " :: "
+						+ caught.getMessage());
+			}
+
+			@Override
+			public void onSuccess(User result) {
+				user = result;
+				fetchLeague();
+			}
+
+			@Override
+			protected void callService(AsyncCallback<User> cb) {
+				userAccountService.getUser(user.getId(), cb);
+			}
+
+		}.retry(3);
+	}
+
 	private void fetchTactic() {
 		new RPCCall<TacticUser>() {
 
@@ -395,6 +430,7 @@ public class ShowLeaguePresenter implements Presenter {
 			@Override
 			public void onSuccess(Date result) {
 				now = result;
+				fetchUser();
 			}
 
 			@Override

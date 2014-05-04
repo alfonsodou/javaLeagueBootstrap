@@ -222,8 +222,16 @@ public class User implements Serializable {
 	}
 
 	public boolean isJoinLeague(Long id2) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean result = false;
+		
+		for(Ref<League> l : leagues) {
+			if (l.get().getId().equals(id2)) {
+				result = true;
+				break;
+			}
+		}
+		
+		return result;
 	}
 
 	/**
