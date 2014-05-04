@@ -29,10 +29,12 @@ import org.javahispano.javaleague.client.helper.MyClickHandlerMatch;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
+import org.javahispano.javaleague.client.service.TacticServiceAsync;
 import org.javahispano.javaleague.shared.AppLib;
 import org.javahispano.javaleague.shared.domain.CalendarDate;
 import org.javahispano.javaleague.shared.domain.League;
 import org.javahispano.javaleague.shared.domain.Match;
+import org.javahispano.javaleague.shared.domain.TacticUser;
 import org.javahispano.javaleague.shared.domain.User;
 
 import com.google.gwt.core.shared.GWT;
@@ -82,9 +84,11 @@ public class ShowLeaguePresenter implements Presenter {
 	private final SimpleEventBus eventBus;
 	private final Display display;
 	private final LeagueServiceAsync leagueService;
+	private final TacticServiceAsync tacticService;
 
 	private Long leagueId;
 	private League league;
+	private TacticUser tacticUser;
 	private User user;
 	private Long matchId;
 	private int round;
@@ -93,9 +97,11 @@ public class ShowLeaguePresenter implements Presenter {
 	private JavaLeagueMessages javaLeagueMessages = GWT
 			.create(JavaLeagueMessages.class);
 
-	public ShowLeaguePresenter(LeagueServiceAsync leagueService, Long leagueId,
-			User user, SimpleEventBus eventBus, Display display) {
+	public ShowLeaguePresenter(LeagueServiceAsync leagueService,
+			TacticServiceAsync tacticService, Long leagueId, User user,
+			SimpleEventBus eventBus, Display display) {
 		this.leagueService = leagueService;
+		this.tacticService = tacticService;
 		this.leagueId = leagueId;
 		this.user = user;
 		this.eventBus = eventBus;
@@ -103,13 +109,14 @@ public class ShowLeaguePresenter implements Presenter {
 		this.round = 0;
 
 		fetchDate();
+		fetchTactic();
 		fetchLeague();
 	}
 
 	private void ShowLeague() {
 		if (league.getEndSignIn().before(now)
 				|| user.isJoinLeague(league.getId())
-				|| user.getTactic().getFileName().equals(AppLib.NO_FILE)) {
+				|| tacticUser.getFileName().equals(AppLib.NO_FILE)) {
 			display.getJoinLeagueButton().setEnabled(false);
 		} else {
 			display.getJoinLeagueButton().setEnabled(true);
@@ -328,6 +335,29 @@ public class ShowLeaguePresenter implements Presenter {
 				eventBus.fireEvent(new EditLeagueEvent(league.getId()));
 			}
 		});
+	}
+
+	private void fetchTactic() {
+		new RPCCall<TacticUser>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Error fetching tacticUser ID: "
+						+ user.getTactic().getId() + " :: "
+						+ caught.getMessage());
+			}
+
+			@Override
+			public void onSuccess(TacticUser result) {
+				tacticUser = result;
+			}
+
+			@Override
+			protected void callService(AsyncCallback<TacticUser> cb) {
+				tacticService.getTactic(user.getTactic().getId(), cb);
+			}
+
+		}.retry(3);
 	}
 
 	private void fetchLeague() {
