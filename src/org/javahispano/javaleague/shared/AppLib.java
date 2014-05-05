@@ -28,5 +28,9 @@ public class AppLib {
 	public static int POINTS_FOR_LOST = 0;
 	
 	public static int DEFAULT_NUMBER_ROUNDS = 2;
+	
+	public static int MINUTES_BEFORE_LIVE_MATCH = 5;
+	
+	public static int MINUTES_AFTER_LIVE_MATCH = 10;
 
 }

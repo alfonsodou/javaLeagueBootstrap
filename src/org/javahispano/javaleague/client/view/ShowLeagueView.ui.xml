@@ -50,7 +50,38 @@
 							</b:TabListItem>
 						</b:NavTabs>
 						<b:TabContent>
-							<b:TabPane b:id="tabInformation" ui:field="tabPaneInformation"></b:TabPane>
+							<b:TabPane b:id="tabInformation" ui:field="tabPaneInformation">
+								<b:Description horizontal="true">
+									<b:DescriptionTitle>
+										<ui:msg key="nameLeagueDescription">Nombre</ui:msg>
+									</b:DescriptionTitle>
+									<b:DescriptionData ui:field="nameLeagueDescription"></b:DescriptionData>
+									<b:DescriptionTitle>
+										<ui:msg key="nameManagerDescription">Manager</ui:msg>
+									</b:DescriptionTitle>
+									<b:DescriptionData ui:field="nameManagerDescription"></b:DescriptionData>
+									<b:DescriptionTitle>
+										<ui:msg key="typeLeagueDescription">Tipo</ui:msg>
+									</b:DescriptionTitle>
+									<b:DescriptionData ui:field="typeLeagueDescription"></b:DescriptionData>
+									<b:DescriptionTitle>
+										<ui:msg key="pointsForWinDescription">Puntos por ganar</ui:msg>
+									</b:DescriptionTitle>
+									<b:DescriptionData ui:field="pointsForWinDescription"></b:DescriptionData>
+									<b:DescriptionTitle>
+										<ui:msg key="pointsForTiedDescription">Puntos por empatar</ui:msg>
+									</b:DescriptionTitle>
+									<b:DescriptionData ui:field="pointsForTiedDescription"></b:DescriptionData>
+									<b:DescriptionTitle>
+										<ui:msg key="pointsForLostDescription">Puntos por perder</ui:msg>
+									</b:DescriptionTitle>
+									<b:DescriptionData ui:field="pointsForLostDescription"></b:DescriptionData>
+									<b:DescriptionTitle>
+										<ui:msg key="joinTeamsDescription">Equipos inscritos</ui:msg>
+									</b:DescriptionTitle>
+									<b:DescriptionData ui:field="joinTeamsDescription"></b:DescriptionData>
+								</b:Description>
+							</b:TabPane>
 							<b:TabPane active="true" b:id="tabDate" ui:field="tabPaneDate">
 							</b:TabPane>
 							<b:TabPane b:id="tabClasification" ui:field="tabPaneClasification">

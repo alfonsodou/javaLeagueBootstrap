@@ -63,4 +63,16 @@ public interface JavaLeagueMessages extends Messages {
 	
 	@DefaultMessage("Jornada")
 	String round();
+	
+	@DefaultMessage("Pública")
+	String publicLeague();
+	
+	@DefaultMessage("Privada")
+	String privateLeague();
+	
+	@DefaultMessage("En DIRECTO!")
+	String live();
+	
+	@DefaultMessage("ERROR!")
+	String matchError();
 }

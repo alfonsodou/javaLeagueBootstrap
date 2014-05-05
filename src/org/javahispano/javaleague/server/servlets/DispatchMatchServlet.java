@@ -28,6 +28,10 @@ import com.google.appengine.api.taskqueue.TaskOptions;
  * 
  */
 public class DispatchMatchServlet extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger
 			.getLogger(DispatchMatchServlet.class.getName());
 	private MatchDAO dao = new MatchDAO();

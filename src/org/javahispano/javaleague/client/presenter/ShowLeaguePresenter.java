@@ -5,17 +5,21 @@ package org.javahispano.javaleague.client.presenter;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.gwtbootstrap3.client.ui.Anchor;
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Column;
+import org.gwtbootstrap3.client.ui.DescriptionData;
 import org.gwtbootstrap3.client.ui.Heading;
 import org.gwtbootstrap3.client.ui.ListItem;
 import org.gwtbootstrap3.client.ui.Pagination;
 import org.gwtbootstrap3.client.ui.Paragraph;
 import org.gwtbootstrap3.client.ui.Row;
 import org.gwtbootstrap3.client.ui.Small;
+import org.gwtbootstrap3.client.ui.TabListItem;
 import org.gwtbootstrap3.client.ui.TabPane;
 import org.gwtbootstrap3.client.ui.constants.Alignment;
 import org.gwtbootstrap3.client.ui.constants.ColumnSize;
@@ -77,10 +81,30 @@ public class ShowLeaguePresenter implements Presenter {
 		TabPane getTabPaneDate();
 
 		TabPane getTabPaneClasification();
-		
+
 		TabPane getTabPaneInformation();
 
 		Pagination getPaginationRounds();
+
+		DescriptionData getNameLeagueDescription();
+
+		DescriptionData getNameManagerDescription();
+
+		DescriptionData getPointsForWinDescription();
+
+		DescriptionData getPointsForTiedDescription();
+
+		DescriptionData getPointsForLostDescription();
+
+		DescriptionData getJoinTeamsDescription();
+
+		DescriptionData getTypeLeagueDescription();
+
+		TabListItem getTabListItemInformation();
+
+		TabListItem getTabListItemDate();
+
+		TabListItem getTabListItemClasification();
 
 	}
 
@@ -131,7 +155,7 @@ public class ShowLeaguePresenter implements Presenter {
 		}
 		if (user.getTactic().getFileName().equals(AppLib.NO_FILE)) {
 			display.getJoinLeagueButton().setEnabled(false);
-		}		
+		}
 
 		if (league.getManagerId().equals(user.getId())) {
 			display.getDropLeagueButton().setVisible(true);
@@ -150,14 +174,38 @@ public class ShowLeaguePresenter implements Presenter {
 		display.getDescriptionLeague().setHTML(league.getDescription());
 		display.getNameLeague().setText(league.getName());
 
+		display.getNameLeagueDescription().setText(league.getName());
+		display.getNameManagerDescription().setText(league.getNameManager());
+		if (league.getType() == League.PUBLIC) {
+			display.getTypeLeagueDescription().setText(
+					javaLeagueMessages.publicLeague());
+		} else {
+			display.getTypeLeagueDescription().setText(
+					javaLeagueMessages.privateLeague());
+		}
+		display.getPointsForLostDescription().setText(
+				Integer.toString(league.getPointsForLost()));
+		display.getPointsForTiedDescription().setText(
+				Integer.toString(league.getPointsForTied()));
+		display.getPointsForWinDescription().setText(
+				Integer.toString(league.getPointsForWin()));
+		display.getJoinTeamsDescription().setText(
+				Integer.toString(league.getUsers().size()));
+
+		round = getRoundActual();
+
+		doDisplayRound(round);
+
 		ListItem previousLink = display.getPaginationRounds().addPreviousLink();
 		previousLink.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				if (round > 0) {
-					round--;
-					doDisplayRound(round);
+				if (league.getMatchs().size() > 0) {
+					if (round > 0) {
+						round--;
+						doDisplayRound(round);
+					}
 				}
 			}
 
@@ -167,71 +215,109 @@ public class ShowLeaguePresenter implements Presenter {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				if (round < league.getMatchs().size() - 1) {
-					round++;
-					doDisplayRound(round);
+				if (league.getMatchs().size() > 0) {
+					if (round < league.getMatchs().size() - 1) {
+						round++;
+						doDisplayRound(round);
+					}
 				}
 			}
-
 		});
-
-		if (league.getMatchs().size() > 0) {
-			doDisplayRound(round);
-		}
 
 	}
 
+	private int getRoundActual() {
+		int result = 0;
+
+		for (Ref<CalendarDate> cd : league.getMatchs()) {
+			if (cd.get().getFinish().before(now)) {
+				result++;
+			} else {
+				break;
+			}
+		}
+
+		return result;
+	}
+
 	private void doDisplayRound(int index) {
-		DateTimeFormat date = DateTimeFormat
-				.getFormat(PredefinedFormat.DATE_TIME_MEDIUM);
+		if (league.getMatchs().size() > 0) {
+			DateTimeFormat date = DateTimeFormat
+					.getFormat(PredefinedFormat.DATE_TIME_MEDIUM);
 
-		Ref<CalendarDate> cd = league.getMatchs().get(index);
-		display.getTabPaneDate().clear();
-		display.getParagraphRoundDate().setText(
-				javaLeagueMessages.round() + " " + Integer.toString(index + 1)
-						+ " / " + Integer.toString(league.getMatchs().size())
-						+ " :: " + date.format(cd.get().getStart()));
+			Ref<CalendarDate> cd = league.getMatchs().get(index);
+			display.getTabPaneDate().clear();
+			display.getParagraphRoundDate().setText(
+					javaLeagueMessages.round() + " "
+							+ Integer.toString(index + 1) + " / "
+							+ Integer.toString(league.getMatchs().size())
+							+ " :: " + date.format(cd.get().getStart()));
 
-		for (Ref<Match> m : cd.get().getMatchs()) {
+			for (Ref<Match> m : cd.get().getMatchs()) {
 
-			Row row = new Row();
+				Row row = new Row();
 
-			row.add(addTeam(m.get().getLocal().getId(), m.get().getNameLocal(),
-					m.get().getNameLocalManager()));
-			row.add(addResult(m.get().getLocalGoals(), m.get()
-					.getVisitingTeamGoals(), m.get().getLocalPossesion(), m
-					.get().getState(), m.get().getId()));
-			row.add(addTeam(m.get().getVisiting().getId(), m.get()
-					.getNameForeign(), m.get().getNameVisitingManager()));
-			row.add(addLinks(m.get().getId(), m.get().getLocal().getUserId(), m
-					.get().getVisiting().getUserId()));
+				row.add(addTeam(m.get().getLocal().getId(), m.get()
+						.getNameLocal(), m.get().getNameLocalManager()));
+				row.add(addResult(m.get().getLocalGoals(), m.get()
+						.getVisitingTeamGoals(), m.get().getLocalPossesion(), m
+						.get().getState(), m.get().getId(), m.get()
+						.getVisualization()));
+				row.add(addTeam(m.get().getVisiting().getId(), m.get()
+						.getNameForeign(), m.get().getNameVisitingManager()));
+				row.add(addLinks(m.get().getId(), m.get().getLocal()
+						.getUserId(), m.get().getVisiting().getUserId()));
 
-			display.getTabPaneDate().add(row);
+				display.getTabPaneDate().add(row);
+			}
 		}
 	}
 
 	private Column addResult(int localGoals, int visitingTeamGoals,
-			double localPossesion, int state, Long id) {
+			double localPossesion, int state, Long id, Date d) {
 		Column column = new Column();
 		column.setSize(ColumnSize.MD_3);
 		Paragraph p = new Paragraph();
 		p.setAlignment(Alignment.CENTER);
 		Paragraph result = new Paragraph();
 		Small possesion = new Small();
+		DateTimeFormat date = DateTimeFormat
+				.getFormat(PredefinedFormat.TIME_MEDIUM);
 
 		matchId = id;
-		if (state == 1) {
-			Anchor anchor = new Anchor();
-			anchor.setText(localGoals + " - " + visitingTeamGoals);
-			MyClickHandlerMatch myClickHandler = new MyClickHandlerMatch(id,
-					eventBus);
-			anchor.addClickHandler(myClickHandler);
-			result.add(anchor);
-			possesion.setText(round(localPossesion * 100d, 2) + " - "
-					+ round((1d - localPossesion) * 100d, 2));
-		} else {
-			result.setText("N / A");
+		Anchor anchor = new Anchor();
+		
+		switch (state) {
+		case AppLib.MATCH_ERROR:
+			anchor.setText(javaLeagueMessages.matchError());
+			break;
+		case AppLib.MATCH_SCHEDULED:
+			anchor.setText(date.format(d));
+			break;
+		case AppLib.MATCH_OK:
+			if (now.before(addMinutesToDate(d,
+					-AppLib.MINUTES_BEFORE_LIVE_MATCH))) {
+				anchor.setText(date.format(d));
+			} else {
+				if (now.after(addMinutesToDate(d,
+						-AppLib.MINUTES_BEFORE_LIVE_MATCH))
+						&& now.before(addMinutesToDate(d,
+								AppLib.MINUTES_AFTER_LIVE_MATCH))) {
+					anchor.setText(javaLeagueMessages.live());
+
+				} else {
+					anchor.setText(localGoals + " - " + visitingTeamGoals);
+					possesion.setText(round(localPossesion * 100d, 2) + " - "
+							+ round((1d - localPossesion) * 100d, 2));
+				}
+				MyClickHandlerMatch myClickHandler = new MyClickHandlerMatch(
+						id, eventBus);
+				anchor.addClickHandler(myClickHandler);
+			}
+			break;
 		}
+
+		result.add(anchor);
 
 		p.add(result);
 		p.add(possesion);
@@ -484,4 +570,20 @@ public class ShowLeaguePresenter implements Presenter {
 
 		}.retry(3);
 	}
+
+	/**
+	 * Agrega o quita minutos a una fecha dada. Para quitar minutos hay que
+	 * sumarle valores negativos.
+	 * 
+	 * @param date
+	 * @param minutes
+	 * @return
+	 */
+	private Date addMinutesToDate(Date date, int minutes) {
+		Calendar calendarDate = Calendar.getInstance();
+		calendarDate.setTime(date);
+		calendarDate.add(Calendar.MINUTE, minutes);
+		return calendarDate.getTime();
+	}
+
 }
