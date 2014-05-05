@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.javahispano.javaleague.server.domain.MatchDAO;
+import org.javahispano.javaleague.shared.AppLib;
 import org.javahispano.javaleague.shared.domain.Match;
 
 import com.google.appengine.api.datastore.DatastoreService;
@@ -36,8 +37,6 @@ public class ScheduleMatchsServlet extends HttpServlet {
 			.getLogger(ScheduleMatchsServlet.class.getName());
 	private static Queue queue = QueueFactory.getQueue("league");
 	private static MatchDAO matchDAO = new MatchDAO();
-	private static DatastoreService ds = DatastoreServiceFactory
-			.getDatastoreService();
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
@@ -49,7 +48,7 @@ public class ScheduleMatchsServlet extends HttpServlet {
 				queue.add(TaskOptions.Builder.withUrl("/playMatch").param(
 						"matchID", m.getId().toString()));
 				
-				m.setState(2);
+				m.setState(AppLib.MATCH_QUEUE);
 				matchDAO.save(m);
 
 			} catch (Exception e) {

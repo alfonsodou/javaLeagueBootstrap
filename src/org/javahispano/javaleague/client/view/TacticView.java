@@ -58,6 +58,8 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	Label errorInterfaceTactic;
 	@UiField
 	Paragraph messagePackagePath;
+	@UiField
+	Label waitForFriendlyMatch;
 
 	private static TacticViewUiBinder uiBinder = GWT
 			.create(TacticViewUiBinder.class);
@@ -89,7 +91,7 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	}
 
 	@Override
-	public HasClickHandlers getPlayMatchButton() {
+	public Button getPlayMatchButton() {
 		return playMatchButton;
 	}
 
@@ -166,6 +168,11 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	@Override
 	public Paragraph getMessagePackagePath() {
 		return messagePackagePath;
+	}
+
+	@Override
+	public Label getWaitForFriendlyMatch() {
+		return waitForFriendlyMatch;
 	}
 
 }

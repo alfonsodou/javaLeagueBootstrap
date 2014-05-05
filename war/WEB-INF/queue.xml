@@ -1,7 +1,12 @@
 <queue-entries>
-  <queue>
-    <name>league</name>
-    <rate>20/s</rate>
-    <max-concurrent-requests>1</max-concurrent-requests>
-  </queue>
+	<queue>
+		<name>league</name>
+		<rate>20/s</rate>
+		<max-concurrent-requests>1</max-concurrent-requests>
+	</queue>
+	<queue>
+		<name>friendly</name>
+		<rate>20/s</rate>
+		<max-concurrent-requests>1</max-concurrent-requests>
+	</queue>
 </queue-entries>

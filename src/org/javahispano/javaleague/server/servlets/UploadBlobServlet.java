@@ -113,7 +113,10 @@ public class UploadBlobServlet extends HttpServlet {
 								tacticUser.setFileName(item.getName());
 								tacticUser.setBytes(gcsService.getMetadata(
 										fileName).getLength());
-
+								if (tacticUser.getFriendlyMatch() != AppLib.FRIENDLY_MATCH_SCHEDULED) {
+									tacticUser
+											.setFriendlyMatch(AppLib.FRIENDLY_MATCH_OK);
+								}
 							}
 						}
 					}

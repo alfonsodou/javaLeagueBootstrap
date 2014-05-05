@@ -9,4 +9,8 @@
 		<property name="managerId" direction="asc" />
 		<property name="updated" direction="desc" />
 	</datastore-index>
+	<datastore-index kind="TacticUser" ancestor="false"
+		source="manual">
+		<property name="friendlyMatch"/>
+	</datastore-index>	
 </datastore-indexes>

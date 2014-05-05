@@ -8,6 +8,7 @@ import org.javahispano.javaleague.shared.AppLib;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 /**
  * 
@@ -51,6 +52,7 @@ public class TacticUser implements Serializable {
 	 */
 	private Date updated;
 
+	@Index
 	private int friendlyMatch;
 
 	private int goalsFor;

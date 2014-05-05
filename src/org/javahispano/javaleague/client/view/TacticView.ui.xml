@@ -109,6 +109,10 @@
 								Amistoso
 							</ui:msg>
 						</b:Button>
+						<b:Label ui:field="waitForFriendlyMatch" type="INFO">
+							<ui:msg key="waitForFriendlyMatch">Esperando para jugar partido
+								amistoso</ui:msg>
+						</b:Label>
 					</b:Column>
 				</b:Row>
 			</b:PanelBody>

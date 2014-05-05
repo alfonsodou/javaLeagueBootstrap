@@ -5,9 +5,7 @@ package org.javahispano.javaleague.client.presenter;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import org.gwtbootstrap3.client.ui.Anchor;
 import org.gwtbootstrap3.client.ui.Button;
@@ -580,10 +578,7 @@ public class ShowLeaguePresenter implements Presenter {
 	 * @return
 	 */
 	private Date addMinutesToDate(Date date, int minutes) {
-		Calendar calendarDate = Calendar.getInstance();
-		calendarDate.setTime(date);
-		calendarDate.add(Calendar.MINUTE, minutes);
-		return calendarDate.getTime();
+		return new Date(date.getTime() + (minutes * 60 * 1000));
 	}
 
 }

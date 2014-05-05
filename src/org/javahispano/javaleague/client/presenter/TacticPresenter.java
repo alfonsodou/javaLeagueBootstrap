@@ -60,7 +60,7 @@ public class TacticPresenter implements Presenter {
 
 		void setGoalsAgainst(String goalsAgainst);
 
-		HasClickHandlers getPlayMatchButton();
+		Button getPlayMatchButton();
 
 		Label getErrorTeamName();
 
@@ -79,6 +79,8 @@ public class TacticPresenter implements Presenter {
 		Label getErrorInterfaceTactic();
 
 		Paragraph getMessagePackagePath();
+		
+		Label getWaitForFriendlyMatch();
 
 	}
 
@@ -108,6 +110,7 @@ public class TacticPresenter implements Presenter {
 		hideErrorLabel();
 
 		this.display.getUpdateButton().setEnabled(false);
+		this.display.getWaitForFriendlyMatch().setVisible(false);
 
 		bind();
 	}
@@ -127,7 +130,7 @@ public class TacticPresenter implements Presenter {
 			public void onClick(ClickEvent event) {
 				GWT.log("TacticPresenter: Firing PlayMatchEvent");
 				eventBus.fireEvent(new PlayMatchEvent(tactic.getId()));
-
+		
 				doPlayMatch();
 			}
 		});
@@ -216,7 +219,9 @@ public class TacticPresenter implements Presenter {
 			@Override
 			public void onSuccess(Object result) {
 				GWT.log("Dispathing Match for Tactic: " + tactic.getId());
-
+				
+				display.getPlayMatchButton().setEnabled(false);
+				display.getWaitForFriendlyMatch().setVisible(true);
 			}
 
 			@Override
@@ -276,6 +281,12 @@ public class TacticPresenter implements Presenter {
 					} else {
 						display.getFileName().setText(
 								javaLeagueMessages.emptyUserTactic());
+						display.getPlayMatchButton().setEnabled(false);
+					}
+					
+					if (tactic.getFriendlyMatch() != AppLib.FRIENDLY_MATCH_OK) {
+						display.getPlayMatchButton().setEnabled(false);
+						display.getWaitForFriendlyMatch().setVisible(true);
 					}
 
 					display.getMessagePackagePath().setText(
@@ -283,6 +294,7 @@ public class TacticPresenter implements Presenter {
 									+ tactic.getId().toString()));
 				} else {
 					display.getUpdateButton().setEnabled(false);
+					display.getPlayMatchButton().setEnabled(false);
 				}
 			}
 
