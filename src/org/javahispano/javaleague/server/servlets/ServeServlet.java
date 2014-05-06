@@ -39,14 +39,24 @@ public class ServeServlet extends HttpServlet {
 
 		long id = Long.parseLong(req.getParameter("id").replace("_", ""));
 		Match p = dao.findById(id);
+		String pathFileName;
 
-		GcsFilename filename = new GcsFilename(AppLib.BUCKET_GCS, p.getLeagueId()
-				.toString() + "/" + p.getId().toString() + ".jvc");
-		
+		if (p.getLeagueId().longValue() == 0L) {
+			pathFileName = AppLib.PATH_MATCH + AppLib.PATH_FRIENDLY_MATCH
+					+ p.getLeagueId().toString() + "/" + p.getId().toString()
+					+ ".jvc";
+		} else {
+			pathFileName = AppLib.PATH_MATCH + AppLib.PATH_LEAGUE_MATCH
+					+ p.getLeagueId().toString() + "/" + p.getId().toString()
+					+ ".jvc";
+		}
+
+		GcsFilename filename = new GcsFilename(AppLib.BUCKET_GCS, pathFileName);
+
 		res.setHeader("ETag", p.getId().toString());// Establece header ETag
 		res.setHeader("Content-disposition", "attachment; filename="
 				+ p.getId().toString() + ".jvc");
-		
+
 		res.getOutputStream().write(readFromFile(filename));
 		res.flushBuffer();
 	}

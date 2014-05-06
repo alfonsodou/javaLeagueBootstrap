@@ -33,13 +33,13 @@ import com.google.appengine.tools.cloudstorage.GcsService;
 import com.google.appengine.tools.cloudstorage.GcsServiceFactory;
 import com.google.appengine.tools.cloudstorage.RetryParams;
 
-public class PlayMatchServlet extends HttpServlet {
+public class PlayMatchFriendlyServlet extends HttpServlet {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(PlayMatchServlet.class
-			.getName());
+	private static final Logger log = Logger
+			.getLogger(PlayMatchFriendlyServlet.class.getName());
 	private MyDataStoreClassLoader myDataStoreClassLoader;
 	private MatchDAO matchDAO = new MatchDAO();
 	private TacticUserDAO tacticUserDAO = new TacticUserDAO();
@@ -96,20 +96,18 @@ public class PlayMatchServlet extends HttpServlet {
 
 			MatchShared matchShared = a.execute(lo, vo);
 
-			filename = new GcsFilename(AppLib.BUCKET_GCS, AppLib.PATH_MATCH
-					+ AppLib.PATH_LEAGUE_MATCH + match.getLeagueId().toString()
-					+ "/" + match.getId().toString() + ".jvc");
+			filename = new GcsFilename(AppLib.BUCKET_GCS, match.getLeagueId()
+					.toString() + "/" + match.getId().toString() + ".jvc");
 			writeToFile(filename, matchShared.getMatch());
 
-			filename = new GcsFilename(AppLib.BUCKET_GCS, AppLib.PATH_MATCH
-					+ AppLib.PATH_LEAGUE_MATCH + match.getLeagueId().toString()
-					+ "/" + match.getId().toString() + ".bin");
+			filename = new GcsFilename(AppLib.BUCKET_GCS, match.getLeagueId()
+					.toString() + "/" + match.getId().toString() + ".bin");
 			writeToFile(filename, matchShared.getMatchBin());
 
 			match.setLocalGoals(matchShared.getGoalsLocal());
 			match.setVisitingTeamGoals(matchShared.getGoalsVisiting());
 			match.setLocalPossesion(matchShared.getPosessionLocal());
-			match.setState(AppLib.MATCH_OK);
+			match.setState(1);
 			match.setTimeLocal(matchShared.getTimeLocal());
 			match.setTimeVisita(matchShared.getTimeVisita());
 
@@ -165,10 +163,9 @@ public class PlayMatchServlet extends HttpServlet {
 		 * Para obtener el GcsFilename necesito el id del usuario !!! ¿ Añadirlo
 		 * a la táctica ?
 		 */
-		GcsFilename fileName = new GcsFilename(AppLib.BUCKET_GCS,
-				AppLib.PATH_USER + tactic.getUserId().toString() + "/"
-						+ tactic.getId().toString() + "/"
-						+ tactic.getFileName());
+		GcsFilename fileName = new GcsFilename(AppLib.BUCKET_GCS, "user/"
+				+ tactic.getUserId().toString() + "/"
+				+ tactic.getId().toString() + "/" + tactic.getFileName());
 
 		byteStream = myDataStoreClassLoader.addClassJar(readFile(fileName));
 

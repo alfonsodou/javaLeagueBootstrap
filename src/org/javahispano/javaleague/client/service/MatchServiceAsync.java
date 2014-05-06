@@ -25,4 +25,6 @@ public interface MatchServiceAsync {
 
 	void dispatchMatch(Long tacticId, AsyncCallback<Void> callback);
 
+	void getMatchListByState(int state, AsyncCallback<List<Match>> callback);
+
 }

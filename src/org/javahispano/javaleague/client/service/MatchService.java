@@ -19,5 +19,7 @@ public interface MatchService extends RemoteService {
 	Match getMatchById(Long id);
 
 	void dispatchMatch(Long tacticId);
+	
+	List<Match> getMatchListByState(int state);
 
 }

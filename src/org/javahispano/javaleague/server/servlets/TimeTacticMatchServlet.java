@@ -37,9 +37,18 @@ public class TimeTacticMatchServlet extends HttpServlet {
 		Match match = null;
 		long[] time;
 		String result = "";
+
 		try {
 			match = matchDAO.findById(Long.parseLong(req
 					.getParameter("matchID").replace("_", "")));
+
+			if ((!currentUser.getTactic().getId()
+					.equals(match.getLocal().getId()))
+					&& (!currentUser.getTactic().getId()
+							.equals(match.getVisiting().getId()))) {
+				return;
+
+			}
 		} catch (Exception e) {
 			log.warning(e.getMessage());
 		}
@@ -59,7 +68,7 @@ public class TimeTacticMatchServlet extends HttpServlet {
 					+ match.getId().toString() + "_" + match.getNameForeign()
 					+ ".csv");
 		}
-		
+
 		for (int i = 0; i < time.length; i++) {
 			result += time[i] + ",";
 		}

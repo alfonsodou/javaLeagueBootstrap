@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.javahispano.javaleague.shared.AppLib;
 import org.javahispano.javaleague.shared.domain.Match;
 
 /**
@@ -46,11 +47,17 @@ public class MatchDAO {
 			partidos.add(fetched);
 		}
 	}
-	
+
 	public List<Match> getMatchsDate(Date date) {
-		List<Match> m = ofy().load().type(Match.class).filter("state", 0).filter("execution <", date).list();
-		
+		List<Match> m = ofy().load().type(Match.class)
+				.filter("state", AppLib.MATCH_SCHEDULED)
+				.filter("execution <", date).list();
+
 		return m;
+	}
+
+	public List<Match> getMatchsState(int state) {
+		return ofy().load().type(Match.class).filter("state", state).list();
 	}
 
 }

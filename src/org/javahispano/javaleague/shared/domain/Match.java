@@ -60,6 +60,8 @@ public class Match implements Serializable {
 	private long[] timeLocal;
 
 	private long[] timeVisita;
+	
+	private Long frameWorkId;
 
 	public Match() {
 		super();
@@ -74,7 +76,7 @@ public class Match implements Serializable {
 		this.leagueId = 0L;
 		this.timeLocal = null;
 		this.timeVisita = null;
-
+		this.frameWorkId = AppLib.DEFAULT_FRAMEWORK_ID;
 	}
 
 	public Long getId() {
@@ -259,6 +261,20 @@ public class Match implements Serializable {
 	 */
 	public void setUpdated(Date updated) {
 		this.updated = updated;
+	}
+
+	/**
+	 * @return the frameWorkId
+	 */
+	public Long getFrameWorkId() {
+		return frameWorkId;
+	}
+
+	/**
+	 * @param frameWorkId the frameWorkId to set
+	 */
+	public void setFrameWorkId(Long frameWorkId) {
+		this.frameWorkId = frameWorkId;
 	}
 
 	

@@ -34,7 +34,7 @@ public class MatchServiceImpl extends RemoteServiceServlet implements
 	
 	@Override
 	public void dispatchMatch(Long tacticId) {
-		Queue queue = QueueFactory.getDefaultQueue();
+		Queue queue = QueueFactory.getQueue("friendly");
 		queue.add(TaskOptions.Builder.withUrl("/dispatchMatch").param(
 				"tacticID", Long.toString(tacticId)));
 	}	
@@ -75,6 +75,15 @@ public class MatchServiceImpl extends RemoteServiceServlet implements
 
 		return match;
 
+	}
+
+	@Override
+	public List<Match> getMatchListByState(int state) {
+		List<Match> matchList = null;
+		
+		matchList = matchDAO.getMatchsState(state);
+		
+		return matchList;
 	}
 
 }
