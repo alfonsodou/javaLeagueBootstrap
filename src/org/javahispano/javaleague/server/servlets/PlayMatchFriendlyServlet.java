@@ -96,38 +96,23 @@ public class PlayMatchFriendlyServlet extends HttpServlet {
 
 			MatchShared matchShared = a.execute(lo, vo);
 
-			filename = new GcsFilename(AppLib.BUCKET_GCS, match.getLeagueId()
-					.toString() + "/" + match.getId().toString() + ".jvc");
+			filename = new GcsFilename(AppLib.BUCKET_GCS, AppLib.PATH_MATCH
+					+ AppLib.PATH_FRIENDLY_MATCH + match.getId().toString()
+					+ ".jvc");
 			writeToFile(filename, matchShared.getMatch());
 
-			filename = new GcsFilename(AppLib.BUCKET_GCS, match.getLeagueId()
-					.toString() + "/" + match.getId().toString() + ".bin");
+			filename = new GcsFilename(AppLib.BUCKET_GCS, AppLib.PATH_MATCH
+					+ AppLib.PATH_FRIENDLY_MATCH + match.getId().toString()
+					+ ".bin");
 			writeToFile(filename, matchShared.getMatchBin());
 
 			match.setLocalGoals(matchShared.getGoalsLocal());
 			match.setVisitingTeamGoals(matchShared.getGoalsVisiting());
 			match.setLocalPossesion(matchShared.getPosessionLocal());
-			match.setState(1);
+			match.setState(AppLib.MATCH_OK);
 			match.setTimeLocal(matchShared.getTimeLocal());
 			match.setTimeVisita(matchShared.getTimeVisita());
 
-			// actualizamos estadisticas
-			localTactic.addGoalsFor(match.getLocalGoals());
-			localTactic.addGoalsAgainst(match.getVisitingTeamGoals());
-			visitingTactic.addGoalsFor(match.getVisitingTeamGoals());
-			visitingTactic.addGoalsAgainst(match.getLocalGoals());
-			if (match.getLocalGoals() == match.getVisitingTeamGoals()) {
-				localTactic.addMatchTied();
-				visitingTactic.addMatchTied();
-			} else {
-				if (match.getLocalGoals() > match.getVisitingTeamGoals()) {
-					localTactic.addMatchWins();
-					visitingTactic.addMatchLost();
-				} else {
-					localTactic.addMatchLost();
-					visitingTactic.addMatchWins();
-				}
-			}
 			localTactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_NO);
 			visitingTactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_NO);
 
@@ -159,13 +144,10 @@ public class PlayMatchFriendlyServlet extends HttpServlet {
 		Class<?> result = null;
 		Map<String, byte[]> byteStream;
 
-		/**
-		 * Para obtener el GcsFilename necesito el id del usuario !!! ¿ Añadirlo
-		 * a la táctica ?
-		 */
-		GcsFilename fileName = new GcsFilename(AppLib.BUCKET_GCS, "user/"
-				+ tactic.getUserId().toString() + "/"
-				+ tactic.getId().toString() + "/" + tactic.getFileName());
+		GcsFilename fileName = new GcsFilename(AppLib.BUCKET_GCS,
+				AppLib.PATH_USER + tactic.getUserId().toString() + "/"
+						+ tactic.getId().toString() + "/"
+						+ tactic.getFileName());
 
 		byteStream = myDataStoreClassLoader.addClassJar(readFile(fileName));
 

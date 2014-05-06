@@ -39,8 +39,18 @@ public class ServeBinServlet extends HttpServlet {
 
 		long id = Long.parseLong(req.getParameter("id").replace("_", ""));
 		Match p = dao.findById(id);
-		GcsFilename filename = new GcsFilename(AppLib.BUCKET_GCS, p
-				.getLeagueId().toString() + "/" + p.getId().toString() + ".bin");
+		String pathFileName;
+
+		if (p.getLeagueId().longValue() == 0L) {
+			pathFileName = AppLib.PATH_MATCH + AppLib.PATH_FRIENDLY_MATCH
+					+ p.getId().toString() + ".bin";
+		} else {
+			pathFileName = AppLib.PATH_MATCH + AppLib.PATH_LEAGUE_MATCH
+					+ p.getLeagueId().toString() + "/" + p.getId().toString()
+					+ ".bin";
+		}
+
+		GcsFilename filename = new GcsFilename(AppLib.BUCKET_GCS, pathFileName);
 
 		res.setHeader("ETag", p.getId().toString());// Establece header ETag
 		res.setHeader("Content-disposition", "inline; filename="

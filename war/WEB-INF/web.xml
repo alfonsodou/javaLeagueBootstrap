@@ -113,6 +113,16 @@
 		<url-pattern>/playMatch</url-pattern>
 	</servlet-mapping>
 
+	<!-- ===================== Play Friendly Match Servlet ===================== -->
+	<servlet>
+		<servlet-name>playMatchFriendly</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.servlets.PlayMatchFriendlyServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>playMatchFriendly</servlet-name>
+		<url-pattern>/playMatchFriendly</url-pattern>
+	</servlet-mapping>
+
 	<!-- ===================== Serve Match Servlet ===================== -->
 	<servlet>
 		<servlet-name>Serve</servlet-name>

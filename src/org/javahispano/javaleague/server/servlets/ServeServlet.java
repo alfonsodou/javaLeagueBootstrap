@@ -43,8 +43,7 @@ public class ServeServlet extends HttpServlet {
 
 		if (p.getLeagueId().longValue() == 0L) {
 			pathFileName = AppLib.PATH_MATCH + AppLib.PATH_FRIENDLY_MATCH
-					+ p.getLeagueId().toString() + "/" + p.getId().toString()
-					+ ".jvc";
+					+ p.getId().toString() + ".jvc";
 		} else {
 			pathFileName = AppLib.PATH_MATCH + AppLib.PATH_LEAGUE_MATCH
 					+ p.getLeagueId().toString() + "/" + p.getId().toString()
