@@ -46,6 +46,9 @@ public class DispatchMatchServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		User currentUser = LoginHelper.getLoggedInUser(req.getSession());
+		if (currentUser == null) {
+			log.warning("currentUser is null!!!");
+		}
 		TacticUser tactic = null;
 		Long tacticID = Long.parseLong(req.getParameter("tacticID").replace(
 				"_", ""));
