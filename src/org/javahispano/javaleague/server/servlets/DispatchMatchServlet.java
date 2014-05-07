@@ -4,6 +4,8 @@
 package org.javahispano.javaleague.server.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -52,65 +54,59 @@ public class DispatchMatchServlet extends HttpServlet {
 			List<Match> matchList = matchDao
 					.getMatchsState(AppLib.MATCH_FRIENDLY_WAITING);
 
-			if (matchList.size() > 0) {
+			if ((matchList != null) && (matchList.size() > 0)) {
 				Match match = matchList.get(0);
 
 				if (match.getLocal() == null) {
 					match.setLocal(tactic);
 					match.setNameLocal(tactic.getTeamName());
-					match.setNameLocalManager(currentUser.getName());
+					//match.setNameLocalManager(currentUser.getName());
 				} else {
 					match.setVisiting(tactic);
 					match.setNameForeign(tactic.getTeamName());
-					match.setNameVisitingManager(currentUser.getName());
+					//match.setNameVisitingManager(currentUser.getName());
 				}
+
 				QueueStatistics queueStatistics = QueueFactory.getQueue(
 						AppLib.QUEUE_FRIENDLY).fetchStatistics();
 
+				match.setExecution(new Date());
 				match.setVisualization(addMinutesToDate(
 						new Date(),
 						AppLib.MINUTES_EXECUTION_MATCH
 								+ (AppLib.MINUTES_EXECUTION_MATCH * queueStatistics
 										.getNumTasks())));
-			}
-
-			List<TacticUser> results = (List<TacticUser>) tacticUserDAO
-					.getTactics(tacticID);
-
-			// De la lista resultante hay que escoger un equipo para el
-			// partido
-			if (!results.isEmpty()) {
-
-				Match match = new Match();
-				TacticUser visitingTactic = results
-						.get((int) (Math.random() * results.size()));
-
-				match.setLocal(tactic);
-				match.setVisiting(visitingTactic);
-				match.setNameLocal(tactic.getTeamName());
-				match.setNameForeign(visitingTactic.getTeamName());
-				match.setVisualization(addMinutesToDate(new Date(), 5));
-
-				// tactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_SCHEDULED);
-				// visitingTactic
-				// .setFriendlyMatch(AppLib.FRIENDLY_MATCH_SCHEDULED);
-
 				matchDao.save(match);
 
-				Queue queue = QueueFactory.getDefaultQueue();
+				Queue queue = QueueFactory.getQueue(AppLib.QUEUE_FRIENDLY);
+				queue.add(TaskOptions.Builder.withUrl("/playMatchFriendly")
+						.param("matchID", match.getId().toString()));
+			} else {
+				Match match = new Match();
+				int result = ((int) (Math.random() * 10));
 
-				queue.add(TaskOptions.Builder.withUrl("/playMatch").param(
-						"matchID", match.getId().toString()));
+				if (result % 2 == 0) {
+					match.setLocal(tactic);
+					match.setNameLocal(tactic.getTeamName());
+					//match.setNameLocalManager(currentUser.getName());
+				} else {
+					match.setVisiting(tactic);
+					match.setNameForeign(tactic.getTeamName());
+					//match.setNameVisitingManager(currentUser.getName());
+				}
+
+				match.setState(AppLib.MATCH_FRIENDLY_WAITING);
+				matchDao.save(match);
 			}
-			// } else {
-			// ... no results ...
-			// tactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_OK);
-			// }
-			// } // end if AppLib.FRIENDLY_MATCH_NO
+
+			tactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_SCHEDULED);
+			tacticUserDAO.save(tactic);
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.warning(e.getMessage());
-
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			log.warning("stackTrace -> " + sw.toString());
 		}
 	}
 

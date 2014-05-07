@@ -79,7 +79,7 @@ public class TacticPresenter implements Presenter {
 		Label getErrorInterfaceTactic();
 
 		Paragraph getMessagePackagePath();
-		
+
 		Label getWaitForFriendlyMatch();
 
 	}
@@ -130,7 +130,7 @@ public class TacticPresenter implements Presenter {
 			public void onClick(ClickEvent event) {
 				GWT.log("TacticPresenter: Firing PlayMatchEvent");
 				eventBus.fireEvent(new PlayMatchEvent(tactic.getId()));
-		
+
 				doPlayMatch();
 			}
 		});
@@ -175,12 +175,13 @@ public class TacticPresenter implements Presenter {
 		DateTimeFormat fmt = DateTimeFormat
 				.getFormat(PredefinedFormat.DATE_TIME_MEDIUM);
 		Date now = new Date();
-		
+
 		display.setTeamName(getElementTextValue(tacticElement, "teamname"));
 
 		display.getUpdatedTactic().setText(fmt.format(now));
 
-		if (!getElementTextValue(tacticElement, "filename").equals(AppLib.NO_FILE)) {
+		if (!getElementTextValue(tacticElement, "filename").equals(
+				AppLib.NO_FILE)) {
 			display.getFileName().setText(
 					getElementTextValue(tacticElement, "filename") + " :: "
 							+ getElementTextValue(tacticElement, "bytes")
@@ -219,7 +220,7 @@ public class TacticPresenter implements Presenter {
 			@Override
 			public void onSuccess(Object result) {
 				GWT.log("Dispathing Match for Tactic: " + tactic.getId());
-				
+
 				display.getPlayMatchButton().setEnabled(false);
 				display.getWaitForFriendlyMatch().setVisible(true);
 			}
@@ -283,8 +284,8 @@ public class TacticPresenter implements Presenter {
 								javaLeagueMessages.emptyUserTactic());
 						display.getPlayMatchButton().setEnabled(false);
 					}
-					
-					if (tactic.getFriendlyMatch() != AppLib.FRIENDLY_MATCH_OK) {
+
+					if (tactic.getFriendlyMatch() == AppLib.FRIENDLY_MATCH_SCHEDULED) {
 						display.getPlayMatchButton().setEnabled(false);
 						display.getWaitForFriendlyMatch().setVisible(true);
 					}
