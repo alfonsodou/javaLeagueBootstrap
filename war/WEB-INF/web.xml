@@ -213,6 +213,16 @@
 		<url-pattern>/imageTransform</url-pattern>
 	</servlet-mapping>
 
+	<!-- ===================== BenchMark Servlet ===================== -->
+	<servlet>
+		<servlet-name>benchMark</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.servlets.BenchMarkServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>benchMark</servlet-name>
+		<url-pattern>/benchMark</url-pattern>
+	</servlet-mapping>
+
 	<!-- ===================== ObjectifyFilter ===================== -->
 	<filter>
 		<filter-name>ObjectifyFilter</filter-name>
