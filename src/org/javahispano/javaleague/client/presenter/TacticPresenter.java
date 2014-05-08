@@ -186,6 +186,9 @@ public class TacticPresenter implements Presenter {
 					getElementTextValue(tacticElement, "filename") + " :: "
 							+ getElementTextValue(tacticElement, "bytes")
 							+ " bytes");
+			if (tactic.getFriendlyMatch() != AppLib.FRIENDLY_MATCH_SCHEDULED) {
+				display.getPlayMatchButton().setEnabled(true);
+			}
 		} else {
 			display.getFileName().setText(javaLeagueMessages.emptyUserTactic());
 		}

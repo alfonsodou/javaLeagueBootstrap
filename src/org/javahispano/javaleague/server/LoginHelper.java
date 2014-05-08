@@ -1,5 +1,7 @@
 package org.javahispano.javaleague.server;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Date;
 import java.util.logging.Logger;
 
@@ -38,21 +40,32 @@ public class LoginHelper extends RemoteServiceServlet {
 
 	static public User getLoggedInUser(HttpSession session) {
 
-		if (session == null)
+		if (session == null) {
+			logger.warning("LoginHelper: getLoggedInUser :: Session is null!");
 			return null; // user not logged in
+		}
+			
 
 		String userId = (String) session.getAttribute("userId");
-		if (userId == null)
-			return null; // user not logged in
+		if (userId == null) {
+			logger.warning("LoginHelper: getLoggedInUser :: userId is null!");
+			return null; // user not logged in			
+		}
+
 
 		Long id = Long.parseLong(userId.trim());
-
 		try {
 			User u = userDAO.findById(id);
 			u.setLastActive(new Date());
 			userDAO.save(u);
 			return u;
 		} catch (Exception e) {
+			logger.warning(e.getMessage());
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			logger.warning("stackTrace -> " + sw.toString());
+
+			
 			return null;
 		}
 

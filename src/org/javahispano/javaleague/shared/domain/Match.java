@@ -53,14 +53,14 @@ public class Match implements Serializable {
 	private Date visualization;
 
 	private Date updated;
-	
+
 	@Index
 	private int state;
 
 	private long[] timeLocal;
 
 	private long[] timeVisita;
-	
+
 	private Long frameWorkId;
 
 	public Match() {
@@ -88,7 +88,12 @@ public class Match implements Serializable {
 	}
 
 	public TacticUser getLocal() {
-		return localTeam.get();
+		try {
+			TacticUser result = localTeam.get();
+			return result;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	public void setLocal(TacticUser local) {
@@ -96,7 +101,12 @@ public class Match implements Serializable {
 	}
 
 	public TacticUser getVisiting() {
-		return visitingTeam.get();
+		try {
+			TacticUser result = visitingTeam.get();
+			return result;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	public void setVisiting(TacticUser visiting) {
@@ -257,7 +267,8 @@ public class Match implements Serializable {
 	}
 
 	/**
-	 * @param updated the updated to set
+	 * @param updated
+	 *            the updated to set
 	 */
 	public void setUpdated(Date updated) {
 		this.updated = updated;
@@ -271,11 +282,11 @@ public class Match implements Serializable {
 	}
 
 	/**
-	 * @param frameWorkId the frameWorkId to set
+	 * @param frameWorkId
+	 *            the frameWorkId to set
 	 */
 	public void setFrameWorkId(Long frameWorkId) {
 		this.frameWorkId = frameWorkId;
 	}
 
-	
 }

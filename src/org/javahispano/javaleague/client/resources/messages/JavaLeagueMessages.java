@@ -58,7 +58,7 @@ public interface JavaLeagueMessages extends Messages {
 	@DefaultMessage("¿ Estás seguro ?")
 	String confirm();
 	
-	@DefaultMessage("Todas las clases de tú táctica deben estar incluidas en el package {0}")
+	@DefaultMessage("Todas las clases de tu táctica deben estar incluidas en el package {0}")
 	String packagePath(String path);
 	
 	@DefaultMessage("Jornada")

@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.javahispano.javaleague.server.LoginHelper;
 import org.javahispano.javaleague.server.domain.MatchDAO;
 import org.javahispano.javaleague.server.domain.TacticUserDAO;
+import org.javahispano.javaleague.server.domain.UserDAO;
 import org.javahispano.javaleague.shared.AppLib;
 import org.javahispano.javaleague.shared.domain.Match;
 import org.javahispano.javaleague.shared.domain.TacticUser;
@@ -42,18 +43,17 @@ public class DispatchMatchServlet extends HttpServlet {
 			.getLogger(DispatchMatchServlet.class.getName());
 	private MatchDAO matchDao = new MatchDAO();
 	private TacticUserDAO tacticUserDAO = new TacticUserDAO();
+	private UserDAO userDAO = new UserDAO();
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
-		User currentUser = LoginHelper.getLoggedInUser(req.getSession());
-		if (currentUser == null) {
-			log.warning("currentUser is null!!!");
-		}
+
 		TacticUser tactic = null;
 		Long tacticID = Long.parseLong(req.getParameter("tacticID").replace(
 				"_", ""));
 		try {
 			tactic = tacticUserDAO.findById(tacticID);
+			User currentUser = userDAO.findById(tactic.getUserId());
 			List<Match> matchList = matchDao
 					.getMatchsState(AppLib.MATCH_FRIENDLY_WAITING);
 
@@ -63,11 +63,11 @@ public class DispatchMatchServlet extends HttpServlet {
 				if (match.getLocal() == null) {
 					match.setLocal(tactic);
 					match.setNameLocal(tactic.getTeamName());
-					//match.setNameLocalManager(currentUser.getName());
+					match.setNameLocalManager(currentUser.getName());
 				} else {
 					match.setVisiting(tactic);
 					match.setNameForeign(tactic.getTeamName());
-					//match.setNameVisitingManager(currentUser.getName());
+					match.setNameVisitingManager(currentUser.getName());
 				}
 
 				QueueStatistics queueStatistics = QueueFactory.getQueue(
@@ -91,11 +91,11 @@ public class DispatchMatchServlet extends HttpServlet {
 				if (result % 2 == 0) {
 					match.setLocal(tactic);
 					match.setNameLocal(tactic.getTeamName());
-					//match.setNameLocalManager(currentUser.getName());
+					match.setNameLocalManager(currentUser.getName());
 				} else {
 					match.setVisiting(tactic);
 					match.setNameForeign(tactic.getTeamName());
-					//match.setNameVisitingManager(currentUser.getName());
+					match.setNameVisitingManager(currentUser.getName());
 				}
 
 				match.setState(AppLib.MATCH_FRIENDLY_WAITING);

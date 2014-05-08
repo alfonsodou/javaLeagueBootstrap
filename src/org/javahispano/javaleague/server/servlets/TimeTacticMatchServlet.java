@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.javahispano.javaleague.server.LoginHelper;
 import org.javahispano.javaleague.server.domain.MatchDAO;
+import org.javahispano.javaleague.server.domain.UserDAO;
 import org.javahispano.javaleague.shared.domain.Match;
 import org.javahispano.javaleague.shared.domain.User;
 
@@ -22,17 +23,12 @@ import org.javahispano.javaleague.shared.domain.User;
  * 
  */
 public class TimeTacticMatchServlet extends HttpServlet {
-	/**
-	 * Falta implementar la seguridad. Solo puede acceder a los datos el usuario
-	 * propietario de la tactica
-	 */
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger
 			.getLogger(TimeTacticMatchServlet.class.getName());
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
-		User currentUser = LoginHelper.getLoggedInUser(req.getSession());
 		MatchDAO matchDAO = new MatchDAO();
 		Match match = null;
 		long[] time;
@@ -41,14 +37,6 @@ public class TimeTacticMatchServlet extends HttpServlet {
 		try {
 			match = matchDAO.findById(Long.parseLong(req
 					.getParameter("matchID").replace("_", "")));
-
-			if ((!currentUser.getTactic().getId()
-					.equals(match.getLocal().getId()))
-					&& (!currentUser.getTactic().getId()
-							.equals(match.getVisiting().getId()))) {
-				return;
-
-			}
 		} catch (Exception e) {
 			log.warning(e.getMessage());
 		}
@@ -70,7 +58,7 @@ public class TimeTacticMatchServlet extends HttpServlet {
 		}
 
 		for (int i = 0; i < time.length; i++) {
-			result += time[i] + ",";
+			result += time[i] + "\n";
 		}
 		result = result.substring(0, result.length() - 1);
 		out.println(result);
