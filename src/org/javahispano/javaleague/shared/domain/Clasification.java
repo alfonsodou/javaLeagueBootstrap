@@ -27,11 +27,11 @@ public class Clasification implements Serializable {
 	
 	private Long calendarDateId;
 	
-	private List<Ref<StatisticsTeam>> statisticsTeam;
+	private List<StatisticsTeam> statisticsTeam;
 	
 	public Clasification() {
 		super();
-		statisticsTeam = new ArrayList<Ref<StatisticsTeam>>();
+		statisticsTeam = new ArrayList<StatisticsTeam>();
 	}
 
 	/**
@@ -65,14 +65,14 @@ public class Clasification implements Serializable {
 	/**
 	 * @return the statisticsTeam
 	 */
-	public List<Ref<StatisticsTeam>> getStatisticsTeam() {
+	public List<StatisticsTeam> getStatisticsTeam() {
 		return statisticsTeam;
 	}
 
 	/**
 	 * @param statisticsTeam the statisticsTeam to set
 	 */
-	public void setStatisticsTeam(List<Ref<StatisticsTeam>> statisticsTeam) {
+	public void setStatisticsTeam(List<StatisticsTeam> statisticsTeam) {
 		this.statisticsTeam = statisticsTeam;
 	}
 

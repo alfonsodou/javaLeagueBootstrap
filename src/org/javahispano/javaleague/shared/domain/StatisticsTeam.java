@@ -3,13 +3,12 @@
  */
 package org.javahispano.javaleague.shared.domain;
 
-import com.googlecode.objectify.annotation.Embed;
 
 /**
  * @author adou
  *
  */
-@Embed
+
 public class StatisticsTeam {
 	private String teamName;
 	private int goalsFor;
