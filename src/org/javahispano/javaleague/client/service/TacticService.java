@@ -3,6 +3,8 @@
  */
 package org.javahispano.javaleague.client.service;
 
+import java.util.Date;
+
 import org.javahispano.javaleague.shared.domain.TacticUser;
 import org.javahispano.javaleague.shared.domain.User;
 import org.javahispano.javaleague.shared.exception.NotLoggedInException;
@@ -27,5 +29,5 @@ public interface TacticService extends RemoteService {
 
 	TacticUser getTacticUserLogin();
 	
-	
+	Date getDateNow();
 }

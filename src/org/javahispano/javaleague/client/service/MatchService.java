@@ -12,7 +12,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 public interface MatchService extends RemoteService {
 
 
-	List<Match> getMatchList(TacticUser tactic);
+	List<Match> getMatchList(Long tacticId);
 
 	void setMatchState(Match match, int state);
 

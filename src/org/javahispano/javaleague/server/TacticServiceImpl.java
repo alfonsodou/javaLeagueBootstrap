@@ -71,4 +71,8 @@ public class TacticServiceImpl extends RemoteServiceServlet implements
 		return userTactic;
 	}
 
+	@Override
+	public Date getDateNow() {
+		return new Date();
+	}
 }

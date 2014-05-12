@@ -60,6 +60,10 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	Paragraph messagePackagePath;
 	@UiField
 	Label waitForFriendlyMatch;
+	@UiField
+	Paragraph nextMatchs;
+	@UiField
+	Paragraph lastMatchs;
 
 	private static TacticViewUiBinder uiBinder = GWT
 			.create(TacticViewUiBinder.class);
@@ -173,6 +177,16 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	@Override
 	public Label getWaitForFriendlyMatch() {
 		return waitForFriendlyMatch;
+	}
+
+	@Override
+	public Paragraph getNextMatchs() {
+		return nextMatchs;
+	}
+
+	@Override
+	public Paragraph getLastMatchs() {
+		return lastMatchs;
 	}
 
 }

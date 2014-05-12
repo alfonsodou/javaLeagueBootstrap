@@ -119,6 +119,22 @@
 						</b:Paragraph>
 					</b:Column>
 				</b:Row>
+				<b:Row>
+					<b:Column size="MD_6">
+						<b:Paragraph ui:field="nextMatchs" alignment="CENTER">
+							<b:Lead>
+								<ui:msg key="nextMatchs">Próximos partidos</ui:msg>
+							</b:Lead>
+						</b:Paragraph>
+					</b:Column>
+					<b:Column size="MD_5" offset="MD_1">
+						<b:Paragraph ui:field="lastMatchs" alignment="CENTER">
+							<b:Lead>
+								<ui:msg key="lastMatchs">Últimos partidos</ui:msg>
+							</b:Lead>
+						</b:Paragraph>
+					</b:Column>
+				</b:Row>
 			</b:PanelBody>
 		</b:Panel>
 	</b:Row>

@@ -5,7 +5,7 @@ package org.javahispano.javaleague.server.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,51 +17,35 @@ import org.javahispano.javaleague.shared.domain.BenchMark;
 
 /**
  * @author adou
- *
+ * 
  */
-public class BenchMarkServlet extends HttpServlet {
+public class ShowBenchMarkServlet extends HttpServlet {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private BenchMarkDAO benchMarkDAO = new BenchMarkDAO();
-	
+
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
-	    long t1 = System.nanoTime();
+		resp.setHeader("Content-disposition",
+				"attachment; filename=benchMark.csv");
 
-	    int result = 0;
-	    for (int i = 0; i < 1000 * 1000; i++) {    // sole loop
-	        result += sum();
-	    }
+		PrintWriter out = resp.getWriter();
+		List<BenchMark> listBenchMark = benchMarkDAO.getAllBenchMark();
+		for (BenchMark benchMark : listBenchMark) {
+			out.println(benchMark.getDate().toString() + ","
+					+ benchMark.getTime());
+		}
 
-	    long t2 = System.nanoTime();
-	    
-	    BenchMark benchMark = new BenchMark();
-	    benchMark.setDate(new Date());
-	    benchMark.setTime(((t2 - t1) * 1e-9));
-	    benchMark.setResult(result);
-	    benchMarkDAO.save(benchMark);
-	    
-/*	    PrintWriter out = resp.getWriter();
-		out.println("Execution time: " + ((t2 - t1) * 1e-9) +
-		        " seconds to compute result = " + result);
-		resp.flushBuffer();*/
+		resp.flushBuffer();
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		doGet(req, res);
 	}
-	
-	private static int sum() {
-	    int sum = 0;
-	    for (int j = 0; j < 10 * 1000; j++) {
-	        sum += j;
-	    }
-	    return sum;
-	}	
 
 }

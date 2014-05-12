@@ -116,7 +116,6 @@ public class ShowLeaguePresenter implements Presenter {
 	private League league;
 	private TacticUser tacticUser;
 	private User user;
-	private Long matchId;
 	private int round;
 	private Date now;
 
@@ -159,15 +158,15 @@ public class ShowLeaguePresenter implements Presenter {
 			display.getDropLeagueButton().setVisible(true);
 			display.getEditLeagueButton().setVisible(true);
 			display.getCreateCalendarLeagueButton().setVisible(true);
+			if (league.getUsers().size() < 2) {
+				display.getCreateCalendarLeagueButton().setEnabled(false);
+			} else {
+				display.getCreateCalendarLeagueButton().setEnabled(true);
+			}
 		} else {
 			display.getDropLeagueButton().setVisible(false);
 			display.getEditLeagueButton().setVisible(false);
 			display.getCreateCalendarLeagueButton().setVisible(false);
-		}
-		if (league.getUsers().size() < 2) {
-			display.getCreateCalendarLeagueButton().setEnabled(false);
-		} else {
-			display.getCreateCalendarLeagueButton().setEnabled(true);
 		}
 		display.getDescriptionLeague().setHTML(league.getDescription());
 		display.getNameLeague().setText(league.getName());
@@ -206,7 +205,6 @@ public class ShowLeaguePresenter implements Presenter {
 					}
 				}
 			}
-
 		});
 		ListItem nextLink = display.getPaginationRounds().addNextLink();
 		nextLink.addClickHandler(new ClickHandler() {
@@ -221,7 +219,6 @@ public class ShowLeaguePresenter implements Presenter {
 				}
 			}
 		});
-
 	}
 
 	private int getRoundActual() {
@@ -264,7 +261,8 @@ public class ShowLeaguePresenter implements Presenter {
 				row.add(addTeam(m.get().getVisiting().getId(), m.get()
 						.getNameForeign(), m.get().getNameVisitingManager()));
 				row.add(addLinks(m.get().getId(), m.get().getLocal()
-						.getUserId(), m.get().getVisiting().getUserId()));
+						.getUserId(), m.get().getVisiting().getUserId(), m
+						.get().getState()));
 
 				display.getTabPaneDate().add(row);
 			}
@@ -282,9 +280,8 @@ public class ShowLeaguePresenter implements Presenter {
 		DateTimeFormat date = DateTimeFormat
 				.getFormat(PredefinedFormat.TIME_MEDIUM);
 
-		matchId = id;
 		Anchor anchor = new Anchor();
-		
+
 		switch (state) {
 		case AppLib.MATCH_ERROR:
 			anchor.setText(javaLeagueMessages.matchError());
@@ -344,34 +341,37 @@ public class ShowLeaguePresenter implements Presenter {
 		return column;
 	}
 
-	private Column addLinks(Long id, Long localId, Long visitingId) {
+	private Column addLinks(Long id, Long localId, Long visitingId, int state) {
 		Column column = new Column();
 		column.setSize(ColumnSize.MD_1);
-		Paragraph p = new Paragraph();
-		p.setAlignment(Alignment.CENTER);
-		Anchor match = new Anchor();
-		match.setIcon(IconType.DOWNLOAD);
-		match.setHref(AppLib.baseURL + "/serve?id=" + Long.toString(id));
-		p.add(match);
 
-		if (user.getId() == localId) {
-			Anchor csv = new Anchor();
-			csv.setIcon(IconType.CALENDAR);
-			csv.setHref(AppLib.baseURL + "/timeTacticMatch?id="
-					+ Long.toString(id) + "&tactic=local");
+		if (state == AppLib.MATCH_OK) {
+			Paragraph p = new Paragraph();
+			p.setAlignment(Alignment.CENTER);
+			Anchor match = new Anchor();
+			match.setIcon(IconType.DOWNLOAD);
+			match.setHref(AppLib.baseURL + "/serve?id=" + Long.toString(id));
+			p.add(match);
 
-			p.add(csv);
+			if (user.getId() == localId) {
+				Anchor csv = new Anchor();
+				csv.setIcon(IconType.CALENDAR);
+				csv.setHref(AppLib.baseURL + "/timeTacticMatch?id="
+						+ Long.toString(id) + "&tactic=local");
 
-		} else if (user.getId() == visitingId) {
-			Anchor csv = new Anchor();
-			csv.setIcon(IconType.CALENDAR);
-			csv.setHref(AppLib.baseURL + "/timeTacticMatch?id="
-					+ Long.toString(id) + "&tactic=vis");
+				p.add(csv);
 
-			p.add(csv);
+			} else if (user.getId() == visitingId) {
+				Anchor csv = new Anchor();
+				csv.setIcon(IconType.CALENDAR);
+				csv.setHref(AppLib.baseURL + "/timeTacticMatch?id="
+						+ Long.toString(id) + "&tactic=vis");
+
+				p.add(csv);
+			}
+
+			column.add(p);
 		}
-
-		column.add(p);
 
 		return column;
 	}

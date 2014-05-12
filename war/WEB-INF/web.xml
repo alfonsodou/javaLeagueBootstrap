@@ -220,9 +220,19 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>benchMark</servlet-name>
-		<url-pattern>/benchMark</url-pattern>
+		<url-pattern>/cron/benchMark</url-pattern>
 	</servlet-mapping>
 
+	<!-- ===================== Show BenchMark Servlet ===================== -->
+	<servlet>
+		<servlet-name>showBenchMark</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.servlets.ShowBenchMarkServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>showBenchMark</servlet-name>
+		<url-pattern>showBenchMark</url-pattern>
+	</servlet-mapping>
+	
 	<!-- ===================== ObjectifyFilter ===================== -->
 	<filter>
 		<filter-name>ObjectifyFilter</filter-name>

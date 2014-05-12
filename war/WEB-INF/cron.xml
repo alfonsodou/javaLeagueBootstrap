@@ -5,4 +5,9 @@
     <description>Comprueba cada 5 minutos los partidos a ejecutar</description>
     <schedule>every 5 minutes</schedule>
   </cron>
+  <cron>
+    <url>/cron/benchMark</url>
+    <description>Ejecuta cada 15 minutos el benchMark</description>
+    <schedule>every 15 minutes</schedule>
+  </cron>  
 </cronentries>

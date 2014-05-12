@@ -27,6 +27,9 @@ public class Match implements Serializable {
 
 	@Load
 	private Ref<TacticUser> localTeam;
+	
+	@Index
+	private Long localTeamId;
 
 	private String nameLocalTeam;
 
@@ -34,6 +37,9 @@ public class Match implements Serializable {
 
 	@Load
 	private Ref<TacticUser> visitingTeam;
+	
+	@Index
+	private Long visitingTeamId;
 
 	private String nameVisitingTeam;
 
@@ -62,6 +68,8 @@ public class Match implements Serializable {
 	private long[] timeVisita;
 
 	private Long frameWorkId;
+	
+	private String error;
 
 	public Match() {
 		super();
@@ -288,5 +296,48 @@ public class Match implements Serializable {
 	public void setFrameWorkId(Long frameWorkId) {
 		this.frameWorkId = frameWorkId;
 	}
+
+	/**
+	 * @return the error
+	 */
+	public String getError() {
+		return error;
+	}
+
+	/**
+	 * @param error the error to set
+	 */
+	public void setError(String error) {
+		this.error = error;
+	}
+
+	/**
+	 * @return the localTeamId
+	 */
+	public Long getLocalTeamId() {
+		return localTeamId;
+	}
+
+	/**
+	 * @param localTeamId the localTeamId to set
+	 */
+	public void setLocalTeamId(Long localTeamId) {
+		this.localTeamId = localTeamId;
+	}
+
+	/**
+	 * @return the visitingTeamId
+	 */
+	public Long getVisitingTeamId() {
+		return visitingTeamId;
+	}
+
+	/**
+	 * @param visitingTeamId the visitingTeamId to set
+	 */
+	public void setVisitingTeamId(Long visitingTeamId) {
+		this.visitingTeamId = visitingTeamId;
+	}
+	
 
 }

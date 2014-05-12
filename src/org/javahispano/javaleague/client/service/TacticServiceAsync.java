@@ -3,6 +3,8 @@
  */
 package org.javahispano.javaleague.client.service;
 
+import java.util.Date;
+
 import org.javahispano.javaleague.shared.domain.TacticUser;
 import org.javahispano.javaleague.shared.domain.User;
 
@@ -23,5 +25,7 @@ public interface TacticServiceAsync {
 	void getUserAccount(AsyncCallback<User> callback);
 
 	void getTacticUserLogin(AsyncCallback<TacticUser> callback);
+
+	void getDateNow(AsyncCallback<Date> callback);
 
 }

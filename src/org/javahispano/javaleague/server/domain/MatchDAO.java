@@ -34,8 +34,8 @@ public class MatchDAO {
 	public List<Match> findByTactic(Long id) {
 		List<Match> list = new ArrayList<Match>();
 
-		getMatchs(id, list, "localTeam");
-		getMatchs(id, list, "visitingTeam");
+		getMatchs(id, list, "localTeamId");
+		getMatchs(id, list, "visitingTeamId");
 
 		return list;
 	}

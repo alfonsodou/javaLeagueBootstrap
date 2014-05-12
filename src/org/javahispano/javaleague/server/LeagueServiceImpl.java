@@ -219,12 +219,16 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 							.getTactic());
 					match.setNameLocal(league.getUsers().get(home).get()
 							.getTactic().getTeamName());
+					match.setLocalTeamId(league.getUsers().get(home).get()
+							.getTactic().getId());
 					match.setNameForeign(league.getUsers().get(away).get()
 							.getTactic().getTeamName());
 					match.setNameLocalManager(league.getUsers().get(home).get()
 							.getName());
 					match.setNameVisitingManager(league.getUsers().get(away)
 							.get().getName());
+					match.setVisitingTeamId(league.getUsers().get(away).get()
+							.getTactic().getId());
 					match = matchDAO.save(match);
 					calendarDate.addMatch(match);
 				}
@@ -389,9 +393,10 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 		List<Ref<LeagueSummary>> leaguesSummary = null;
 
 		logger.warning("getManagerLeaguesSummary. UserId: " + user.getId());
-		
+
 		try {
-			leaguesSummary = leagueSummaryDAO.getManagerLeaguesSummary(user.getId());
+			leaguesSummary = leagueSummaryDAO.getManagerLeaguesSummary(user
+					.getId());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -409,7 +414,7 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 			e.printStackTrace();
 			logger.warning(e.getMessage());
 		}
-		
+
 		return league;
 	}
 

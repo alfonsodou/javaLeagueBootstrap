@@ -64,10 +64,12 @@ public class DispatchMatchServlet extends HttpServlet {
 					match.setLocal(tactic);
 					match.setNameLocal(tactic.getTeamName());
 					match.setNameLocalManager(currentUser.getName());
+					match.setLocalTeamId(tactic.getId());
 				} else {
 					match.setVisiting(tactic);
 					match.setNameForeign(tactic.getTeamName());
 					match.setNameVisitingManager(currentUser.getName());
+					match.setVisitingTeamId(tactic.getId());
 				}
 
 				QueueStatistics queueStatistics = QueueFactory.getQueue(
@@ -92,10 +94,12 @@ public class DispatchMatchServlet extends HttpServlet {
 					match.setLocal(tactic);
 					match.setNameLocal(tactic.getTeamName());
 					match.setNameLocalManager(currentUser.getName());
+					match.setLocalTeamId(tactic.getId());					
 				} else {
 					match.setVisiting(tactic);
 					match.setNameForeign(tactic.getTeamName());
 					match.setNameVisitingManager(currentUser.getName());
+					match.setVisitingTeamId(tactic.getId());					
 				}
 
 				match.setState(AppLib.MATCH_FRIENDLY_WAITING);
