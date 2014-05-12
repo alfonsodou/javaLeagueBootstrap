@@ -75,4 +75,10 @@ public interface JavaLeagueMessages extends Messages {
 	
 	@DefaultMessage("ERROR!")
 	String matchError();
+	
+	@DefaultMessage("Amistoso")
+	String friendly();
+	
+	@DefaultMessage("Liga")
+	String league();
 }

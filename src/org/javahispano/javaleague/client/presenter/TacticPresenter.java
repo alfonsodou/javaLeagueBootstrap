@@ -12,6 +12,7 @@ import org.gwtbootstrap3.client.ui.Anchor;
 import org.gwtbootstrap3.client.ui.Badge;
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Column;
+import org.gwtbootstrap3.client.ui.Italics;
 import org.gwtbootstrap3.client.ui.Label;
 import org.gwtbootstrap3.client.ui.Paragraph;
 import org.gwtbootstrap3.client.ui.Row;
@@ -21,7 +22,7 @@ import org.gwtbootstrap3.client.ui.constants.ColumnSize;
 import org.gwtbootstrap3.client.ui.constants.IconType;
 import org.javahispano.javaleague.client.event.PlayMatchEvent;
 import org.javahispano.javaleague.client.event.UpdateTacticEvent;
-import org.javahispano.javaleague.client.helper.MyClickHandlerMatch;
+import org.javahispano.javaleague.client.helper.MyClickHandlerLeague;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.MatchServiceAsync;
@@ -31,7 +32,6 @@ import org.javahispano.javaleague.client.service.UserFileServiceAsync;
 import org.javahispano.javaleague.shared.AppLib;
 import org.javahispano.javaleague.shared.domain.Match;
 import org.javahispano.javaleague.shared.domain.TacticUser;
-import org.javahispano.javaleague.shared.domain.User;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -260,8 +260,6 @@ public class TacticPresenter implements Presenter {
 		container.clear();
 		container.add(display.asWidget());
 		fetchTacticSummary();
-/*		fetchDate();
-		fetchMatchs();*/
 	}
 
 	private void fetchMatchs() {
@@ -279,6 +277,7 @@ public class TacticPresenter implements Presenter {
 					for (Match m : result) {
 						Row row = new Row();
 
+						row.add(addType(m.getLeagueId()));
 						row.add(addTeam(m.getLocal().getId(), m.getNameLocal(),
 								m.getNameLocalManager()));
 						row.add(addResult(m.getLocalGoals(),
@@ -290,7 +289,10 @@ public class TacticPresenter implements Presenter {
 						row.add(addLinks(m.getId(), m.getLocal().getUserId(), m
 								.getVisiting().getUserId(), m.getState()));
 
-						if (m.getState() == AppLib.MATCH_OK) {
+						if ((m.getState() == AppLib.MATCH_OK)
+								&& (!now.before(addMinutesToDate(
+										m.getVisualization(),
+										-AppLib.MINUTES_BEFORE_LIVE_MATCH)))) {
 							display.getLastMatchs().add(row);
 						} else {
 							display.getNextMatchs().add(row);
@@ -381,10 +383,30 @@ public class TacticPresenter implements Presenter {
 				.getNodeValue();
 	}
 
+	private Column addType(Long leagueId) {
+		Column column = new Column();
+
+		column.setSize(ColumnSize.MD_1);
+		if (leagueId != 0) {
+			Anchor anchor = new Anchor();
+			anchor.setText(javaLeagueMessages.league());
+			MyClickHandlerLeague myClickHandler = new MyClickHandlerLeague(
+					leagueId, eventBus);
+			anchor.addClickHandler(myClickHandler);
+			column.add(anchor);
+		} else {
+			Italics italics = new Italics();
+			italics.setText(javaLeagueMessages.friendly());
+			column.add(italics);
+		}
+
+		return column;
+	}
+
 	private Column addResult(int localGoals, int visitingTeamGoals,
 			double localPossesion, int state, Long id, Date d) {
 		Column column = new Column();
-		column.setSize(ColumnSize.MD_3);
+		column.setSize(ColumnSize.MD_2);
 		Paragraph p = new Paragraph();
 		p.setAlignment(Alignment.CENTER);
 		Paragraph result = new Paragraph();
@@ -397,8 +419,13 @@ public class TacticPresenter implements Presenter {
 		switch (state) {
 		case AppLib.MATCH_ERROR:
 			anchor.setText(javaLeagueMessages.matchError());
+			anchor.setHref(AppLib.baseURL + "/serveError?id="
+					+ Long.toString(id));
 			break;
 		case AppLib.MATCH_SCHEDULED:
+			anchor.setText(date.format(d));
+			break;
+		case AppLib.MATCH_QUEUE:
 			anchor.setText(date.format(d));
 			break;
 		case AppLib.MATCH_OK:
@@ -411,15 +438,21 @@ public class TacticPresenter implements Presenter {
 						&& now.before(addMinutesToDate(d,
 								AppLib.MINUTES_AFTER_LIVE_MATCH))) {
 					anchor.setText(javaLeagueMessages.live());
-
 				} else {
 					anchor.setText(localGoals + " - " + visitingTeamGoals);
 					possesion.setText(round(localPossesion * 100d, 2) + " - "
 							+ round((1d - localPossesion) * 100d, 2));
 				}
-				MyClickHandlerMatch myClickHandler = new MyClickHandlerMatch(
-						id, eventBus);
-				anchor.addClickHandler(myClickHandler);
+				/*
+				 * De momento el enlace descarga el partido Falta arreglar el
+				 * visor para ver el partido en directo
+				 */
+				anchor.setHref(AppLib.baseURL + "/serve?id="
+						+ Long.toString(id));
+				/*
+				 * MyClickHandlerMatch myClickHandler = new MyClickHandlerMatch(
+				 * id, eventBus); anchor.addClickHandler(myClickHandler);
+				 */
 			}
 			break;
 		}

@@ -127,7 +127,7 @@
 							</b:Lead>
 						</b:Paragraph>
 					</b:Column>
-					<b:Column size="MD_5" offset="MD_1">
+					<b:Column size="MD_6">
 						<b:Paragraph ui:field="lastMatchs" alignment="CENTER">
 							<b:Lead>
 								<ui:msg key="lastMatchs">Últimos partidos</ui:msg>

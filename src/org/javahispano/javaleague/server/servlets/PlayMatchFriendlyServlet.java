@@ -127,6 +127,7 @@ public class PlayMatchFriendlyServlet extends HttpServlet {
 			log.warning("stackTrace -> " + sw.toString());
 
 			match.setState(AppLib.MATCH_ERROR);
+			match.setError(sw.toString());
 			localTactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_OK);
 			visitingTactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_OK);
 		} finally {

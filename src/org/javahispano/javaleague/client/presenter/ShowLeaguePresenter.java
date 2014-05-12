@@ -12,6 +12,7 @@ import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Column;
 import org.gwtbootstrap3.client.ui.DescriptionData;
 import org.gwtbootstrap3.client.ui.Heading;
+import org.gwtbootstrap3.client.ui.Italics;
 import org.gwtbootstrap3.client.ui.ListItem;
 import org.gwtbootstrap3.client.ui.Pagination;
 import org.gwtbootstrap3.client.ui.Paragraph;
@@ -27,6 +28,7 @@ import org.gwtbootstrap3.extras.bootbox.client.callback.ConfirmCallback;
 import org.javahispano.javaleague.client.event.CreateCalendarLeagueEvent;
 import org.javahispano.javaleague.client.event.EditLeagueEvent;
 import org.javahispano.javaleague.client.event.ShowMyLeaguesEvent;
+import org.javahispano.javaleague.client.helper.MyClickHandlerLeague;
 import org.javahispano.javaleague.client.helper.MyClickHandlerMatch;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
@@ -252,6 +254,7 @@ public class ShowLeaguePresenter implements Presenter {
 
 				Row row = new Row();
 
+				row.add(addType(m.get().getLeagueId()));
 				row.add(addTeam(m.get().getLocal().getId(), m.get()
 						.getNameLocal(), m.get().getNameLocalManager()));
 				row.add(addResult(m.get().getLocalGoals(), m.get()
@@ -269,6 +272,26 @@ public class ShowLeaguePresenter implements Presenter {
 		}
 	}
 
+	private Column addType(Long leagueId) {
+		Column column = new Column();
+
+		column.setSize(ColumnSize.MD_2);
+		if (leagueId != 0) {
+			Anchor anchor = new Anchor();
+			anchor.setText(javaLeagueMessages.league());
+			MyClickHandlerLeague myClickHandler = new MyClickHandlerLeague(
+					leagueId, eventBus);
+			anchor.addClickHandler(myClickHandler);
+			column.add(anchor);
+		} else {
+			Italics italics = new Italics();
+			italics.setText(javaLeagueMessages.friendly());
+			column.add(italics);
+		}
+		
+		return column;
+	}
+	
 	private Column addResult(int localGoals, int visitingTeamGoals,
 			double localPossesion, int state, Long id, Date d) {
 		Column column = new Column();
@@ -305,9 +328,15 @@ public class ShowLeaguePresenter implements Presenter {
 					possesion.setText(round(localPossesion * 100d, 2) + " - "
 							+ round((1d - localPossesion) * 100d, 2));
 				}
-				MyClickHandlerMatch myClickHandler = new MyClickHandlerMatch(
+				/*
+				 * De momento el enlace descarga el partido 
+				 * Falta arreglar el visor para ver el partido en directo
+				 */
+				anchor.setHref(AppLib.baseURL + "/serve?id=" + Long.toString(id));
+
+/*				MyClickHandlerMatch myClickHandler = new MyClickHandlerMatch(
 						id, eventBus);
-				anchor.addClickHandler(myClickHandler);
+				anchor.addClickHandler(myClickHandler);*/
 			}
 			break;
 		}

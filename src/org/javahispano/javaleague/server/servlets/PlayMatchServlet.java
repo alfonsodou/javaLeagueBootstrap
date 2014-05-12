@@ -144,8 +144,9 @@ public class PlayMatchServlet extends HttpServlet {
 			log.warning("stackTrace -> " + sw.toString());
 
 			match.setState(AppLib.MATCH_ERROR);
-			localTactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_NO);
-			visitingTactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_NO);
+			match.setError(sw.toString());
+			localTactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_OK);
+			visitingTactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_OK);
 		} finally {
 			matchDAO.save(match);
 			tacticUserDAO.save(localTactic);
