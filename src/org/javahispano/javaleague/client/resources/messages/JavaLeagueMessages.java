@@ -81,4 +81,7 @@ public interface JavaLeagueMessages extends Messages {
 	
 	@DefaultMessage("Liga")
 	String league();
+	
+	@DefaultMessage("Esperando")
+	String waiting();
 }

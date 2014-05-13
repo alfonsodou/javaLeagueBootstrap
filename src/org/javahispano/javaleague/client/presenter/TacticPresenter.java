@@ -278,13 +278,13 @@ public class TacticPresenter implements Presenter {
 						Row row = new Row();
 
 						row.add(addType(m.getLeagueId()));
-						row.add(addTeam(m.getLocal().getId(), m.getNameLocal(),
+						row.add(addTeam(m.getLocalTeamId(), m.getNameLocal(),
 								m.getNameLocalManager()));
 						row.add(addResult(m.getLocalGoals(),
 								m.getVisitingTeamGoals(),
 								m.getLocalPossesion(), m.getState(), m.getId(),
 								m.getVisualization()));
-						row.add(addTeam(m.getVisiting().getId(),
+						row.add(addTeam(m.getVisitingTeamId(),
 								m.getNameForeign(), m.getNameVisitingManager()));
 						row.add(addLinks(m.getId(), m.getLocal().getUserId(), m
 								.getVisiting().getUserId(), m.getState()));
@@ -406,7 +406,7 @@ public class TacticPresenter implements Presenter {
 	private Column addResult(int localGoals, int visitingTeamGoals,
 			double localPossesion, int state, Long id, Date d) {
 		Column column = new Column();
-		column.setSize(ColumnSize.MD_2);
+		column.setSize(ColumnSize.MD_3);
 		Paragraph p = new Paragraph();
 		p.setAlignment(Alignment.CENTER);
 		Paragraph result = new Paragraph();
@@ -427,6 +427,9 @@ public class TacticPresenter implements Presenter {
 			break;
 		case AppLib.MATCH_QUEUE:
 			anchor.setText(date.format(d));
+			break;
+		case AppLib.MATCH_FRIENDLY_WAITING:
+			anchor.setText(javaLeagueMessages.waiting());
 			break;
 		case AppLib.MATCH_OK:
 			if (now.before(addMinutesToDate(d,
@@ -469,15 +472,23 @@ public class TacticPresenter implements Presenter {
 
 	private Column addTeam(Long id, String name, String nameManager) {
 		Column column = new Column();
-		column.setSize(ColumnSize.MD_4);
+		column.setSize(ColumnSize.MD_3);
 		Paragraph p = new Paragraph();
 		p.setAlignment(Alignment.CENTER);
 		Paragraph teamName = new Paragraph();
 		Small managerName = new Small();
 
-		teamName.setText(name);
-		managerName.setText(nameManager);
-
+		if (name != null) {
+			teamName.setText(name);
+		} else {
+			teamName.setText(javaLeagueMessages.waiting());
+		}
+		if (nameManager != null) {
+			managerName.setText(nameManager);	
+		} else {
+			managerName.setText(javaLeagueMessages.waiting());
+		}
+		
 		p.add(teamName);
 		p.add(managerName);
 
