@@ -21,6 +21,7 @@ import org.gwtbootstrap3.client.ui.constants.Alignment;
 import org.gwtbootstrap3.client.ui.constants.ColumnSize;
 import org.gwtbootstrap3.client.ui.constants.IconType;
 import org.javahispano.javaleague.client.event.PlayMatchEvent;
+import org.javahispano.javaleague.client.event.ShowMyTacticEvent;
 import org.javahispano.javaleague.client.event.UpdateTacticEvent;
 import org.javahispano.javaleague.client.helper.MyClickHandlerLeague;
 import org.javahispano.javaleague.client.helper.RPCCall;
@@ -97,6 +98,8 @@ public class TacticPresenter implements Presenter {
 		Paragraph getNextMatchs();
 
 		Paragraph getLastMatchs();
+
+		Button getUpdateWindowButton();
 	}
 
 	private TacticUser tactic;
@@ -129,6 +132,7 @@ public class TacticPresenter implements Presenter {
 
 		this.display.getUpdateButton().setEnabled(false);
 		this.display.getWaitForFriendlyMatch().setVisible(false);
+		this.display.getUpdateWindowButton().setEnabled(false);
 
 		bind();
 	}
@@ -141,6 +145,13 @@ public class TacticPresenter implements Presenter {
 				eventBus.fireEvent(new UpdateTacticEvent(tactic));
 
 				doUpdateTactic();
+			}
+		});
+
+		display.getUpdateWindowButton().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				display.getUpdateWindowButton().setEnabled(false);
+				fetchDate();
 			}
 		});
 
@@ -274,6 +285,9 @@ public class TacticPresenter implements Presenter {
 			@Override
 			public void onSuccess(List<Match> result) {
 				if ((result != null) && (result.size() > 0)) {
+					display.getLastMatchs().clear();
+					display.getNextMatchs().clear();
+
 					for (Match m : result) {
 						Row row = new Row();
 
@@ -286,8 +300,16 @@ public class TacticPresenter implements Presenter {
 								m.getVisualization()));
 						row.add(addTeam(m.getVisitingTeamId(),
 								m.getNameForeign(), m.getNameVisitingManager()));
-						row.add(addLinks(m.getId(), m.getLocal().getUserId(), m
-								.getVisiting().getUserId(), m.getState()));
+						if ((m.getLocalTeamId() == 0)
+								|| (m.getVisitingTeamId() == 0)) {
+							Column column = new Column();
+							column.setSize(ColumnSize.MD_1);
+							row.add(column);
+						} else {
+							row.add(addLinks(m.getId(), m.getLocal()
+									.getUserId(), m.getVisiting().getUserId(),
+									m.getState(), m.getVisualization()));
+						}
 
 						if ((m.getState() == AppLib.MATCH_OK)
 								&& (!now.before(addMinutesToDate(
@@ -299,6 +321,8 @@ public class TacticPresenter implements Presenter {
 						}
 					}
 				}
+				
+				display.getUpdateWindowButton().setEnabled(true);
 			}
 
 			@Override
@@ -478,17 +502,14 @@ public class TacticPresenter implements Presenter {
 		Paragraph teamName = new Paragraph();
 		Small managerName = new Small();
 
-		if (name != null) {
+		if (id != 0) {
 			teamName.setText(name);
+			managerName.setText(nameManager);
 		} else {
 			teamName.setText(javaLeagueMessages.waiting());
-		}
-		if (nameManager != null) {
-			managerName.setText(nameManager);	
-		} else {
 			managerName.setText(javaLeagueMessages.waiting());
 		}
-		
+
 		p.add(teamName);
 		p.add(managerName);
 
@@ -497,11 +518,18 @@ public class TacticPresenter implements Presenter {
 		return column;
 	}
 
-	private Column addLinks(Long id, Long localId, Long visitingId, int state) {
+	private Column addLinks(Long id, Long localId, Long visitingId, int state,
+			Date d) {
 		Column column = new Column();
 		column.setSize(ColumnSize.MD_1);
 
-		if (state == AppLib.MATCH_OK) {
+		if ((state == AppLib.MATCH_OK)
+				&& !(now.before(addMinutesToDate(d,
+						-AppLib.MINUTES_BEFORE_LIVE_MATCH)))
+				&& !(now.after(addMinutesToDate(d,
+						-AppLib.MINUTES_BEFORE_LIVE_MATCH)) && now
+						.before(addMinutesToDate(d,
+								AppLib.MINUTES_AFTER_LIVE_MATCH)))) {
 			Paragraph p = new Paragraph();
 			p.setAlignment(Alignment.CENTER);
 			Anchor match = new Anchor();

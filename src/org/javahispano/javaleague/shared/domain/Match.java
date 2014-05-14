@@ -75,6 +75,8 @@ public class Match implements Serializable {
 		super();
 		this.execution = new Date();
 		this.visualization = new Date();
+		this.localTeamId = 0L;
+		this.visitingTeamId = 0L;
 		this.visitingTeam = null;
 		this.localTeam = null;
 		this.visitingTeamGoals = 0;

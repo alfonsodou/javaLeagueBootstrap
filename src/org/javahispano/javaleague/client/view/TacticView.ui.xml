@@ -120,18 +120,30 @@
 					</b:Column>
 				</b:Row>
 				<b:Row>
+					<b:Column size="MD_2" offset="MD_10">
+						<b:Button ui:field="updateWindowButton" icon="REFRESH"
+							iconSpin="true">
+							<ui:msg key="updateWindowButton">Refrescar</ui:msg>
+						</b:Button>
+					</b:Column>
+				</b:Row>
+				<b:Row>
 					<b:Column size="MD_6">
-						<b:Paragraph ui:field="nextMatchs" alignment="CENTER">
+						<b:Paragraph alignment="CENTER">
 							<b:Lead>
 								<ui:msg key="nextMatchs">Próximos partidos</ui:msg>
 							</b:Lead>
 						</b:Paragraph>
+						<b:Paragraph ui:field="nextMatchs" alignment="CENTER">
+						</b:Paragraph>
 					</b:Column>
 					<b:Column size="MD_6">
-						<b:Paragraph ui:field="lastMatchs" alignment="CENTER">
+						<b:Paragraph alignment="CENTER">
 							<b:Lead>
 								<ui:msg key="lastMatchs">Últimos partidos</ui:msg>
 							</b:Lead>
+						</b:Paragraph>
+						<b:Paragraph ui:field="lastMatchs" alignment="CENTER">
 						</b:Paragraph>
 					</b:Column>
 				</b:Row>

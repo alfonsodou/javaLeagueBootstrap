@@ -64,6 +64,8 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	Paragraph nextMatchs;
 	@UiField
 	Paragraph lastMatchs;
+	@UiField
+	Button updateWindowButton;
 
 	private static TacticViewUiBinder uiBinder = GWT
 			.create(TacticViewUiBinder.class);
@@ -187,6 +189,11 @@ public class TacticView extends Composite implements TacticPresenter.Display {
 	@Override
 	public Paragraph getLastMatchs() {
 		return lastMatchs;
+	}
+
+	@Override
+	public Button getUpdateWindowButton() {
+		return updateWindowButton;
 	}
 
 }
