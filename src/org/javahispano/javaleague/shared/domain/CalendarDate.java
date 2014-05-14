@@ -6,6 +6,7 @@ package org.javahispano.javaleague.shared.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -43,8 +44,7 @@ public class CalendarDate implements Serializable {
 	
 	private Date finish;
 	
-	@Load
-	private Ref<Clasification> clasification;
+	private HashMap<Long, StatisticsTeam> clasification;
 	
 	private Date updated;
 
@@ -52,6 +52,7 @@ public class CalendarDate implements Serializable {
 	public CalendarDate() {
 		super();
 		matchs = new ArrayList<Ref<Match>>();
+		clasification = new HashMap<Long, StatisticsTeam>();
 	}
 	
 	/**
@@ -130,15 +131,15 @@ public class CalendarDate implements Serializable {
 	/**
 	 * @return the clasification
 	 */
-	public Clasification getClasification() {
-		return clasification.get();
+	public HashMap<Long, StatisticsTeam> getClasification() {
+		return clasification;
 	}
 
 	/**
 	 * @param clasification the clasification to set
 	 */
-	public void setClasification(Clasification clasification) {
-		this.clasification = Ref.create(clasification);
+	public void setClasification(HashMap<Long, StatisticsTeam> clasification) {
+		this.clasification = clasification;
 	}
 	
 	public void addMatch(Match m) {

@@ -26,7 +26,13 @@ public class StatisticsTeam {
 	private double posession;
 	
 	public StatisticsTeam() {
-		
+		this.goalsFor = 0;
+		this.goalsAgainst = 0;
+		this.matchLost = 0;
+		this.matchTied = 0;
+		this.matchWins = 0;
+		this.points = 0;
+		this.posession = 0.0;
 	}
 
 	/**

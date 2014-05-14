@@ -18,6 +18,8 @@ import org.javahispano.javaleague.shared.domain.CalendarDate;
 import org.javahispano.javaleague.shared.domain.League;
 import org.javahispano.javaleague.shared.domain.LeagueSummary;
 import org.javahispano.javaleague.shared.domain.Match;
+import org.javahispano.javaleague.shared.domain.StatisticsTeam;
+import org.javahispano.javaleague.shared.domain.TacticUser;
 import org.javahispano.javaleague.shared.domain.User;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -186,6 +188,13 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 				calendarDate.setStart(start);
 				calendarDate.setFinish(start);
 				calendarDate.setLeagueId(league.getId());
+				
+				for(int x = 0; x < n;x++) {
+					TacticUser t = league.getUsers().get(x).get().getTactic();
+					StatisticsTeam st = new StatisticsTeam();
+					st.setTeamName(t.getTeamName());
+					calendarDate.getClasification().put(t.getId(), st);
+				}
 
 				start = getNextDate(start, days.get(indexDay));
 				if (indexDay == days.size() - 1) {

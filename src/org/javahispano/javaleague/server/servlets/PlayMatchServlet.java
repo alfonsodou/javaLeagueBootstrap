@@ -52,8 +52,6 @@ public class PlayMatchServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
-		// Partido partido = null;
-
 		Match match = null;
 		Object lo = null;
 		Object vo = null;

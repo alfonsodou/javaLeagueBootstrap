@@ -6,6 +6,7 @@ package org.javahispano.javaleague.client.presenter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Date;
+import java.util.HashMap;
 
 import org.gwtbootstrap3.client.ui.Anchor;
 import org.gwtbootstrap3.client.ui.Button;
@@ -29,7 +30,6 @@ import org.javahispano.javaleague.client.event.CreateCalendarLeagueEvent;
 import org.javahispano.javaleague.client.event.EditLeagueEvent;
 import org.javahispano.javaleague.client.event.ShowMyLeaguesEvent;
 import org.javahispano.javaleague.client.helper.MyClickHandlerLeague;
-import org.javahispano.javaleague.client.helper.MyClickHandlerMatch;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
@@ -39,6 +39,7 @@ import org.javahispano.javaleague.shared.AppLib;
 import org.javahispano.javaleague.shared.domain.CalendarDate;
 import org.javahispano.javaleague.shared.domain.League;
 import org.javahispano.javaleague.shared.domain.Match;
+import org.javahispano.javaleague.shared.domain.StatisticsTeam;
 import org.javahispano.javaleague.shared.domain.TacticUser;
 import org.javahispano.javaleague.shared.domain.User;
 
@@ -138,9 +139,6 @@ public class ShowLeaguePresenter implements Presenter {
 		this.round = 0;
 
 		fetchDate();
-		// fetchTactic();
-		// fetchUser();
-		// fetchLeague();
 	}
 
 	private void ShowLeague() {
@@ -242,6 +240,8 @@ public class ShowLeaguePresenter implements Presenter {
 			DateTimeFormat date = DateTimeFormat
 					.getFormat(PredefinedFormat.DATE_TIME_MEDIUM);
 
+			doDisplayClasification(index);
+
 			Ref<CalendarDate> cd = league.getMatchs().get(index);
 			display.getTabPaneDate().clear();
 			display.getParagraphRoundDate().setText(
@@ -272,6 +272,25 @@ public class ShowLeaguePresenter implements Presenter {
 		}
 	}
 
+	private void doDisplayClasification(int index) {
+		display.getParagraphRoundClasification().clear();
+		HashMap<Long, StatisticsTeam> hashMapST = new HashMap<Long, StatisticsTeam>();
+		for (int i = 0; i < league.getUsers().size(); i++) {
+			StatisticsTeam st = new StatisticsTeam();
+			st.setTeamName(league.getUsers().get(i).get().getTactic()
+					.getTeamName());
+			hashMapST.put(league.getUsers().get(i).get().getTactic().getId(),
+					st);
+		}
+		
+		for (int f = 0; f <= index; f++) {
+			Ref<CalendarDate> cd = league.getMatchs().get(index);
+			for(Ref<Match> m : cd.get().getMatchs()) {
+				
+			}
+		}
+	}
+
 	private Column addType(Long leagueId) {
 		Column column = new Column();
 
@@ -288,10 +307,10 @@ public class ShowLeaguePresenter implements Presenter {
 			italics.setText(javaLeagueMessages.friendly());
 			column.add(italics);
 		}
-		
+
 		return column;
 	}
-	
+
 	private Column addResult(int localGoals, int visitingTeamGoals,
 			double localPossesion, int state, Long id, Date d) {
 		Column column = new Column();
@@ -329,14 +348,16 @@ public class ShowLeaguePresenter implements Presenter {
 							+ round((1d - localPossesion) * 100d, 2));
 				}
 				/*
-				 * De momento el enlace descarga el partido 
-				 * Falta arreglar el visor para ver el partido en directo
+				 * De momento el enlace descarga el partido Falta arreglar el
+				 * visor para ver el partido en directo
 				 */
-				anchor.setHref(AppLib.baseURL + "/serve?id=" + Long.toString(id));
+				anchor.setHref(AppLib.baseURL + "/serve?id="
+						+ Long.toString(id));
 
-/*				MyClickHandlerMatch myClickHandler = new MyClickHandlerMatch(
-						id, eventBus);
-				anchor.addClickHandler(myClickHandler);*/
+				/*
+				 * MyClickHandlerMatch myClickHandler = new MyClickHandlerMatch(
+				 * id, eventBus); anchor.addClickHandler(myClickHandler);
+				 */
 			}
 			break;
 		}
