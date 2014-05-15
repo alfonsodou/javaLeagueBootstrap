@@ -17,10 +17,12 @@ import org.javahispano.javaleague.javacup.shared.Agent;
 import org.javahispano.javaleague.javacup.shared.MatchShared;
 import org.javahispano.javaleague.server.classloader.MyDataStoreClassLoader;
 import org.javahispano.javaleague.server.domain.FrameWorkDAO;
+import org.javahispano.javaleague.server.domain.LeagueDAO;
 import org.javahispano.javaleague.server.domain.MatchDAO;
 import org.javahispano.javaleague.server.domain.TacticUserDAO;
 import org.javahispano.javaleague.shared.AppLib;
 import org.javahispano.javaleague.shared.domain.FrameWork;
+import org.javahispano.javaleague.shared.domain.League;
 import org.javahispano.javaleague.shared.domain.Match;
 import org.javahispano.javaleague.shared.domain.TacticUser;
 
@@ -44,6 +46,7 @@ public class PlayMatchServlet extends HttpServlet {
 	private MatchDAO matchDAO = new MatchDAO();
 	private TacticUserDAO tacticUserDAO = new TacticUserDAO();
 	private FrameWorkDAO frameWorkDAO = new FrameWorkDAO();
+	private LeagueDAO leagueDAO = new LeagueDAO();
 
 	private final GcsService gcsService = GcsServiceFactory
 			.createGcsService(RetryParams.getDefaultInstance());
@@ -56,6 +59,7 @@ public class PlayMatchServlet extends HttpServlet {
 		Object lo = null;
 		Object vo = null;
 		FrameWork frameWork = null;
+		League league = null;
 
 		Long matchID = Long.parseLong(req.getParameter("matchID").replace("_",
 				""));
@@ -128,8 +132,9 @@ public class PlayMatchServlet extends HttpServlet {
 					visitingTactic.addMatchWins();
 				}
 			}
-			localTactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_NO);
-			visitingTactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_NO);
+			
+			league = leagueDAO.findById(match.getLeagueId());
+			league.setExecutedMatchs(league.getExecutedMatchs() + 1);
 
 		} catch (Exception e) {
 
@@ -143,12 +148,11 @@ public class PlayMatchServlet extends HttpServlet {
 
 			match.setState(AppLib.MATCH_ERROR);
 			match.setError(sw.toString());
-			localTactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_OK);
-			visitingTactic.setFriendlyMatch(AppLib.FRIENDLY_MATCH_OK);
 		} finally {
 			matchDAO.save(match);
 			tacticUserDAO.save(localTactic);
 			tacticUserDAO.save(visitingTactic);
+			leagueDAO.save(league);
 		}
 
 	}

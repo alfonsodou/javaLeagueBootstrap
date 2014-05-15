@@ -42,15 +42,19 @@ public class LeagueDAO {
 	public void delete(Long id) {
 		ofy().delete().type(League.class).id(id).now();
 	}
-	
+
 	public List<Ref<League>> getAllLeagues() {
 		List<League> leagues = ofy().load().type(League.class).list();
 		List<Ref<League>> refLeagues = new ArrayList<Ref<League>>();
-		
-		for(League l : leagues) {
+
+		for (League l : leagues) {
 			refLeagues.add(Ref.create(l));
 		}
-		
+
 		return refLeagues;
+	}
+
+	public List<League> getLeaguesState(int state) {
+		return ofy().load().type(League.class).filter("state", state).list();
 	}
 }

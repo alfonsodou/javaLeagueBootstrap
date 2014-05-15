@@ -5,6 +5,7 @@ package org.javahispano.javaleague.server.domain;
 
 import org.javahispano.javaleague.shared.domain.BenchMark;
 import org.javahispano.javaleague.shared.domain.CalendarDate;
+import org.javahispano.javaleague.shared.domain.Clasification;
 import org.javahispano.javaleague.shared.domain.FrameWork;
 import org.javahispano.javaleague.shared.domain.League;
 import org.javahispano.javaleague.shared.domain.LeagueSummary;
@@ -30,6 +31,7 @@ public class OfyService {
 		factory().register(User.class);
 		factory().register(LeagueSummary.class);
 		factory().register(BenchMark.class);
+		factory().register(Clasification.class);
 	}
 
 	public static Objectify ofy() {

@@ -4,10 +4,9 @@
 package org.javahispano.javaleague.shared.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
+import java.util.HashMap;
 
-import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
@@ -25,13 +24,19 @@ public class Clasification implements Serializable {
 	@Id
 	private Long id;
 	
-	private Long calendarDateId;
+	private Long leagueId;
 	
-	private List<StatisticsTeam> statisticsTeam;
+	private HashMap<Long, StatisticsTeam> clasification;
+	
+	private int numberMatchs;
+	
+	private Date updated;
 	
 	public Clasification() {
 		super();
-		statisticsTeam = new ArrayList<StatisticsTeam>();
+		clasification = new HashMap<Long, StatisticsTeam>();
+		this.numberMatchs = 0;
+		this.updated = new Date();
 	}
 
 	/**
@@ -49,31 +54,59 @@ public class Clasification implements Serializable {
 	}
 
 	/**
-	 * @return the calendarDateId
+	 * @return the leagueId
 	 */
-	public Long getCalendarDateId() {
-		return calendarDateId;
+	public Long getLeagueId() {
+		return leagueId;
 	}
 
 	/**
-	 * @param calendarDateId the calendarDateId to set
+	 * @param leagueId the leagueId to set
 	 */
-	public void setCalendarDateId(Long calendarDateId) {
-		this.calendarDateId = calendarDateId;
+	public void setLeagueId(Long leagueId) {
+		this.leagueId = leagueId;
 	}
 
 	/**
-	 * @return the statisticsTeam
+	 * @return the clasification
 	 */
-	public List<StatisticsTeam> getStatisticsTeam() {
-		return statisticsTeam;
+	public HashMap<Long, StatisticsTeam> getClasification() {
+		return clasification;
 	}
 
 	/**
-	 * @param statisticsTeam the statisticsTeam to set
+	 * @param clasification the clasification to set
 	 */
-	public void setStatisticsTeam(List<StatisticsTeam> statisticsTeam) {
-		this.statisticsTeam = statisticsTeam;
+	public void setClasification(HashMap<Long, StatisticsTeam> clasification) {
+		this.clasification = clasification;
+	}
+
+	/**
+	 * @return the numberMatchs
+	 */
+	public int getNumberMatchs() {
+		return numberMatchs;
+	}
+
+	/**
+	 * @param numberMatchs the numberMatchs to set
+	 */
+	public void setNumberMatchs(int numberMatchs) {
+		this.numberMatchs = numberMatchs;
+	}
+
+	/**
+	 * @return the updated
+	 */
+	public Date getUpdated() {
+		return updated;
+	}
+
+	/**
+	 * @param updated the updated to set
+	 */
+	public void setUpdated(Date updated) {
+		this.updated = updated;
 	}
 
 }

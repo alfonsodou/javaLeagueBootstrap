@@ -37,6 +37,10 @@ public class AppLib {
 	public static final String PATH_LEAGUE_MATCH = "league/";
 	public static final String PATH_USER = "user/";
 
+	public static final int LEAGUE_INIT = 0;
+	public static final int LEAGUE_EXECUTION = 1;
+	public static final int LEAGUE_FINISH = 2;
+	
 	public static final String NO_FILE = "NO_FILE";
 
 	public static int POINTS_FOR_WIN = 3;

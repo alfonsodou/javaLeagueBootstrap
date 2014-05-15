@@ -43,16 +43,13 @@ public class CalendarDate implements Serializable {
 	private Date start;
 	
 	private Date finish;
-	
-	private HashMap<Long, StatisticsTeam> clasification;
-	
+		
 	private Date updated;
 
 	
 	public CalendarDate() {
 		super();
 		matchs = new ArrayList<Ref<Match>>();
-		clasification = new HashMap<Long, StatisticsTeam>();
 	}
 	
 	/**
@@ -128,20 +125,6 @@ public class CalendarDate implements Serializable {
 		this.leagueId = leagueId;
 	}
 
-	/**
-	 * @return the clasification
-	 */
-	public HashMap<Long, StatisticsTeam> getClasification() {
-		return clasification;
-	}
-
-	/**
-	 * @param clasification the clasification to set
-	 */
-	public void setClasification(HashMap<Long, StatisticsTeam> clasification) {
-		this.clasification = clasification;
-	}
-	
 	public void addMatch(Match m) {
 		matchs.add(Ref.create(m));
 	}

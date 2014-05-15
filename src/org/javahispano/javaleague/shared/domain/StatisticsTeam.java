@@ -147,5 +147,31 @@ public class StatisticsTeam {
 		this.posession = posession;
 	}
 	
+	public void addGoalsFor(int goals) {
+		this.goalsFor += goals;
+	}
 	
+	public void addGoalsAgainst(int goals) {
+		this.goalsAgainst += goals;
+	}
+	
+	public void addMatchWins() {
+		this.matchWins++;
+	}
+	
+	public void addMatchLost() {
+		this.matchLost++;
+	}
+	
+	public void addMatchTied() {
+		this.matchTied++;
+	}
+	
+	public void addPoints(int points) {
+		this.points += points;
+	}
+	
+	public void addPosession(double posession) {
+		this.posession += posession;
+	}
 }

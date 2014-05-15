@@ -14,6 +14,7 @@ import org.javahispano.javaleague.server.domain.LeagueDAO;
 import org.javahispano.javaleague.server.domain.LeagueSummaryDAO;
 import org.javahispano.javaleague.server.domain.MatchDAO;
 import org.javahispano.javaleague.server.domain.UserDAO;
+import org.javahispano.javaleague.shared.AppLib;
 import org.javahispano.javaleague.shared.domain.CalendarDate;
 import org.javahispano.javaleague.shared.domain.League;
 import org.javahispano.javaleague.shared.domain.LeagueSummary;
@@ -174,6 +175,8 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 		logger.warning("Total fechas: " + fechas);
 		logger.warning("Partidos por fecha: " + partidosPorFecha);
 
+		league.setNumberMatchs(partidos);
+		league.setState(AppLib.LEAGUE_EXECUTION);
 		for (int f = 0; f < league.getNumberRounds(); f++) {
 			if (f % 2 == 0) { // es par
 				swap = true;
@@ -189,13 +192,6 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 				calendarDate.setFinish(start);
 				calendarDate.setLeagueId(league.getId());
 				
-				for(int x = 0; x < n;x++) {
-					TacticUser t = league.getUsers().get(x).get().getTactic();
-					StatisticsTeam st = new StatisticsTeam();
-					st.setTeamName(t.getTeamName());
-					calendarDate.getClasification().put(t.getId(), st);
-				}
-
 				start = getNextDate(start, days.get(indexDay));
 				if (indexDay == days.size() - 1) {
 					indexDay = 0;

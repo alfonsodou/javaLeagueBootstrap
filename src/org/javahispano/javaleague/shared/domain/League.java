@@ -11,6 +11,7 @@ import org.javahispano.javaleague.shared.AppLib;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Load;
 
 /**
@@ -69,6 +70,16 @@ public class League implements Serializable {
 	
 	private Integer pointsForLost;
 	
+	@Load
+	private Ref<Clasification> clasification;
+	
+	private int numberMatchs;
+	
+	private int executedMatchs;
+	
+	@Index
+	private int state;
+	
 	public League() {
 		super();
 		this.creation = new Date();
@@ -79,6 +90,10 @@ public class League implements Serializable {
 		this.pointsForLost = AppLib.POINTS_FOR_LOST;
 		this.pointsForTied = AppLib.POINTS_FOR_TIED;
 		this.pointsForWin = AppLib.POINTS_FOR_WIN;
+		this.numberMatchs = 0;
+		this.executedMatchs = 0;
+		this.state = AppLib.LEAGUE_INIT;
+		this.clasification = null;
 	}
 		
 	public Long getId() {
@@ -325,4 +340,62 @@ public class League implements Serializable {
 	public void addCalendarDate(CalendarDate c) {
 		matchs.add(Ref.create(c));
 	}
+
+	/**
+	 * @return the clasification
+	 */
+	public Ref<Clasification> getClasification() {
+		return clasification;
+	}
+
+	/**
+	 * @param clasification the clasification to set
+	 */
+	public void setClasification(Clasification clasification) {
+		this.clasification = Ref.create(clasification);
+	}
+
+	/**
+	 * @return the numberMatchs
+	 */
+	public int getNumberMatchs() {
+		return numberMatchs;
+	}
+
+	/**
+	 * @param numberMatchs the numberMatchs to set
+	 */
+	public void setNumberMatchs(int numberMatchs) {
+		this.numberMatchs = numberMatchs;
+	}
+
+	/**
+	 * @return the executedMatchs
+	 */
+	public int getExecutedMatchs() {
+		return executedMatchs;
+	}
+
+	/**
+	 * @param executedMatchs the executedMatchs to set
+	 */
+	public void setExecutedMatchs(int executedMatchs) {
+		this.executedMatchs = executedMatchs;
+	}
+
+	/**
+	 * @return the state
+	 */
+	public int getState() {
+		return state;
+	}
+
+	/**
+	 * @param state the state to set
+	 */
+	public void setState(int state) {
+		this.state = state;
+	}
+	
+	
 }
