@@ -147,7 +147,7 @@ public class ShowLeaguePresenter implements Presenter {
 		if (league.getEndSignIn().before(now)) {
 			display.getJoinLeagueButton().setEnabled(false);
 		}
-		if (user.isJoinLeague(league.getId())) {
+		if (isJoinLeague(user.getId())) {
 			display.getJoinLeagueButton().setEnabled(false);
 		}
 		if (user.getTactic().getFileName().equals(AppLib.NO_FILE)) {
@@ -221,6 +221,18 @@ public class ShowLeaguePresenter implements Presenter {
 		});
 	}
 
+	private boolean isJoinLeague(Long userId) {
+		boolean result = false;
+		for(Ref<User> u : league.getUsers()) {
+			if (u.get().getId().equals(userId)) {
+				result = true;
+				break;
+			}
+		}
+		
+		return result;
+	}
+	
 	private int getRoundActual() {
 		int result = 0;
 
