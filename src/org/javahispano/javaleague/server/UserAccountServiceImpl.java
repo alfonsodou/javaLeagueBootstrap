@@ -53,7 +53,8 @@ public class UserAccountServiceImpl extends RemoteServiceServlet implements
 					+ " :: password = " + password);
 		}
 
-		if ((user != null) && (user.getPassword().equals(password))) {
+		if ((user != null) && (user.getPassword().equals(password))
+				&& (user.isActive())) {
 			HttpSession session = getThreadLocalRequest().getSession();
 			// update session if successful
 			session.setAttribute("userId", String.valueOf(user.getId()));
