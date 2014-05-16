@@ -314,7 +314,7 @@ public class AppController implements ValueChangeHandler<String> {
 			} else if (token.equals("showLeague")) {
 				presenter = new ShowLeaguePresenter(leagueService,
 						userTacticService, userAccountService, leagueId,
-						currentUser, eventBus, new ShowLeagueView());
+						currentUser.getId(), eventBus, new ShowLeagueView());
 				presenter.go(JavaLeagueApp.get().getCenterPanel());
 
 				return;

@@ -116,6 +116,7 @@ public class ShowLeaguePresenter implements Presenter {
 	private final UserAccountServiceAsync userAccountService;
 
 	private Long leagueId;
+	private Long userId;
 	private League league;
 	private TacticUser tacticUser;
 	private User user;
@@ -128,12 +129,12 @@ public class ShowLeaguePresenter implements Presenter {
 	public ShowLeaguePresenter(LeagueServiceAsync leagueService,
 			TacticServiceAsync tacticService,
 			UserAccountServiceAsync userAccountService, Long leagueId,
-			User user, SimpleEventBus eventBus, Display display) {
+			Long userId, SimpleEventBus eventBus, Display display) {
 		this.leagueService = leagueService;
 		this.tacticService = tacticService;
 		this.userAccountService = userAccountService;
 		this.leagueId = leagueId;
-		this.user = user;
+		this.userId = userId;
 		this.eventBus = eventBus;
 		this.display = display;
 		this.round = 0;
@@ -223,24 +224,26 @@ public class ShowLeaguePresenter implements Presenter {
 
 	private boolean isJoinLeague(Long userId) {
 		boolean result = false;
-		for(Ref<User> u : league.getUsers()) {
+		for (Ref<User> u : league.getUsers()) {
 			if (u.get().getId().equals(userId)) {
 				result = true;
 				break;
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	private int getRoundActual() {
 		int result = 0;
 
-		for (Ref<CalendarDate> cd : league.getMatchs()) {
-			if (cd.get().getFinish().before(now)) {
-				result++;
-			} else {
-				break;
+		if (league.getState() != AppLib.LEAGUE_INIT) {
+			for (Ref<CalendarDate> cd : league.getMatchs()) {
+				if (cd.get().getFinish().before(now)) {
+					result++;
+				} else {
+					break;
+				}
 			}
 		}
 
@@ -294,11 +297,11 @@ public class ShowLeaguePresenter implements Presenter {
 			hashMapST.put(league.getUsers().get(i).get().getTactic().getId(),
 					st);
 		}
-		
+
 		for (int f = 0; f <= index; f++) {
 			Ref<CalendarDate> cd = league.getMatchs().get(index);
-			for(Ref<Match> m : cd.get().getMatchs()) {
-				
+			for (Ref<Match> m : cd.get().getMatchs()) {
+
 			}
 		}
 	}

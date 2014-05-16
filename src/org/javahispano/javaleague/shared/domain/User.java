@@ -257,4 +257,6 @@ public class User implements Serializable {
 		leagues.remove(Ref.create(l));
 	}
 
+	
+	
 }
