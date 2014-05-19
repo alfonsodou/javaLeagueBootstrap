@@ -142,15 +142,17 @@ public class ShowLeaguePresenter implements Presenter {
 		fetchDate();
 	}
 
-	private void ShowLeague() {
+	private void ShowLeague() {	
 		display.getJoinLeagueButton().setEnabled(true);
 
 		if (league.getEndSignIn().before(now)) {
 			display.getJoinLeagueButton().setEnabled(false);
 		}
+
 		if (isJoinLeague(user.getId())) {
 			display.getJoinLeagueButton().setEnabled(false);
 		}
+		
 		if (user.getTactic().getFileName().equals(AppLib.NO_FILE)) {
 			display.getJoinLeagueButton().setEnabled(false);
 		}
@@ -255,7 +257,7 @@ public class ShowLeaguePresenter implements Presenter {
 			DateTimeFormat date = DateTimeFormat
 					.getFormat(PredefinedFormat.DATE_TIME_MEDIUM);
 
-			doDisplayClasification(index);
+			//doDisplayClasification(index);
 
 			Ref<CalendarDate> cd = league.getMatchs().get(index);
 			display.getTabPaneDate().clear();
@@ -515,7 +517,7 @@ public class ShowLeaguePresenter implements Presenter {
 
 			@Override
 			protected void callService(AsyncCallback<User> cb) {
-				userAccountService.getUser(user.getId(), cb);
+				userAccountService.getUser(userId, cb);
 			}
 
 		}.retry(3);
