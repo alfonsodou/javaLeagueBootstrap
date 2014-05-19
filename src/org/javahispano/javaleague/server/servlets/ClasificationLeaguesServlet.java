@@ -57,11 +57,9 @@ public class ClasificationLeaguesServlet extends HttpServlet {
 					for (Ref<Match> m : cd.get().getMatchs()) {
 						if (m.get().getState() == AppLib.MATCH_OK) {
 							StatisticsTeam stLocal = l.getClasification().get()
-									.getClasification()
-									.get(m.get().getLocalTeamId());
+									.getClasification(m.get().getLocalTeamId());
 							StatisticsTeam stVis = l.getClasification().get()
-									.getClasification()
-									.get(m.get().getVisitingTeamId());
+									.getClasification(m.get().getVisitingTeamId());
 							if (m.get().getLocalGoals() > m.get()
 									.getVisitingTeamGoals()) {
 								stLocal.addGoalsAgainst(m.get()
@@ -110,10 +108,8 @@ public class ClasificationLeaguesServlet extends HttpServlet {
 								stVis.addPosession(1 - m.get()
 										.getLocalPossesion());
 							}
-							clasification.getClasification().put(
-									m.get().getLocalTeamId(), stLocal);
-							clasification.getClasification().put(
-									m.get().getVisitingTeamId(), stVis);
+							clasification.getClasification().add(stLocal);
+							clasification.getClasification().add(stVis);
 						}
 					}
 				}
@@ -140,7 +136,8 @@ public class ClasificationLeaguesServlet extends HttpServlet {
 			User u = l.getUsers().get(f).get();
 			StatisticsTeam st = new StatisticsTeam();
 			st.setTeamName(u.getTactic().getTeamName());
-			c.getClasification().put(u.getTactic().getId(), st);
+			st.setTacticId(u.getTactic().getId());
+			c.getClasification().add(st);
 		}
 		c = clasificationDAO.save(c);
 		l.setClasification(c);

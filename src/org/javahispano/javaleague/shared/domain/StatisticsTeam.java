@@ -10,7 +10,10 @@ package org.javahispano.javaleague.shared.domain;
  */
 
 public class StatisticsTeam {
+	private Long tacticId;
+	
 	private String teamName;
+	
 	private int goalsFor;
 
 	private int goalsAgainst;
@@ -26,6 +29,7 @@ public class StatisticsTeam {
 	private double posession;
 	
 	public StatisticsTeam() {
+		this.tacticId = 0L;
 		this.goalsFor = 0;
 		this.goalsAgainst = 0;
 		this.matchLost = 0;
@@ -174,4 +178,20 @@ public class StatisticsTeam {
 	public void addPosession(double posession) {
 		this.posession += posession;
 	}
+
+	/**
+	 * @return the tacticId
+	 */
+	public Long getTacticId() {
+		return tacticId;
+	}
+
+	/**
+	 * @param tacticId the tacticId to set
+	 */
+	public void setTacticId(Long tacticId) {
+		this.tacticId = tacticId;
+	}
+	
+	
 }

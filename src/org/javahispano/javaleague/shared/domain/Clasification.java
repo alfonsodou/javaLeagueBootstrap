@@ -4,8 +4,10 @@
 package org.javahispano.javaleague.shared.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -26,7 +28,7 @@ public class Clasification implements Serializable {
 	
 	private Long leagueId;
 	
-	private HashMap<Long, StatisticsTeam> clasification;
+	private List<StatisticsTeam> clasification;
 	
 	private int numberMatchs;
 	
@@ -34,7 +36,7 @@ public class Clasification implements Serializable {
 	
 	public Clasification() {
 		super();
-		clasification = new HashMap<Long, StatisticsTeam>();
+		clasification = new ArrayList<StatisticsTeam>();
 		this.numberMatchs = 0;
 		this.updated = new Date();
 	}
@@ -70,14 +72,28 @@ public class Clasification implements Serializable {
 	/**
 	 * @return the clasification
 	 */
-	public HashMap<Long, StatisticsTeam> getClasification() {
+	public List<StatisticsTeam> getClasification() {
 		return clasification;
 	}
 
+	public StatisticsTeam getClasification(Long id) {
+		StatisticsTeam result = null;
+		for(StatisticsTeam st : clasification) {
+			if (st.getTacticId().equals(id)) {
+				result = st;
+				break;
+			}
+		}
+	
+		clasification.remove(result);
+		
+		return result;
+	}
+	
 	/**
 	 * @param clasification the clasification to set
 	 */
-	public void setClasification(HashMap<Long, StatisticsTeam> clasification) {
+	public void setClasification(List<StatisticsTeam> clasification) {
 		this.clasification = clasification;
 	}
 
