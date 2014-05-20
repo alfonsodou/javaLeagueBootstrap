@@ -6,11 +6,12 @@ package org.javahispano.javaleague.shared.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Load;
 
 /**
  * @author adou
@@ -28,7 +29,8 @@ public class Clasification implements Serializable {
 	
 	private Long leagueId;
 	
-	private List<StatisticsTeam> clasification;
+	@Load
+	private List<Ref<StatisticsTeam>> clasification;
 	
 	private int numberMatchs;
 	
@@ -36,7 +38,7 @@ public class Clasification implements Serializable {
 	
 	public Clasification() {
 		super();
-		clasification = new ArrayList<StatisticsTeam>();
+		clasification = new ArrayList<Ref<StatisticsTeam>>();
 		this.numberMatchs = 0;
 		this.updated = new Date();
 	}
@@ -72,15 +74,15 @@ public class Clasification implements Serializable {
 	/**
 	 * @return the clasification
 	 */
-	public List<StatisticsTeam> getClasification() {
+	public List<Ref<StatisticsTeam>> getClasification() {
 		return clasification;
 	}
 
 	public StatisticsTeam getClasification(Long id) {
 		StatisticsTeam result = null;
-		for(StatisticsTeam st : clasification) {
-			if (st.getTacticId().equals(id)) {
-				result = st;
+		for(Ref<StatisticsTeam> st : clasification) {
+			if (st.get().getTacticId().equals(id)) {
+				result = st.get();
 				break;
 			}
 		}
@@ -93,7 +95,7 @@ public class Clasification implements Serializable {
 	/**
 	 * @param clasification the clasification to set
 	 */
-	public void setClasification(List<StatisticsTeam> clasification) {
+	public void setClasification(List<Ref<StatisticsTeam>> clasification) {
 		this.clasification = clasification;
 	}
 

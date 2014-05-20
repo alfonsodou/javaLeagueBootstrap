@@ -3,13 +3,28 @@
  */
 package org.javahispano.javaleague.shared.domain;
 
+import java.io.Serializable;
+
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+
 
 /**
  * @author adou
  *
  */
 
-public class StatisticsTeam {
+@Entity
+public class StatisticsTeam implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	private Long id;
+	
 	private Long tacticId;
 	
 	private String teamName;
@@ -29,6 +44,7 @@ public class StatisticsTeam {
 	private double posession;
 	
 	public StatisticsTeam() {
+		super();
 		this.tacticId = 0L;
 		this.goalsFor = 0;
 		this.goalsAgainst = 0;
@@ -191,6 +207,20 @@ public class StatisticsTeam {
 	 */
 	public void setTacticId(Long tacticId) {
 		this.tacticId = tacticId;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	

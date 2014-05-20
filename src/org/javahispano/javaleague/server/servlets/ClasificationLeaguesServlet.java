@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.javahispano.javaleague.server.domain.ClasificationDAO;
 import org.javahispano.javaleague.server.domain.LeagueDAO;
+import org.javahispano.javaleague.server.domain.StatisticsTeamDAO;
 import org.javahispano.javaleague.shared.AppLib;
 import org.javahispano.javaleague.shared.domain.CalendarDate;
 import org.javahispano.javaleague.shared.domain.Clasification;
@@ -36,6 +37,7 @@ public class ClasificationLeaguesServlet extends HttpServlet {
 
 	private LeagueDAO leagueDAO = new LeagueDAO();
 	private ClasificationDAO clasificationDAO = new ClasificationDAO();
+	private StatisticsTeamDAO statisticsTeamDAO = new StatisticsTeamDAO();
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
@@ -108,8 +110,10 @@ public class ClasificationLeaguesServlet extends HttpServlet {
 								stVis.addPosession(1 - m.get()
 										.getLocalPossesion());
 							}
-							clasification.getClasification().add(stLocal);
-							clasification.getClasification().add(stVis);
+							stLocal = statisticsTeamDAO.save(stLocal);
+							stVis = statisticsTeamDAO.save(stVis);
+							clasification.getClasification().add(Ref.create(stLocal));
+							clasification.getClasification().add(Ref.create(stVis));
 						}
 					}
 				}
@@ -137,7 +141,8 @@ public class ClasificationLeaguesServlet extends HttpServlet {
 			StatisticsTeam st = new StatisticsTeam();
 			st.setTeamName(u.getTactic().getTeamName());
 			st.setTacticId(u.getTactic().getId());
-			c.getClasification().add(st);
+			st = statisticsTeamDAO.save(st);
+			c.getClasification().add(Ref.create(st));
 		}
 		c = clasificationDAO.save(c);
 		l.setClasification(c);

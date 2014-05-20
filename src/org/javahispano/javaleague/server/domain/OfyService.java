@@ -10,6 +10,7 @@ import org.javahispano.javaleague.shared.domain.FrameWork;
 import org.javahispano.javaleague.shared.domain.League;
 import org.javahispano.javaleague.shared.domain.LeagueSummary;
 import org.javahispano.javaleague.shared.domain.Match;
+import org.javahispano.javaleague.shared.domain.StatisticsTeam;
 import org.javahispano.javaleague.shared.domain.TacticUser;
 import org.javahispano.javaleague.shared.domain.User;
 
@@ -32,6 +33,7 @@ public class OfyService {
 		factory().register(LeagueSummary.class);
 		factory().register(BenchMark.class);
 		factory().register(Clasification.class);
+		factory().register(StatisticsTeam.class);
 	}
 
 	public static Objectify ofy() {
