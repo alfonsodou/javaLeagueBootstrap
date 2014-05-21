@@ -20,4 +20,7 @@ public class StatisticsTeamDAO {
 		return statisticsTeam;
 	}
 
+	public void delete(Long id) {
+		ofy().delete().type(StatisticsTeam.class).id(id).now();
+	}
 }

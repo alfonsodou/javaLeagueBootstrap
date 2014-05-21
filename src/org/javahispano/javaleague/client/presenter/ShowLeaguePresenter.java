@@ -271,7 +271,7 @@ public class ShowLeaguePresenter implements Presenter {
 
 				Row row = new Row();
 
-				row.add(addType(m.get().getLeagueId()));
+				//row.add(addType(m.get().getLeagueId()));
 				row.add(addTeam(m.get().getLocal().getId(), m.get()
 						.getNameLocal(), m.get().getNameLocalManager()));
 				row.add(addResult(m.get().getLocalGoals(), m.get()

@@ -59,8 +59,6 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 			league.setManagerId(user.getId());
 			league.setNameManager(user.getName());
 			league = leagueDAO.save(league);
-			user.addLeague(league);
-			user = userDAO.save(user);
 			LeagueSummary leagueSummary = new LeagueSummary();
 			leagueSummary.setLeagueId(league.getId());
 			leagueSummary.setCreation(league.getCreation());
@@ -70,6 +68,8 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 			leagueSummary.setManagerId(league.getManagerId());
 			leagueSummary.setStartSignIn(league.getStartSignIn());
 			leagueSummary = leagueSummaryDAO.save(leagueSummary);
+			user.addLeague(leagueSummary);
+			user = userDAO.save(user);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.warning(e.getMessage());
@@ -87,6 +87,7 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 					.getSession());
 			// leagues = Lists.newArrayList(user.getLeagues());
 			leagues = leagueDAO.getAllLeagues();
+			//leagues = user.getLeagues();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -113,7 +114,8 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public void dropLeague(Long id) {
 		try {
-			League l = leagueDAO.findById(id);
+			LeagueSummary l = leagueSummaryDAO.findById(id);
+			League league = l.getLeagueId()
 
 			// Borramos la liga de la lista de ligas del manager
 			User user = LoginHelper.getLoggedInUser(getThreadLocalRequest()
@@ -397,8 +399,6 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 				.getSession());
 		List<Ref<LeagueSummary>> leaguesSummary = null;
 
-		logger.warning("getManagerLeaguesSummary. UserId: " + user.getId());
-
 		try {
 			leaguesSummary = leagueSummaryDAO.getManagerLeaguesSummary(user
 					.getId());
@@ -421,6 +421,28 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 		}
 
 		return league;
+	}
+
+	@Override
+	public List<Ref<LeagueSummary>> getMyLeaguesSummary() {
+		List<Ref<LeagueSummary>> leaguesSummary = null;
+
+		try {
+			User user = LoginHelper.getLoggedInUser(getThreadLocalRequest()
+					.getSession());
+			// leagues = Lists.newArrayList(user.getLeagues());
+			//leagues = leagueDAO.getAllLeagues();
+			for(Ref<League> league : user.getLeagues()) {
+				leaguesSummary.add(e)
+			}
+			leagues = user.getLeagues();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.warning(e.getMessage());
+		}
+
+		return leagues;
 	}
 
 }

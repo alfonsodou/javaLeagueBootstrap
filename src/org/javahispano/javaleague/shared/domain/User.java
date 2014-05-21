@@ -50,12 +50,12 @@ public class User implements Serializable {
 	private String channelId;
 	
 	@Load
-	private List<Ref<League>> leagues;
+	private List<Ref<LeagueSummary>> leagues;
 
 	public User() {
 		super();
 		this.active = false;
-		this.leagues = new ArrayList<Ref<League>>();
+		this.leagues = new ArrayList<Ref<LeagueSummary>>();
 	}
 
 	/**
@@ -207,16 +207,16 @@ public class User implements Serializable {
 	/**
 	 * @return the leagues
 	 */
-	public List<Ref<League>> getLeagues() {
+	public List<Ref<LeagueSummary>> getLeagues() {
 		return leagues;
 	}
 
 	/**
 	 * @param leagues the leagues to set
 	 */
-	public void setLeagues(List<League> value) {
+	public void setLeagues(List<LeagueSummary> value) {
 		leagues.clear();
-		for(League l : value) {
+		for(LeagueSummary l : value) {
 			leagues.add(Ref.create(l));
 		}
 	}
@@ -224,8 +224,8 @@ public class User implements Serializable {
 	public boolean isJoinLeague(Long id2) {
 		boolean result = false;
 		
-		for(Ref<League> l : leagues) {
-			if (l.get().getId().equals(id2)) {
+		for(Ref<LeagueSummary> l : leagues) {
+			if (l.get().getLeagueId().equals(id2)) {
 				result = true;
 				break;
 			}
@@ -249,11 +249,11 @@ public class User implements Serializable {
 	}
 
 	
-	public void addLeague(League l) {
+	public void addLeague(LeagueSummary l) {
 		leagues.add(Ref.create(l));
 	}
 
-	public void deleteLeague(League l) {
+	public void deleteLeague(LeagueSummary l) {
 		leagues.remove(Ref.create(l));
 	}
 

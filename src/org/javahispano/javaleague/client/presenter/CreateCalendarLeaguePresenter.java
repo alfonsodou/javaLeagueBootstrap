@@ -22,6 +22,8 @@ import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.SimpleEventBus;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -78,7 +80,7 @@ public class CreateCalendarLeaguePresenter implements Presenter {
 	private final SimpleEventBus eventBus;
 	private League league;
 	private Long leagueId;
-	List<Integer> days = new ArrayList<Integer>();	
+	List<Integer> days = new ArrayList<Integer>();
 
 	public CreateCalendarLeaguePresenter(LeagueServiceAsync leagueService,
 			SimpleEventBus eventBus, Long leagueId, Display display) {
@@ -88,7 +90,7 @@ public class CreateCalendarLeaguePresenter implements Presenter {
 		this.display = display;
 
 		hideErrorLabels();
-	
+
 		fetchLeague();
 	}
 
@@ -99,7 +101,7 @@ public class CreateCalendarLeaguePresenter implements Presenter {
 
 		bind();
 	}
-	
+
 	private void ShowLeague() {
 		this.display.getSaturdayCheckBox().setValue(true);
 		this.display.getLeagueName().setText(league.getName());
@@ -112,6 +114,9 @@ public class CreateCalendarLeaguePresenter implements Presenter {
 				league.getPointsForTied().toString());
 		this.display.getPointsForLost().setText(
 				league.getPointsForLost().toString());
+		this.display.getStartFirstRound().setFormat(
+				DateTimeFormat.getFormat(PredefinedFormat.DATE_TIME_FULL)
+						.toString());
 	}
 
 	private void bind() {
@@ -210,7 +215,7 @@ public class CreateCalendarLeaguePresenter implements Presenter {
 			}.retry(3);
 		}
 	}
-	
+
 	private void fetchLeague() {
 		new RPCCall<League>() {
 

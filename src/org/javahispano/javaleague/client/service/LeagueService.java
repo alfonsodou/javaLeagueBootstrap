@@ -29,6 +29,8 @@ public interface LeagueService extends RemoteService {
 	List<Ref<LeagueSummary>> getLeaguesSummary();
 	
 	List<Ref<LeagueSummary>> getManagerLeaguesSummary();
+	
+	List<Ref<LeagueSummary>> getMyLeaguesSummary();
 
 	League getLeague(Long id);
 

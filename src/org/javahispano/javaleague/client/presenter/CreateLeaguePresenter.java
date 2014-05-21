@@ -21,6 +21,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.SimpleEventBus;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasValue;
@@ -101,6 +103,13 @@ public class CreateLeaguePresenter implements Presenter {
 				Integer.toString(AppLib.POINTS_FOR_TIED));
 		this.display.getPointsForWin().setText(
 				Integer.toString(AppLib.POINTS_FOR_WIN));
+
+		this.display.getStartSignIn().setFormat(
+				DateTimeFormat.getFormat(PredefinedFormat.DATE_TIME_FULL)
+						.toString());
+		this.display.getEndSignIn().setFormat(
+				DateTimeFormat.getFormat(PredefinedFormat.DATE_TIME_FULL)
+						.toString());
 
 		hideErrorLabel();
 
