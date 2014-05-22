@@ -13,10 +13,13 @@ import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
 import org.javahispano.javaleague.shared.domain.League;
+import org.javahispano.javaleague.shared.domain.LeagueSummary;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.SimpleEventBus;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -42,7 +45,7 @@ public class SearchLeaguePresenter implements Presenter {
 
 		HasClickHandlers getSearchLeagueButton();
 
-		CellTable<League> getCellTableLeagues();
+		CellTable<LeagueSummary> getCellTableLeagues();
 
 		TextBox getSearchLeagueTextBox();
 		
@@ -54,7 +57,7 @@ public class SearchLeaguePresenter implements Presenter {
 	private final SimpleEventBus eventBus;
 	private final String textToSearch;
 	
-	private List<Ref<League>> leagues;
+	private List<Ref<LeagueSummary>> leagues;
 
 	private JavaLeagueMessages javaLeagueMessages = GWT
 			.create(JavaLeagueMessages.class);
@@ -119,41 +122,45 @@ public class SearchLeaguePresenter implements Presenter {
 	}
 	
 	private void doShowLeagues() {
-		TextColumn<League> col1 = new TextColumn<League>() {
+		TextColumn<LeagueSummary> col1 = new TextColumn<LeagueSummary>() {
 
 			@Override
-			public String getValue(League object) {
+			public String getValue(LeagueSummary object) {
 				return String.valueOf(object.getName());
 			}
 		};
 		display.getCellTableLeagues().addColumn(col1,
 				javaLeagueMessages.nameLeague());
 
-		TextColumn<League> col2 = new TextColumn<League>() {
+		TextColumn<LeagueSummary> col2 = new TextColumn<LeagueSummary>() {
 
 			@Override
-			public String getValue(League object) {
+			public String getValue(LeagueSummary object) {
 				return String.valueOf(object.getNameManager());
 			}
 		};
 		display.getCellTableLeagues().addColumn(col2,
 				javaLeagueMessages.manager());
 
-		TextColumn<League> col3 = new TextColumn<League>() {
+		TextColumn<LeagueSummary> col3 = new TextColumn<LeagueSummary>() {
 
 			@Override
-			public String getValue(League object) {
-				return String.valueOf(object.getStartSignIn().toString());
+			public String getValue(LeagueSummary object) {
+				DateTimeFormat date = DateTimeFormat
+						.getFormat(PredefinedFormat.DATE_TIME_MEDIUM);
+				return String.valueOf(date.format(object.getStartSignIn()));
 			}
 		};
 		display.getCellTableLeagues().addColumn(col3,
 				javaLeagueMessages.startSignIn());
 
-		TextColumn<League> col4 = new TextColumn<League>() {
+		TextColumn<LeagueSummary> col4 = new TextColumn<LeagueSummary>() {
 
 			@Override
-			public String getValue(League object) {
-				return String.valueOf(object.getEndSignIn().toString());
+			public String getValue(LeagueSummary object) {
+				DateTimeFormat date = DateTimeFormat
+						.getFormat(PredefinedFormat.DATE_TIME_MEDIUM);
+				return String.valueOf(date.format(object.getEndSignIn()));
 			}
 		};
 		display.getCellTableLeagues().addColumn(col4,
@@ -161,21 +168,21 @@ public class SearchLeaguePresenter implements Presenter {
 
 		dataGridProvider.addDataDisplay(display.getCellTableLeagues());
 
-		for (Ref<League> l : leagues) {
+		for (Ref<LeagueSummary> l : leaguesSummary) {
 			dataGridProvider.getList().add(l.get());
 		}
 
 		// Add a selection model to handle user selection.
-		final SingleSelectionModel<League> selectionModel = new SingleSelectionModel<League>();
+		final SingleSelectionModel<LeagueSummary> selectionModel = new SingleSelectionModel<LeagueSummary>();
 		display.getCellTableLeagues().setSelectionModel(selectionModel);
 		selectionModel
 				.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 					public void onSelectionChange(SelectionChangeEvent event) {
-						League selected = selectionModel.getSelectedObject();
+						LeagueSummary selected = selectionModel.getSelectedObject();
 						if (selected != null) {
-							GWT.log("SearchLeaguesPresenter: Firing ShowLeagueEvent. LeagueName: "
+							GWT.log("MyLeaguesPresenter: Firing ShowLeagueEvent. LeagueName: "
 									+ selected.getName());
-							eventBus.fireEvent(new ShowLeagueEvent(selected.getId()));
+							eventBus.fireEvent(new ShowLeagueEvent(selected.getLeagueId()));
 						}
 					}
 				});

@@ -69,6 +69,5 @@ public class LeagueSummaryDAO {
 		return refLeaguesSummary;
 	}
 	
-	public LeagueSummary
 
 }

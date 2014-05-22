@@ -87,7 +87,7 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 					.getSession());
 			// leagues = Lists.newArrayList(user.getLeagues());
 			leagues = leagueDAO.getAllLeagues();
-			//leagues = user.getLeagues();
+			// leagues = user.getLeagues();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -114,16 +114,23 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public void dropLeague(Long id) {
 		try {
-			LeagueSummary l = leagueSummaryDAO.findById(id);
-			League league = l.getLeagueId()
-
-			// Borramos la liga de la lista de ligas del manager
 			User user = LoginHelper.getLoggedInUser(getThreadLocalRequest()
 					.getSession());
+			Long leagueSummaryId = null;
+			
+			for(Ref<LeagueSummary> leagueSummary : user.getLeagues()) {
+				if (leagueSummary.get().getLeagueId().equals(id)) {
+					leagueSummaryId = leagueSummary.get().getId();
+					break;
+				}
+			}
+			LeagueSummary l = leagueSummaryDAO.findById(leagueSummaryId);
+			League league = leagueDAO.findById(l.getLeagueId());
+
 			user.deleteLeague(l);
 			userDAO.save(user);
 
-			List<Ref<User>> users = l.getUsers();
+			List<Ref<User>> users = league.getUsers();
 			if (users != null) {
 				for (Ref<User> u : users) {
 					u.get().deleteLeague(l);
@@ -142,13 +149,14 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 		try {
 			User user = LoginHelper.getLoggedInUser(getThreadLocalRequest()
 					.getSession());
-			League l = leagueDAO.findById(id);
+			LeagueSummary l = leagueSummaryDAO.findById(id);
+			League league = leagueDAO.findById(l.getLeagueId());
 			if (l.getManagerId().compareTo(user.getId()) != 0) {
 				user.addLeague(l);
 				userDAO.save(user);
 			}
-			l.addUser(user);
-			leagueDAO.save(l);
+			league.addUser(user);
+			leagueDAO.save(league);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.warning(e.getMessage());
@@ -193,7 +201,7 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 				calendarDate.setStart(start);
 				calendarDate.setFinish(start);
 				calendarDate.setLeagueId(league.getId());
-				
+
 				start = getNextDate(start, days.get(indexDay));
 				if (indexDay == days.size() - 1) {
 					indexDay = 0;
@@ -430,19 +438,13 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 		try {
 			User user = LoginHelper.getLoggedInUser(getThreadLocalRequest()
 					.getSession());
-			// leagues = Lists.newArrayList(user.getLeagues());
-			//leagues = leagueDAO.getAllLeagues();
-			for(Ref<League> league : user.getLeagues()) {
-				leaguesSummary.add(e)
-			}
-			leagues = user.getLeagues();
-
+			leaguesSummary = user.getLeagues();
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.warning(e.getMessage());
 		}
 
-		return leagues;
+		return leaguesSummary;
 	}
 
 }

@@ -104,12 +104,14 @@ public class CreateLeaguePresenter implements Presenter {
 		this.display.getPointsForWin().setText(
 				Integer.toString(AppLib.POINTS_FOR_WIN));
 
+		/*
 		this.display.getStartSignIn().setFormat(
 				DateTimeFormat.getFormat(PredefinedFormat.DATE_TIME_FULL)
-						.toString());
+						.getPattern());
 		this.display.getEndSignIn().setFormat(
 				DateTimeFormat.getFormat(PredefinedFormat.DATE_TIME_FULL)
-						.toString());
+						.getPattern());
+						*/
 
 		hideErrorLabel();
 

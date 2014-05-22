@@ -114,9 +114,9 @@ public class CreateCalendarLeaguePresenter implements Presenter {
 				league.getPointsForTied().toString());
 		this.display.getPointsForLost().setText(
 				league.getPointsForLost().toString());
-		this.display.getStartFirstRound().setFormat(
+/*		this.display.getStartFirstRound().setFormat(
 				DateTimeFormat.getFormat(PredefinedFormat.DATE_TIME_FULL)
-						.toString());
+						.getPattern());*/
 	}
 
 	private void bind() {
