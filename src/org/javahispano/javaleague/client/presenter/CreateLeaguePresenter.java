@@ -230,9 +230,9 @@ public class CreateLeaguePresenter implements Presenter {
 			league.setPointsForLost(Integer.parseInt(display.getPointsForLost()
 					.getValue()));
 			if (display.getLeaguePrivate().getValue()) {
-				league.setType(League.PRIVATE);
+				league.setType(AppLib.LEAGUE_PRIVATE);
 			} else {
-				league.setType(League.PUBLIC);
+				league.setType(AppLib.LEAGUE_PUBLIC);
 			}
 
 			new RPCCall<League>() {

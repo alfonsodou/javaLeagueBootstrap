@@ -62,7 +62,7 @@ public class SearchLeaguePresenter implements Presenter {
 	private JavaLeagueMessages javaLeagueMessages = GWT
 			.create(JavaLeagueMessages.class);
 
-	private ListDataProvider<League> dataGridProvider = new ListDataProvider<League>();	
+	private ListDataProvider<LeagueSummary> dataGridProvider = new ListDataProvider<LeagueSummary>();	
 	
 	public SearchLeaguePresenter(String textToSearch, LeagueServiceAsync leagueService,
 			SimpleEventBus eventBus, Display display) {
@@ -89,7 +89,7 @@ public class SearchLeaguePresenter implements Presenter {
 	}
 
 	private void fetchLeagues() {
-		new RPCCall<List<Ref<League>>>() {
+		new RPCCall<List<Ref<LeagueSummary>>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -98,7 +98,7 @@ public class SearchLeaguePresenter implements Presenter {
 			}
 
 			@Override
-			public void onSuccess(List<Ref<League>> result) {
+			public void onSuccess(List<Ref<LeagueSummary>> result) {
 				if ((result != null) && (result.size() > 0)) {
 					leagues = result;
 					
@@ -112,8 +112,9 @@ public class SearchLeaguePresenter implements Presenter {
 			}
 
 			@Override
-			protected void callService(AsyncCallback<List<Ref<League>>> cb) {
-				leagueService.getLeagues(textToSearch, cb);
+			protected void callService(AsyncCallback<List<Ref<LeagueSummary>>> cb) {
+				//leagueService.getLeagues(textToSearch, cb);
+				leagueService.getLeaguesSummary(cb);
 				
 			}
 
@@ -168,7 +169,7 @@ public class SearchLeaguePresenter implements Presenter {
 
 		dataGridProvider.addDataDisplay(display.getCellTableLeagues());
 
-		for (Ref<LeagueSummary> l : leaguesSummary) {
+		for (Ref<LeagueSummary> l : leagues) {
 			dataGridProvider.getList().add(l.get());
 		}
 

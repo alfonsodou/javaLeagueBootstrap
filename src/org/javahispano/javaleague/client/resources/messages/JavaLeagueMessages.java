@@ -84,4 +84,10 @@ public interface JavaLeagueMessages extends Messages {
 	
 	@DefaultMessage("Esperando")
 	String waiting();
+	
+	@DefaultMessage("Palabra clave:")
+	String passwordLeaguePrivate();
+	
+	@DefaultMessage("Palabra clave incorrecta!")
+	String wrongPasswordLeaguePrivate();
 }

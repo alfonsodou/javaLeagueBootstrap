@@ -36,7 +36,7 @@ public interface LeagueService extends RemoteService {
 
 	void dropLeague(Long id);
 
-	void joinLeague(Long id);
+	Boolean joinLeague(Long id, String password);
 
 	League createCalendarLeague(League league, Date init, List<Integer> days);
 	

@@ -117,8 +117,8 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 			User user = LoginHelper.getLoggedInUser(getThreadLocalRequest()
 					.getSession());
 			Long leagueSummaryId = null;
-			
-			for(Ref<LeagueSummary> leagueSummary : user.getLeagues()) {
+
+			for (Ref<LeagueSummary> leagueSummary : user.getLeagues()) {
 				if (leagueSummary.get().getLeagueId().equals(id)) {
 					leagueSummaryId = leagueSummary.get().getId();
 					break;
@@ -145,21 +145,32 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public void joinLeague(Long id) {
+	public Boolean joinLeague(Long id, String password) {
 		try {
 			User user = LoginHelper.getLoggedInUser(getThreadLocalRequest()
 					.getSession());
-			LeagueSummary l = leagueSummaryDAO.findById(id);
-			League league = leagueDAO.findById(l.getLeagueId());
-			if (l.getManagerId().compareTo(user.getId()) != 0) {
-				user.addLeague(l);
-				userDAO.save(user);
+			LeagueSummary l = leagueSummaryDAO.findByLeagueId(id);
+			League league = leagueDAO.findById(id);
+			if (((league.getType() == AppLib.LEAGUE_PRIVATE) && (league
+					.getPassword().equals(password)))
+					|| (league.getType() == AppLib.LEAGUE_PUBLIC)) {
+				if (l.getManagerId().compareTo(user.getId()) != 0) {
+					user.addLeague(l);
+					userDAO.save(user);
+				}
+				league.addUser(user);
+				leagueDAO.save(league);
+
+				return true;
+
+			} else {
+				return false;
 			}
-			league.addUser(user);
-			leagueDAO.save(league);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.warning(e.getMessage());
+
+			return false;
 		}
 
 	}

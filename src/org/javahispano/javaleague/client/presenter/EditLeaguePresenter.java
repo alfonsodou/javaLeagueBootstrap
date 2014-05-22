@@ -12,6 +12,7 @@ import org.gwtbootstrap3.extras.summernote.client.ui.Summernote;
 import org.javahispano.javaleague.client.event.ShowMyLeaguesEvent;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
+import org.javahispano.javaleague.shared.AppLib;
 import org.javahispano.javaleague.shared.domain.League;
 
 import com.google.gwt.core.client.GWT;
@@ -168,7 +169,7 @@ public class EditLeaguePresenter implements Presenter {
 		display.getLeagueDescription().setCode(league.getDescription());
 		display.getLeagueDescription().reconfigure();
 		display.getLeagueName().setValue(league.getName());
-		if (league.getType() == League.PRIVATE) {
+		if (league.getType() == AppLib.LEAGUE_PRIVATE) {
 			display.getLeaguePrivate().setActive(true);
 			display.getLeaguePublic().setActive(false);
 			display.getPasswordLeague().setVisible(true);
@@ -268,9 +269,9 @@ public class EditLeaguePresenter implements Presenter {
 			league.setPointsForLost(Integer.parseInt(display.getPointsForLost()
 					.getValue()));
 			if (display.getLeaguePrivate().getValue()) {
-				league.setType(League.PRIVATE);
+				league.setType(AppLib.LEAGUE_PRIVATE);
 			} else {
-				league.setType(League.PUBLIC);
+				league.setType(AppLib.LEAGUE_PUBLIC);
 			}
 			new RPCCall<League>() {
 

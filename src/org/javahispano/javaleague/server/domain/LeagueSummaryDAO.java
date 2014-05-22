@@ -32,12 +32,9 @@ public class LeagueSummaryDAO {
 		return ofy().load().type(LeagueSummary.class).id(id).now();
 	}
 
-	public List<LeagueSummary> findByLeague(Long leagueId) {
-		List<LeagueSummary> leaguesSummary = ofy().load()
-				.type(LeagueSummary.class).filter("leagueId", leagueId)
-				.order("-updated").list();
-
-		return leaguesSummary;
+	public LeagueSummary findByLeagueId(Long leagueId) {
+		return ofy().load().type(LeagueSummary.class)
+				.filter("leagueId", leagueId).first().now();
 	}
 
 	public void delete(Long id) {
@@ -68,6 +65,5 @@ public class LeagueSummaryDAO {
 
 		return refLeaguesSummary;
 	}
-	
 
 }

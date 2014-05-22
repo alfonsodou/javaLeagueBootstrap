@@ -41,6 +41,9 @@ public class AppLib {
 	public static final int LEAGUE_EXECUTION = 1;
 	public static final int LEAGUE_FINISH = 2;
 	
+	public static final int LEAGUE_PUBLIC = 1;
+	public static final int LEAGUE_PRIVATE = 2;
+	
 	public static final String NO_FILE = "NO_FILE";
 
 	public static int POINTS_FOR_WIN = 3;

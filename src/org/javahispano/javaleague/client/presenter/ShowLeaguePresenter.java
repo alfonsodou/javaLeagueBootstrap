@@ -26,6 +26,7 @@ import org.gwtbootstrap3.client.ui.constants.ColumnSize;
 import org.gwtbootstrap3.client.ui.constants.IconType;
 import org.gwtbootstrap3.extras.bootbox.client.Bootbox;
 import org.gwtbootstrap3.extras.bootbox.client.callback.ConfirmCallback;
+import org.gwtbootstrap3.extras.bootbox.client.callback.PromptCallback;
 import org.javahispano.javaleague.client.event.CreateCalendarLeagueEvent;
 import org.javahispano.javaleague.client.event.EditLeagueEvent;
 import org.javahispano.javaleague.client.event.ShowMyLeaguesEvent;
@@ -142,7 +143,7 @@ public class ShowLeaguePresenter implements Presenter {
 		fetchDate();
 	}
 
-	private void ShowLeague() {	
+	private void ShowLeague() {
 		display.getJoinLeagueButton().setEnabled(true);
 
 		if (league.getEndSignIn().before(now)) {
@@ -152,7 +153,7 @@ public class ShowLeaguePresenter implements Presenter {
 		if (isJoinLeague(user.getId())) {
 			display.getJoinLeagueButton().setEnabled(false);
 		}
-		
+
 		if (user.getTactic().getFileName().equals(AppLib.NO_FILE)) {
 			display.getJoinLeagueButton().setEnabled(false);
 		}
@@ -176,7 +177,7 @@ public class ShowLeaguePresenter implements Presenter {
 
 		display.getNameLeagueDescription().setText(league.getName());
 		display.getNameManagerDescription().setText(league.getNameManager());
-		if (league.getType() == League.PUBLIC) {
+		if (league.getType() == AppLib.LEAGUE_PUBLIC) {
 			display.getTypeLeagueDescription().setText(
 					javaLeagueMessages.publicLeague());
 		} else {
@@ -257,7 +258,7 @@ public class ShowLeaguePresenter implements Presenter {
 			DateTimeFormat date = DateTimeFormat
 					.getFormat(PredefinedFormat.DATE_TIME_MEDIUM);
 
-			//doDisplayClasification(index);
+			// doDisplayClasification(index);
 
 			Ref<CalendarDate> cd = league.getMatchs().get(index);
 			display.getTabPaneDate().clear();
@@ -271,7 +272,7 @@ public class ShowLeaguePresenter implements Presenter {
 
 				Row row = new Row();
 
-				//row.add(addType(m.get().getLeagueId()));
+				// row.add(addType(m.get().getLeagueId()));
 				row.add(addTeam(m.get().getLocal().getId(), m.get()
 						.getNameLocal(), m.get().getNameLocalManager()));
 				row.add(addResult(m.get().getLocalGoals(), m.get()
@@ -361,8 +362,10 @@ public class ShowLeaguePresenter implements Presenter {
 
 				} else {
 					anchor.setText(localGoals + " - " + visitingTeamGoals);
-					possesion.setText(round(localPossesion * 100d, 2) + " - "
-							+ round((1d - localPossesion) * 100d, 2));
+					possesion
+							.setText(round(localPossesion * 100d, 2)
+									+ " - "
+									+ round((1d - localPossesion) * 100d, 2));
 				}
 				/*
 				 * De momento el enlace descarga el partido Falta arreglar el
@@ -477,7 +480,17 @@ public class ShowLeaguePresenter implements Presenter {
 
 		display.getJoinLeagueButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				doJoinLeague();
+				if (league.getType() == AppLib.LEAGUE_PRIVATE) {
+					Bootbox.prompt(javaLeagueMessages.passwordLeaguePrivate(),
+							new PromptCallback() {
+								@Override
+								public void callback(String result) {
+									doJoinLeague(result);
+								}
+							});
+				} else {
+					doJoinLeague("NO PASSWORD");
+				}
 			}
 		});
 
@@ -592,8 +605,8 @@ public class ShowLeaguePresenter implements Presenter {
 		}.retry(3);
 	}
 
-	private void doJoinLeague() {
-		new RPCCall<Void>() {
+	private void doJoinLeague(final String password) {
+		new RPCCall<Boolean>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -601,14 +614,19 @@ public class ShowLeaguePresenter implements Presenter {
 			}
 
 			@Override
-			public void onSuccess(Void result) {
-				GWT.log("ShowLeaguePresenter: firing ShowMyLeaguesEvent");
-				eventBus.fireEvent(new ShowMyLeaguesEvent());
+			public void onSuccess(Boolean result) {
+				if (!result) {
+					Bootbox.alert(javaLeagueMessages
+							.wrongPasswordLeaguePrivate());
+				} else {
+					GWT.log("ShowLeaguePresenter: firing ShowMyLeaguesEvent");
+					eventBus.fireEvent(new ShowMyLeaguesEvent());
+				}
 			}
 
 			@Override
-			protected void callService(AsyncCallback<Void> cb) {
-				leagueService.joinLeague(league.getId(), cb);
+			protected void callService(AsyncCallback<Boolean> cb) {
+				leagueService.joinLeague(league.getId(), password, cb);
 			}
 
 		}.retry(3);

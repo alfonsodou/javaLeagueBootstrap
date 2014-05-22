@@ -30,8 +30,6 @@ public class League implements Serializable {
 	 * 
 	 */
 	private static final Logger log = Logger.getLogger(League.class.getName());
-	
-	public static Integer PUBLIC = 1, PRIVATE = 2;
 	  
 	@Id
 	private Long id;
@@ -274,7 +272,7 @@ public class League implements Serializable {
 	}
 
 	public boolean isPublic() {
-		return (this.type == PUBLIC);
+		return (this.type == AppLib.LEAGUE_PUBLIC);
 	}
 	
 	public void addUser(User u) {

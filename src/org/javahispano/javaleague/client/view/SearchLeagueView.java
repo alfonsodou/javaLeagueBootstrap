@@ -8,7 +8,7 @@ import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.CellTable;
 import org.gwtbootstrap3.client.ui.TextBox;
 import org.javahispano.javaleague.client.presenter.SearchLeaguePresenter;
-import org.javahispano.javaleague.shared.domain.League;
+import org.javahispano.javaleague.shared.domain.LeagueSummary;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -56,7 +56,7 @@ public class SearchLeagueView extends Composite implements SearchLeaguePresenter
 	}
 
 	@Override
-	public CellTable<League> getCellTableLeagues() {
+	public CellTable<LeagueSummary> getCellTableLeagues() {
 		return cellTableLeagues;
 	}
 
