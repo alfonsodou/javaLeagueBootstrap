@@ -103,7 +103,7 @@ public class CreateLeaguePresenter implements Presenter {
 				Integer.toString(AppLib.POINTS_FOR_TIED));
 		this.display.getPointsForWin().setText(
 				Integer.toString(AppLib.POINTS_FOR_WIN));
-
+		
 		/*
 		this.display.getStartSignIn().setFormat(
 				DateTimeFormat.getFormat(PredefinedFormat.DATE_TIME_FULL)

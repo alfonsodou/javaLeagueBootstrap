@@ -56,7 +56,8 @@
 									<ui:msg key="startFirstRound">Fecha Primera Jornada</ui:msg>
 								</b:FormLabel>
 								<g:FlowPanel addStyleNames="col-lg-10">
-									<b2:DateTimeBox ui:field="startFirstRound"></b2:DateTimeBox>
+									<b2:DateTimeBox ui:field="startFirstRound"
+										autoClose="true" format="dd/mm/yyyy hh:ii"></b2:DateTimeBox>
 								</g:FlowPanel>
 							</b:FormGroup>
 
@@ -73,19 +74,19 @@
 									</b:CheckBox>
 									<b:CheckBox b:id="daysRound" ui:field="wednesdayCheckBox">
 										<ui:msg key="wednesday">Miércoles</ui:msg>
-									</b:CheckBox> 
+									</b:CheckBox>
 									<b:CheckBox b:id="daysRound" ui:field="thursdayCheckBox">
 										<ui:msg key="thursday">Jueves</ui:msg>
-									</b:CheckBox> 
+									</b:CheckBox>
 									<b:CheckBox b:id="daysRound" ui:field="fridayCheckBox">
 										<ui:msg key="friday">Viernes</ui:msg>
-									</b:CheckBox> 
+									</b:CheckBox>
 									<b:CheckBox b:id="daysRound" ui:field="saturdayCheckBox">
 										<ui:msg key="saturday">Sábado</ui:msg>
-									</b:CheckBox> 
+									</b:CheckBox>
 									<b:CheckBox b:id="daysRound" ui:field="sundayCheckBox">
 										<ui:msg key="sunday">Domingo</ui:msg>
-									</b:CheckBox> 
+									</b:CheckBox>
 									<b:Label ui:field="errorDayRound" type="DANGER">
 										<ui:msg key="daysNumberRound">Debes seleccionar al menos un día de la
 											semana</ui:msg>

@@ -109,7 +109,8 @@
 									<ui:msg key="startSignIn">Inicio inscripciones</ui:msg>
 								</b:FormLabel>
 								<g:FlowPanel addStyleNames="col-lg-10">
-									<b2:DateTimeBox ui:field="startSignIn"></b2:DateTimeBox>
+									<b2:DateTimeBox ui:field="startSignIn"
+										autoClose="true" format="dd/mm/yyyy hh:ii"></b2:DateTimeBox>
 								</g:FlowPanel>
 							</b:FormGroup>
 
@@ -118,7 +119,8 @@
 									<ui:msg key="endSignIn">Fin inscripciones</ui:msg>
 								</b:FormLabel>
 								<g:FlowPanel addStyleNames="col-lg-10">
-									<b2:DateTimeBox ui:field="endSignIn"></b2:DateTimeBox>
+									<b2:DateTimeBox ui:field="endSignIn" autoClose="true"
+										format="dd/mm/yyyy hh:ii"></b2:DateTimeBox>
 									<b:Label ui:field="errorDate" type="DANGER">
 										<ui:msg key="errorDate">La fecha final no puede ser inferior a la
 											inicial</ui:msg>

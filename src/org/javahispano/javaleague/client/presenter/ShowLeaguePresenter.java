@@ -194,9 +194,9 @@ public class ShowLeaguePresenter implements Presenter {
 				Integer.toString(league.getUsers().size()));
 
 		round = getRoundActual();
-
+		
 		doDisplayRound(round);
-
+	
 		ListItem previousLink = display.getPaginationRounds().addPreviousLink();
 		previousLink.addClickHandler(new ClickHandler() {
 
@@ -254,7 +254,7 @@ public class ShowLeaguePresenter implements Presenter {
 	}
 
 	private void doDisplayRound(int index) {
-		if (league.getMatchs().size() > 0) {
+		if ((league.getMatchs() != null) && (league.getMatchs().size() > 0)) {
 			DateTimeFormat date = DateTimeFormat
 					.getFormat(PredefinedFormat.DATE_TIME_MEDIUM);
 
@@ -272,7 +272,6 @@ public class ShowLeaguePresenter implements Presenter {
 
 				Row row = new Row();
 
-				// row.add(addType(m.get().getLeagueId()));
 				row.add(addTeam(m.get().getLocal().getId(), m.get()
 						.getNameLocal(), m.get().getNameLocalManager()));
 				row.add(addResult(m.get().getLocalGoals(), m.get()
@@ -309,26 +308,6 @@ public class ShowLeaguePresenter implements Presenter {
 		}
 	}
 
-	private Column addType(Long leagueId) {
-		Column column = new Column();
-
-		column.setSize(ColumnSize.MD_2);
-		if (leagueId != 0) {
-			Anchor anchor = new Anchor();
-			anchor.setText(javaLeagueMessages.league());
-			MyClickHandlerLeague myClickHandler = new MyClickHandlerLeague(
-					leagueId, eventBus);
-			anchor.addClickHandler(myClickHandler);
-			column.add(anchor);
-		} else {
-			Italics italics = new Italics();
-			italics.setText(javaLeagueMessages.friendly());
-			column.add(italics);
-		}
-
-		return column;
-	}
-
 	private Column addResult(int localGoals, int visitingTeamGoals,
 			double localPossesion, int state, Long id, Date d) {
 		Column column = new Column();
@@ -362,10 +341,8 @@ public class ShowLeaguePresenter implements Presenter {
 
 				} else {
 					anchor.setText(localGoals + " - " + visitingTeamGoals);
-					possesion
-							.setText(round(localPossesion * 100d, 2)
-									+ " - "
-									+ round((1d - localPossesion) * 100d, 2));
+					possesion.setText(round(localPossesion * 100d, 2) + " - "
+							+ round((1d - localPossesion) * 100d, 2));
 				}
 				/*
 				 * De momento el enlace descarga el partido Falta arreglar el
@@ -485,7 +462,9 @@ public class ShowLeaguePresenter implements Presenter {
 							new PromptCallback() {
 								@Override
 								public void callback(String result) {
-									doJoinLeague(result);
+									if (!result.isEmpty()) {
+										doJoinLeague(result);
+									}
 								}
 							});
 				} else {
