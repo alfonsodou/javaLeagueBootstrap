@@ -50,7 +50,9 @@ public class ClasificationLeaguesServlet extends HttpServlet {
 					&& (l.getClasification().get().getClasification().size() > 0)) {
 				for (Ref<StatisticsTeam> st : l.getClasification().get()
 						.getClasification()) {
-					statisticsTeamDAO.delete(st.get().getId());
+					if (st.get() != null) {
+						statisticsTeamDAO.delete(st.get().getId());
+					}
 				}
 				clasificationDAO.delete(l.getClasification().get().getId());
 			}
@@ -125,6 +127,7 @@ public class ClasificationLeaguesServlet extends HttpServlet {
 									Ref.create(stLocal));
 							clasification.getClasification().add(
 									Ref.create(stVis));
+							clasification.addNumberMatchs();
 						}
 					}
 				}

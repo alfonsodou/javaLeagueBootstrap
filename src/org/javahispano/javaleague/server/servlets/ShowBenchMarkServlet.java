@@ -30,16 +30,19 @@ public class ShowBenchMarkServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
+		String result = "";
+
 		resp.setHeader("Content-disposition",
 				"attachment; filename=benchMark.csv");
 
 		PrintWriter out = resp.getWriter();
 		List<BenchMark> listBenchMark = benchMarkDAO.getAllBenchMark();
 		for (BenchMark benchMark : listBenchMark) {
-			out.println(benchMark.getDate().toString() + ","
-					+ benchMark.getTime());
+			result += benchMark.getDate().toString() + ","
+					+ benchMark.getTime() + "\n";
 		}
-
+		result = result.substring(0, result.length() - 1);
+		out.println(result);
 		resp.flushBuffer();
 	}
 

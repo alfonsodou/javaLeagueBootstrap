@@ -127,4 +127,7 @@ public class Clasification implements Serializable {
 		this.updated = updated;
 	}
 
+	public void addNumberMatchs() {
+		this.numberMatchs++;
+	}
 }
