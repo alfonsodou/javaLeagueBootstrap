@@ -213,13 +213,6 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 				calendarDate.setFinish(start);
 				calendarDate.setLeagueId(league.getId());
 
-				start = getNextDate(start, days.get(indexDay));
-				if (indexDay == days.size() - 1) {
-					indexDay = 0;
-				} else {
-					indexDay++;
-				}
-
 				for (int m = 0; m < partidosPorFecha; m++) {
 					logger.warning("Fecha: " + round + " :: Partido: " + m);
 
@@ -260,6 +253,13 @@ public class LeagueServiceImpl extends RemoteServiceServlet implements
 				}
 				calendarDate = calendarDateDAO.save(calendarDate);
 				league.addCalendarDate(calendarDate);
+				
+				start = getNextDate(start, days.get(indexDay));
+				if (indexDay == days.size() - 1) {
+					indexDay = 0;
+				} else {
+					indexDay++;
+				}
 			}
 		}
 
