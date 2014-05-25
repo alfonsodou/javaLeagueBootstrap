@@ -28,6 +28,6 @@ public class BenchMarkDAO {
 	}
 
 	public List<BenchMark> getAllBenchMark() {
-		return ofy().load().type(BenchMark.class).order("date").list();
+		return ofy().load().type(BenchMark.class).list();
 	}
 }

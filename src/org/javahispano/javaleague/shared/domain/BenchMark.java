@@ -8,6 +8,7 @@ import java.util.Date;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 /**
  * @author adou
@@ -24,6 +25,7 @@ public class BenchMark implements Serializable {
 	@Id
 	private Long id;
 	
+	@Index
 	private Date date;
 	
 	private double time;
