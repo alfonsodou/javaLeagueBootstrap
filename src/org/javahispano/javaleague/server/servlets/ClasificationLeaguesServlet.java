@@ -127,10 +127,7 @@ public class ClasificationLeaguesServlet extends HttpServlet {
 							}
 							stLocal = statisticsTeamDAO.save(stLocal);
 							stVis = statisticsTeamDAO.save(stVis);
-							clasification.getClasification().add(
-									Ref.create(stLocal));
-							clasification.getClasification().add(
-									Ref.create(stVis));
+
 							clasification.addNumberMatchs();
 						}
 					}
