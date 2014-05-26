@@ -137,6 +137,8 @@ public class ClasificationLeaguesServlet extends HttpServlet {
 			if (l.getExecutedMatchs() == l.getNumberMatchs()) {
 				l.setState(AppLib.LEAGUE_FINISH);
 			}
+			
+			bubbleSort(clasification.getClasification());
 
 			clasificationDAO.save(clasification);
 			leagueDAO.save(l);
@@ -147,6 +149,25 @@ public class ClasificationLeaguesServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		doGet(req, res);
+	}
+
+	private void bubbleSort(List<Ref<StatisticsTeam>> array) {
+		boolean swapped = true;
+		int j = 0;
+		Ref<StatisticsTeam> tmp;
+		while (swapped) {
+			swapped = false;
+			j++;
+			for (int i = 0; i < array.size() - j; i++) {
+				if (array.get(i).get().getPoints() <
+						array.get(i + 1).get().getPoints()) {
+					tmp = array.get(i);
+					array.set(i, array.get(i + 1));
+					array.set(i + 1, tmp);
+					swapped = true;
+				}
+			}
+		}
 	}
 
 	private void createClasification(League l) {

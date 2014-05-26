@@ -5,15 +5,16 @@ package org.javahispano.javaleague.client.presenter;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import org.gwtbootstrap3.client.ui.Anchor;
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Column;
 import org.gwtbootstrap3.client.ui.DescriptionData;
 import org.gwtbootstrap3.client.ui.Heading;
-import org.gwtbootstrap3.client.ui.Italics;
 import org.gwtbootstrap3.client.ui.ListItem;
 import org.gwtbootstrap3.client.ui.Pagination;
 import org.gwtbootstrap3.client.ui.Paragraph;
@@ -30,7 +31,6 @@ import org.gwtbootstrap3.extras.bootbox.client.callback.PromptCallback;
 import org.javahispano.javaleague.client.event.CreateCalendarLeagueEvent;
 import org.javahispano.javaleague.client.event.EditLeagueEvent;
 import org.javahispano.javaleague.client.event.ShowMyLeaguesEvent;
-import org.javahispano.javaleague.client.helper.MyClickHandlerLeague;
 import org.javahispano.javaleague.client.helper.RPCCall;
 import org.javahispano.javaleague.client.resources.messages.JavaLeagueMessages;
 import org.javahispano.javaleague.client.service.LeagueServiceAsync;
@@ -172,6 +172,14 @@ public class ShowLeaguePresenter implements Presenter {
 			display.getEditLeagueButton().setVisible(false);
 			display.getCreateCalendarLeagueButton().setVisible(false);
 		}
+
+		if ((league.getState() == AppLib.LEAGUE_EXECUTION)
+				|| (league.getState() == AppLib.LEAGUE_FINISH)) {
+			display.getDropLeagueButton().setEnabled(false);
+			display.getEditLeagueButton().setEnabled(false);
+			display.getCreateCalendarLeagueButton().setEnabled(false);
+		}
+		
 		display.getDescriptionLeague().setHTML(league.getDescription());
 		display.getNameLeague().setText(league.getName());
 
@@ -194,9 +202,10 @@ public class ShowLeaguePresenter implements Presenter {
 				Integer.toString(league.getUsers().size()));
 
 		round = getRoundActual();
-		
+
 		doDisplayRound(round);
-	
+		doDisplayClasification();
+
 		ListItem previousLink = display.getPaginationRounds().addPreviousLink();
 		previousLink.addClickHandler(new ClickHandler() {
 
@@ -258,8 +267,6 @@ public class ShowLeaguePresenter implements Presenter {
 			DateTimeFormat date = DateTimeFormat
 					.getFormat(PredefinedFormat.DATE_TIME_MEDIUM);
 
-			// doDisplayClasification(index);
-
 			Ref<CalendarDate> cd = league.getMatchs().get(index);
 			display.getTabPaneDate().clear();
 			display.getParagraphRoundDate().setText(
@@ -289,23 +296,102 @@ public class ShowLeaguePresenter implements Presenter {
 		}
 	}
 
-	private void doDisplayClasification(int index) {
-		display.getParagraphRoundClasification().clear();
-		HashMap<Long, StatisticsTeam> hashMapST = new HashMap<Long, StatisticsTeam>();
-		for (int i = 0; i < league.getUsers().size(); i++) {
-			StatisticsTeam st = new StatisticsTeam();
-			st.setTeamName(league.getUsers().get(i).get().getTactic()
-					.getTeamName());
-			hashMapST.put(league.getUsers().get(i).get().getTactic().getId(),
-					st);
-		}
+	private void doDisplayClasification() {
+		int i = 1;
 
-		for (int f = 0; f <= index; f++) {
-			Ref<CalendarDate> cd = league.getMatchs().get(index);
-			for (Ref<Match> m : cd.get().getMatchs()) {
+		display.getTabPaneClasification().clear();
+		for (Ref<StatisticsTeam> st : league.getClasification().get()
+				.getClasification()) {
+			Row row = new Row();
+			row.add(addNumber(i));
+			row.add(addTeamName(st.get().getTeamName()));
+			row.add(addMatchsPlayed(st.get().getMatchLost()
+					+ st.get().getMatchTied() + st.get().getMatchWins()));
+			row.add(addGoalsFor(st.get().getGoalsFor()));
+			row.add(addGoalsAgainst(st.get().getGoalsAgainst()));
+			row.add(addPoints(st.get().getPoints()));
 
-			}
+			display.getTabPaneClasification().add(row);
+			i++;
 		}
+	}
+
+	private Column addNumber(int i) {
+		Column column = new Column();
+		column.setSize(ColumnSize.MD_1);
+
+		Paragraph p = new Paragraph();
+		p.setAlignment(Alignment.RIGHT);
+		p.setHTML(Integer.toString(i));
+
+		column.add(p);
+
+		return column;
+	}
+
+	private Column addPoints(int i) {
+		Column column = new Column();
+		column.setSize(ColumnSize.MD_1);
+
+		Paragraph p = new Paragraph();
+		p.setAlignment(Alignment.RIGHT);
+		p.setHTML(Integer.toString(i));
+
+		column.add(p);
+
+		return column;
+	}
+
+	private Column addGoalsAgainst(int i) {
+		Column column = new Column();
+		column.setSize(ColumnSize.MD_2);
+
+		Paragraph p = new Paragraph();
+		p.setAlignment(Alignment.RIGHT);
+		p.setHTML(Integer.toString(i));
+
+		column.add(p);
+
+		return column;
+	}
+
+	private Column addGoalsFor(int i) {
+		Column column = new Column();
+		column.setSize(ColumnSize.MD_2);
+
+		Paragraph p = new Paragraph();
+		p.setAlignment(Alignment.RIGHT);
+		p.setHTML(Integer.toString(i));
+
+		column.add(p);
+
+		return column;
+	}
+
+	private Column addMatchsPlayed(int i) {
+		Column column = new Column();
+		column.setSize(ColumnSize.MD_1);
+
+		Paragraph p = new Paragraph();
+		p.setAlignment(Alignment.RIGHT);
+		p.setHTML(Integer.toString(i));
+
+		column.add(p);
+
+		return column;
+	}
+
+	private Column addTeamName(String s) {
+		Column column = new Column();
+		column.setSize(ColumnSize.MD_3);
+
+		Paragraph p = new Paragraph();
+		p.setAlignment(Alignment.CENTER);
+		p.setHTML(s);
+
+		column.add(p);
+
+		return column;
 	}
 
 	private Column addResult(int localGoals, int visitingTeamGoals,
