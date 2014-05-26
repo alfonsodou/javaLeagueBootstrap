@@ -5,6 +5,9 @@ package org.javahispano.javaleague.server.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -31,6 +34,7 @@ public class ShowBenchMarkServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
 		String result = "";
+		DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
 
 		resp.setHeader("Content-disposition",
 				"attachment; filename=benchMark.csv");
@@ -38,7 +42,7 @@ public class ShowBenchMarkServlet extends HttpServlet {
 		PrintWriter out = resp.getWriter();
 		List<BenchMark> listBenchMark = benchMarkDAO.getAllBenchMark();
 		for (BenchMark benchMark : listBenchMark) {
-			result += benchMark.getDate().toString() + ","
+			result += df.format(benchMark.getDate()) + ";"
 					+ benchMark.getTime() + "\n";
 		}
 		result = result.substring(0, result.length() - 1);

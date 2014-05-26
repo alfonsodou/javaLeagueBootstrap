@@ -5,6 +5,7 @@ package org.javahispano.javaleague.server.servlets;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -34,6 +35,9 @@ public class ClasificationLeaguesServlet extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private static final Logger log = Logger
+			.getLogger(ClasificationLeaguesServlet.class.getName());	
 
 	private LeagueDAO leagueDAO = new LeagueDAO();
 	private ClasificationDAO clasificationDAO = new ClasificationDAO();
