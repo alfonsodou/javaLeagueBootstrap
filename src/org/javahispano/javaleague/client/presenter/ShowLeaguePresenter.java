@@ -5,10 +5,7 @@ package org.javahispano.javaleague.client.presenter;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 
 import org.gwtbootstrap3.client.ui.Anchor;
 import org.gwtbootstrap3.client.ui.Button;
@@ -179,7 +176,7 @@ public class ShowLeaguePresenter implements Presenter {
 			display.getEditLeagueButton().setEnabled(false);
 			display.getCreateCalendarLeagueButton().setEnabled(false);
 		}
-		
+
 		display.getDescriptionLeague().setHTML(league.getDescription());
 		display.getNameLeague().setText(league.getName());
 
@@ -300,6 +297,19 @@ public class ShowLeaguePresenter implements Presenter {
 		int i = 1;
 
 		display.getTabPaneClasification().clear();
+
+		Row r = new Row();
+		r.add(addText(javaLeagueMessages.position(), ColumnSize.MD_1));
+		r.add(addText(javaLeagueMessages.team(), ColumnSize.MD_3));
+		r.add(addText(javaLeagueMessages.matchsPlayed(), ColumnSize.MD_1));
+		r.add(addText(javaLeagueMessages.matchsWins(), ColumnSize.MD_1));
+		r.add(addText(javaLeagueMessages.matchsTied(), ColumnSize.MD_1));
+		r.add(addText(javaLeagueMessages.matchsLost(), ColumnSize.MD_1));
+		r.add(addText(javaLeagueMessages.goalsFor(), ColumnSize.MD_1));
+		r.add(addText(javaLeagueMessages.goalsAgainst(), ColumnSize.MD_1));
+		r.add(addText(javaLeagueMessages.points(), ColumnSize.MD_1));
+		display.getTabPaneClasification().add(r);
+
 		for (Ref<StatisticsTeam> st : league.getClasification().get()
 				.getClasification()) {
 			Row row = new Row();
@@ -307,13 +317,32 @@ public class ShowLeaguePresenter implements Presenter {
 			row.add(addTeamName(st.get().getTeamName()));
 			row.add(addMatchsPlayed(st.get().getMatchLost()
 					+ st.get().getMatchTied() + st.get().getMatchWins()));
+			row.add(addNumber(st.get().getMatchWins()));
+			row.add(addNumber(st.get().getMatchTied()));
+			row.add(addNumber(st.get().getMatchLost()));
 			row.add(addGoalsFor(st.get().getGoalsFor()));
 			row.add(addGoalsAgainst(st.get().getGoalsAgainst()));
 			row.add(addPoints(st.get().getPoints()));
-
 			display.getTabPaneClasification().add(row);
 			i++;
 		}
+	}
+
+	private Column addText(String text, ColumnSize size) {
+		Column column = new Column();
+		column.setSize(size);
+
+		Paragraph p = new Paragraph();
+		p.setAlignment(Alignment.CENTER);
+
+		Small small = new Small();
+		small.setHTML(text);
+
+		p.add(small);
+
+		column.add(p);
+
+		return column;
 	}
 
 	private Column addNumber(int i) {
@@ -344,7 +373,7 @@ public class ShowLeaguePresenter implements Presenter {
 
 	private Column addGoalsAgainst(int i) {
 		Column column = new Column();
-		column.setSize(ColumnSize.MD_2);
+		column.setSize(ColumnSize.MD_1);
 
 		Paragraph p = new Paragraph();
 		p.setAlignment(Alignment.RIGHT);
@@ -357,7 +386,7 @@ public class ShowLeaguePresenter implements Presenter {
 
 	private Column addGoalsFor(int i) {
 		Column column = new Column();
-		column.setSize(ColumnSize.MD_2);
+		column.setSize(ColumnSize.MD_1);
 
 		Paragraph p = new Paragraph();
 		p.setAlignment(Alignment.RIGHT);

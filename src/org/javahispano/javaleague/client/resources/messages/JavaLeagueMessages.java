@@ -90,4 +90,31 @@ public interface JavaLeagueMessages extends Messages {
 	
 	@DefaultMessage("Palabra clave incorrecta!")
 	String wrongPasswordLeaguePrivate();
+	
+	@DefaultMessage("Pos.")
+	String position();
+	
+	@DefaultMessage("Equipo")
+	String team();
+	
+	@DefaultMessage("Jug.")
+	String matchsPlayed();
+	
+	@DefaultMessage("Gan.")
+	String matchsWins();
+	
+	@DefaultMessage("Emp.")
+	String matchsTied();
+	
+	@DefaultMessage("Per.")
+	String matchsLost();
+	
+	@DefaultMessage("GF")
+	String goalsFor();
+	
+	@DefaultMessage("GC")
+	String goalsAgainst();
+	
+	@DefaultMessage("Ptos.")
+	String points();
 }

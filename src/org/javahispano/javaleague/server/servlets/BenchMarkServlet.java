@@ -44,11 +44,6 @@ public class BenchMarkServlet extends HttpServlet {
 	    benchMark.setTime(((t2 - t1) * 1e-9));
 	    benchMark.setResult(result);
 	    benchMarkDAO.save(benchMark);
-	    
-/*	    PrintWriter out = resp.getWriter();
-		out.println("Execution time: " + ((t2 - t1) * 1e-9) +
-		        " seconds to compute result = " + result);
-		resp.flushBuffer();*/
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
