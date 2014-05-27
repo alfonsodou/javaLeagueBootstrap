@@ -97,7 +97,7 @@ public class MyLeaguesPresenter implements Presenter {
 
 			@Override
 			public void onSuccess(List<Ref<LeagueSummary>> result) {
-				if (result.size() > 0) {
+				if ((result != null) && (result.size() > 0)) {
 					leaguesSummary = result;
 
 					doShowMyLeagues();
