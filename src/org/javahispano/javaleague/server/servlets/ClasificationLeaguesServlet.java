@@ -35,9 +35,9 @@ public class ClasificationLeaguesServlet extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final Logger log = Logger
-			.getLogger(ClasificationLeaguesServlet.class.getName());	
+			.getLogger(ClasificationLeaguesServlet.class.getName());
 
 	private LeagueDAO leagueDAO = new LeagueDAO();
 	private ClasificationDAO clasificationDAO = new ClasificationDAO();
@@ -66,6 +66,8 @@ public class ClasificationLeaguesServlet extends HttpServlet {
 
 			if (l.getExecutedMatchs() > l.getClasification().get()
 					.getNumberMatchs()) {
+				log.warning("** Liga executed matchs: " + l.getExecutedMatchs()
+						+ " :: " + l.getClasification().get().getNumberMatchs());
 				List<Ref<CalendarDate>> listCalendarDate = l.getMatchs();
 				for (Ref<CalendarDate> cd : listCalendarDate) {
 					for (Ref<Match> m : cd.get().getMatchs()) {
@@ -137,7 +139,7 @@ public class ClasificationLeaguesServlet extends HttpServlet {
 			if (l.getExecutedMatchs() == l.getNumberMatchs()) {
 				l.setState(AppLib.LEAGUE_FINISH);
 			}
-			
+
 			bubbleSort(clasification.getClasification());
 
 			clasificationDAO.save(clasification);
@@ -159,8 +161,8 @@ public class ClasificationLeaguesServlet extends HttpServlet {
 			swapped = false;
 			j++;
 			for (int i = 0; i < array.size() - j; i++) {
-				if (array.get(i).get().getPoints() <
-						array.get(i + 1).get().getPoints()) {
+				if (array.get(i).get().getPoints() < array.get(i + 1).get()
+						.getPoints()) {
 					tmp = array.get(i);
 					array.set(i, array.get(i + 1));
 					array.set(i + 1, tmp);
