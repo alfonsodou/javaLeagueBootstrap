@@ -2,8 +2,8 @@
 <cronentries>
   <cron>
     <url>/cron/scheduleMatchs</url>
-    <description>Comprueba cada 5 minutos los partidos a ejecutar</description>
-    <schedule>every 5 minutes</schedule>
+    <description>Comprueba cada 30 minutos los partidos a ejecutar</description>
+    <schedule>every 30 minutes</schedule>
   </cron>
   <cron>
     <url>/cron/benchMark</url>
@@ -12,8 +12,8 @@
   </cron>
    <cron>
     <url>/cron/clasificationLeagues</url>
-    <description>Actualiza cada 15 minutos las clasificaciones de las ligas</description>
-    <schedule>every 15 minutes</schedule>
+    <description>Actualiza cada 30 minutos las clasificaciones de las ligas</description>
+    <schedule>every 30 minutes</schedule>
   </cron>  
     
 </cronentries>
