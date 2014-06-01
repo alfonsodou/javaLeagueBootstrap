@@ -153,6 +153,17 @@
 		<url-pattern>/serveBin</url-pattern>
 	</servlet-mapping>
 
+	
+	<!-- ===================== Serve Bin Match Mock Servlet ===================== -->
+	<servlet>
+		<servlet-name>ServeBinMock</servlet-name>
+		<servlet-class>org.javahispano.javaleague.server.servlets.ServeBinMockServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ServeBinMock</servlet-name>
+		<url-pattern>/serveBinMock</url-pattern>
+	</servlet-mapping>
+
 	<!-- ===================== Daytime Servlet ===================== -->
 	<servlet>
 		<servlet-name>Daytime</servlet-name>

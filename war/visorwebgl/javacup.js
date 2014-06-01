@@ -25,10 +25,6 @@ function getuByte(bin) {
     return bin.read('uint8');
 }
 
-function getLong(bin) {
-	return bin.read('int64');
-}
-
 function miniName(name) {
     name = name.replace(/\s+/, " ");
     ss = name.split(" ");
@@ -99,8 +95,6 @@ function getIteracion(bin) {
         golesVisita: getByte(bin),
         posLocal: [],
         posVisita: [],
-        timeLocal: getLong(bin),
-        timeVisita: getLong(bin),
         idxTime: 0
     };
     if (out && getFlag(4, iter.flags)) {

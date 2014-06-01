@@ -889,7 +889,7 @@ loadScene.addChild(logoKreadi);
 setGame('gameCanvas', loadScene, _fps);
 console.log(document.location.search.substring(1));
 //loadPartido('/imageTransform?file=' + document.location.search.substring(1));
-loadPartido(document.location.search.substring(1));
+loadPartido('/serveBinMock');
 
 function animLoad() {
     loadText2.position.y = _h - 33;
