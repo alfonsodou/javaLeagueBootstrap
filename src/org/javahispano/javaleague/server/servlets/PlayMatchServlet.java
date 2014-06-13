@@ -1,7 +1,14 @@
 package org.javahispano.javaleague.server.servlets;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.io.StringWriter;
 import java.nio.ByteBuffer;
 import java.util.Iterator;
@@ -132,7 +139,7 @@ public class PlayMatchServlet extends HttpServlet {
 					visitingTactic.addMatchWins();
 				}
 			}
-			
+
 			league = leagueDAO.findById(match.getLeagueId());
 			league.setExecutedMatchs(league.getExecutedMatchs() + 1);
 
@@ -250,4 +257,22 @@ public class PlayMatchServlet extends HttpServlet {
 		return result.array();
 	}
 
+	private static Serializable fromBytes(byte[] bytes) throws IOException,
+			ClassNotFoundException {
+		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+		ObjectInput in = new ObjectInputStream(bis);
+		Object o = in.readObject();
+		bis.close();
+		in.close();
+		return (Serializable) o;
+	}
+
+	private static byte[] toBytes(Serializable ser) throws IOException {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ObjectOutput out = new ObjectOutputStream(bos);
+		out.writeObject(ser);
+		out.close();
+		bos.close();
+		return bos.toByteArray();
+	}
 }

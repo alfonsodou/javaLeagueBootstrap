@@ -69,5 +69,7 @@ public class ServeBinServlet extends HttpServlet {
 		}
 		return result.array();
 	}
+	
+	
 
 }

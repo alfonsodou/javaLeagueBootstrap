@@ -3,17 +3,25 @@
  */
 package org.javahispano.javaleague.server.servlets;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.io.Serializable;
+import java.io.StringWriter;
 import java.nio.ByteBuffer;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.javahispano.javaleague.server.domain.MatchDAO;
 import org.javahispano.javaleague.shared.AppLib;
-import org.javahispano.javaleague.shared.domain.Match;
 
 import com.google.appengine.tools.cloudstorage.GcsFilename;
 import com.google.appengine.tools.cloudstorage.GcsInputChannel;
@@ -30,27 +38,38 @@ public class ServeBinMockServlet extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private MatchDAO dao = new MatchDAO();
 	private final GcsService gcsService = GcsServiceFactory
 			.createGcsService(RetryParams.getDefaultInstance());
+	private static final Logger log = Logger
+			.getLogger(ServeBinMockServlet.class.getName());
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 
 		String pathFileName;
-		
+
 		pathFileName = "matchs/league/6133129278390272/5031379704217600.bin";
 
 		GcsFilename filename = new GcsFilename(AppLib.BUCKET_GCS, pathFileName);
 
 		res.setHeader("ETag", "5031379704217600");// Establece header ETag
-		res.setHeader("Content-disposition", "inline; filename=5031379704217600.bin");
+		res.setHeader("Content-disposition",
+				"inline; filename=5031379704217600.bin");
 
-		res.getOutputStream().write(readFromFile(filename));
-		res.flushBuffer();
+		try {
+			byte[] ser = (byte[]) fromBytes(readFromFile(filename));
+			res.getOutputStream().write(ser);
+		} catch (ClassNotFoundException e) {
+			log.warning(e.getMessage());
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			log.warning("stackTrace -> " + sw.toString());
+		}
+		res.getOutputStream().close();
 	}
 
-	private byte[] readFromFile(GcsFilename fileName) throws IOException {
+	private byte[] readFromFile(GcsFilename fileName) throws IOException,
+			ClassNotFoundException {
 		int fileSize = (int) gcsService.getMetadata(fileName).getLength();
 		ByteBuffer result = ByteBuffer.allocate(fileSize);
 		try (GcsInputChannel readChannel = gcsService.openReadChannel(fileName,
@@ -60,4 +79,22 @@ public class ServeBinMockServlet extends HttpServlet {
 		return result.array();
 	}
 
+	private static Serializable fromBytes(byte[] bytes) throws IOException,
+			ClassNotFoundException {
+		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+		ObjectInput in = new ObjectInputStream(bis);
+		Object o = in.readObject();
+		bis.close();
+		in.close();
+		return (Serializable) o;
+	}
+
+	private static byte[] toBytes(Serializable ser) throws IOException {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ObjectOutput out = new ObjectOutputStream(bos);
+		out.writeObject(ser);
+		out.close();
+		bos.close();
+		return bos.toByteArray();
+	}
 }
