@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.javahispano.javaleague.server.utils.Compressor;
+import org.javahispano.javaleague.server.utils.Serializer;
 import org.javahispano.javaleague.shared.AppLib;
 
 import com.google.appengine.tools.cloudstorage.GcsFilename;
@@ -48,24 +50,29 @@ public class ServeBinMockServlet extends HttpServlet {
 
 		String pathFileName;
 
-		pathFileName = "matchs/league/6133129278390272/5031379704217600.bin";
+		// pathFileName = "matchs/league/6133129278390272/5031379704217600.bin";
+		pathFileName = req.getParameter("file");
+		log.warning("FileName: " + pathFileName);
 
 		GcsFilename filename = new GcsFilename(AppLib.BUCKET_GCS, pathFileName);
 
 		res.setHeader("ETag", "5031379704217600");// Establece header ETag
-		res.setHeader("Content-disposition",
-				"inline; filename=5031379704217600.bin");
+		res.setHeader(
+				"Content-disposition",
+				"inline; filename="
+						+ pathFileName.substring(pathFileName.lastIndexOf("/"),
+								pathFileName.lastIndexOf(".")));
 
 		try {
-			byte[] ser = (byte[]) fromBytes(readFromFile(filename));
+			byte[] ser = readFromFile(filename);
 			res.getOutputStream().write(ser);
+			res.getOutputStream().close();
 		} catch (ClassNotFoundException e) {
 			log.warning(e.getMessage());
 			StringWriter sw = new StringWriter();
 			e.printStackTrace(new PrintWriter(sw));
 			log.warning("stackTrace -> " + sw.toString());
 		}
-		res.getOutputStream().close();
 	}
 
 	private byte[] readFromFile(GcsFilename fileName) throws IOException,

@@ -113,7 +113,7 @@ public class PlayMatchServlet extends HttpServlet {
 			filename = new GcsFilename(AppLib.BUCKET_GCS, AppLib.PATH_MATCH
 					+ AppLib.PATH_LEAGUE_MATCH + match.getLeagueId().toString()
 					+ "/" + match.getId().toString() + ".bin");
-			writeToFile(filename, matchShared.getMatchBin());
+			writeToFile(filename, toBytes(matchShared.getMatchBin()));
 
 			match.setLocalGoals(matchShared.getGoalsLocal());
 			match.setVisitingTeamGoals(matchShared.getGoalsVisiting());

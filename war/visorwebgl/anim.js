@@ -46,7 +46,7 @@ player_new2_png_19 = null;
 player_new2_png_20 = null;
 
 function setColors(colors) {
-    var url = '/imageTransform?path=/webgl/img/player2.png&nocache&from=0.5666666666,0.15833333333,0,0.4222222222222,0.202777,0.7083333&error=.1,.1,.1,.1,.1,.1&to=';
+    var url = '/imageTransform?path=/visorwebgl/img/player2.png&nocache&from=0.5666666666,0.15833333333,0,0.4222222222222,0.202777,0.7083333&error=.1,.1,.1,.1,.1,.1&to=';
     url = url + colors[0] + "." + colors[1] + "." + colors[2] + ",";//short
     url = url + colors[3] + "." + colors[4] + "." + colors[5] + ",";//polera1
     url = url + colors[6] + "." + colors[7] + "." + colors[8] + ",";//polera2
