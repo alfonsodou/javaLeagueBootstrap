@@ -196,6 +196,8 @@ public class TacticPresenter implements Presenter {
 							display.getFileName().setText(
 									javaLeagueMessages.emptyUserTactic());
 						}
+						
+						display.getUpdateButton().setEnabled(true);
 					}
 				});
 	}
@@ -235,6 +237,9 @@ public class TacticPresenter implements Presenter {
 		}
 
 		if (!error) {
+			
+			display.getUpdateButton().setEnabled(false);
+			
 			tactic.setTeamName(display.getTeamName().getValue());
 			display.getFormPanelTactic().submit();
 		}
